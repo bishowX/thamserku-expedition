@@ -9,7 +9,7 @@ import { PathwayRegulatoryCaution } from '../components/pathway/PathwayRegulator
 import { PathwayClosing } from '../components/pathway/PathwayClosing';
 import { Footer } from '../components/Footer';
 
-export const SevenThousandMeterPathway = () => {
+export default function SevenThousandMeterPathway() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />

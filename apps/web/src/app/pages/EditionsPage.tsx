@@ -7,7 +7,7 @@ import { EditionsComparison } from "../components/editions/EditionsComparison";
 import { EditionsAvailability } from "../components/editions/EditionsAvailability";
 import { EditionsClosing } from "../components/editions/EditionsClosing";
 
-export function EditionsPage() {
+export default function EditionsPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

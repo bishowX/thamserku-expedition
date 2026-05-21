@@ -10,7 +10,7 @@ import { YetiFAQ } from '../components/yeti/YetiFAQ';
 import { YetiClosing } from '../components/yeti/YetiClosing';
 import { Footer } from '../components/Footer';
 
-export const YetiInfrastructure = () => {
+export default function YetiInfrastructure() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />

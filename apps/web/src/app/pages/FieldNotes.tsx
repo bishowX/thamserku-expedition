@@ -7,7 +7,7 @@ import { FieldNotesNewsletterSignUp } from '../components/fieldnotes/FieldNotesN
 import { FieldNotesClosing } from '../components/fieldnotes/FieldNotesClosing';
 import { Footer } from '../components/Footer';
 
-export const FieldNotes = () => {
+export default function FieldNotes() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />

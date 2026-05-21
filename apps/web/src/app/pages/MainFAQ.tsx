@@ -7,7 +7,7 @@ import { FAQNewsletterBanner } from '../components/faq/FAQNewsletterBanner';
 import { FAQClosing } from '../components/faq/FAQClosing';
 import { Footer } from '../components/Footer';
 
-export const MainFAQ = () => {
+export default function MainFAQ() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />

@@ -3,6 +3,8 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
 
+const singletons = ['homePage', 'siteSettings', 'yetiInfrastructure', 'legacy']
+
 export default defineConfig({
   name: 'thamserku-expedition',
   title: 'Thamserku Expedition',
@@ -11,11 +13,40 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('Content')
+          .items([
+            S.listItem()
+              .title('Home Page')
+              .id('homePage')
+              .child(S.document().schemaType('homePage').documentId('homePage')),
+            S.listItem()
+              .title('Site Settings')
+              .id('siteSettings')
+              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+            S.listItem()
+              .title('Yeti Infrastructure')
+              .id('yetiInfrastructure')
+              .child(S.document().schemaType('yetiInfrastructure').documentId('yetiInfrastructure')),
+            S.listItem()
+              .title('Legacy')
+              .id('legacy')
+              .child(S.document().schemaType('legacy').documentId('legacy')),
+            S.divider(),
+            S.documentTypeListItem('expedition').title('Expeditions'),
+            S.documentTypeListItem('edition').title('Editions'),
+            S.documentTypeListItem('fieldNote').title('Field Notes'),
+          ]),
+    }),
     visionTool(),
   ],
 
   schema: {
     types: schemaTypes,
+    // Prevent creating new instances of singleton types
+    templates: (templates) =>
+      templates.filter(({ schemaType }) => !singletons.includes(schemaType)),
   },
 })

@@ -11,7 +11,7 @@ import { LegacyPhilosophy } from "../components/legacy/LegacyPhilosophy";
 import { LegacyNewsletterBanner } from "../components/legacy/LegacyNewsletterBanner";
 import { LegacyClosing } from "../components/legacy/LegacyClosing";
 
-export function LegacyPage() {
+export default function LegacyPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

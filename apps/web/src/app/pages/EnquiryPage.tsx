@@ -9,7 +9,7 @@ import { EnquiryAlternative } from '../components/enquiry/EnquiryAlternative';
 import { EnquiryClosing } from '../components/enquiry/EnquiryClosing';
 import { Footer } from '../components/Footer';
 
-export const EnquiryPage = () => {
+export default function EnquiryPage() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <EnquiryHero />

@@ -10,7 +10,7 @@ import { AtlasWhy } from "../components/atlas/AtlasWhy";
 import { AtlasFAQ } from "../components/atlas/AtlasFAQ";
 import { AtlasClosing } from "../components/atlas/AtlasClosing";
 
-export function AtlasPage() {
+export default function AtlasPage() {
   return (
     <div className="w-full min-h-screen bg-[#1A1A1A] text-white">
       <Nav hideOnScrollDown />

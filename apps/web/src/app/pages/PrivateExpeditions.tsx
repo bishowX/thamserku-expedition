@@ -8,7 +8,7 @@ import { PrivateConsultationPathway } from '../components/private/PrivateConsult
 import { PrivateClosing } from '../components/private/PrivateClosing';
 import { Footer } from '../components/Footer';
 
-export const PrivateExpeditions = () => {
+export default function PrivateExpeditions() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />

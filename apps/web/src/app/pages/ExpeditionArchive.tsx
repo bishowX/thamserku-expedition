@@ -9,7 +9,7 @@ import { ArchiveVerification } from '../components/archive/ArchiveVerification';
 import { ArchiveClosing } from '../components/archive/ArchiveClosing';
 import { Footer } from '../components/Footer';
 
-export const ExpeditionArchive = () => {
+export default function ExpeditionArchive() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />

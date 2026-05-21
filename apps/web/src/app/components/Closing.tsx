@@ -2,7 +2,15 @@ import { MoveRight } from "lucide-react";
 import { Link } from "react-router";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
-export function Closing() {
+type ClosingData = {
+  closingHeading?: string
+  closingBody?: string
+}
+
+export function Closing({ data }: { data?: ClosingData }) {
+  const heading = data?.closingHeading ?? "Begin with knowledge. Move with respect."
+  const body = data?.closingBody ?? "Every Thamserku journey begins with a private conversation — with our expedition desk, not a booking page."
+
   return (
     <section className="relative w-full bg-[#1A1A1A] text-white py-48 px-8 overflow-hidden flex flex-col items-center justify-center text-center">
       <div className="absolute inset-0 z-0">
@@ -18,15 +26,15 @@ export function Closing() {
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
           07 — BEGIN PRIVATELY
         </span>
-        
+
         <h2 className="font-['Radley'] font-light text-5xl md:text-[80px] leading-[1.1] mb-2">
-          Begin with knowledge. Move with respect.
+          {heading}
         </h2>
-        
+
         <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[16px] leading-[1.8] max-w-[48ch] mb-4">
-          Every Thamserku journey begins with a private conversation — with our expedition desk, not a booking page.
+          {body}
         </p>
-        
+
         <div className="flex flex-wrap justify-center gap-4 mt-8">
           <Link to="/consultation" className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:bg-transparent hover:text-white transition-colors">
             Schedule a Consultation <MoveRight className="w-3 h-3" />

@@ -7,7 +7,7 @@ import { TeamField } from "../components/team/TeamField";
 import { TeamLeadership } from "../components/team/TeamLeadership";
 import { TeamClosing } from "../components/team/TeamClosing";
 
-export function TeamPage() {
+export default function TeamPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

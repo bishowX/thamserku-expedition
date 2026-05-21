@@ -3,7 +3,19 @@ import { Link } from "react-router";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import heroImage from "../../assets/images/Copy_of_Majgaon_View_(13).JPG";
 
-export function Hero() {
+type HeroData = {
+  heroHeadline?: string;
+  heroSubheading?: string;
+};
+
+const DEFAULT_HEADLINE = "The Himalayas, understood through generations.";
+const DEFAULT_SUBHEADING =
+  "Private expeditions shaped by Sherpa wisdom, Himalayan discipline and nearly four decades of legacy.";
+
+export function Hero({ data }: { data?: HeroData }) {
+  const headline = data?.heroHeadline ?? DEFAULT_HEADLINE;
+  const subheading = data?.heroSubheading ?? DEFAULT_SUBHEADING;
+
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center text-white pb-32 pt-48 px-8 overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -18,23 +30,24 @@ export function Hero() {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-8">
         <div className="max-w-4xl">
           <h1 className="font-['Radley'] font-light text-6xl md:text-8xl tracking-tight leading-[1.1] mb-6">
-            The Himalayas, understood through generations.
+            {headline}
           </h1>
-          <div className="flex flex-col gap-2">
-            <p className="font-['Lexend'] font-light text-[#C8CDD2] text-xl md:text-2xl max-w-[56ch] leading-relaxed">
-              Private expeditions shaped by Sherpa wisdom, Himalayan discipline and nearly four decades of legacy.
-            </p>
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
-              [CLIENT TO CONFIRM] — EXACT FOUNDING YEAR AND LEGACY DURATION PENDING.
-            </span>
-          </div>
+          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-xl md:text-2xl max-w-[56ch] leading-relaxed">
+            {subheading}
+          </p>
         </div>
 
         <div className="flex flex-wrap gap-4 mt-4">
-          <Link to="/atlas" className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:bg-transparent hover:text-white transition-colors">
+          <Link
+            to="/atlas"
+            className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:bg-transparent hover:text-white transition-colors"
+          >
             Explore the Atlas <MoveRight className="w-3 h-3" />
           </Link>
-          <Link to="/consultation" className="border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:border-white transition-colors">
+          <Link
+            to="/consultation"
+            className="border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:border-white transition-colors"
+          >
             Schedule a Consultation <MoveRight className="w-3 h-3" />
           </Link>
         </div>
