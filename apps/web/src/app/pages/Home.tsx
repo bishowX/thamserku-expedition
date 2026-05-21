@@ -26,7 +26,7 @@ export default function Home() {
         <Manifesto data={data.homePage ?? undefined} />
         <YetiInfrastructurePreview data={data.homePage ?? undefined} />
         <AtlasPreview expeditions={data.expeditions.length > 0 ? data.expeditions : undefined} data={data.homePage ?? undefined} />
-        <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} />
+        <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} data={data.homePage ?? undefined} />
         <LegacyPreview data={data.homePage ?? undefined} />
         <FieldNotesPreview fieldNotes={data.homePage?.featuredFieldNotes ?? []} />
         <Closing data={data.homePage ?? undefined} />

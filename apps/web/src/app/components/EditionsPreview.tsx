@@ -1,13 +1,11 @@
 import { MoveRight } from "lucide-react";
+import { Link } from "react-router";
 import type { SanityEdition } from "../../lib/queries";
 
-const FALLBACK_EDITIONS = [
-  { letter: "A", name: "Alpine Edition", sub: "The essential expedition", positioning: "The essential Thamserku expedition experience, run with disciplined professional support.", who: "FOR EXPERIENCED CLIMBERS SEEKING A DISCIPLINED, PROFESSIONALLY MANAGED EXPEDITION." },
-  { letter: "B", name: "Bespoke Edition", sub: "A more personal expedition", positioning: "A more personal expedition shaped around individual goals, schedule, and pace.", who: "FOR PRIVATE CLIMBERS, COUPLES, OR SMALL GROUPS SEEKING FLEXIBILITY AND CUSTOMIZATION." },
-  { letter: "C", name: "Crafted Edition", sub: "Service, comfort, storytelling", positioning: "An elevated expedition with deeper service, comfort, and documented storytelling.", who: "FOR HNW CLIENTS, EXECUTIVES, AND CLIMBERS WHO WANT TECHNICAL SERIOUSNESS WITH RICHER SERVICE." },
-  { letter: "D", name: "Definitive Edition", sub: "The most exclusive private expedition", positioning: "The most exclusive premium luxury Thamserku experience, designed around privacy and rare access.", who: "FOR UHNW INDIVIDUALS, PRIVATE FAMILIES, AND ELITE ADVENTURERS REQUIRING MAXIMUM PRIVACY." },
-  { letter: "E", name: "Explorer Edition", sub: "The Himalayas beyond the summit", positioning: "For those seeking the Himalayas beyond the summit — softer, slower, more cultural.", who: "FOR TRAVELLERS, FAMILIES, LEADERS, PHOTOGRAPHERS, AND CULTURAL EXPLORERS." },
-]
+type EditionsData = {
+  editionsHeading?: string
+  editionsIntro?: string
+}
 
 function toDisplayData(ed: SanityEdition) {
   return {
@@ -16,11 +14,14 @@ function toDisplayData(ed: SanityEdition) {
     sub: ed.subtitle,
     positioning: ed.positioning,
     who: ed.targetAudience,
+    slug: ed.slug?.current ?? '',
   }
 }
 
-export function EditionsPreview({ editions }: { editions?: SanityEdition[] }) {
-  const items = editions ? editions.map(toDisplayData) : FALLBACK_EDITIONS
+export function EditionsPreview({ editions, data }: { editions?: SanityEdition[]; data?: EditionsData }) {
+  if (!editions?.length) return null
+
+  const items = editions.map(toDisplayData)
 
   return (
     <section id="editions" className="w-full bg-[#0A3A77] text-white py-32 px-8">
@@ -32,14 +33,18 @@ export function EditionsPreview({ editions }: { editions?: SanityEdition[] }) {
             </span>
           </div>
           <div className="md:w-1/2">
-            <h2 className="font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6">
-              Five lenses through which to read the same mountain.
-            </h2>
+            {data?.editionsHeading && (
+              <h2 className="font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6">
+                {data.editionsHeading}
+              </h2>
+            )}
           </div>
           <div className="md:w-1/4">
-            <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]">
-              From Alpine discipline to the Definitive private expedition, each edition is shaped around intent, privacy, and preparation.
-            </p>
+            {data?.editionsIntro && (
+              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]">
+                {data.editionsIntro}
+              </p>
+            )}
           </div>
         </div>
 
@@ -75,9 +80,18 @@ export function EditionsPreview({ editions }: { editions?: SanityEdition[] }) {
               </div>
 
               <div className="md:w-2/12 flex md:justify-end">
-                <button className="flex items-center gap-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors border-b border-transparent hover:border-[#C8CDD2] pb-1">
-                  Read Edition <MoveRight className="w-3 h-3" />
-                </button>
+                {ed.slug ? (
+                  <Link
+                    to={`/editions/${ed.slug}`}
+                    className="flex items-center gap-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors border-b border-transparent hover:border-[#C8CDD2] pb-1"
+                  >
+                    Read Edition <MoveRight className="w-3 h-3" />
+                  </Link>
+                ) : (
+                  <span className="flex items-center gap-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white opacity-40">
+                    Read Edition <MoveRight className="w-3 h-3" />
+                  </span>
+                )}
               </div>
             </div>
           ))}

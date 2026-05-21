@@ -60,6 +60,8 @@ export type HomePageData = {
     heroSubheading: string;
     atlasHeading: string;
     atlasIntro: string;
+    editionsHeading: string;
+    editionsIntro: string;
     manifestoHeading: string;
     manifestoBody: string;
     closingHeading: string;
@@ -83,7 +85,7 @@ export type HomePageData = {
 export async function getHomePageData(): Promise<HomePageData> {
   return serverClient.fetch(`{
     "homePage": *[_type == "homePage"][0] {
-      heroHeadline, heroSubheading, atlasHeading, atlasIntro, manifestoHeading, manifestoBody,
+      heroHeadline, heroSubheading, atlasHeading, atlasIntro, editionsHeading, editionsIntro, manifestoHeading, manifestoBody,
       closingHeading, closingBody,
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
       legacyImage, legacyHeading, legacyBody1, legacyBody2, legacyQuote, legacyAttribution, legacyTimeline,

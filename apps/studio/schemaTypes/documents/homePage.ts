@@ -8,6 +8,8 @@ export default defineType({
     defineField({ name: 'heroHeadline', title: 'Hero Headline', type: 'string' }),
     defineField({ name: 'atlasHeading', title: 'Atlas Heading', type: 'string', description: 'e.g. Five mountains. Five different kinds of preparation.' }),
     defineField({ name: 'atlasIntro', title: 'Atlas Intro', type: 'text', rows: 2 }),
+    defineField({ name: 'editionsHeading', title: 'Editions Heading', type: 'string' }),
+    defineField({ name: 'editionsIntro', title: 'Editions Intro', type: 'text', rows: 2 }),
     defineField({ name: 'heroSubheading', title: 'Hero Subheading', type: 'text', rows: 3 }),
     defineField({
       name: 'manifestoHeading',
