@@ -6,6 +6,8 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({ name: 'heroHeadline', title: 'Hero Headline', type: 'string' }),
+    defineField({ name: 'atlasHeading', title: 'Atlas Heading', type: 'string', description: 'e.g. Five mountains. Five different kinds of preparation.' }),
+    defineField({ name: 'atlasIntro', title: 'Atlas Intro', type: 'text', rows: 2 }),
     defineField({ name: 'heroSubheading', title: 'Hero Subheading', type: 'text', rows: 3 }),
     defineField({
       name: 'manifestoHeading',
@@ -24,6 +26,37 @@ export default defineType({
       of: [{ type: 'reference', to: [{ type: 'fieldNote' }] }],
       validation: (Rule) => Rule.max(4),
       description: 'Up to 4 field notes shown on the homepage preview.',
+    }),
+    defineField({
+      name: 'legacyImage',
+      title: 'Legacy Image',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'legacyHeading',
+      title: 'Legacy Heading',
+      type: 'text',
+      rows: 2,
+      description: 'The last sentence will render in italic blue.',
+    }),
+    defineField({ name: 'legacyBody1', title: 'Legacy Body (first paragraph)', type: 'text', rows: 4 }),
+    defineField({ name: 'legacyBody2', title: 'Legacy Body (second paragraph)', type: 'text', rows: 4 }),
+    defineField({ name: 'legacyQuote', title: 'Legacy Quote', type: 'string', description: 'e.g. — The Chairman' }),
+    defineField({ name: 'legacyAttribution', title: 'Legacy Attribution', type: 'string' }),
+    defineField({
+      name: 'legacyTimeline',
+      title: 'Legacy Timeline',
+      type: 'array',
+      of: [{ type: 'timelineEra' }],
+    }),
+    defineField({ name: 'infrastructureHeading', title: 'Yeti Infrastructure Heading', type: 'string' }),
+    defineField({ name: 'infrastructureIntro', title: 'Yeti Infrastructure Intro', type: 'text', rows: 3 }),
+    defineField({
+      name: 'infrastructurePillars',
+      title: 'Yeti Infrastructure Pillars',
+      type: 'array',
+      of: [{ type: 'yetiPillar' }],
     }),
   ],
   preview: {

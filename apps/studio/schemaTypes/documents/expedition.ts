@@ -21,6 +21,13 @@ export default defineType({
     defineField({ name: 'style', title: 'Style', type: 'string', description: 'e.g. Disciplined passage' }),
     defineField({ name: 'positioning', title: 'Positioning Tagline', type: 'text', rows: 3 }),
     defineField({
+      name: 'image',
+      title: 'Card Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Image shown on the expedition atlas card.',
+    }),
+    defineField({
       name: 'editions',
       title: 'Editions',
       type: 'array',

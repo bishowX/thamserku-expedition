@@ -3,9 +3,9 @@ import { MoveRight } from "lucide-react";
 import type { SanityYetiPillar } from "../../lib/queries";
 
 type YetiData = {
-  heading?: string
-  intro?: string
-  pillars?: SanityYetiPillar[]
+  infrastructureHeading?: string
+  infrastructureIntro?: string
+  infrastructurePillars?: SanityYetiPillar[]
 }
 
 const FALLBACK_PILLARS = [
@@ -16,10 +16,10 @@ const FALLBACK_PILLARS = [
 ]
 
 export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
-  const heading = data?.heading ?? "An operating foundation behind every expedition."
-  const intro = data?.intro ?? "Thamserku draws on the Yeti Infrastructure: air support, mountain lodges, regional access and field continuity that quietly support every expedition we run."
-  const pillars = data?.pillars
-    ? data.pillars.map(p => ({
+  const heading = data?.infrastructureHeading ?? "An operating foundation behind every expedition."
+  const intro = data?.infrastructureIntro ?? "Thamserku draws on the Yeti Infrastructure: air support, mountain lodges, regional access and field continuity that quietly support every expedition we run."
+  const pillars = data?.infrastructurePillars
+    ? data.infrastructurePillars.map(p => ({
         eyebrow: `PILLAR ${p.number} — ${p.name.toUpperCase()}`,
         title: p.subtitle,
         desc: p.body,

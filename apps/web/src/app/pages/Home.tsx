@@ -24,10 +24,10 @@ export default function Home() {
       <main>
         <Hero data={data.homePage ?? undefined} />
         <Manifesto data={data.homePage ?? undefined} />
-        <YetiInfrastructurePreview data={data.yetiInfrastructure ?? undefined} />
-        <AtlasPreview expeditions={data.expeditions.length > 0 ? data.expeditions : undefined} />
+        <YetiInfrastructurePreview data={data.homePage ?? undefined} />
+        <AtlasPreview expeditions={data.expeditions.length > 0 ? data.expeditions : undefined} data={data.homePage ?? undefined} />
         <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} />
-        <LegacyPreview data={data.legacy ?? undefined} />
+        <LegacyPreview data={data.homePage ?? undefined} />
         <FieldNotesPreview fieldNotes={data.homePage?.featuredFieldNotes ?? []} />
         <Closing data={data.homePage ?? undefined} />
       </main>
