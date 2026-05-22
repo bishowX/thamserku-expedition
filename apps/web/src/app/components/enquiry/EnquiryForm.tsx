@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
-import { ChevronDown, Upload, CheckCircle, Paperclip } from 'lucide-react';
-import { useNavigation, Form } from 'react-router';
+import { ChevronDown, Upload, CheckCircle, Paperclip, Loader, AlertCircle } from 'lucide-react';
+import { useNavigation, useFetcher, Form } from 'react-router';
 import type { ConsultationPage } from '../../../lib/queries';
+
+type UploadResult = { assetId: string; filename: string } | { error: string };
 
 type Errors = { fullName?: string; email?: string };
 
@@ -19,6 +21,18 @@ export const EnquiryForm = ({
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 
+  const uploadFetcher = useFetcher<UploadResult>();
+  const isUploading = uploadFetcher.state !== 'idle';
+  const uploadedAssetId = uploadFetcher.data && 'assetId' in uploadFetcher.data
+    ? uploadFetcher.data.assetId
+    : undefined;
+  const uploadedFilename = uploadFetcher.data && 'filename' in uploadFetcher.data
+    ? uploadFetcher.data.filename
+    : undefined;
+  const uploadError = uploadFetcher.data && 'error' in uploadFetcher.data
+    ? uploadFetcher.data.error
+    : undefined;
+
   const [activeInterest, setActiveInterest] = useState<string[]>([]);
   const [activeEdition, setActiveEdition] = useState<string>('');
   const [trekkingExp, setTrekkingExp] = useState<string>('');
@@ -27,8 +41,19 @@ export const EnquiryForm = ({
   const [privateGroup, setPrivateGroup] = useState<string>('');
   const [privacyLevel, setPrivacyLevel] = useState<string>('');
   const [contactMethod, setContactMethod] = useState<string>('');
-  const [cvFileName, setCvFileName] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append('file', file);
+    uploadFetcher.submit(fd, {
+      method: 'post',
+      action: '/api/upload-cv',
+      encType: 'multipart/form-data',
+    });
+  };
 
   const toggleInterest = (interest: string) => {
     setActiveInterest(prev =>
@@ -122,7 +147,7 @@ export const EnquiryForm = ({
           <div className="h-[1px] w-full bg-[#E5E7EB] mt-12" />
         </div>
 
-        <Form method="post" encType="multipart/form-data" className="space-y-32">
+        <Form method="post" className="space-y-32">
 
           {/* Hidden inputs for button-toggle state */}
           {activeInterest.map(interest => (
@@ -137,6 +162,7 @@ export const EnquiryForm = ({
           <input type="hidden" name="groupPreference" value={privateGroup} />
           <input type="hidden" name="privacyLevel" value={privacyLevel} />
           <input type="hidden" name="preferredContact" value={contactMethod} />
+          {uploadedAssetId && <input type="hidden" name="climbingCvAssetId" value={uploadedAssetId} />}
 
           {/* Chapter A */}
           <div className="space-y-12">
@@ -312,23 +338,38 @@ export const EnquiryForm = ({
                 <input
                   ref={fileInputRef}
                   type="file"
-                  name="climbingCv"
                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                   className="sr-only"
-                  onChange={e => setCvFileName(e.target.files?.[0]?.name ?? '')}
+                  onChange={handleFileChange}
                 />
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full border border-[#C8CDD2] hover:border-[#1A1A1A] transition-colors p-8 flex flex-col items-center justify-center cursor-pointer group text-left"
+                  disabled={isUploading}
+                  className="w-full border border-[#C8CDD2] hover:border-[#1A1A1A] transition-colors p-8 flex flex-col items-center justify-center cursor-pointer group disabled:cursor-default disabled:opacity-70"
                 >
-                  {cvFileName ? (
+                  {isUploading && (
+                    <>
+                      <Loader className="w-5 h-5 text-[#5A6673] mb-4 animate-spin" />
+                      <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">UPLOADING…</p>
+                    </>
+                  )}
+                  {!isUploading && uploadedAssetId && (
                     <>
                       <Paperclip className="w-5 h-5 text-[#0A3A77] mb-4" />
                       <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] mb-1">FILE ATTACHED</p>
-                      <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px] text-center break-all">{cvFileName}</p>
+                      <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px] text-center break-all">{uploadedFilename}</p>
+                      <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] mt-2">CLICK TO REPLACE</p>
                     </>
-                  ) : (
+                  )}
+                  {!isUploading && uploadError && (
+                    <>
+                      <AlertCircle className="w-5 h-5 text-red-400 mb-4" />
+                      <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-red-400 mb-1">UPLOAD FAILED · CLICK TO RETRY</p>
+                      <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px] text-center">{uploadError}</p>
+                    </>
+                  )}
+                  {!isUploading && !uploadedAssetId && !uploadError && (
                     <>
                       <Upload className="w-5 h-5 text-[#5A6673] group-hover:text-[#1A1A1A] mb-4 transition-colors" />
                       <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] mb-2">OPTIONAL · PDF · DOC · IMAGES · MAX 10 MB</p>
@@ -432,10 +473,10 @@ export const EnquiryForm = ({
               </p>
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isUploading}
                 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#0A3A77] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'SENDING…' : 'SEND THE LETTER →'}
+                {isSubmitting ? 'SENDING…' : isUploading ? 'UPLOADING FILE…' : 'SEND THE LETTER →'}
               </button>
             </div>
           </div>

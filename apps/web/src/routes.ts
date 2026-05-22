@@ -14,4 +14,5 @@ export default [
   route('private', './app/pages/PrivateExpeditions.tsx'),
   route('field-notes', './app/pages/FieldNotes.tsx'),
   route('faq', './app/pages/MainFAQ.tsx'),
+  route('api/upload-cv', './app/api/upload-cv.ts'),
 ] satisfies RouteConfig

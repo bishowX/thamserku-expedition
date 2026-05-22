@@ -37,20 +37,11 @@ export async function action({ request }: { request: Request }): Promise<
     return { success: false, errors };
   }
 
-  // Upload climbing CV to Sanity if present
-  let climbingCv: { _type: 'file'; asset: { _type: 'reference'; _ref: string } } | undefined;
-  const cvFile = formData.get('climbingCv') as File | null;
-  if (cvFile && cvFile.size > 0) {
-    try {
-      const asset = await writeClient.assets.upload('file', cvFile, {
-        filename: cvFile.name,
-        contentType: cvFile.type || 'application/octet-stream',
-      });
-      climbingCv = { _type: 'file', asset: { _type: 'reference', _ref: asset._id } };
-    } catch {
-      // Non-fatal — proceed without the file
-    }
-  }
+  // The CV is pre-uploaded client-side; we receive only the asset ID.
+  const cvAssetId = (formData.get('climbingCvAssetId') as string | null)?.trim() || undefined;
+  const climbingCv = cvAssetId
+    ? { _type: 'file' as const, asset: { _type: 'reference' as const, _ref: cvAssetId } }
+    : undefined;
 
   const expeditionInterest = (formData.getAll('expeditionInterest') as string[]).filter(Boolean);
   const altitudeExperience = (formData.getAll('altitudeExperience') as string[]).filter(Boolean);
