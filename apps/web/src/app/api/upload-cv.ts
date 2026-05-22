@@ -17,7 +17,8 @@ export async function action({ request }: { request: Request }) {
   }
 
   try {
-    const asset = await writeClient.assets.upload('file', file, {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const asset = await writeClient.assets.upload('file', buffer, {
       filename: file.name,
       contentType: file.type || 'application/octet-stream',
     });
