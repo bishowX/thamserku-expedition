@@ -108,7 +108,7 @@ export const EnquiryForm = ({
             Your letter is in our hands.
           </h2>
           <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[20px] max-w-[52ch] mb-16">
-            We read every enquiry personally. You will hear from our desk within 48 hours — quietly, and without formality.
+            We read every enquiry personally. You will hear from our desk within 48 hours.
           </p>
           <div className="h-[1px] w-24 bg-[#C8CDD2] mb-8" />
           <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
