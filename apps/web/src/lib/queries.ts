@@ -54,6 +54,71 @@ export type SanityExpeditionForMatrix = {
   editionLetters: string[];
 };
 
+export type SanityExpeditionForYeti = {
+  _id: string;
+  code: string;
+  name: string;
+  altitude: string;
+  region: string;
+  yetiAirNote?: string;
+  yetiLodgesNote?: string;
+  yetiAccessNote?: string;
+  yetiContinuityNote?: string;
+};
+
+export type YetiPageData = {
+  yetiPage: {
+    heroHeadline?: string;
+    heroSubheading?: string;
+    heroStatOperations?: string;
+    heroStatRegions?: string;
+    heroStatContinuity?: string;
+    heroStatStatus?: string;
+    definitionHeading?: string;
+    definitionTagline?: string;
+    definitionBody1?: string;
+    definitionBody2?: string;
+    definitionBody3?: string;
+    airHeading?: string;
+    airTagline?: string;
+    airBody?: string;
+    airImage?: { asset: { _ref: string } } | null;
+    airChannels?: string;
+    airUseCases?: string;
+    airAvailability?: string;
+    airCoordination?: string;
+    lodgesHeading?: string;
+    lodgesTagline?: string;
+    lodgesBody?: string;
+    lodgesImage?: { asset: { _ref: string } } | null;
+    lodgesRegions?: string;
+    lodgesUseCases?: string;
+    lodgesStandard?: string;
+    lodgesStaffing?: string;
+    accessHeading?: string;
+    accessTagline?: string;
+    accessBody?: string;
+    accessImage?: { asset: { _ref: string } } | null;
+    accessRegions?: string;
+    accessUseCases?: string;
+    accessContinuity?: string;
+    accessHandling?: string;
+    continuityHeading?: string;
+    continuityTagline?: string;
+    continuityBody1?: string;
+    continuityBody2?: string;
+    continuityImage?: { asset: { _ref: string } } | null;
+    peakSectionHeading?: string;
+    peakSectionTagline?: string;
+    faqHeading?: string;
+    faqTagline?: string;
+    faqs?: Array<{ _key: string; question: string; answer: string }>;
+    closingHeading?: string;
+    closingBody?: string;
+  } | null;
+  expeditions: SanityExpeditionForYeti[];
+};
+
 export type SanityFieldNote = {
   _id: string;
   code: string;
@@ -132,6 +197,28 @@ export async function getHomePageData(): Promise<HomePageData> {
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug
+    }
+  }`);
+}
+
+export async function getYetiPageData(): Promise<YetiPageData> {
+  return serverClient.fetch(`{
+    "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
+      heroHeadline, heroSubheading,
+      heroStatOperations, heroStatRegions, heroStatContinuity, heroStatStatus,
+      definitionHeading, definitionTagline, definitionBody1, definitionBody2, definitionBody3,
+      airHeading, airTagline, airBody, airImage, airChannels, airUseCases, airAvailability, airCoordination,
+      lodgesHeading, lodgesTagline, lodgesBody, lodgesImage, lodgesRegions, lodgesUseCases, lodgesStandard, lodgesStaffing,
+      accessHeading, accessTagline, accessBody, accessImage, accessRegions, accessUseCases, accessContinuity, accessHandling,
+      continuityHeading, continuityTagline, continuityBody1, continuityBody2, continuityImage,
+      peakSectionHeading, peakSectionTagline,
+      faqHeading, faqTagline,
+      faqs[] { _key, question, answer },
+      closingHeading, closingBody
+    },
+    "expeditions": *[_type == "expedition"] | order(number asc) {
+      _id, code, name, altitude, region,
+      yetiAirNote, yetiLodgesNote, yetiAccessNote, yetiContinuityNote
     }
   }`);
 }

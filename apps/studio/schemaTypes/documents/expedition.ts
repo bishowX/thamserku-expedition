@@ -33,6 +33,10 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'edition' }] }],
     }),
+    defineField({ name: 'yetiAirNote', title: 'Yeti — Air Support Note', type: 'text', rows: 2, description: 'Short description of air support for this peak (shown on Yeti Infrastructure page).' }),
+    defineField({ name: 'yetiLodgesNote', title: 'Yeti — Mountain Lodges Note', type: 'text', rows: 2, description: 'Short description of lodge support for this peak.' }),
+    defineField({ name: 'yetiAccessNote', title: 'Yeti — Regional Access Note', type: 'text', rows: 2, description: 'Short description of regional access for this peak.' }),
+    defineField({ name: 'yetiContinuityNote', title: 'Yeti — Field Continuity Note', type: 'text', rows: 2, description: 'Short description of field continuity for this peak.' }),
   ],
   orderings: [
     { title: 'Number', name: 'numberAsc', by: [{ field: 'number', direction: 'asc' }] },
