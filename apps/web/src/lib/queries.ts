@@ -32,6 +32,28 @@ export type SanityEdition = {
   slug: { current: string };
 };
 
+export type SanityEditionFull = SanityEdition & {
+  tag?: string;
+  body1?: string;
+  body2?: string;
+  image?: { asset: { _ref: string } } | null;
+  colorVariant?: 'dark' | 'light' | 'blue';
+  isFlagship?: boolean;
+  character?: string;
+  privacyLevel?: string;
+  comfortLevel?: string;
+  comparisonStyle?: string;
+  bestFor?: string;
+  mountainNames?: string[];
+};
+
+export type SanityExpeditionForMatrix = {
+  _id: string;
+  name: string;
+  altitude: string;
+  editionLetters: string[];
+};
+
 export type SanityFieldNote = {
   _id: string;
   code: string;
@@ -82,6 +104,19 @@ export type HomePageData = {
   editions: SanityEdition[];
 };
 
+export type EditionsPageData = {
+  editionsPage: {
+    heroHeadline?: string;
+    heroSubheading?: string;
+    manifestoHeading?: string;
+    manifestoBody?: string;
+    closingHeading?: string;
+    closingBody?: string;
+  } | null;
+  editions: SanityEditionFull[];
+  expeditions: SanityExpeditionForMatrix[];
+};
+
 export async function getHomePageData(): Promise<HomePageData> {
   return serverClient.fetch(`{
     "homePage": *[_type == "homePage"][0] {
@@ -97,6 +132,24 @@ export async function getHomePageData(): Promise<HomePageData> {
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug
+    }
+  }`);
+}
+
+export async function getEditionsPageData(): Promise<EditionsPageData> {
+  return serverClient.fetch(`{
+    "editionsPage": *[_type == "editionsPage"][0] {
+      heroHeadline, heroSubheading, manifestoHeading, manifestoBody, closingHeading, closingBody
+    },
+    "editions": *[_type == "edition"] | order(letter asc) {
+      _id, letter, name, subtitle, positioning, targetAudience, slug,
+      tag, body1, body2, image, colorVariant, isFlagship,
+      character, privacyLevel, comfortLevel, comparisonStyle, bestFor,
+      "mountainNames": *[_type == "expedition" && references(^._id)] | order(number asc).name
+    },
+    "expeditions": *[_type == "expedition"] | order(number asc) {
+      _id, name, altitude,
+      "editionLetters": editions[]->letter
     }
   }`);
 }

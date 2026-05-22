@@ -1,12 +1,34 @@
-export function EditionsComparison() {
-  const tableData = [
-    { label: "CHARACTER", a: "Disciplined", b: "Personal", c: "Crafted", d: "Definitive", e: "Cultural" },
-    { label: "PRIVACY LEVEL", a: "Standard", b: "Tailored", c: "High", d: "Maximum", e: "Tailored" },
-    { label: "COMFORT LEVEL", a: "Essential", b: "Considered", c: "Elevated", d: "Definitive", e: "Considered" },
-    { label: "STYLE", a: "Disciplined climb", b: "Personal climb", c: "Service-rich climb", d: "Private flagship", e: "Non-summit reading" },
-    { label: "BEST FOR", a: "Experienced climbers", b: "Private groups", c: "Elevated service", d: "UHNW individuals", e: "Cultural explorers" },
-    { label: "AVAILABLE ON", a: "EVEREST · MANASLU · HIMCHULI", b: "ALL", c: "EVEREST · MANASLU · DHAULAGIRI · MAKALU", d: "EVEREST · DHAULAGIRI · MAKALU", e: "HIMCHULI · EVEREST B.C." }
-  ];
+import type { SanityEditionFull, SanityExpeditionForMatrix } from "../../../lib/queries";
+
+type Row = {
+  label: string;
+  getValue: (ed: SanityEditionFull, expeditions: SanityExpeditionForMatrix[]) => string;
+};
+
+const ROWS: Row[] = [
+  { label: 'CHARACTER', getValue: (ed) => ed.character ?? '—' },
+  { label: 'PRIVACY LEVEL', getValue: (ed) => ed.privacyLevel ?? '—' },
+  { label: 'COMFORT LEVEL', getValue: (ed) => ed.comfortLevel ?? '—' },
+  { label: 'STYLE', getValue: (ed) => ed.comparisonStyle ?? '—' },
+  { label: 'BEST FOR', getValue: (ed) => ed.bestFor ?? '—' },
+  {
+    label: 'AVAILABLE ON',
+    getValue: (ed, expeditions) =>
+      expeditions
+        .filter((exp) => exp.editionLetters.includes(ed.letter))
+        .map((exp) => exp.name.toUpperCase())
+        .join(' · ') || '—',
+  },
+];
+
+export function EditionsComparison({
+  editions,
+  expeditions,
+}: {
+  editions: SanityEditionFull[];
+  expeditions: SanityExpeditionForMatrix[];
+}) {
+  if (!editions.length) return null;
 
   return (
     <section className="w-full bg-white text-[#1A1A1A] py-32 px-8">
@@ -18,7 +40,6 @@ export function EditionsComparison() {
           Five editions, read side by side.
         </h2>
 
-        {/* Comparison Table */}
         <div className="w-full overflow-x-auto">
           <table className="w-full min-w-[1024px] text-left border-collapse">
             <thead>
@@ -26,38 +47,24 @@ export function EditionsComparison() {
                 <th className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-[#5A6673] py-8 w-1/6">
                   EDITION
                 </th>
-                {['A', 'B', 'C', 'D', 'E'].map(letter => (
-                  <th key={letter} className="font-['Radley'] font-light text-2xl md:text-3xl text-[#1A1A1A] py-8 w-[16.66%]">
-                    {letter === 'A' && 'Alpine'}
-                    {letter === 'B' && 'Bespoke'}
-                    {letter === 'C' && 'Crafted'}
-                    {letter === 'D' && 'Definitive'}
-                    {letter === 'E' && 'Explorer'}
+                {editions.map((ed) => (
+                  <th key={ed._id} className="font-['Radley'] font-light text-2xl md:text-3xl text-[#1A1A1A] py-8 w-[16.66%]">
+                    {ed.name.replace(' Edition', '')}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {tableData.map((row, idx) => (
-                <tr key={idx} className="border-b border-[#1A1A1A]/10 transition-colors hover:bg-[#F4F2EC]/50">
+              {ROWS.map((row) => (
+                <tr key={row.label} className="border-b border-[#1A1A1A]/10 transition-colors hover:bg-[#F4F2EC]/50">
                   <td className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] py-8">
                     {row.label}
                   </td>
-                  <td className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4">
-                    {row.a}
-                  </td>
-                  <td className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4">
-                    {row.b}
-                  </td>
-                  <td className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4">
-                    {row.c}
-                  </td>
-                  <td className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4">
-                    {row.d}
-                  </td>
-                  <td className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4">
-                    {row.e}
-                  </td>
+                  {editions.map((ed) => (
+                    <td key={ed._id} className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4">
+                      {row.getValue(ed, expeditions)}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
