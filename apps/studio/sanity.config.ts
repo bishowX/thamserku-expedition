@@ -42,6 +42,7 @@ export default defineConfig({
             S.documentTypeListItem('expedition').title('Expeditions'),
             S.documentTypeListItem('edition').title('Editions'),
             S.documentTypeListItem('fieldNote').title('Field Notes'),
+            S.documentTypeListItem('chairmanLetter').title("Chairman's Letters"),
           ]),
     }),
     visionTool(),

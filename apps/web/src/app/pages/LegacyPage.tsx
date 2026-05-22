@@ -28,7 +28,7 @@ export default function LegacyPage() {
     <div className="w-full min-h-screen bg-[#F4F2EC] text-[#1A1A1A]">
       <LegacyHero page={page} />
       <LegacyOrigin page={page} />
-      <LegacyChairman page={page} />
+      <LegacyChairman letter={page?.chairmanLetter ?? undefined} />
       <LegacyTimeline page={page} />
       <LegacyLineage page={page} />
       <LegacyRevival page={page} />

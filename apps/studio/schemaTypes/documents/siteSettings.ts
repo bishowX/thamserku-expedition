@@ -4,18 +4,20 @@ export default defineType({
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
+  groups: [
+    { name: 'site', title: 'Site' },
+    { name: 'newsletter', title: 'Newsletter' },
+  ],
   fields: [
-    defineField({ name: 'tagline', title: 'Tagline', type: 'string' }),
-    defineField({ name: 'foundingYear', title: 'Founding Year', type: 'number' }),
-    defineField({ name: 'copyrightLine', title: 'Copyright Line', type: 'string' }),
-    defineField({ name: 'newsletterHeading', title: 'Newsletter Heading', type: 'string' }),
-    defineField({ name: 'newsletterBody', title: 'Newsletter Body', type: 'text', rows: 3 }),
-    defineField({
-      name: 'newsletterCadence',
-      title: 'Newsletter Cadence',
-      type: 'string',
-      description: 'e.g. quarterly',
-    }),
+    // Site
+    defineField({ name: 'tagline', title: 'Tagline', type: 'string', group: 'site' }),
+    defineField({ name: 'foundingYear', title: 'Founding Year', type: 'number', group: 'site' }),
+    defineField({ name: 'copyrightLine', title: 'Copyright Line', type: 'string', group: 'site' }),
+
+    // Newsletter
+    defineField({ name: 'newsletterHeading', title: 'Heading', type: 'string', group: 'newsletter' }),
+    defineField({ name: 'newsletterBody', title: 'Body', type: 'text', rows: 3, group: 'newsletter' }),
+    defineField({ name: 'newsletterCadence', title: 'Cadence', type: 'string', group: 'newsletter', description: 'e.g. quarterly' }),
   ],
   preview: {
     prepare: () => ({ title: 'Site Settings' }),

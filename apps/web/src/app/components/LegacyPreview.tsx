@@ -1,15 +1,12 @@
+import { PortableText } from "@portabletext/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import chairmanImage from "../../assets/images/Mt-Everest-8848m-no-label-2.jpg";
 import { urlFor } from "../../lib/sanity";
-import type { SanityTimelineEra } from "../../lib/queries";
+import type { SanityTimelineEra, ChairmanLetterData } from "../../lib/queries";
 
 type LegacyData = {
-  legacyImage?: { asset: { _ref: string } } | null
+  chairmanLetter?: ChairmanLetterData | null
   legacyHeading?: string
-  legacyBody1?: string
-  legacyBody2?: string
-  legacyQuote?: string
-  legacyAttribution?: string
   legacyTimeline?: SanityTimelineEra[]
 }
 
@@ -19,13 +16,22 @@ function splitAtLastSentence(text: string): [string, string] {
   return [text.slice(0, idx + 1), text.slice(idx + 2)]
 }
 
+const bodyComponents = {
+  block: {
+    normal: ({ children }: { children?: React.ReactNode }) => (
+      <p className="font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.8]">{children}</p>
+    ),
+  },
+};
+
 export function LegacyPreview({ data }: { data?: LegacyData }) {
   const [headingPart1, headingPart2] = splitAtLastSentence(data?.legacyHeading ?? '')
-  const body1 = data?.legacyBody1
-  const body2 = data?.legacyBody2
-  const quote = data?.legacyQuote
-  const attribution = data?.legacyAttribution
   const timeline = data?.legacyTimeline ?? []
+
+  const letter = data?.chairmanLetter
+  const imgSrc = letter?.image ? urlFor(letter.image).width(800).url() : chairmanImage
+  const quote = letter?.signature
+  const attribution = letter?.organization
 
   return (
     <section id="legacy" className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-32 px-8">
@@ -34,7 +40,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
         <div className="w-full md:w-5/12">
           <div className="aspect-[4/5] bg-[#E5E7EB] overflow-hidden">
             <ImageWithFallback
-              src={data?.legacyImage ? urlFor(data.legacyImage).width(800).url() : chairmanImage}
+              src={imgSrc}
               alt="Legacy"
               className="w-full h-full object-cover saturate-[0.6] contrast-110 sepia-[0.2]"
             />
@@ -52,19 +58,26 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-6 font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.8] max-w-[56ch]">
-            {body1 && <p>{body1}</p>}
-            {body2 && <p>{body2}</p>}
-          </div>
+          {letter?.body && (
+            <div className="flex flex-col gap-6 max-w-[56ch]">
+              <PortableText value={letter.body} components={bodyComponents} />
+            </div>
+          )}
 
-          <div className="mt-4 border-l-2 border-[#C8CDD2] pl-6 py-2">
-            <div className="font-['Radley'] italic text-[28px] text-[#1A1A1A] leading-none mb-2">
-              {quote}
+          {(quote || attribution) && (
+            <div className="mt-4 border-l-2 border-[#C8CDD2] pl-6 py-2">
+              {quote && (
+                <div className="font-['Radley'] italic text-[28px] text-[#1A1A1A] leading-none mb-2">
+                  {quote}
+                </div>
+              )}
+              {attribution && (
+                <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673]">
+                  {attribution}
+                </div>
+              )}
             </div>
-            <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673]">
-              {attribution}
-            </div>
-          </div>
+          )}
 
           {timeline.length > 0 && (
             <div className="mt-12 grid grid-cols-1 sm:grid-cols-5 gap-6 border-t border-[#C8CDD2]/30 pt-8 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.15em] text-[#5A6673]">

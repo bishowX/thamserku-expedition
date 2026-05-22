@@ -36,23 +36,13 @@ export default defineType({
     defineField({ name: 'originImageCaption', title: 'Image Caption', type: 'string', group: 'origin', description: 'e.g. KHUMBU APPROACH · ARCHIVAL' }),
 
     // 03 — Chairman's Letter
-    defineField({ name: 'chairmanEyebrow', title: 'Eyebrow', type: 'string', group: 'chairman', description: "e.g. 03 — THE CHAIRMAN'S LETTER" }),
-    defineField({ name: 'chairmanHeading', title: 'Heading', type: 'string', group: 'chairman' }),
     defineField({
-      name: 'chairmanParagraphs',
-      title: 'Letter Paragraphs',
-      type: 'array',
+      name: 'chairmanLetter',
+      title: "Chairman's Letter",
+      type: 'reference',
+      to: [{ type: 'chairmanLetter' }],
       group: 'chairman',
-      of: [{
-        type: 'object',
-        fields: [defineField({ name: 'text', title: 'Paragraph', type: 'text', rows: 4 })],
-        preview: { select: { title: 'text' } },
-      }],
     }),
-    defineField({ name: 'chairmanSignature', title: 'Signature', type: 'string', group: 'chairman', description: 'e.g. — The Chairman' }),
-    defineField({ name: 'chairmanOrganization', title: 'Organization Label', type: 'string', group: 'chairman', description: 'e.g. THAMSERKU EXPEDITIONS · YETI GROUP' }),
-    defineField({ name: 'chairmanImage', title: 'Image', type: 'image', options: { hotspot: true }, group: 'chairman' }),
-    defineField({ name: 'chairmanImageCaption', title: 'Image Caption', type: 'string', group: 'chairman', description: 'e.g. MT. EVEREST · 8848M · MAHALANGUR HIMAL' }),
 
     // 04 — Timeline
     defineField({ name: 'timelineEyebrow', title: 'Eyebrow', type: 'string', group: 'timeline', description: 'e.g. 04 — TIMELINE' }),

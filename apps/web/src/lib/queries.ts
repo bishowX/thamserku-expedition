@@ -154,12 +154,8 @@ export type HomePageData = {
     closingHeading: string;
     closingBody: string;
     featuredFieldNotes: SanityFieldNote[];
-    legacyImage: { asset: { _ref: string } } | null;
+    chairmanLetter?: ChairmanLetterData | null;
     legacyHeading: string;
-    legacyBody1: string;
-    legacyBody2: string;
-    legacyQuote: string;
-    legacyAttribution: string;
     legacyTimeline: SanityTimelineEra[];
     infrastructureHeading: string;
     infrastructureIntro: string;
@@ -188,7 +184,8 @@ export async function getHomePageData(): Promise<HomePageData> {
       heroHeadline, heroSubheading, atlasHeading, atlasIntro, editionsHeading, editionsIntro, manifestoHeading, manifestoBody,
       closingHeading, closingBody,
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
-      legacyImage, legacyHeading, legacyBody1, legacyBody2, legacyQuote, legacyAttribution, legacyTimeline,
+      chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
+      legacyHeading, legacyTimeline,
       infrastructureHeading, infrastructureIntro, infrastructurePillars
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
@@ -249,6 +246,17 @@ export type LegacyChairmanParagraph = {
   text: string;
 };
 
+export type ChairmanLetterData = {
+  eyebrow?: string;
+  heading?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body?: any[];
+  signature?: string;
+  organization?: string;
+  image?: { asset: { _ref: string } } | null;
+  imageCaption?: string;
+};
+
 export type LegacyPageData = {
   legacyPage: {
     heroEyebrow?: string;
@@ -267,13 +275,7 @@ export type LegacyPageData = {
     originPullQuote?: string;
     originImage?: { asset: { _ref: string } } | null;
     originImageCaption?: string;
-    chairmanEyebrow?: string;
-    chairmanHeading?: string;
-    chairmanParagraphs?: LegacyChairmanParagraph[];
-    chairmanSignature?: string;
-    chairmanOrganization?: string;
-    chairmanImage?: { asset: { _ref: string } } | null;
-    chairmanImageCaption?: string;
+    chairmanLetter?: ChairmanLetterData | null;
     timelineEyebrow?: string;
     timelineHeading?: string;
     timelineFooterNote?: string;
@@ -308,9 +310,7 @@ export async function getLegacyPageData(): Promise<LegacyPageData> {
       heroMetaFeature, heroMetaAtlas, heroMetaReadTime, heroMetaEra,
       originEyebrow, originYears, originSideNote, originBody1, originBody2,
       originPullQuote, originImage, originImageCaption,
-      chairmanEyebrow, chairmanHeading,
-      chairmanParagraphs[] { _key, text },
-      chairmanSignature, chairmanOrganization, chairmanImage, chairmanImageCaption,
+      chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
       timelineEyebrow, timelineHeading, timelineFooterNote,
       timelineChapters[] { _key, roman, years, title, description, image },
       lineageEyebrow, lineageHeading, lineageBody1, lineageBody2,

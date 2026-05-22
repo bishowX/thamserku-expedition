@@ -5,6 +5,7 @@ import expedition from './documents/expedition'
 import fieldNote from './documents/fieldNote'
 import homePage from './documents/homePage'
 import legacyPage from './documents/legacyPage'
+import chairmanLetter from './documents/chairmanLetter'
 import siteSettings from './documents/siteSettings'
 import yetiInfrastructurePage from './documents/yetiInfrastructurePage'
 import yetiPillar from './objects/yetiPillar'
@@ -21,6 +22,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   expedition,
   edition,
   fieldNote,
+  chairmanLetter,
   // Objects
   yetiPillar,
   timelineEra,

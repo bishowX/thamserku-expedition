@@ -4,19 +4,30 @@ export default defineType({
   name: 'editionsPage',
   title: 'Editions Page',
   type: 'document',
+  groups: [
+    { name: 'hero', title: 'Hero' },
+    { name: 'manifesto', title: 'Manifesto' },
+    { name: 'closing', title: 'Closing' },
+  ],
   fields: [
-    defineField({ name: 'heroHeadline', title: 'Hero Headline', type: 'string' }),
-    defineField({ name: 'heroSubheading', title: 'Hero Subheading', type: 'text', rows: 3 }),
+    // Hero
+    defineField({ name: 'heroHeadline', title: 'Headline', type: 'string', group: 'hero' }),
+    defineField({ name: 'heroSubheading', title: 'Subheading', type: 'text', rows: 3, group: 'hero' }),
+
+    // Manifesto
     defineField({
       name: 'manifestoHeading',
-      title: 'Manifesto Heading',
+      title: 'Heading',
       type: 'text',
       rows: 2,
+      group: 'manifesto',
       description: 'The last sentence will render in italic blue.',
     }),
-    defineField({ name: 'manifestoBody', title: 'Manifesto Body', type: 'text', rows: 4 }),
-    defineField({ name: 'closingHeading', title: 'Closing Heading', type: 'text', rows: 2 }),
-    defineField({ name: 'closingBody', title: 'Closing Body', type: 'text', rows: 2 }),
+    defineField({ name: 'manifestoBody', title: 'Body', type: 'text', rows: 4, group: 'manifesto' }),
+
+    // Closing
+    defineField({ name: 'closingHeading', title: 'Heading', type: 'text', rows: 2, group: 'closing' }),
+    defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 2, group: 'closing' }),
   ],
   preview: {
     prepare: () => ({ title: 'Editions Page' }),
