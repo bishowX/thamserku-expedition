@@ -6,6 +6,7 @@ export default defineType({
   type: 'document',
   groups: [
     { name: 'site', title: 'Site' },
+    { name: 'enquiry', title: 'Enquiry' },
     { name: 'newsletter', title: 'Newsletter' },
   ],
   fields: [
@@ -13,6 +14,8 @@ export default defineType({
     defineField({ name: 'tagline', title: 'Tagline', type: 'string', group: 'site' }),
     defineField({ name: 'foundingYear', title: 'Founding Year', type: 'number', group: 'site' }),
     defineField({ name: 'copyrightLine', title: 'Copyright Line', type: 'string', group: 'site' }),
+    // Enquiry
+    defineField({ name: 'enquiryEmail', title: 'Enquiry Notification Email', type: 'string', group: 'enquiry', description: 'Submission notifications are sent to this address.' }),
 
     // Newsletter
     defineField({ name: 'newsletterHeading', title: 'Heading', type: 'string', group: 'newsletter' }),

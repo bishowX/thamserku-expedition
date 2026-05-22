@@ -1,4 +1,5 @@
 import type { SchemaTypeDefinition } from 'sanity'
+import enquiry from './documents/enquiry'
 import edition from './documents/edition'
 import editionsPage from './documents/editionsPage'
 import expedition from './documents/expedition'
@@ -28,6 +29,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   edition,
   fieldNote,
   chairmanLetter,
+  enquiry,
   // Objects
   yetiPillar,
   timelineEra,

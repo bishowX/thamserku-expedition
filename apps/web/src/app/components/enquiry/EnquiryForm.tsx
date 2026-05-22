@@ -1,14 +1,24 @@
-import { useState } from 'react';
-import { ChevronDown, Upload } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { ChevronDown, Upload, CheckCircle, Paperclip } from 'lucide-react';
+import { useNavigation, Form } from 'react-router';
 import type { ConsultationPage } from '../../../lib/queries';
+
+type Errors = { fullName?: string; email?: string };
 
 export const EnquiryForm = ({
   data,
   expeditions,
+  submitted,
+  errors,
 }: {
   data?: ConsultationPage;
   expeditions?: Array<{ _id: string; name: string; code: string }>;
+  submitted?: boolean;
+  errors?: Errors;
 }) => {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+
   const [activeInterest, setActiveInterest] = useState<string[]>([]);
   const [activeEdition, setActiveEdition] = useState<string>('');
   const [trekkingExp, setTrekkingExp] = useState<string>('');
@@ -17,6 +27,8 @@ export const EnquiryForm = ({
   const [privateGroup, setPrivateGroup] = useState<string>('');
   const [privacyLevel, setPrivacyLevel] = useState<string>('');
   const [contactMethod, setContactMethod] = useState<string>('');
+  const [cvFileName, setCvFileName] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toggleInterest = (interest: string) => {
     setActiveInterest(prev =>
@@ -56,6 +68,32 @@ export const EnquiryForm = ({
     'OTHER · NOT SURE',
   ];
 
+  // Confirmation panel shown after successful submission
+  if (submitted) {
+    return (
+      <section id="letter-path" className="bg-white py-24 md:py-48">
+        <div className="max-w-[880px] mx-auto px-8 flex flex-col items-center text-center">
+          <div className="w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-12">
+            <CheckCircle className="w-5 h-5 text-[#0A3A77]" strokeWidth={1.5} />
+          </div>
+          <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
+            LETTER RECEIVED
+          </p>
+          <h2 className="font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-[1.1] mb-8 text-[#1A1A1A] max-w-[22ch]">
+            Your letter is in our hands.
+          </h2>
+          <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[20px] max-w-[52ch] mb-16">
+            We read every enquiry personally. You will hear from our desk within 48 hours — quietly, and without formality.
+          </p>
+          <div className="h-[1px] w-24 bg-[#C8CDD2] mb-8" />
+          <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            THAMSERKU EXPEDITIONS <span className="mx-2">·</span> DESK
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="letter-path" className="bg-white py-24 md:py-48">
       <div className="max-w-[880px] mx-auto px-8">
@@ -84,7 +122,21 @@ export const EnquiryForm = ({
           <div className="h-[1px] w-full bg-[#E5E7EB] mt-12" />
         </div>
 
-        <form className="space-y-32">
+        <Form method="post" encType="multipart/form-data" className="space-y-32">
+
+          {/* Hidden inputs for button-toggle state */}
+          {activeInterest.map(interest => (
+            <input key={interest} type="hidden" name="expeditionInterest" value={interest} />
+          ))}
+          <input type="hidden" name="preferredEdition" value={activeEdition} />
+          <input type="hidden" name="trekkingExperience" value={trekkingExp} />
+          {altitudeExp.map(alt => (
+            <input key={alt} type="hidden" name="altitudeExperience" value={alt} />
+          ))}
+          <input type="hidden" name="preferredSeason" value={preferredSeason} />
+          <input type="hidden" name="groupPreference" value={privateGroup} />
+          <input type="hidden" name="privacyLevel" value={privacyLevel} />
+          <input type="hidden" name="preferredContact" value={contactMethod} />
 
           {/* Chapter A */}
           <div className="space-y-12">
@@ -94,22 +146,51 @@ export const EnquiryForm = ({
             </div>
             <div className="space-y-10">
               <div className="flex flex-col">
-                <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">A.1 — FULL NAME <span className="ml-1">·</span></label>
-                <input type="text" placeholder="How would you like us to address you?" className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50" />
+                <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">
+                  A.1 — FULL NAME <span className="ml-1">·</span>
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="How would you like us to address you?"
+                  className={`w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/50 ${errors?.fullName ? 'border-red-400 focus:border-red-500' : 'border-[#5A6673] focus:border-[#0A3A77]'}`}
+                />
+                {errors?.fullName && (
+                  <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-red-500 mt-2">{errors.fullName}</p>
+                )}
               </div>
               <div className="flex flex-col">
-                <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">A.2 — EMAIL <span className="ml-1">·</span></label>
-                <input type="email" placeholder="name@domain.com" className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50" />
+                <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">
+                  A.2 — EMAIL <span className="ml-1">·</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="name@domain.com"
+                  className={`w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/50 ${errors?.email ? 'border-red-400 focus:border-red-500' : 'border-[#5A6673] focus:border-[#0A3A77]'}`}
+                />
+                {errors?.email && (
+                  <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-red-500 mt-2">{errors.email}</p>
+                )}
               </div>
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">A.3 — PHONE / WHATSAPP</label>
-                <input type="tel" placeholder="Your number with country code" className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50" />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Your number with country code"
+                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50"
+                />
                 <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] mt-3">OPTIONAL · USED ONLY IF YOU PREFER VOICE OR WHATSAPP CONTACT.</p>
               </div>
               <div className="flex flex-col relative">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">A.4 — COUNTRY OF RESIDENCE <span className="ml-1">·</span></label>
                 <div className="relative border-b border-[#5A6673] pb-3 cursor-pointer group">
-                  <select defaultValue="" className="w-full bg-transparent text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl appearance-none focus:outline-none cursor-pointer group-hover:text-[#0A3A77] transition-colors text-[#5A6673]/50">
+                  <select
+                    name="countryOfResidence"
+                    defaultValue=""
+                    className="w-full bg-transparent text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl appearance-none focus:outline-none cursor-pointer group-hover:text-[#0A3A77] transition-colors text-[#5A6673]/50"
+                  >
                     <option value="" disabled>Select country</option>
                     <option value="us" className="not-italic font-sans text-base">United States</option>
                     <option value="uk" className="not-italic font-sans text-base">United Kingdom</option>
@@ -153,7 +234,12 @@ export const EnquiryForm = ({
               </div>
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">B.2 — IF "OTHER · NOT SURE", A FEW WORDS ON WHAT YOU ARE LOOKING FOR</label>
-                <input type="text" placeholder="e.g. a first 8,000m peak, a quieter Himalayan objective, a non-summit Himalayan journey..." className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50" />
+                <input
+                  type="text"
+                  name="otherExpeditionNote"
+                  placeholder="e.g. a first 8,000m peak, a quieter Himalayan objective, a non-summit Himalayan journey..."
+                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50"
+                />
               </div>
             </div>
           </div>
@@ -214,15 +300,42 @@ export const EnquiryForm = ({
               </div>
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">D.3 — FITNESS & TRAINING BACKGROUND <span className="ml-1">·</span></label>
-                <textarea rows={4} placeholder="A short paragraph about your training rhythm — running, hiking, strength, altitude exposure, anything relevant." className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none" />
+                <textarea
+                  rows={4}
+                  name="fitnessBackground"
+                  placeholder="A short paragraph about your training rhythm — running, hiking, strength, altitude exposure, anything relevant."
+                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none"
+                />
               </div>
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">D.4 — UPLOAD CLIMBING CV OR PRIOR EXPEDITION DETAILS</label>
-                <div className="w-full border border-[#C8CDD2] hover:border-[#1A1A1A] transition-colors p-8 flex flex-col items-center justify-center cursor-pointer group">
-                  <Upload className="w-5 h-5 text-[#5A6673] group-hover:text-[#1A1A1A] mb-4 transition-colors" />
-                  <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] mb-2">OPTIONAL · PDF · DOC · IMAGES · MAX 10 MB</p>
-                  <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[16px] text-center max-w-[48ch]">If you have a climbing CV, prior expedition reports, or photographs, attach them here. They help our desk write a more accurate first response.</p>
-                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  name="climbingCv"
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  className="sr-only"
+                  onChange={e => setCvFileName(e.target.files?.[0]?.name ?? '')}
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full border border-[#C8CDD2] hover:border-[#1A1A1A] transition-colors p-8 flex flex-col items-center justify-center cursor-pointer group text-left"
+                >
+                  {cvFileName ? (
+                    <>
+                      <Paperclip className="w-5 h-5 text-[#0A3A77] mb-4" />
+                      <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] mb-1">FILE ATTACHED</p>
+                      <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px] text-center break-all">{cvFileName}</p>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-5 h-5 text-[#5A6673] group-hover:text-[#1A1A1A] mb-4 transition-colors" />
+                      <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] mb-2">OPTIONAL · PDF · DOC · IMAGES · MAX 10 MB</p>
+                      <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[16px] text-center max-w-[48ch]">If you have a climbing CV, prior expedition reports, or photographs, attach them here. They help our desk write a more accurate first response.</p>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </div>
@@ -247,7 +360,14 @@ export const EnquiryForm = ({
               </div>
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">E.2 — NUMBER OF GUESTS <span className="ml-1">·</span></label>
-                <input type="number" min="1" max="10" placeholder="1" className="w-full max-w-[120px] bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50" />
+                <input
+                  type="number"
+                  name="numberOfGuests"
+                  min="1"
+                  max="10"
+                  placeholder="1"
+                  className="w-full max-w-[120px] bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50"
+                />
               </div>
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">E.3 — PRIVATE OR GROUP PREFERENCE <span className="ml-1">·</span></label>
@@ -274,7 +394,12 @@ export const EnquiryForm = ({
               </div>
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">E.5 — MEDICAL CONSIDERATIONS <span className="ml-1">·</span> OPTIONAL</label>
-                <textarea rows={3} placeholder="Any medical history, medications, or considerations our team should be aware of when planning." className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none" />
+                <textarea
+                  rows={3}
+                  name="medicalConsiderations"
+                  placeholder="Any medical history, medications, or considerations our team should be aware of when planning."
+                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none"
+                />
                 <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] mt-3">HANDLED CONFIDENTIALLY · BY OUR SAFETY & MEDICAL ADVISOR ONLY.</p>
               </div>
             </div>
@@ -289,7 +414,12 @@ export const EnquiryForm = ({
             <div className="space-y-10">
               <div className="flex flex-col">
                 <label className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">F.1 — A MESSAGE TO THE DESK <span className="ml-1">·</span></label>
-                <textarea rows={6} placeholder="Write to us in your own words — your timing, your intention, anything that matters to you about this journey." className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none" />
+                <textarea
+                  rows={6}
+                  name="messageToDesk"
+                  placeholder="Write to us in your own words — your timing, your intention, anything that matters to you about this journey."
+                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none"
+                />
               </div>
             </div>
           </div>
@@ -300,13 +430,17 @@ export const EnquiryForm = ({
               <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
                 BY SUBMITTING, YOU AGREE TO OUR PRIVACY TERMS <span className="mx-2">·</span> WE WILL NEVER SHARE YOUR DETAILS.
               </p>
-              <button type="submit" className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#0A3A77] hover:text-white transition-colors">
-                SEND THE LETTER →
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#0A3A77] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'SENDING…' : 'SEND THE LETTER →'}
               </button>
             </div>
           </div>
 
-        </form>
+        </Form>
       </div>
     </section>
   );
