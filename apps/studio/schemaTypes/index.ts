@@ -4,6 +4,7 @@ import editionsPage from './documents/editionsPage'
 import expedition from './documents/expedition'
 import fieldNote from './documents/fieldNote'
 import homePage from './documents/homePage'
+import legacyPage from './documents/legacyPage'
 import siteSettings from './documents/siteSettings'
 import yetiInfrastructurePage from './documents/yetiInfrastructurePage'
 import yetiPillar from './objects/yetiPillar'
@@ -13,6 +14,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
   homePage,
   editionsPage,
+  legacyPage,
   yetiInfrastructurePage,
   siteSettings,
   // Collections

@@ -223,6 +223,107 @@ export async function getYetiPageData(): Promise<YetiPageData> {
   }`);
 }
 
+export type LegacyTimelineChapter = {
+  _key: string;
+  roman: string;
+  years: string;
+  title: string;
+  description: string;
+  image?: { asset: { _ref: string } } | null;
+};
+
+export type LegacyRevivalPillar = {
+  _key: string;
+  label: string;
+  quote: string;
+};
+
+export type LegacyLineageDataTile = {
+  _key: string;
+  label: string;
+  value: string;
+};
+
+export type LegacyChairmanParagraph = {
+  _key: string;
+  text: string;
+};
+
+export type LegacyPageData = {
+  legacyPage: {
+    heroEyebrow?: string;
+    heroHeadline?: string;
+    heroSubheading?: string;
+    heroImage?: { asset: { _ref: string } } | null;
+    heroMetaFeature?: string;
+    heroMetaAtlas?: string;
+    heroMetaReadTime?: string;
+    heroMetaEra?: string;
+    originEyebrow?: string;
+    originYears?: string;
+    originSideNote?: string;
+    originBody1?: string;
+    originBody2?: string;
+    originPullQuote?: string;
+    originImage?: { asset: { _ref: string } } | null;
+    originImageCaption?: string;
+    chairmanEyebrow?: string;
+    chairmanHeading?: string;
+    chairmanParagraphs?: LegacyChairmanParagraph[];
+    chairmanSignature?: string;
+    chairmanOrganization?: string;
+    chairmanImage?: { asset: { _ref: string } } | null;
+    chairmanImageCaption?: string;
+    timelineEyebrow?: string;
+    timelineHeading?: string;
+    timelineFooterNote?: string;
+    timelineChapters?: LegacyTimelineChapter[];
+    lineageEyebrow?: string;
+    lineageHeading?: string;
+    lineageBody1?: string;
+    lineageBody2?: string;
+    lineageDataTiles?: LegacyLineageDataTile[];
+    revivalEyebrow?: string;
+    revivalHeading?: string;
+    revivalLeftQuote?: string;
+    revivalLeftParagraph1?: string;
+    revivalLeftParagraph2?: string;
+    revivalLeftParagraph3?: string;
+    revivalPillars?: LegacyRevivalPillar[];
+    philosophyEyebrow?: string;
+    philosophyHeadlinePart1?: string;
+    philosophyHeadlinePart2?: string;
+    philosophySubline?: string;
+    newsletterEyebrow?: string;
+    newsletterHeading?: string;
+    newsletterBody?: string;
+    newsletterPrivacyNote?: string;
+  } | null;
+};
+
+export async function getLegacyPageData(): Promise<LegacyPageData> {
+  return serverClient.fetch(`{
+    "legacyPage": *[_type == "legacyPage"][0] {
+      heroEyebrow, heroHeadline, heroSubheading, heroImage,
+      heroMetaFeature, heroMetaAtlas, heroMetaReadTime, heroMetaEra,
+      originEyebrow, originYears, originSideNote, originBody1, originBody2,
+      originPullQuote, originImage, originImageCaption,
+      chairmanEyebrow, chairmanHeading,
+      chairmanParagraphs[] { _key, text },
+      chairmanSignature, chairmanOrganization, chairmanImage, chairmanImageCaption,
+      timelineEyebrow, timelineHeading, timelineFooterNote,
+      timelineChapters[] { _key, roman, years, title, description, image },
+      lineageEyebrow, lineageHeading, lineageBody1, lineageBody2,
+      lineageDataTiles[] { _key, label, value },
+      revivalEyebrow, revivalHeading, revivalLeftQuote,
+      revivalLeftParagraph1, revivalLeftParagraph2, revivalLeftParagraph3,
+      revivalPillars[] { _key, label, quote },
+      philosophyEyebrow, philosophyHeadlinePart1, philosophyHeadlinePart2, philosophySubline,
+      newsletterEyebrow, newsletterHeading, newsletterBody, newsletterPrivacyNote
+    }
+  }`);
+}
+
 export async function getEditionsPageData(): Promise<EditionsPageData> {
   return serverClient.fetch(`{
     "editionsPage": *[_type == "editionsPage"][0] {
