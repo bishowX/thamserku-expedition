@@ -1,10 +1,13 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server.browser";
-import { ServerRouter, Link, UNSAFE_withComponentProps, Outlet, Meta, Links, ScrollRestoration, Scripts, useLocation, useLoaderData } from "react-router";
+import { ServerRouter, Link, UNSAFE_withComponentProps, Outlet, Meta, Links, ScrollRestoration, Scripts, useLocation, useNavigate, useLoaderData, useNavigation, useFetcher, Form, useActionData } from "react-router";
 import { useState, useRef, useEffect } from "react";
-import { X, ArrowRight, Menu, MoveRight, ArrowDown, ChevronDown, Upload } from "lucide-react";
+import { X, ArrowRight, Menu, MoveRight, ArrowDown, ChevronDown, CheckCircle, Loader, Paperclip, AlertCircle, Upload } from "lucide-react";
 import { createClient } from "@sanity/client";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import { PortableText } from "@portabletext/react";
+import { Resend } from "resend";
 const streamTimeout = 5e3;
 async function handleRequest(request, responseStatusCode, responseHeaders, routerContext) {
   let shellRendered = false;
@@ -393,14 +396,28 @@ function Hero({ data }) {
         /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-xl md:text-2xl max-w-[56ch] leading-relaxed", children: subheading })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-4 mt-4", children: [
-        /* @__PURE__ */ jsxs(Link, { to: "/atlas", className: "border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:bg-transparent hover:text-white transition-colors", children: [
-          "Explore the Atlas ",
-          /* @__PURE__ */ jsx(MoveRight, { className: "w-3 h-3" })
-        ] }),
-        /* @__PURE__ */ jsxs(Link, { to: "/consultation", className: "border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:border-white transition-colors", children: [
-          "Schedule a Consultation ",
-          /* @__PURE__ */ jsx(MoveRight, { className: "w-3 h-3" })
-        ] })
+        /* @__PURE__ */ jsxs(
+          Link,
+          {
+            to: "/atlas",
+            className: "border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:bg-transparent hover:text-white transition-colors",
+            children: [
+              "Explore the Atlas ",
+              /* @__PURE__ */ jsx(MoveRight, { className: "w-3 h-3" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          Link,
+          {
+            to: "/consultation",
+            className: "border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:border-white transition-colors",
+            children: [
+              "Schedule a Consultation ",
+              /* @__PURE__ */ jsx(MoveRight, { className: "w-3 h-3" })
+            ]
+          }
+        )
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "hidden md:block absolute bottom-0 left-0 w-full border-t border-white/10 bg-[#1A1A1A]/40 backdrop-blur-sm z-20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto flex flex-wrap md:flex-nowrap divide-y md:divide-y-0 md:divide-x divide-white/10 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#C8CDD2]", children: [
@@ -441,9 +458,9 @@ const FALLBACK_PILLARS = [
   { eyebrow: "PILLAR IV — FIELD CONTINUITY", title: "Multi-generational, on the ground.", desc: "A multi-generational field team supported by Kathmandu-based operations, allowing the same standards of care from first letter to descent." }
 ];
 function YetiInfrastructurePreview({ data }) {
-  const heading = (data == null ? void 0 : data.heading) ?? "An operating foundation behind every expedition.";
-  const intro = (data == null ? void 0 : data.intro) ?? "Thamserku draws on the Yeti Infrastructure: air support, mountain lodges, regional access and field continuity that quietly support every expedition we run.";
-  const pillars = (data == null ? void 0 : data.pillars) ? data.pillars.map((p) => ({
+  const heading = (data == null ? void 0 : data.infrastructureHeading) ?? "An operating foundation behind every expedition.";
+  const intro = (data == null ? void 0 : data.infrastructureIntro) ?? "Thamserku draws on the Yeti Infrastructure: air support, mountain lodges, regional access and field continuity that quietly support every expedition we run.";
+  const pillars = (data == null ? void 0 : data.infrastructurePillars) ? data.infrastructurePillars.map((p) => ({
     eyebrow: `PILLAR ${p.number} — ${p.name.toUpperCase()}`,
     title: p.subtitle,
     desc: p.body
@@ -493,37 +510,43 @@ function YetiInfrastructurePreview({ data }) {
     ] })
   ] });
 }
-const FALLBACK_IMAGES = {
-  EVR: "https://images.unsplash.com/photo-1765207142247-d505b2ffc2a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxNb3VudCUyMEV2ZXJlc3QlMjBzdW1taXQlMjBtb29keSUyMGRhcmt8ZW58MXx8fHwxNzc3NDQ2MzA3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  MAN: "https://images.unsplash.com/photo-1650221293568-82a9823d938a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxNYW5hc2x1JTIwbW91bnRhaW4lMjBzbm93JTIwcGVhayUyMGRhcmt8ZW58MXx8fHwxNzc3NDQ2MzA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  DHA: "https://images.unsplash.com/photo-1755015347269-c3969c4a0ae7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxEaGF1bGFnaXJpJTIwbW91bnRhaW4lMjByYW5nZSUyMGRhcmt8ZW58MXx8fHwxNzc3NDQ2MzA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  MAK: "https://images.unsplash.com/photo-1745677617575-62b14956f2d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxNYWthbHUlMjBtb3VudGFpbiUyMHBlYWslMjBkcmFtYXRpY3xlbnwxfHx8fDE3Nzc0NDYzMDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  HIM: "https://images.unsplash.com/photo-1764356806887-89cf05d562bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxIaW1hbGF5YW4lMjBtb3VudGFpbiUyMHF1aWV0JTIwZGlzdGFudHxlbnwxfHx8fDE3Nzc0NDYzMDR8MA&ixlib=rb-4.1.0&q=80&w=1080"
-};
-const FALLBACK_EXPEDITIONS = [
-  { code: "EXP / 01 — EVR", name: "Everest", positioning: "The highest mountain on earth asks for more than strength. It asks for patience, judgement, and respect.", altitude: "8,848.86 m", region: "Khumbu, Nepal", season: "Spring", style: "Disciplined passage", editions: "Alpine · Bespoke · Crafted · Definitive", cols: 6, image: FALLBACK_IMAGES.EVR },
-  { code: "EXP / 02 — MAN", name: "Manaslu", positioning: "A powerful 8,000m expedition for climbers seeking scale, beauty, and progression.", altitude: "8,163 m", region: "Gorkha, Nepal", season: "Autumn", style: "Progression climb", editions: "Alpine · Bespoke · Crafted", cols: 3, image: FALLBACK_IMAGES.MAN },
-  { code: "EXP / 03 — DHA", name: "Dhaulagiri", positioning: "Remote, immense, and uncompromising — a mountain for solitude and strength.", altitude: "8,167 m", region: "Dhaulagiri, Nepal", season: "Spring", style: "Solitude climb", editions: "Bespoke · Crafted · Definitive", cols: 3, image: FALLBACK_IMAGES.DHA },
-  { code: "EXP / 04 — MAK", name: "Makalu", positioning: "A striking Himalayan giant for experienced climbers seeking technical elegance and isolation.", altitude: "8,485 m", region: "Mahalangur, Nepal", season: "Spring", style: "Technical climb", editions: "Bespoke · Crafted · Definitive", cols: 3, image: FALLBACK_IMAGES.MAK },
-  { code: "EXP / 05 — HIM", name: "Himchuli", positioning: "A quieter Himalayan objective for climbers seeking a less commercial expedition experience.", altitude: "TBC", region: "Annapurna, Nepal", season: "Spring · Autumn", style: "Quiet objective", editions: "Alpine · Bespoke · Explorer", cols: 3, image: FALLBACK_IMAGES.HIM }
-];
+const sanityClient = createClient({
+  projectId: "ugjhuor8",
+  dataset: "production",
+  apiVersion: "2026-05-21",
+  useCdn: true
+});
+const builder = createImageUrlBuilder(sanityClient);
+function urlFor(source) {
+  return builder.image(source);
+}
 function toPreviewData(exp, idx) {
-  var _a;
+  var _a, _b;
   return {
     code: `EXP / ${exp.number} — ${exp.code}`,
     name: exp.name,
+    slug: ((_a = exp.slug) == null ? void 0 : _a.current) ?? "",
     positioning: exp.positioning,
     altitude: exp.altitude,
     region: exp.region,
     season: exp.season,
     style: exp.style,
-    editions: ((_a = exp.editions) == null ? void 0 : _a.map((e) => e.name.replace(" Edition", "")).join(" · ")) ?? "",
+    editions: ((_b = exp.editions) == null ? void 0 : _b.map((e) => {
+      var _a2;
+      return {
+        id: e._id,
+        name: e.name.replace(" Edition", ""),
+        slug: ((_a2 = e.slug) == null ? void 0 : _a2.current) ?? ""
+      };
+    })) ?? [],
     cols: idx === 0 ? 6 : 3,
-    image: FALLBACK_IMAGES[exp.code] ?? ""
+    image: exp.image ? urlFor(exp.image).width(1200).url() : ""
   };
 }
-function AtlasPreview({ expeditions }) {
-  const items = expeditions ? expeditions.map(toPreviewData) : FALLBACK_EXPEDITIONS;
+function AtlasPreview({ expeditions, data }) {
+  const navigate = useNavigate();
+  if (!(expeditions == null ? void 0 : expeditions.length)) return null;
+  const items = expeditions.map(toPreviewData);
   return /* @__PURE__ */ jsxs("section", { id: "atlas", className: "relative w-full bg-[#1A1A1A] text-white py-32 px-8 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
       "div",
@@ -538,62 +561,71 @@ function AtlasPreview({ expeditions }) {
     /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-7xl mx-auto flex flex-col gap-16", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row gap-12 md:gap-24 items-start", children: [
         /* @__PURE__ */ jsx("div", { className: "md:w-1/4", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: "03 — EXPEDITION ATLAS" }) }),
-        /* @__PURE__ */ jsx("div", { className: "md:w-1/2", children: /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6", children: "Five mountains. Five different kinds of preparation." }) }),
-        /* @__PURE__ */ jsx("div", { className: "md:w-1/4", children: /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]", children: "Each Thamserku expedition is read as a passage, not a package." }) })
+        /* @__PURE__ */ jsx("div", { className: "md:w-1/2", children: (data == null ? void 0 : data.atlasHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6", children: data.atlasHeading }) }),
+        /* @__PURE__ */ jsx("div", { className: "md:w-1/4", children: (data == null ? void 0 : data.atlasIntro) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]", children: data.atlasIntro }) })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-6", children: items.map((exp, idx) => /* @__PURE__ */ jsxs(
-        Link,
-        {
-          to: exp.name === "Everest" ? "/everest" : "#",
-          className: `group relative flex flex-col justify-between border border-white/10 bg-[#2E353C]/30 p-8 min-h-[480px] overflow-hidden transition-all duration-500 hover:-translate-y-1 ${idx >= 3 ? "md:col-span-6" : exp.cols === 6 ? "md:col-span-6" : "md:col-span-3"}`,
-          children: [
-            /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-0", children: [
-              /* @__PURE__ */ jsx(
-                ImageWithFallback,
-                {
-                  src: exp.image,
-                  alt: exp.name,
-                  className: "w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-40 transition-opacity duration-700"
-                }
-              ),
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent opacity-80" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-              /* @__PURE__ */ jsx("div", { className: "font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#C8CDD2] mb-8", children: exp.code }),
-              /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[44px] leading-none mb-4", children: exp.name }),
-              /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-relaxed max-w-[40ch]", children: exp.positioning })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "relative z-10 mt-12 flex flex-col gap-4 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.1em] text-[#5A6673]", children: [
-              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-y-2 gap-x-4", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
-                  "ALT: ",
-                  exp.altitude
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  "REG: ",
-                  exp.region
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  "SEA: ",
-                  exp.season
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  "STY: ",
-                  exp.style
-                ] })
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-6", children: items.map((exp, idx) => {
+        const href = exp.slug ? `/${exp.slug}` : null;
+        return /* @__PURE__ */ jsxs(
+          "div",
+          {
+            onClick: () => href && navigate(href),
+            className: `group relative flex flex-col justify-between border border-white/10 bg-[#2E353C]/30 p-8 min-h-[480px] overflow-hidden transition-all duration-500 hover:-translate-y-1 ${href ? "cursor-pointer" : ""} ${idx >= 3 ? "md:col-span-6" : exp.cols === 6 ? "md:col-span-6" : "md:col-span-3"}`,
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-0", children: [
+                /* @__PURE__ */ jsx(
+                  ImageWithFallback,
+                  {
+                    src: exp.image,
+                    alt: exp.name,
+                    className: "w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-40 transition-opacity duration-700"
+                  }
+                ),
+                /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent opacity-80" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 text-[#C8CDD2] flex justify-between items-center", children: [
-                /* @__PURE__ */ jsxs("span", { children: [
-                  "EDITIONS: ",
-                  exp.editions
+              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+                /* @__PURE__ */ jsx("div", { className: "font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#C8CDD2] mb-8", children: exp.code }),
+                /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[44px] leading-none mb-4", children: exp.name }),
+                /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-relaxed max-w-[40ch]", children: exp.positioning })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "relative z-10 mt-12 flex flex-col gap-4 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.1em] text-[#5A6673]", children: [
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-y-2 gap-x-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    "ALT: ",
+                    exp.altitude
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    "REG: ",
+                    exp.region
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    "SEA: ",
+                    exp.season
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    "STY: ",
+                    exp.style
+                  ] })
                 ] }),
-                exp.name === "Everest" && /* @__PURE__ */ jsx(MoveRight, { className: "w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" })
+                /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 text-[#C8CDD2] flex justify-between items-center", children: [
+                  /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-x-3 gap-y-1", children: exp.editions.map((ed, i) => /* @__PURE__ */ jsx(
+                    Link,
+                    {
+                      to: "/editions",
+                      onClick: (e) => e.stopPropagation(),
+                      className: "hover:text-white transition-colors",
+                      children: ed.name
+                    },
+                    ed.id || i
+                  )) }),
+                  /* @__PURE__ */ jsx(MoveRight, { className: "w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0 ml-4" })
+                ] })
               ] })
-            ] })
-          ]
-        },
-        idx
-      )) }),
+            ]
+          },
+          idx
+        );
+      }) }),
       /* @__PURE__ */ jsx("div", { className: "flex justify-end mt-4", children: /* @__PURE__ */ jsxs(Link, { to: "/atlas", className: "border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:border-white transition-colors", children: [
         "View the full atlas ",
         /* @__PURE__ */ jsx(MoveRight, { className: "w-3 h-3" })
@@ -685,29 +717,25 @@ function FieldNotesPreview({ fieldNotes }) {
     ] }) })
   ] }) });
 }
-const FALLBACK_EDITIONS = [
-  { letter: "A", name: "Alpine Edition", sub: "The essential expedition", positioning: "The essential Thamserku expedition experience, run with disciplined professional support.", who: "FOR EXPERIENCED CLIMBERS SEEKING A DISCIPLINED, PROFESSIONALLY MANAGED EXPEDITION." },
-  { letter: "B", name: "Bespoke Edition", sub: "A more personal expedition", positioning: "A more personal expedition shaped around individual goals, schedule, and pace.", who: "FOR PRIVATE CLIMBERS, COUPLES, OR SMALL GROUPS SEEKING FLEXIBILITY AND CUSTOMIZATION." },
-  { letter: "C", name: "Crafted Edition", sub: "Service, comfort, storytelling", positioning: "An elevated expedition with deeper service, comfort, and documented storytelling.", who: "FOR HNW CLIENTS, EXECUTIVES, AND CLIMBERS WHO WANT TECHNICAL SERIOUSNESS WITH RICHER SERVICE." },
-  { letter: "D", name: "Definitive Edition", sub: "The most exclusive private expedition", positioning: "The most exclusive premium luxury Thamserku experience, designed around privacy and rare access.", who: "FOR UHNW INDIVIDUALS, PRIVATE FAMILIES, AND ELITE ADVENTURERS REQUIRING MAXIMUM PRIVACY." },
-  { letter: "E", name: "Explorer Edition", sub: "The Himalayas beyond the summit", positioning: "For those seeking the Himalayas beyond the summit — softer, slower, more cultural.", who: "FOR TRAVELLERS, FAMILIES, LEADERS, PHOTOGRAPHERS, AND CULTURAL EXPLORERS." }
-];
 function toDisplayData(ed) {
+  var _a;
   return {
     letter: ed.letter,
     name: ed.name,
     sub: ed.subtitle,
     positioning: ed.positioning,
-    who: ed.targetAudience
+    who: ed.targetAudience,
+    slug: ((_a = ed.slug) == null ? void 0 : _a.current) ?? ""
   };
 }
-function EditionsPreview({ editions: editions2 }) {
-  const items = editions2 ? editions2.map(toDisplayData) : FALLBACK_EDITIONS;
+function EditionsPreview({ editions: editions2, data }) {
+  if (!(editions2 == null ? void 0 : editions2.length)) return null;
+  const items = editions2.map(toDisplayData);
   return /* @__PURE__ */ jsx("section", { id: "editions", className: "w-full bg-[#0A3A77] text-white py-32 px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto flex flex-col gap-16", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row gap-12 md:gap-24 items-start mb-12", children: [
       /* @__PURE__ */ jsx("div", { className: "md:w-1/4", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: "05 — EDITIONS" }) }),
-      /* @__PURE__ */ jsx("div", { className: "md:w-1/2", children: /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6", children: "Five lenses through which to read the same mountain." }) }),
-      /* @__PURE__ */ jsx("div", { className: "md:w-1/4", children: /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]", children: "From Alpine discipline to the Definitive private expedition, each edition is shaped around intent, privacy, and preparation." }) })
+      /* @__PURE__ */ jsx("div", { className: "md:w-1/2", children: (data == null ? void 0 : data.editionsHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6", children: data.editionsHeading }) }),
+      /* @__PURE__ */ jsx("div", { className: "md:w-1/4", children: (data == null ? void 0 : data.editionsIntro) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]", children: data.editionsIntro }) })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "flex flex-col border-b border-white/10", children: items.map((ed, idx) => /* @__PURE__ */ jsxs(
       "div",
@@ -725,7 +753,17 @@ function EditionsPreview({ editions: editions2 }) {
             '"'
           ] }) }),
           /* @__PURE__ */ jsx("div", { className: "md:w-3/12", children: /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.1em] text-[10px] text-[#C8CDD2] leading-relaxed max-w-[40ch]", children: ed.who }) }),
-          /* @__PURE__ */ jsx("div", { className: "md:w-2/12 flex md:justify-end", children: /* @__PURE__ */ jsxs("button", { className: "flex items-center gap-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors border-b border-transparent hover:border-[#C8CDD2] pb-1", children: [
+          /* @__PURE__ */ jsx("div", { className: "md:w-2/12 flex md:justify-end", children: ed.slug ? /* @__PURE__ */ jsxs(
+            Link,
+            {
+              to: `/editions/${ed.slug}`,
+              className: "flex items-center gap-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors border-b border-transparent hover:border-[#C8CDD2] pb-1",
+              children: [
+                "Read Edition ",
+                /* @__PURE__ */ jsx(MoveRight, { className: "w-3 h-3" })
+              ]
+            }
+          ) : /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white opacity-40", children: [
             "Read Edition ",
             /* @__PURE__ */ jsx(MoveRight, { className: "w-3 h-3" })
           ] }) })
@@ -736,37 +774,29 @@ function EditionsPreview({ editions: editions2 }) {
   ] }) });
 }
 const chairmanImage$1 = "/assets/Mt-Everest-8848m-no-label-1-XCj15Fwr.jpg";
-const FALLBACK_HEADING_PART1 = "Thamserku was not created to follow the Himalayan expedition industry.";
-const FALLBACK_HEADING_PART2 = "It helped shape it.";
-const FALLBACK_BODY1 = "Founded as one of Nepal's original high-altitude expedition names and continuing under the Yeti Group, Thamserku has been part of Himalayan exploration through nearly four decades of seasons, summits, and Sherpa-led judgement.";
-const FALLBACK_BODY2 = "We do not fight the mountain. We learn from it — and we pass that learning on to the people who climb with us.";
-const FALLBACK_QUOTE = "— The Chairman";
-const FALLBACK_ATTRIBUTION = "THAMSERKU EXPEDITIONS · YETI GROUP";
-const FALLBACK_TIMELINE = [
-  { decade: "1980s", era: "Founding Era" },
-  { decade: "1990s", era: "Sherpa-led Logistics" },
-  { decade: "2000s", era: "Expedition Role" },
-  { decade: "2020s", era: "Heritage Revival" },
-  { decade: "Today", era: "Refined for the World" }
-];
 function splitAtLastSentence(text) {
   const idx = text.lastIndexOf(". ");
   if (idx === -1) return [text, ""];
   return [text.slice(0, idx + 1), text.slice(idx + 2)];
 }
+const bodyComponents = {
+  block: {
+    normal: ({ children }) => /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.8]", children })
+  }
+};
 function LegacyPreview({ data }) {
-  const [headingPart1, headingPart2] = (data == null ? void 0 : data.heading) ? splitAtLastSentence(data.heading) : [FALLBACK_HEADING_PART1, FALLBACK_HEADING_PART2];
-  const body1 = (data == null ? void 0 : data.body1) ?? FALLBACK_BODY1;
-  const body2 = (data == null ? void 0 : data.body2) ?? FALLBACK_BODY2;
-  const quote = (data == null ? void 0 : data.quote) ?? FALLBACK_QUOTE;
-  const attribution = (data == null ? void 0 : data.attribution) ?? FALLBACK_ATTRIBUTION;
-  const timeline = (data == null ? void 0 : data.timeline) ?? FALLBACK_TIMELINE;
+  const [headingPart1, headingPart2] = splitAtLastSentence((data == null ? void 0 : data.legacyHeading) ?? "");
+  const timeline = (data == null ? void 0 : data.legacyTimeline) ?? [];
+  const letter = data == null ? void 0 : data.chairmanLetter;
+  const imgSrc = (letter == null ? void 0 : letter.image) ? urlFor(letter.image).width(800).url() : chairmanImage$1;
+  const quote = letter == null ? void 0 : letter.signature;
+  const attribution = letter == null ? void 0 : letter.organization;
   return /* @__PURE__ */ jsx("section", { id: "legacy", className: "w-full bg-[#F4F2EC] text-[#1A1A1A] py-32 px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-start", children: [
     /* @__PURE__ */ jsx("div", { className: "w-full md:w-5/12", children: /* @__PURE__ */ jsx("div", { className: "aspect-[4/5] bg-[#E5E7EB] overflow-hidden", children: /* @__PURE__ */ jsx(
       ImageWithFallback,
       {
-        src: chairmanImage$1,
-        alt: "Mt. Everest 8848m",
+        src: imgSrc,
+        alt: "Legacy",
         className: "w-full h-full object-cover saturate-[0.6] contrast-110 sepia-[0.2]"
       }
     ) }) }),
@@ -779,15 +809,12 @@ function LegacyPreview({ data }) {
           /* @__PURE__ */ jsx("em", { className: "text-[#0A3A77] not-italic italic", children: headingPart2 })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6 font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.8] max-w-[56ch]", children: [
-        /* @__PURE__ */ jsx("p", { children: body1 }),
-        /* @__PURE__ */ jsx("p", { children: body2 })
+      (letter == null ? void 0 : letter.body) && /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-6 max-w-[56ch]", children: /* @__PURE__ */ jsx(PortableText, { value: letter.body, components: bodyComponents }) }),
+      (quote || attribution) && /* @__PURE__ */ jsxs("div", { className: "mt-4 border-l-2 border-[#C8CDD2] pl-6 py-2", children: [
+        quote && /* @__PURE__ */ jsx("div", { className: "font-['Radley'] italic text-[28px] text-[#1A1A1A] leading-none mb-2", children: quote }),
+        attribution && /* @__PURE__ */ jsx("div", { className: "font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673]", children: attribution })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-4 border-l-2 border-[#C8CDD2] pl-6 py-2", children: [
-        /* @__PURE__ */ jsx("div", { className: "font-['Radley'] italic text-[28px] text-[#1A1A1A] leading-none mb-2", children: quote }),
-        /* @__PURE__ */ jsx("div", { className: "font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673]", children: attribution })
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "mt-12 grid grid-cols-1 sm:grid-cols-5 gap-6 border-t border-[#C8CDD2]/30 pt-8 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.15em] text-[#5A6673]", children: timeline.map((era, idx) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+      timeline.length > 0 && /* @__PURE__ */ jsx("div", { className: "mt-12 grid grid-cols-1 sm:grid-cols-5 gap-6 border-t border-[#C8CDD2]/30 pt-8 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.15em] text-[#5A6673]", children: timeline.map((era, idx) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
         /* @__PURE__ */ jsx("span", { className: "text-[#0A3A77]", children: era.decade }),
         /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[18px] text-[#1A1A1A] font-light capitalize tracking-normal", children: era.era })
       ] }, idx)) })
@@ -871,26 +898,109 @@ const serverClient = createClient({
 async function getHomePageData() {
   return serverClient.fetch(`{
     "homePage": *[_type == "homePage"][0] {
-      heroHeadline, heroSubheading, manifestoHeading, manifestoBody,
+      heroHeadline, heroSubheading, atlasHeading, atlasIntro, editionsHeading, editionsIntro, manifestoHeading, manifestoBody,
       closingHeading, closingBody,
-      featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug }
+      featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
+      chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
+      legacyHeading, legacyTimeline,
+      infrastructureHeading, infrastructureIntro, infrastructurePillars
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
-      _id, number, code, name, slug, altitude, region, season, style, positioning,
-      editions[]->{ _id, letter, name }
+      _id, number, code, name, slug, altitude, region, season, style, positioning, image,
+      editions[]->{ _id, letter, name, slug }
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug
-    },
-    "yetiInfrastructure": *[_type == "yetiInfrastructure"][0] {
-      heading, intro, pillars
-    },
-    "legacy": *[_type == "legacy"][0] {
-      heading, body1, body2, quote, attribution, timeline
     }
   }`);
 }
-async function loader() {
+async function getYetiPageData() {
+  return serverClient.fetch(`{
+    "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
+      heroHeadline, heroSubheading,
+      heroStatOperations, heroStatRegions, heroStatContinuity, heroStatStatus,
+      definitionHeading, definitionTagline, definitionBody1, definitionBody2, definitionBody3,
+      airHeading, airTagline, airBody, airImage, airChannels, airUseCases, airAvailability, airCoordination,
+      lodgesHeading, lodgesTagline, lodgesBody, lodgesImage, lodgesRegions, lodgesUseCases, lodgesStandard, lodgesStaffing,
+      accessHeading, accessTagline, accessBody, accessImage, accessRegions, accessUseCases, accessContinuity, accessHandling,
+      continuityHeading, continuityTagline, continuityBody1, continuityBody2, continuityImage,
+      peakSectionHeading, peakSectionTagline,
+      faqHeading, faqTagline,
+      faqs[] { _key, question, answer },
+      closingHeading, closingBody
+    },
+    "expeditions": *[_type == "expedition"] | order(number asc) {
+      _id, code, name, altitude, region,
+      yetiAirNote, yetiLodgesNote, yetiAccessNote, yetiContinuityNote
+    }
+  }`);
+}
+async function getLegacyPageData() {
+  return serverClient.fetch(`{
+    "legacyPage": *[_type == "legacyPage"][0] {
+      heroEyebrow, heroHeadline, heroSubheading, heroImage,
+      heroMetaFeature, heroMetaAtlas, heroMetaReadTime, heroMetaEra,
+      originEyebrow, originYears, originSideNote, originBody1, originBody2,
+      originPullQuote, originImage, originImageCaption,
+      chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
+      timelineEyebrow, timelineHeading, timelineFooterNote,
+      timelineChapters[] { _key, roman, years, title, description, image },
+      lineageEyebrow, lineageHeading, lineageBody1, lineageBody2,
+      lineageDataTiles[] { _key, label, value },
+      revivalEyebrow, revivalHeading, revivalLeftQuote,
+      revivalLeftParagraph1, revivalLeftParagraph2, revivalLeftParagraph3,
+      revivalPillars[] { _key, label, quote },
+      philosophyEyebrow, philosophyHeadlinePart1, philosophyHeadlinePart2, philosophySubline,
+      newsletterEyebrow, newsletterHeading, newsletterBody, newsletterPrivacyNote
+    }
+  }`);
+}
+async function getEditionsPageData() {
+  return serverClient.fetch(`{
+    "editionsPage": *[_type == "editionsPage"][0] {
+      heroHeadline, heroSubheading, manifestoHeading, manifestoBody, closingHeading, closingBody
+    },
+    "editions": *[_type == "edition"] | order(letter asc) {
+      _id, letter, name, subtitle, positioning, targetAudience, slug,
+      tag, body1, body2, image, colorVariant, isFlagship,
+      character, privacyLevel, comfortLevel, comparisonStyle, bestFor,
+      "mountainNames": *[_type == "expedition" && references(^._id)] | order(number asc).name
+    },
+    "expeditions": *[_type == "expedition"] | order(number asc) {
+      _id, name, altitude,
+      "editionLetters": editions[]->letter
+    }
+  }`);
+}
+async function getConsultationPageData() {
+  return serverClient.fetch(`{
+    "consultationPage": *[_type == "consultationPage"][0] {
+      heroHeadline, heroSubheading, heroImage,
+      heroMetaResponse, heroMetaHandledBy, heroMetaLanguages, heroMetaConfidentiality,
+      invitationHeading, invitationBody,
+      trustQuote, trustBody,
+      callCoversHeading, callCoversSubheading,
+      callCoversMoments[] { _key, marker, title, description },
+      callCoversFootnote,
+      formSectionLabel, formHeading, formSubheading,
+      formAlternativeLabel, formAlternativeSubheading,
+      formChapterATitle, formChapterBTitle, formChapterCTitle,
+      formChapterDTitle, formChapterDSubheading, formChapterETitle, formChapterFTitle,
+      formEditionOptions, formSeasonOptions, formGroupOptions,
+      formPrivacyOptions, formContactOptions, formTrekkingOptions, formAltitudeOptions,
+      processHeading,
+      processSteps[] { _key, stepNumber, marker, title, description },
+      processFootnote,
+      alternativeHeading,
+      alternativeOptions[] { _key, label, title, value },
+      closingLabel, closingHeading, closingBody
+    },
+    "expeditions": *[_type == "expedition"] | order(number asc) {
+      _id, name, code
+    }
+  }`);
+}
+async function loader$4() {
   return getHomePageData();
 }
 const Home = UNSAFE_withComponentProps(function Home2() {
@@ -903,13 +1013,15 @@ const Home = UNSAFE_withComponentProps(function Home2() {
       }), /* @__PURE__ */ jsx(Manifesto, {
         data: data.homePage ?? void 0
       }), /* @__PURE__ */ jsx(YetiInfrastructurePreview, {
-        data: data.yetiInfrastructure ?? void 0
+        data: data.homePage ?? void 0
       }), /* @__PURE__ */ jsx(AtlasPreview, {
-        expeditions: data.expeditions.length > 0 ? data.expeditions : void 0
+        expeditions: data.expeditions.length > 0 ? data.expeditions : void 0,
+        data: data.homePage ?? void 0
       }), /* @__PURE__ */ jsx(EditionsPreview, {
-        editions: data.editions.length > 0 ? data.editions : void 0
+        editions: data.editions.length > 0 ? data.editions : void 0,
+        data: data.homePage ?? void 0
       }), /* @__PURE__ */ jsx(LegacyPreview, {
-        data: data.legacy ?? void 0
+        data: data.homePage ?? void 0
       }), /* @__PURE__ */ jsx(FieldNotesPreview, {
         fieldNotes: ((_a = data.homePage) == null ? void 0 : _a.featuredFieldNotes) ?? []
       }), /* @__PURE__ */ jsx(Closing, {
@@ -921,7 +1033,7 @@ const Home = UNSAFE_withComponentProps(function Home2() {
 const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Home,
-  loader
+  loader: loader$4
 }, Symbol.toStringTag, { value: "Module" }));
 function EverestHero() {
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden pb-16 md:pb-24", children: [
@@ -1996,14 +2108,14 @@ function AtlasComparison() {
         /* @__PURE__ */ jsx("th", { className: "py-6 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] font-normal w-[10%]", children: "EDITIONS" }),
         /* @__PURE__ */ jsx("th", { className: "py-6 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] font-normal w-[15%]", children: "BEST FOR" })
       ] }) }),
-      /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-white/10", children: data.map((row, idx) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-white/5 transition-colors duration-300 group", children: [
-        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Radley'] text-2xl text-white", children: row.name }),
-        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row.altitude }),
-        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row.region }),
-        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row.season }),
-        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row.style }),
-        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['JetBrains_Mono'] tracking-[0.22em] text-[10px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row.editions }),
-        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row.bestFor })
+      /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-white/10", children: data.map((row2, idx) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-white/5 transition-colors duration-300 group", children: [
+        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Radley'] text-2xl text-white", children: row2.name }),
+        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row2.altitude }),
+        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row2.region }),
+        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row2.season }),
+        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row2.style }),
+        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['JetBrains_Mono'] tracking-[0.22em] text-[10px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row2.editions }),
+        /* @__PURE__ */ jsx("td", { className: "py-8 pr-4 font-['Lexend'] font-light text-[14px] text-[#C8CDD2] group-hover:text-white transition-colors", children: row2.bestFor })
       ] }, idx)) })
     ] }) }),
     /* @__PURE__ */ jsx("div", { className: "pt-8 border-t border-white/20", children: /* @__PURE__ */ jsx("p", { className: "font-['Radley'] text-[16px] italic text-[#C8CDD2] max-w-[80ch]", children: "Note · Altitude is one variable among many. Speak with the expedition desk to understand which mountain is right for your background and intent." }) })
@@ -2279,16 +2391,14 @@ const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: AtlasPage
 }, Symbol.toStringTag, { value: "Module" }));
 const heroImage$1 = "/assets/Copy_of_DSCF0876-BLPC4TMC.jpg";
-function EditionsHero() {
+function EditionsHero({ editions: editions2, page }) {
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-end pb-24 md:pb-32 overflow-hidden", children: [
     /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-0 pointer-events-none", children: [
       /* @__PURE__ */ jsx(
         "div",
         {
           className: "absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70",
-          style: {
-            backgroundImage: `url('${heroImage$1}')`
-          }
+          style: { backgroundImage: `url('${heroImage$1}')` }
         }
       ),
       /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-transparent via-[#1A1A1A]/60 to-[#1A1A1A]" }),
@@ -2305,130 +2415,81 @@ function EditionsHero() {
     ] }),
     /* @__PURE__ */ jsx(Nav, {}),
     /* @__PURE__ */ jsxs("div", { className: "relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end mt-48", children: [
-      /* @__PURE__ */ jsx("h1", { className: "font-['Radley'] font-light text-5xl md:text-[88px] lg:text-[104px] leading-[1.05] mb-8 max-w-[18ch] text-white tracking-tight", children: "Five lenses through which to read the same mountain." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[64ch] mb-24 md:mb-32", children: "Every Thamserku expedition is shaped by an edition. The mountain remains the mountain — but the way it is read, supported, and lived through changes with intent, privacy, and preparation." }),
-      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-5 gap-0 w-full border-l border-white/10", children: [
-        { letter: "A", name: "ALPINE" },
-        { letter: "B", name: "BESPOKE" },
-        { letter: "C", name: "CRAFTED" },
-        { letter: "D", name: "DEFINITIVE" },
-        { letter: "E", name: "EXPLORER" }
-      ].map((item, idx) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col border-r border-b md:border-b-0 border-white/10 px-6 py-8", children: [
-        /* @__PURE__ */ jsx("span", { className: "font-['Radley'] font-light text-7xl md:text-[140px] lg:text-[180px] leading-none text-[#C8CDD2] mb-4 md:mb-8", children: item.letter }),
+      (page == null ? void 0 : page.heroHeadline) && /* @__PURE__ */ jsx("h1", { className: "font-['Radley'] font-light text-5xl md:text-[88px] lg:text-[104px] leading-[1.05] mb-8 max-w-[18ch] text-white tracking-tight", children: page.heroHeadline }),
+      (page == null ? void 0 : page.heroSubheading) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[64ch] mb-24 md:mb-32", children: page.heroSubheading }),
+      editions2.length > 0 && /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-5 gap-0 w-full border-l border-white/10", children: editions2.map((ed) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col border-r border-b md:border-b-0 border-white/10 px-6 py-8", children: [
+        /* @__PURE__ */ jsx("span", { className: "font-['Radley'] font-light text-7xl md:text-[140px] lg:text-[180px] leading-none text-[#C8CDD2] mb-4 md:mb-8", children: ed.letter }),
         /* @__PURE__ */ jsxs("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white", children: [
-          item.letter,
+          ed.letter,
           " — ",
-          item.name
+          ed.name.replace(" Edition", "").toUpperCase()
         ] })
-      ] }, idx)) })
+      ] }, ed._id)) })
     ] })
   ] });
 }
-function EditionsManifesto() {
+function EditionsManifesto({ page }) {
+  var _a;
+  const parts = ((_a = page == null ? void 0 : page.manifestoHeading) == null ? void 0 : _a.split(".").filter(Boolean)) ?? [];
+  const lastSentence = parts.length > 1 ? parts[parts.length - 1].trim() : null;
+  const leadText = parts.length > 1 ? parts.slice(0, -1).join(".") + "." : page == null ? void 0 : page.manifestoHeading;
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 md:py-48 px-8", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start", children: [
     /* @__PURE__ */ jsx("div", { className: "col-span-1 md:col-span-4 lg:col-span-5", children: /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]", children: "02 — THE READING" }) }),
     /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-8 lg:col-span-7 flex flex-col gap-12", children: [
-      /* @__PURE__ */ jsxs("h2", { className: "font-['Radley'] font-light text-4xl md:text-[52px] leading-[1.1] max-w-[30ch] tracking-tight text-[#1A1A1A]", children: [
-        "A Thamserku edition is not an upgrade. ",
-        /* @__PURE__ */ jsx("span", { className: "italic text-[#0A3A77]", children: "It is a way of reading the mountain." })
+      (page == null ? void 0 : page.manifestoHeading) && /* @__PURE__ */ jsxs("h2", { className: "font-['Radley'] font-light text-4xl md:text-[52px] leading-[1.1] max-w-[30ch] tracking-tight text-[#1A1A1A]", children: [
+        leadText,
+        lastSentence && /* @__PURE__ */ jsxs(Fragment, { children: [
+          " ",
+          /* @__PURE__ */ jsx("span", { className: "italic text-[#0A3A77]", children: lastSentence })
+        ] })
       ] }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#5A6673] text-[16px] leading-relaxed max-w-[60ch]", children: "From Alpine discipline to the Definitive private expedition, each edition is shaped around intent, privacy, and preparation. The mountain remains constant. What changes is how you arrive at it, who walks beside you, and what is taken care of quietly behind the line." })
+      (page == null ? void 0 : page.manifestoBody) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#5A6673] text-[16px] leading-relaxed max-w-[60ch]", children: page.manifestoBody })
     ] })
   ] }) });
 }
-const bandsData = [
-  {
-    id: "03A",
-    letter: "A",
-    tag: "THE DISCIPLINED CLIMB",
-    name: "Alpine Edition",
-    signature: "The essential expedition.",
-    copy: /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("p", { className: "mb-6", children: "The Alpine Edition is the foundation of how Thamserku climbs. It is the most direct reading of the mountain — disciplined, professionally led, and built around the climber's own preparation rather than external comfort." }),
-      /* @__PURE__ */ jsx("p", { children: "Every Alpine expedition is run with full Sherpa leadership, conservative weather judgement, and the same field standards as our most private editions. What changes is restraint: less surface, more substance." })
-    ] }),
-    audience: "Experienced climbers seeking a disciplined, professionally managed expedition. Suited to those who measure a Himalayan season by judgement and patience, not by service.",
-    mountains: "EVEREST · MANASLU · HIMCHULI",
-    bgColor: "bg-[#1A1A1A]",
-    image: "https://images.unsplash.com/photo-1629976791862-5749e12b2f40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaW1hbGF5YXMlMjBtb3VudGFpbiUyMHBlYWslMjBzbm93fGVufDF8fHx8MTc3NzU2MTc5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-  },
-  {
-    id: "03B",
-    letter: "B",
-    tag: "A MORE PERSONAL EXPEDITION",
-    name: "Bespoke Edition",
-    signature: "Shaped around your intent.",
-    copy: /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("p", { className: "mb-6", children: "The Bespoke Edition is the first edition in which the expedition is reshaped around the individual. Schedule, pace, support, and small private elements are tuned to the climber's goals, body, and life — without compromising the rigor of how Thamserku reads the mountain." }),
-      /* @__PURE__ */ jsx("p", { children: "It remains a serious Himalayan expedition, but the rhythm is yours." })
-    ] }),
-    audience: "Private climbers, couples, or small groups seeking flexibility and customization within a fully Sherpa-led expedition framework.",
-    mountains: "EVEREST · MANASLU · DHAULAGIRI · MAKALU · HIMCHULI",
-    bgColor: "bg-[#F4F2EC]",
-    image: "https://images.unsplash.com/photo-1692452376160-14194abefba8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGJhc2UlMjBjYW1wJTIwdGVudCUyMGV2ZW5pbmd8ZW58MXx8fHwxNzc3NTYxNzk4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-  },
-  {
-    id: "03C",
-    letter: "C",
-    tag: "SERVICE · COMFORT · STORYTELLING",
-    name: "Crafted Edition",
-    signature: "An elevated reading.",
-    copy: /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("p", { className: "mb-6", children: "The Crafted Edition deepens the human side of an expedition. The technical seriousness remains, but Base Camp life, acclimatisation rest, and the rhythm of the journey are richer. There is more attention to comfort, to food, to recovery, and to the documentation of the climb itself." }),
-      /* @__PURE__ */ jsx("p", { children: "It is the edition for climbers who want their season to be remembered as well as completed." })
-    ] }),
-    audience: "HNW clients, executives, and climbers who want technical seriousness paired with richer service, attentive comfort, and considered expedition storytelling.",
-    mountains: "EVEREST · MANASLU · DHAULAGIRI · MAKALU",
-    bgColor: "bg-[#1A1A1A]",
-    image: "https://images.unsplash.com/photo-1733528346006-a47bc1648c76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGJhc2UlMjBjYW1wJTIwdGVudCUyMGV2ZW5pbmd8ZW58MXx8fHwxNzc3NTYxNzk4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-  },
-  {
-    id: "03D",
-    letter: "D",
-    tag: "RARE · PRIVATE · UNCOMMON",
-    name: "Definitive Edition",
-    signature: "The most exclusive private expedition.",
-    copy: /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("p", { className: "mb-6", children: "The Definitive Edition is the most exclusive Thamserku experience. A private camp, concierge planning, maximum discretion, and rare access — all built quietly around a single climber, family, or principal." }),
-      /* @__PURE__ */ jsx("p", { children: "Nothing is templated. Logistics, route preparation, communication, hospitality, and aftercare are designed in private and handled by senior expedition staff from first contact to descent." })
-    ] }),
-    audience: "UHNW individuals, private families, elite adventurers, and clients requiring maximum privacy, discretion, and tailoring.",
-    mountains: "EVEREST · DHAULAGIRI · MAKALU",
-    bgColor: "bg-[#0A3A77]",
-    isFlagship: true,
-    image: "https://images.unsplash.com/photo-1767511513723-bc5ec26142c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaW1hbGF5YXMlMjBtYWplc3RpYyUyMHBlYWslMjBkcmFtYXRpY3xlbnwxfHx8fDE3Nzc1NjE4MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-  },
-  {
-    id: "03E",
-    letter: "E",
-    tag: "BEYOND THE SUMMIT",
-    name: "Explorer Edition",
-    signature: "The Himalayas, read softly.",
-    copy: /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("p", { className: "mb-6", children: "The Explorer Edition exists for the Himalayas beyond the summit. Cultural journeys, base-camp experiences, photographic expeditions, and slower, non-climbing readings of the same mountains we summit on other editions." }),
-      /* @__PURE__ */ jsx("p", { children: "It is the edition for those who want to be in the Himalayas without setting out to stand on top of them." })
-    ] }),
-    audience: "Travellers, families, leaders, photographers, and cultural explorers seeking softer Himalayan journeys.",
-    mountains: "HIMCHULI · EVEREST (BASE CAMP / EXPERIENCE)",
-    bgColor: "bg-[#F4F2EC]",
-    image: "https://images.unsplash.com/photo-1763738173775-5f2f5c6fd782?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZXBhbCUyMGhpbWFsYXlhcyUyMHZhbGxleSUyMGN1bHR1cmV8ZW58MXx8fHwxNzc3NTYxODA1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-  }
-];
-function EditionsBands() {
-  return /* @__PURE__ */ jsx("section", { className: "w-full flex flex-col", children: bandsData.map((band, idx) => {
-    const isDark = band.bgColor === "bg-[#1A1A1A]" || band.bgColor === "bg-[#0A3A77]";
-    const letterColor = band.bgColor === "bg-[#F4F2EC]" ? "text-[#0A3A77]/20" : band.bgColor === "bg-[#0A3A77]" ? "text-white/20" : "text-[#C8CDD2]/20";
+const BG_CLASS = {
+  dark: "bg-[#1A1A1A]",
+  light: "bg-[#F4F2EC]",
+  blue: "bg-[#0A3A77]"
+};
+const LETTER_COLOR = {
+  dark: "text-[#C8CDD2]/20",
+  light: "text-[#0A3A77]/20",
+  blue: "text-white/20"
+};
+const COPY_COLOR = {
+  dark: "text-[#C8CDD2]",
+  light: "text-[#5A6673]",
+  blue: "text-[#C8CDD2]"
+};
+const SIGNATURE_COLOR = {
+  dark: "text-[#C8CDD2]",
+  light: "text-[#0A3A77]",
+  blue: "text-[#C8CDD2]"
+};
+function EditionsBands({ editions: editions2 }) {
+  if (!editions2.length) return null;
+  return /* @__PURE__ */ jsx("section", { className: "w-full flex flex-col", children: editions2.map((ed, idx) => {
+    var _a, _b, _c;
+    const variant = ed.colorVariant ?? "dark";
+    const isDark = variant === "dark" || variant === "blue";
+    const bgClass = BG_CLASS[variant] ?? "bg-[#1A1A1A]";
+    const letterColor = LETTER_COLOR[variant] ?? "text-[#C8CDD2]/20";
+    const copyColor = COPY_COLOR[variant] ?? "text-[#C8CDD2]";
+    const sigColor = SIGNATURE_COLOR[variant] ?? "text-[#C8CDD2]";
+    const imageUrl = ed.image ? urlFor(ed.image).width(1800).url() : null;
+    const mountains = ((_a = ed.mountainNames) == null ? void 0 : _a.join(" · ").toUpperCase()) ?? "";
     return /* @__PURE__ */ jsxs(
       "div",
       {
-        className: `w-full relative overflow-hidden ${band.bgColor} ${band.isFlagship ? "py-40 md:py-64 pb-16" : "py-32 md:py-48"} px-8`,
+        className: `w-full relative overflow-hidden ${bgClass} ${ed.isFlagship ? "py-40 md:py-64 pb-16" : "py-32 md:py-48"} px-8`,
         children: [
-          /* @__PURE__ */ jsx(
+          imageUrl && /* @__PURE__ */ jsx(
             "div",
             {
               className: `absolute inset-0 z-0 pointer-events-none mix-blend-luminosity ${isDark ? "opacity-30" : "opacity-[0.08]"}`,
               style: {
-                backgroundImage: `url(${band.image})`,
+                backgroundImage: `url(${imageUrl})`,
                 backgroundPosition: "left center",
                 backgroundSize: "cover",
                 WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 35%, transparent 65%)",
@@ -2440,31 +2501,35 @@ function EditionsBands() {
             /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-5 relative flex flex-col pt-8", children: [
               /* @__PURE__ */ jsxs("p", { className: `font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-8 ${isDark ? "text-[#C8CDD2]" : "text-[#0A3A77]"}`, children: [
                 "EDITION ",
-                band.letter
+                ed.letter
               ] }),
-              /* @__PURE__ */ jsx("div", { className: `font-['Radley'] font-light leading-none ${band.isFlagship ? "text-[240px] md:text-[380px]" : "text-[200px] md:text-[320px]"} -ml-4 ${letterColor}`, children: band.letter }),
-              /* @__PURE__ */ jsx("p", { className: `font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mt-8 max-w-[20ch] leading-relaxed ${isDark ? "text-[#5A6673]" : "text-[#5A6673]"}`, children: band.tag })
+              /* @__PURE__ */ jsx("div", { className: `font-['Radley'] font-light leading-none ${ed.isFlagship ? "text-[240px] md:text-[380px]" : "text-[200px] md:text-[320px]"} -ml-4 ${letterColor}`, children: ed.letter }),
+              ed.tag && /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mt-8 max-w-[20ch] leading-relaxed text-[#5A6673]", children: ed.tag })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-7 flex flex-col", children: [
-              /* @__PURE__ */ jsxs("p", { className: `font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-12 ${isDark ? "text-[#5A6673]" : "text-[#5A6673]"}`, children: [
-                band.id,
+              /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-12 text-[#5A6673]", children: [
+                "03",
+                ed.letter,
                 " — EDITION ",
-                band.letter
+                ed.letter
               ] }),
-              /* @__PURE__ */ jsx("h3", { className: `font-['Radley'] font-light ${band.isFlagship ? "text-5xl md:text-[80px]" : "text-5xl md:text-[64px]"} mb-6 ${isDark ? "text-white" : "text-[#1A1A1A]"}`, children: band.name }),
-              /* @__PURE__ */ jsx("p", { className: `font-['Radley'] italic text-[24px] md:text-[28px] mb-12 ${band.bgColor === "bg-[#1A1A1A]" ? "text-[#C8CDD2]" : band.bgColor === "bg-[#0A3A77]" ? "text-[#C8CDD2]" : "text-[#0A3A77]"}`, children: band.signature }),
-              /* @__PURE__ */ jsx("div", { className: `font-['Lexend'] font-light text-[16px] leading-relaxed max-w-[56ch] mb-16 ${band.bgColor === "bg-[#1A1A1A]" ? "text-[#C8CDD2]" : band.bgColor === "bg-[#0A3A77]" ? "text-[#C8CDD2]" : "text-[#5A6673]"}`, children: band.copy }),
+              /* @__PURE__ */ jsx("h3", { className: `font-['Radley'] font-light ${ed.isFlagship ? "text-5xl md:text-[80px]" : "text-5xl md:text-[64px]"} mb-6 ${isDark ? "text-white" : "text-[#1A1A1A]"}`, children: ed.name }),
+              ed.subtitle && /* @__PURE__ */ jsx("p", { className: `font-['Radley'] italic text-[24px] md:text-[28px] mb-12 ${sigColor}`, children: ed.subtitle }),
+              /* @__PURE__ */ jsxs("div", { className: `font-['Lexend'] font-light text-[16px] leading-relaxed max-w-[56ch] mb-16 ${copyColor}`, children: [
+                ed.body1 && /* @__PURE__ */ jsx("p", { className: "mb-6", children: ed.body1 }),
+                ed.body2 && /* @__PURE__ */ jsx("p", { children: ed.body2 })
+              ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-10 max-w-[56ch]", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
+                ed.targetAudience && /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("p", { className: `font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-4 ${isDark ? "text-white" : "text-[#1A1A1A]"}`, children: "WHO IT IS FOR" }),
-                  /* @__PURE__ */ jsx("p", { className: `font-['Lexend'] font-light italic text-[15px] leading-relaxed ${band.bgColor === "bg-[#1A1A1A]" ? "text-[#C8CDD2]" : band.bgColor === "bg-[#0A3A77]" ? "text-[#C8CDD2]" : "text-[#5A6673]"}`, children: band.audience })
+                  /* @__PURE__ */ jsx("p", { className: `font-['Lexend'] font-light italic text-[15px] leading-relaxed ${copyColor}`, children: ed.targetAudience })
                 ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
+                mountains && /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("p", { className: `font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-4 ${isDark ? "text-white" : "text-[#1A1A1A]"}`, children: "BEST READ ON" }),
-                  /* @__PURE__ */ jsx("p", { className: `font-['JetBrains_Mono'] uppercase tracking-[0.1em] text-[13px] ${band.bgColor === "bg-[#1A1A1A]" ? "text-[#C8CDD2]" : band.bgColor === "bg-[#0A3A77]" ? "text-white" : "text-[#5A6673]"}`, children: band.mountains })
+                  /* @__PURE__ */ jsx("p", { className: `font-['JetBrains_Mono'] uppercase tracking-[0.1em] text-[13px] ${isDark ? "text-[#C8CDD2]" : "text-[#5A6673]"}`, children: mountains })
                 ] })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "flex flex-col sm:flex-row gap-6 mt-20", children: band.isFlagship ? /* @__PURE__ */ jsxs(Fragment, { children: [
+              /* @__PURE__ */ jsx("div", { className: "flex flex-col sm:flex-row gap-6 mt-20", children: ed.isFlagship ? /* @__PURE__ */ jsxs(Fragment, { children: [
                 /* @__PURE__ */ jsx(
                   Link,
                   {
@@ -2473,9 +2538,23 @@ function EditionsBands() {
                     children: "SCHEDULE A DEFINITIVE CONSULTATION →"
                   }
                 ),
-                /* @__PURE__ */ jsx("button", { className: `px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-transparent ${isDark ? "text-[#C8CDD2] hover:text-white hover:border-white/30" : "text-[#5A6673] hover:text-[#1A1A1A] hover:border-[#1A1A1A]/30"}`, children: "READ MORE ABOUT THE DEFINITIVE →" })
+                /* @__PURE__ */ jsx(
+                  Link,
+                  {
+                    to: ((_b = ed.slug) == null ? void 0 : _b.current) ? `/editions/${ed.slug.current}` : "/editions",
+                    className: `px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-transparent ${isDark ? "text-[#C8CDD2] hover:text-white hover:border-white/30" : "text-[#5A6673] hover:text-[#1A1A1A] hover:border-[#1A1A1A]/30"}`,
+                    children: "READ MORE ABOUT THE DEFINITIVE →"
+                  }
+                )
               ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-                /* @__PURE__ */ jsx("button", { className: `px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border ${isDark ? "border-white text-white hover:bg-white hover:text-[#0A3A77]" : "border-[#0A3A77] text-[#0A3A77] hover:bg-[#0A3A77] hover:text-white"}`, children: "READ THE COLLECTION →" }),
+                /* @__PURE__ */ jsx(
+                  Link,
+                  {
+                    to: ((_c = ed.slug) == null ? void 0 : _c.current) ? `/editions/${ed.slug.current}` : "/editions",
+                    className: `px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border ${isDark ? "border-white text-white hover:bg-white hover:text-[#0A3A77]" : "border-[#0A3A77] text-[#0A3A77] hover:bg-[#0A3A77] hover:text-white"}`,
+                    children: "READ THE COLLECTION →"
+                  }
+                ),
                 /* @__PURE__ */ jsx(
                   Link,
                   {
@@ -2486,100 +2565,77 @@ function EditionsBands() {
                 )
               ] }) })
             ] })
-          ] }),
-          band.isFlagship && /* @__PURE__ */ jsx("div", { className: "absolute bottom-8 left-8 right-8 z-10 w-full max-w-[1440px] mx-auto text-center md:text-left", children: /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "[IMAGE PLACEHOLDER] — DEFINITIVE EDITION CINEMATIC SPREAD. FINAL IMAGE TO BE PROVIDED BY CLIENT." }) })
+          ] })
         ]
       },
-      idx
+      ed._id
     );
   }) });
 }
-function EditionsComparison() {
-  const tableData = [
-    { label: "CHARACTER", a: "Disciplined", b: "Personal", c: "Crafted", d: "Definitive", e: "Cultural" },
-    { label: "PRIVACY LEVEL", a: "Standard", b: "Tailored", c: "High", d: "Maximum", e: "Tailored" },
-    { label: "COMFORT LEVEL", a: "Essential", b: "Considered", c: "Elevated", d: "Definitive", e: "Considered" },
-    { label: "STYLE", a: "Disciplined climb", b: "Personal climb", c: "Service-rich climb", d: "Private flagship", e: "Non-summit reading" },
-    { label: "BEST FOR", a: "Experienced climbers", b: "Private groups", c: "Elevated service", d: "UHNW individuals", e: "Cultural explorers" },
-    { label: "AVAILABLE ON", a: "EVEREST · MANASLU · HIMCHULI", b: "ALL", c: "EVEREST · MANASLU · DHAULAGIRI · MAKALU", d: "EVEREST · DHAULAGIRI · MAKALU", e: "HIMCHULI · EVEREST B.C." }
-  ];
+const ROWS = [
+  { label: "CHARACTER", getValue: (ed) => ed.character ?? "—" },
+  { label: "PRIVACY LEVEL", getValue: (ed) => ed.privacyLevel ?? "—" },
+  { label: "COMFORT LEVEL", getValue: (ed) => ed.comfortLevel ?? "—" },
+  { label: "STYLE", getValue: (ed) => ed.comparisonStyle ?? "—" },
+  { label: "BEST FOR", getValue: (ed) => ed.bestFor ?? "—" },
+  {
+    label: "AVAILABLE ON",
+    getValue: (ed, expeditions) => expeditions.filter((exp) => exp.editionLetters.includes(ed.letter)).map((exp) => exp.name.toUpperCase()).join(" · ") || "—"
+  }
+];
+function EditionsComparison({
+  editions: editions2,
+  expeditions
+}) {
+  if (!editions2.length) return null;
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-white text-[#1A1A1A] py-32 px-8", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-[1440px] mx-auto", children: [
     /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: "04 — AT A GLANCE" }),
     /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-4xl md:text-[56px] leading-[1.1] mb-24 max-w-[20ch]", children: "Five editions, read side by side." }),
     /* @__PURE__ */ jsx("div", { className: "w-full overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full min-w-[1024px] text-left border-collapse", children: [
       /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "border-b border-[#1A1A1A]/10", children: [
         /* @__PURE__ */ jsx("th", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-[#5A6673] py-8 w-1/6", children: "EDITION" }),
-        ["A", "B", "C", "D", "E"].map((letter) => /* @__PURE__ */ jsxs("th", { className: "font-['Radley'] font-light text-2xl md:text-3xl text-[#1A1A1A] py-8 w-[16.66%]", children: [
-          letter === "A" && "Alpine",
-          letter === "B" && "Bespoke",
-          letter === "C" && "Crafted",
-          letter === "D" && "Definitive",
-          letter === "E" && "Explorer"
-        ] }, letter))
+        editions2.map((ed) => /* @__PURE__ */ jsx("th", { className: "font-['Radley'] font-light text-2xl md:text-3xl text-[#1A1A1A] py-8 w-[16.66%]", children: ed.name.replace(" Edition", "") }, ed._id))
       ] }) }),
-      /* @__PURE__ */ jsx("tbody", { children: tableData.map((row, idx) => /* @__PURE__ */ jsxs("tr", { className: "border-b border-[#1A1A1A]/10 transition-colors hover:bg-[#F4F2EC]/50", children: [
-        /* @__PURE__ */ jsx("td", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] py-8", children: row.label }),
-        /* @__PURE__ */ jsx("td", { className: "font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4", children: row.a }),
-        /* @__PURE__ */ jsx("td", { className: "font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4", children: row.b }),
-        /* @__PURE__ */ jsx("td", { className: "font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4", children: row.c }),
-        /* @__PURE__ */ jsx("td", { className: "font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4", children: row.d }),
-        /* @__PURE__ */ jsx("td", { className: "font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4", children: row.e })
-      ] }, idx)) })
+      /* @__PURE__ */ jsx("tbody", { children: ROWS.map((row2) => /* @__PURE__ */ jsxs("tr", { className: "border-b border-[#1A1A1A]/10 transition-colors hover:bg-[#F4F2EC]/50", children: [
+        /* @__PURE__ */ jsx("td", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] py-8", children: row2.label }),
+        editions2.map((ed) => /* @__PURE__ */ jsx("td", { className: "font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4", children: row2.getValue(ed, expeditions) }, ed._id))
+      ] }, row2.label)) })
     ] }) }),
     /* @__PURE__ */ jsx("p", { className: "font-['Radley'] italic text-[#5A6673] text-[16px] mt-16 max-w-[80ch]", children: "Note · Editions are not ranked. They are different ways of reading the same mountain. Speak with the expedition desk to find which edition fits your background and intent." })
   ] }) });
 }
-function EditionsAvailability() {
-  const mountains = [
-    { name: "EVEREST", alt: "8,848M" },
-    { name: "MANASLU", alt: "8,163M" },
-    { name: "DHAULAGIRI", alt: "8,167M" },
-    { name: "MAKALU", alt: "8,485M" },
-    { name: "HIMCHULI", alt: "6,441M" }
-  ];
-  const editions2 = [
-    { letter: "A", availability: [true, true, false, false, true] },
-    { letter: "B", availability: [true, true, true, true, true] },
-    { letter: "C", availability: [true, true, true, true, false] },
-    { letter: "D", availability: [true, false, true, true, false] },
-    { letter: "E", availability: [false, false, false, false, true] }
-  ];
-  return /* @__PURE__ */ jsxs("section", { className: "relative w-full bg-[#1A1A1A] text-white py-32 px-8 overflow-hidden", children: [
-    /* @__PURE__ */ jsx(
-      "div",
-      {
-        className: "absolute inset-0 z-0 opacity-0 pointer-events-none",
-        style: {
-          backgroundImage: `none`,
-          backgroundSize: "0px 0px"
-        }
-      }
-    ),
-    /* @__PURE__ */ jsxs("div", { className: "relative z-10 w-full max-w-[1440px] mx-auto", children: [
-      /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6", children: "05 — AVAILABILITY ATLAS" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-4xl md:text-[56px] leading-[1.1] mb-24 max-w-[20ch]", children: "Which editions are offered on which mountains." }),
-      /* @__PURE__ */ jsx("div", { className: "w-full overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full min-w-[800px] text-center border-collapse", children: [
-        /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { children: [
-          /* @__PURE__ */ jsx("th", { className: "w-1/6" }),
-          mountains.map((mountain, idx) => /* @__PURE__ */ jsx("th", { className: "pb-12 border-b border-white/10 w-[16.66%]", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-white", children: mountain.name }) }, idx))
-        ] }) }),
-        /* @__PURE__ */ jsx("tbody", { children: editions2.map((edition, rowIdx) => /* @__PURE__ */ jsxs("tr", { children: [
-          /* @__PURE__ */ jsx("td", { className: "py-8 border-b border-white/10 text-left", children: /* @__PURE__ */ jsx("span", { className: "font-['Radley'] font-light text-4xl text-[#C8CDD2]", children: edition.letter }) }),
-          edition.availability.map((isAvailable, colIdx) => /* @__PURE__ */ jsx("td", { className: "py-8 border-b border-white/10 text-center", children: isAvailable ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-3", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 rounded-full bg-[#C8CDD2]" }),
-            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] tracking-[0.22em] text-[10px] text-[#5A6673]", children: mountains[colIdx].alt })
-          ] }) : /* @__PURE__ */ jsx("span", { className: "text-[#5A6673]", children: "—" }) }, colIdx))
-        ] }, rowIdx)) })
+function EditionsAvailability({
+  expeditions,
+  editions: editions2
+}) {
+  if (!expeditions.length || !editions2.length) return null;
+  return /* @__PURE__ */ jsx("section", { className: "relative w-full bg-[#1A1A1A] text-white py-32 px-8 overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "relative z-10 w-full max-w-[1440px] mx-auto", children: [
+    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6", children: "05 — AVAILABILITY ATLAS" }),
+    /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-4xl md:text-[56px] leading-[1.1] mb-24 max-w-[20ch]", children: "Which editions are offered on which mountains." }),
+    /* @__PURE__ */ jsx("div", { className: "w-full overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full min-w-[800px] text-center border-collapse", children: [
+      /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { children: [
+        /* @__PURE__ */ jsx("th", { className: "w-1/6" }),
+        expeditions.map((exp) => /* @__PURE__ */ jsx("th", { className: "pb-12 border-b border-white/10 w-[16.66%]", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-white", children: exp.name.toUpperCase() }) }, exp._id))
       ] }) }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Radley'] italic text-[#C8CDD2] text-[16px] mt-16 max-w-[80ch]", children: "Note · Explorer Edition is offered as a separate Everest Base Camp / Everest Experience product, not as a summit climb." })
-    ] })
-  ] });
+      /* @__PURE__ */ jsx("tbody", { children: editions2.map((ed) => /* @__PURE__ */ jsxs("tr", { children: [
+        /* @__PURE__ */ jsx("td", { className: "py-8 border-b border-white/10 text-left", children: /* @__PURE__ */ jsx("span", { className: "font-['Radley'] font-light text-4xl text-[#C8CDD2]", children: ed.letter }) }),
+        expeditions.map((exp) => {
+          const available = exp.editionLetters.includes(ed.letter);
+          return /* @__PURE__ */ jsx("td", { className: "py-8 border-b border-white/10 text-center", children: available ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-3", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-2.5 h-2.5 rounded-full bg-[#C8CDD2]" }),
+            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] tracking-[0.22em] text-[10px] text-[#5A6673]", children: exp.altitude })
+          ] }) : /* @__PURE__ */ jsx("span", { className: "text-[#5A6673]", children: "—" }) }, exp._id);
+        })
+      ] }, ed._id)) })
+    ] }) }),
+    /* @__PURE__ */ jsx("p", { className: "font-['Radley'] italic text-[#C8CDD2] text-[16px] mt-16 max-w-[80ch]", children: "Note · Explorer Edition is offered as a separate Everest Base Camp / Everest Experience product, not as a summit climb." })
+  ] }) });
 }
-function EditionsClosing() {
+function EditionsClosing({ page }) {
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#0A3A77] text-white py-32 md:py-48 px-8 flex flex-col items-center justify-center text-center", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-[800px] flex flex-col items-center", children: [
     /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12", children: "06 — BEGIN PRIVATELY" }),
-    /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-5xl md:text-[64px] lg:text-[80px] leading-[1.05] tracking-tight mb-8", children: "Not sure which edition is yours? That is exactly why we begin with a conversation." }),
-    /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mb-16", children: "Share your background, your timing, and your intention. Our expedition desk will recommend the mountain — and the edition — that fits." }),
+    (page == null ? void 0 : page.closingHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-5xl md:text-[64px] lg:text-[80px] leading-[1.05] tracking-tight mb-8", children: page.closingHeading }),
+    (page == null ? void 0 : page.closingBody) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mb-16", children: page.closingBody }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-center gap-6 mb-16 w-full justify-center", children: [
       /* @__PURE__ */ jsx(
         Link,
@@ -2601,82 +2657,108 @@ function EditionsClosing() {
     /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] opacity-80", children: "RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF" })
   ] }) });
 }
+async function loader$3() {
+  return getEditionsPageData();
+}
 const EditionsPage = UNSAFE_withComponentProps(function EditionsPage2() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const data = useLoaderData();
   return /* @__PURE__ */ jsxs("div", {
     className: "w-full min-h-screen bg-[#1A1A1A] text-white",
-    children: [/* @__PURE__ */ jsx(EditionsHero, {}), /* @__PURE__ */ jsx(EditionsManifesto, {}), /* @__PURE__ */ jsx(EditionsBands, {}), /* @__PURE__ */ jsx(EditionsComparison, {}), /* @__PURE__ */ jsx(EditionsAvailability, {}), /* @__PURE__ */ jsx(EditionsClosing, {}), /* @__PURE__ */ jsx(Footer, {})]
+    children: [/* @__PURE__ */ jsx(EditionsHero, {
+      editions: data.editions,
+      page: data.editionsPage ?? void 0
+    }), /* @__PURE__ */ jsx(EditionsManifesto, {
+      page: data.editionsPage ?? void 0
+    }), /* @__PURE__ */ jsx(EditionsBands, {
+      editions: data.editions
+    }), /* @__PURE__ */ jsx(EditionsComparison, {
+      editions: data.editions,
+      expeditions: data.expeditions
+    }), /* @__PURE__ */ jsx(EditionsAvailability, {
+      expeditions: data.expeditions,
+      editions: data.editions
+    }), /* @__PURE__ */ jsx(EditionsClosing, {
+      page: data.editionsPage ?? void 0
+    }), /* @__PURE__ */ jsx(Footer, {})]
   });
 });
 const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: EditionsPage
+  default: EditionsPage,
+  loader: loader$3
 }, Symbol.toStringTag, { value: "Module" }));
 const heroImage = "/assets/Copy_of_Everest_for_Breakfast_(3)-IpSsSLRk.jpg";
-function LegacyHero() {
+function LegacyHero({ page }) {
+  const bgImage = (page == null ? void 0 : page.heroImage) ? urlFor(page.heroImage).width(1920).url() : heroImage;
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full h-screen min-h-[800px] bg-[#1A1A1A] text-white flex flex-col overflow-hidden", children: [
     /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-0 pointer-events-none", children: [
       /* @__PURE__ */ jsx(
         "div",
         {
           className: "absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 mix-blend-luminosity sepia-[.2]",
-          style: {
-            backgroundImage: `url('${heroImage}')`
-          }
+          style: { backgroundImage: `url('${bgImage}')` }
         }
       ),
       /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-transparent to-[#1A1A1A]/90" })
     ] }),
     /* @__PURE__ */ jsx(Nav, {}),
     /* @__PURE__ */ jsxs("div", { className: "relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end h-full mt-32 md:mt-48 flex-grow pb-24 md:pb-32", children: [
-      /* @__PURE__ */ jsxs("h1", { className: "font-['Cormorant_Garamond'] font-light text-5xl md:text-[88px] lg:text-[104px] leading-[1.05] mb-8 max-w-[24ch] text-white tracking-tight", children: [
+      /* @__PURE__ */ jsx("h1", { className: "font-['Cormorant_Garamond'] font-light text-5xl md:text-[88px] lg:text-[104px] leading-[1.05] mb-8 max-w-[24ch] text-white tracking-tight", children: (page == null ? void 0 : page.heroHeadline) ?? /* @__PURE__ */ jsxs(Fragment, { children: [
         "Thamserku was not created to ",
         /* @__PURE__ */ jsx("span", { className: "italic text-[#C8CDD2]", children: "follow" }),
         " the Himalayan expedition industry. It helped ",
         /* @__PURE__ */ jsx("span", { className: "italic text-[#C8CDD2]", children: "shape" }),
         " it."
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Inter'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch]", children: "A long-form reading of the house, its origins, its Sherpa leadership, its place in the Yeti Group, and its revival for a global audience." })
+      ] }) }),
+      /* @__PURE__ */ jsx("p", { className: "font-['Inter'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch]", children: (page == null ? void 0 : page.heroSubheading) ?? "A long-form reading of the house, its origins, its Sherpa leadership, its place in the Yeti Group, and its revival for a global audience." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "hidden md:block relative z-20 w-full border-t border-white/20 mt-auto bg-[#1A1A1A]/30 backdrop-blur-sm", children: /* @__PURE__ */ jsx("div", { className: "max-w-[1440px] mx-auto px-8 py-5", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap md:flex-nowrap gap-y-4 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-white/20 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white", children: [
-      /* @__PURE__ */ jsx("div", { className: "md:pr-8 py-2 md:py-0 whitespace-nowrap", children: "FEATURE · LEGACY" }),
-      /* @__PURE__ */ jsx("div", { className: "md:px-8 py-2 md:py-0 whitespace-nowrap", children: "THE HIMALAYAN ATLAS" }),
-      /* @__PURE__ */ jsx("div", { className: "md:px-8 py-2 md:py-0 whitespace-nowrap", children: "READ TIME · 12 MIN" }),
-      /* @__PURE__ */ jsx("div", { className: "md:px-8 py-2 md:py-0 whitespace-nowrap", children: "NEPAL · 1987 — TODAY" })
+      /* @__PURE__ */ jsx("div", { className: "md:pr-8 py-2 md:py-0 whitespace-nowrap", children: (page == null ? void 0 : page.heroMetaFeature) ?? "FEATURE · LEGACY" }),
+      /* @__PURE__ */ jsx("div", { className: "md:px-8 py-2 md:py-0 whitespace-nowrap", children: (page == null ? void 0 : page.heroMetaAtlas) ?? "THE HIMALAYAN ATLAS" }),
+      /* @__PURE__ */ jsx("div", { className: "md:px-8 py-2 md:py-0 whitespace-nowrap", children: (page == null ? void 0 : page.heroMetaReadTime) ?? "READ TIME · 12 MIN" }),
+      /* @__PURE__ */ jsx("div", { className: "md:px-8 py-2 md:py-0 whitespace-nowrap", children: (page == null ? void 0 : page.heroMetaEra) ?? "NEPAL · 1987 — TODAY" })
     ] }) }) })
   ] });
 }
-function LegacyOrigin() {
+function LegacyOrigin({ page }) {
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 md:py-40 px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16", children: [
     /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-2 flex flex-col gap-8 md:sticky md:top-32 h-fit", children: [
       /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block mb-2", children: "02 — ORIGIN" }),
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: "1987 — 1995" })
+        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block mb-2", children: (page == null ? void 0 : page.originEyebrow) ?? "02 — ORIGIN" }),
+        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: (page == null ? void 0 : page.originYears) ?? "1987 — 1995" })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "border-t border-[#1A1A1A]/10 pt-4 mt-8 hidden md:block", children: /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] leading-relaxed max-w-[16ch]", children: "PRINCIPALS · A SHERPA-LED HOUSE FROM THE BEGINNING." }) })
+      /* @__PURE__ */ jsx("div", { className: "border-t border-[#1A1A1A]/10 pt-4 mt-8 hidden md:block", children: /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] leading-relaxed max-w-[16ch]", children: (page == null ? void 0 : page.originSideNote) ?? "PRINCIPALS · A SHERPA-LED HOUSE FROM THE BEGINNING." }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-7 font-['Cormorant_Garamond'] text-[18px] leading-[1.7] text-[#2E353C] flex flex-col gap-8", children: [
-      /* @__PURE__ */ jsx("p", { className: "first-letter:font-['Cormorant_Garamond'] first-letter:text-[#0A3A77] first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:-mt-2", children: "Thamserku was named after a Himalayan peak, but it was built around a quieter principle: that a Himalayan expedition is only as serious as the Sherpa knowledge that runs it. Founded in the late 1980s as one of Nepal's original high-altitude expedition names, the house grew not by chasing the largest summits, but by deepening the practices that made each expedition possible — route preparation, weather judgement, and a Sherpa-first leadership culture that has remained at the centre of the house for nearly four decades." }),
-      /* @__PURE__ */ jsx("p", { children: "It is part of the Yeti Group, the wider Nepali hospitality and Himalayan group through which Thamserku continues to operate, and to which it is connected by lineage rather than by branding." }),
-      /* @__PURE__ */ jsx("div", { className: "border-y border-[#0A3A77]/20 py-12 md:py-16 mt-12 mb-8", children: /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] italic text-3xl md:text-[44px] leading-tight text-[#0A3A77] font-light", children: '"A Himalayan expedition is only as serious as the Sherpa knowledge that runs it."' }) })
+      /* @__PURE__ */ jsx("p", { className: "first-letter:font-['Cormorant_Garamond'] first-letter:text-[#0A3A77] first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:-mt-2", children: (page == null ? void 0 : page.originBody1) ?? "Thamserku was named after a Himalayan peak, but it was built around a quieter principle: that a Himalayan expedition is only as serious as the Sherpa knowledge that runs it. Founded in the late 1980s as one of Nepal's original high-altitude expedition names, the house grew not by chasing the largest summits, but by deepening the practices that made each expedition possible — route preparation, weather judgement, and a Sherpa-first leadership culture that has remained at the centre of the house for nearly four decades." }),
+      /* @__PURE__ */ jsx("p", { children: (page == null ? void 0 : page.originBody2) ?? "It is part of the Yeti Group, the wider Nepali hospitality and Himalayan group through which Thamserku continues to operate, and to which it is connected by lineage rather than by branding." }),
+      /* @__PURE__ */ jsx("div", { className: "border-y border-[#0A3A77]/20 py-12 md:py-16 mt-12 mb-8", children: /* @__PURE__ */ jsxs("h3", { className: "font-['Cormorant_Garamond'] italic text-3xl md:text-[44px] leading-tight text-[#0A3A77] font-light", children: [
+        '"',
+        (page == null ? void 0 : page.originPullQuote) ?? "A Himalayan expedition is only as serious as the Sherpa knowledge that runs it.",
+        '"'
+      ] }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-3 flex flex-col gap-4", children: [
       /* @__PURE__ */ jsx("div", { className: "w-full aspect-[4/5] bg-gray-200 overflow-hidden relative grayscale-[0.8] sepia-[0.3]", children: /* @__PURE__ */ jsx(
         "img",
         {
-          src: "https://images.unsplash.com/photo-1678501265684-9b76ea299692?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGVycGElMjB2aW50YWdlJTIwa2h1bWJ1JTIwYXBwcm9hY2h8ZW58MXx8fHwxNzc3NDU2NjEwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-          alt: "Archival khumbu approach",
+          src: (page == null ? void 0 : page.originImage) ? urlFor(page.originImage).width(600).url() : "https://images.unsplash.com/photo-1678501265684-9b76ea299692?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGVycGElMjB2aW50YWdlJTIwa2h1bWJ1JTIwYXBwcm9hY2h8ZW58MXx8fHwxNzc3NDU2NjEwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+          alt: "Origin",
           className: "w-full h-full object-cover mix-blend-multiply opacity-80"
         }
       ) }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block mt-2", children: "KHUMBU APPROACH · ARCHIVAL" })
+      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block mt-2", children: (page == null ? void 0 : page.originImageCaption) ?? "KHUMBU APPROACH · ARCHIVAL" })
     ] })
   ] }) });
 }
 const chairmanImage = "/assets/Mt-Everest-8848m-no-label-1-XCj15Fwr.jpg";
-function LegacyChairman() {
+const components = {
+  block: {
+    normal: ({ children }) => /* @__PURE__ */ jsx("p", { children })
+  }
+};
+function LegacyChairman({ letter }) {
+  const imgSrc = (letter == null ? void 0 : letter.image) ? urlFor(letter.image).width(800).url() : chairmanImage;
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full bg-[#1A1A1A] text-white py-24 md:py-40 px-8 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
       "div",
@@ -2694,138 +2776,147 @@ function LegacyChairman() {
           /* @__PURE__ */ jsx(
             "img",
             {
-              src: chairmanImage,
+              src: imgSrc,
               alt: "Mt. Everest 8848m",
               className: "w-full h-full object-cover mix-blend-screen opacity-90"
             }
           ),
           /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#1A1A1A]/30 mix-blend-multiply" })
         ] }),
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mt-2", children: "MT. EVEREST · 8848M · MAHALANGUR HIMAL" })
+        (letter == null ? void 0 : letter.imageCaption) && /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mt-2", children: letter.imageCaption })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-7 font-['Cormorant_Garamond'] text-[18px] leading-[1.75] text-[#C8CDD2] flex flex-col gap-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-4", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-8", children: "03 — THE CHAIRMAN'S LETTER" }),
-          /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[52px] leading-tight text-white max-w-[22ch]", children: "A short letter, written quietly." })
+          (letter == null ? void 0 : letter.eyebrow) && /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-8", children: letter.eyebrow }),
+          (letter == null ? void 0 : letter.heading) && /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[52px] leading-tight text-white max-w-[22ch]", children: letter.heading })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-8 max-w-[60ch]", children: [
-          /* @__PURE__ */ jsx("p", { children: "To those reading this page —" }),
-          /* @__PURE__ */ jsx("p", { children: "The Himalayas have given our family, our team, and our company more than we will ever be able to give back. We have been part of seasons, summits, and quiet days that asked everything of us. We have been part of decisions that were made carefully, by people whose judgement was earned over decades, not bought with equipment." }),
-          /* @__PURE__ */ jsx("p", { children: "Thamserku, today, is a refinement of that long inheritance. It is run by a smaller, more disciplined house, supported by the Yeti Group, and led — as it has always been — by Sherpa expertise. The mountain has not changed. Our way of reading it has only deepened." }),
-          /* @__PURE__ */ jsx("p", { children: "We do not conquer the mountain. We learn from it. And we pass that learning on to the people who climb with us." })
-        ] }),
+        (letter == null ? void 0 : letter.body) && /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-8 max-w-[60ch]", children: /* @__PURE__ */ jsx(PortableText, { value: letter.body, components }) }),
         /* @__PURE__ */ jsxs("div", { className: "mt-12 flex flex-col items-start", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-['Cormorant_Garamond'] italic text-2xl md:text-[24px] text-white border-b border-white/20 pb-2 mb-4", children: "— The Chairman" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: "THAMSERKU EXPEDITIONS · YETI GROUP" })
+          (letter == null ? void 0 : letter.signature) && /* @__PURE__ */ jsx("span", { className: "font-['Cormorant_Garamond'] italic text-2xl md:text-[24px] text-white border-b border-white/20 pb-2 mb-4", children: letter.signature }),
+          (letter == null ? void 0 : letter.organization) && /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: letter.organization })
         ] })
       ] })
     ] })
   ] });
 }
-function LegacyTimeline() {
-  const chapters = [
-    {
-      roman: "I",
-      years: "1987 — 1995",
-      title: "Founding Era",
-      desc: "Thamserku is established as one of Nepal's original high-altitude expedition names. Early seasons are run on Manaslu, Dhaulagiri, and the Khumbu approach to Everest. The Sherpa-first culture is set in place from the start.",
-      img: "https://images.unsplash.com/photo-1727209093337-4e9ba71e3f26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwxOTgwcyUyMG1vdW50YWluJTIwZXhwZWRpdGlvbiUyMHZpbnRhZ2V8ZW58MXx8fHwxNzc3NDU2NjE5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    },
-    {
-      roman: "II",
-      years: "1995 — 2005",
-      title: "Sherpa-led Logistics",
-      desc: "The house deepens its logistics practice — route preparation, fixed lines, oxygen staging, and Base Camp operations are run end-to-end by senior Sherpas trained over years, not seasons.",
-      img: "https://images.unsplash.com/photo-1606585890880-a20adcf38a7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGJhc2UlMjBjYW1wJTIwdGVudCUyMHNub3d8ZW58MXx8fHwxNzc3NDU2NjIyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    },
-    {
-      roman: "III",
-      years: "2005 — 2020",
-      title: "Expedition Role",
-      desc: "Thamserku grows quietly into a recognised name in the Himalayan expedition industry, supporting both private climbers and visiting teams across the 8,000m peaks of Nepal.",
-      img: "https://images.unsplash.com/photo-1734445558792-885402602f7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaW1hbGF5YW4lMjBjbGltYiUyMGVhcmx5JTIwMjAwMHN8ZW58MXx8fHwxNzc3NDU2NjI1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    },
-    {
-      roman: "IV",
-      years: "2020 — 2024",
-      title: "Heritage Revival",
-      desc: "A deliberate revival begins under the Yeti Group: the house is sharpened back to its original principles — fewer mountains, deeper practice, and a refined editorial identity for a global audience.",
-      img: "https://images.unsplash.com/photo-1547127678-a8619053611c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGVycGElMjBsZWFkaW5nJTIwbW91bnRhaW4lMjB0cmVrfGVufDF8fHx8MTc3NzQ1NjYyOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    },
-    {
-      roman: "V",
-      years: "Today",
-      title: "Refined for the World",
-      desc: "Thamserku now reads five Himalayan mountains carefully — Everest, Manaslu, Dhaulagiri, Makalu, and Himchuli — across five editions: Alpine, Bespoke, Crafted, Definitive, and Explorer.",
-      img: "https://images.unsplash.com/photo-1606928359897-d3dc5dd872df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBoaW1hbGF5YW4lMjBsYW5kc2NhcGUlMjBtb3VudGFpbnxlbnwxfHx8fDE3Nzc0NTY2MzF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    }
-  ];
+const DEFAULT_CHAPTERS = [
+  {
+    _key: "1",
+    roman: "I",
+    years: "1987 — 1995",
+    title: "Founding Era",
+    description: "Thamserku is established as one of Nepal's original high-altitude expedition names. Early seasons are run on Manaslu, Dhaulagiri, and the Khumbu approach to Everest. The Sherpa-first culture is set in place from the start.",
+    image: null
+  },
+  {
+    _key: "2",
+    roman: "II",
+    years: "1995 — 2005",
+    title: "Sherpa-led Logistics",
+    description: "The house deepens its logistics practice — route preparation, fixed lines, oxygen staging, and Base Camp operations are run end-to-end by senior Sherpas trained over years, not seasons.",
+    image: null
+  },
+  {
+    _key: "3",
+    roman: "III",
+    years: "2005 — 2020",
+    title: "Expedition Role",
+    description: "Thamserku grows quietly into a recognised name in the Himalayan expedition industry, supporting both private climbers and visiting teams across the 8,000m peaks of Nepal.",
+    image: null
+  },
+  {
+    _key: "4",
+    roman: "IV",
+    years: "2020 — 2024",
+    title: "Heritage Revival",
+    description: "A deliberate revival begins under the Yeti Group: the house is sharpened back to its original principles — fewer mountains, deeper practice, and a refined editorial identity for a global audience.",
+    image: null
+  },
+  {
+    _key: "5",
+    roman: "V",
+    years: "Today",
+    title: "Refined for the World",
+    description: "Thamserku now reads five Himalayan mountains carefully — Everest, Manaslu, Dhaulagiri, Makalu, and Himchuli — across five editions: Alpine, Bespoke, Crafted, Definitive, and Explorer.",
+    image: null
+  }
+];
+const DEFAULT_UNSPLASH = {
+  "1": "https://images.unsplash.com/photo-1727209093337-4e9ba71e3f26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwxOTgwcyUyMG1vdW50YWluJTIwZXhwZWRpdGlvbiUyMHZpbnRhZ2V8ZW58MXx8fHwxNzc3NDU2NjE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "2": "https://images.unsplash.com/photo-1606585890880-a20adcf38a7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGJhc2UlMjBjYW1wJTIwdGVudCUyMHNub3d8ZW58MXx8fHwxNzc3NDU2NjIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "3": "https://images.unsplash.com/photo-1734445558792-885402602f7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaW1hbGF5YW4lMjBjbGltYiUyMGVhcmx5JTIwMjAwMHN8ZW58MXx8fHwxNzc3NDU2NjI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "4": "https://images.unsplash.com/photo-1547127678-a8619053611c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGVycGElMjBsZWFkaW5nJTIwbW91bnRhaW4lMjB0cmVrfGVufDF8fHx8MTc3NzQ1NjYyOHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "5": "https://images.unsplash.com/photo-1606928359897-d3dc5dd872df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBoaW1hbGF5YW4lMjBsYW5kc2NhcGUlMjBtb3VudGFpbnxlbnwxfHx8fDE3Nzc0NTY2MzF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+};
+function LegacyTimeline({ page }) {
+  var _a;
+  const chapters = ((_a = page == null ? void 0 : page.timelineChapters) == null ? void 0 : _a.length) ? page.timelineChapters : DEFAULT_CHAPTERS;
   return /* @__PURE__ */ jsxs("section", { className: "w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 md:py-40 overflow-hidden", children: [
     /* @__PURE__ */ jsx("div", { className: "max-w-[1440px] mx-auto px-8 flex flex-col gap-12 md:gap-24", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-8 mb-16", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: "04 — TIMELINE" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-tight text-[#1A1A1A] max-w-[22ch]", children: "Five chapters in the life of a Himalayan house." })
+      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: (page == null ? void 0 : page.timelineEyebrow) ?? "04 — TIMELINE" }),
+      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-tight text-[#1A1A1A] max-w-[22ch]", children: (page == null ? void 0 : page.timelineHeading) ?? "Five chapters in the life of a Himalayan house." })
     ] }) }),
     /* @__PURE__ */ jsxs("div", { className: "relative w-full mt-8 md:mt-24 pb-32", children: [
       /* @__PURE__ */ jsx("div", { className: "absolute top-[80px] md:top-[120px] left-0 w-full h-[1px] bg-[#0A3A77] z-10" }),
       /* @__PURE__ */ jsxs("div", { className: "flex overflow-x-auto gap-8 px-8 snap-x snap-mandatory scrollbar-hide pb-16 relative z-20", children: [
-        chapters.map((chapter, idx) => /* @__PURE__ */ jsxs("div", { className: "min-w-[280px] md:min-w-[340px] max-w-[340px] flex-shrink-0 snap-start flex flex-col relative pt-[80px] md:pt-[120px]", children: [
-          /* @__PURE__ */ jsxs("div", { className: "absolute top-[76px] md:top-[116px] left-1/2 -translate-x-1/2 flex flex-col items-center z-30", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-2 h-2 rounded-full bg-[#0A3A77]" }),
-            /* @__PURE__ */ jsx("div", { className: "w-[1px] h-12 bg-[#0A3A77]" })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6 mt-16 bg-[#F4F2EC]", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-full aspect-[4/3] bg-gray-200 overflow-hidden grayscale-[0.5] sepia-[0.1]", children: /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: chapter.img,
-                alt: chapter.title,
-                className: "w-full h-full object-cover"
-              }
-            ) }),
-            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 px-2", children: [
-              /* @__PURE__ */ jsxs("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: [
-                "CHAPTER ",
-                chapter.roman,
-                " · ",
-                chapter.years
-              ] }),
-              /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] md:text-[28px] leading-tight text-[#1A1A1A]", children: chapter.title }),
-              /* @__PURE__ */ jsx("p", { className: "font-['Inter'] font-light text-[#5A6673] text-[15px] leading-relaxed", children: chapter.desc })
+        chapters.map((chapter, idx) => {
+          const imgSrc = chapter.image ? urlFor(chapter.image).width(680).url() : DEFAULT_UNSPLASH[String(idx + 1)] ?? "";
+          return /* @__PURE__ */ jsxs("div", { className: "min-w-[280px] md:min-w-[340px] max-w-[340px] flex-shrink-0 snap-start flex flex-col relative pt-[80px] md:pt-[120px]", children: [
+            /* @__PURE__ */ jsxs("div", { className: "absolute top-[76px] md:top-[116px] left-1/2 -translate-x-1/2 flex flex-col items-center z-30", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-2 h-2 rounded-full bg-[#0A3A77]" }),
+              /* @__PURE__ */ jsx("div", { className: "w-[1px] h-12 bg-[#0A3A77]" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6 mt-16 bg-[#F4F2EC]", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-full aspect-[4/3] bg-gray-200 overflow-hidden grayscale-[0.5] sepia-[0.1]", children: /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: imgSrc,
+                  alt: chapter.title,
+                  className: "w-full h-full object-cover"
+                }
+              ) }),
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 px-2", children: [
+                /* @__PURE__ */ jsxs("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: [
+                  "CHAPTER ",
+                  chapter.roman,
+                  " · ",
+                  chapter.years
+                ] }),
+                /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] md:text-[28px] leading-tight text-[#1A1A1A]", children: chapter.title }),
+                /* @__PURE__ */ jsx("p", { className: "font-['Inter'] font-light text-[#5A6673] text-[15px] leading-relaxed", children: chapter.description })
+              ] })
             ] })
-          ] })
-        ] }, idx)),
+          ] }, chapter._key);
+        }),
         /* @__PURE__ */ jsx("div", { className: "min-w-[24px] md:min-w-[64px] flex-shrink-0" })
       ] })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "max-w-[1440px] mx-auto px-8 mt-16", children: /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] max-w-[56ch]", children: "Note · This is not a corporate milestone chart. It is the rhythm of a house that has measured time in seasons, not quarters." }) })
+    /* @__PURE__ */ jsx("div", { className: "max-w-[1440px] mx-auto px-8 mt-16", children: /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] max-w-[56ch]", children: (page == null ? void 0 : page.timelineFooterNote) ?? "Note · This is not a corporate milestone chart. It is the rhythm of a house that has measured time in seasons, not quarters." }) })
   ] });
 }
-function LegacyLineage() {
+const DEFAULT_TILES = [
+  { _key: "1", label: "HOUSE", value: "THAMSERKU EXPEDITIONS" },
+  { _key: "2", label: "GROUP", value: "YETI GROUP" },
+  { _key: "3", label: "LOCATION", value: "KATHMANDU · NEPAL HIMALAYA" }
+];
+function LegacyLineage({ page }) {
+  var _a;
+  const tiles = ((_a = page == null ? void 0 : page.lineageDataTiles) == null ? void 0 : _a.length) ? page.lineageDataTiles : DEFAULT_TILES;
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-white text-[#1A1A1A] py-24 md:py-40 px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto flex flex-col gap-16 md:gap-24", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: "05 — LINEAGE" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-tight text-[#1A1A1A] max-w-[22ch]", children: "A house within a wider Himalayan group." })
+      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: (page == null ? void 0 : page.lineageEyebrow) ?? "05 — LINEAGE" }),
+      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-tight text-[#1A1A1A] max-w-[22ch]", children: (page == null ? void 0 : page.lineageHeading) ?? "A house within a wider Himalayan group." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-32", children: [
       /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-7 flex flex-col gap-8 font-['Cormorant_Garamond'] text-[18px] leading-[1.7] text-[#5A6673] max-w-[60ch]", children: [
-        /* @__PURE__ */ jsx("p", { children: "Thamserku Expeditions operates under the Yeti Group, the Nepali hospitality and Himalayan group through which the house has been continuously connected to the country's mountaineering, hospitality, and aviation lineage." }),
-        /* @__PURE__ */ jsx("p", { children: "The relationship is one of stewardship rather than ownership. The Yeti Group provides the wider organisational support that allows Thamserku to remain disciplined in scope: a small, focused expedition house that does not need to chase volume to remain relevant." })
+        /* @__PURE__ */ jsx("p", { children: (page == null ? void 0 : page.lineageBody1) ?? "Thamserku Expeditions operates under the Yeti Group, the Nepali hospitality and Himalayan group through which the house has been continuously connected to the country's mountaineering, hospitality, and aviation lineage." }),
+        /* @__PURE__ */ jsx("p", { children: (page == null ? void 0 : page.lineageBody2) ?? "The relationship is one of stewardship rather than ownership. The Yeti Group provides the wider organisational support that allows Thamserku to remain disciplined in scope: a small, focused expedition house that does not need to chase volume to remain relevant." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-5 relative flex flex-col justify-center", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col border-t border-[#1A1A1A]/10 w-full max-w-[400px]", children: [
-          /* @__PURE__ */ jsxs("div", { className: "py-6 flex flex-col md:flex-row md:items-center justify-between border-b border-[#1A1A1A]/10 gap-2", children: [
-            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]", children: "HOUSE" }),
-            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A]", children: "THAMSERKU EXPEDITIONS" })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "py-6 flex flex-col md:flex-row md:items-center justify-between border-b border-[#1A1A1A]/10 gap-2", children: [
-            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]", children: "GROUP" }),
-            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A]", children: "YETI GROUP" })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "py-6 flex flex-col md:flex-row md:items-center justify-between border-b border-[#1A1A1A]/10 gap-2", children: [
-            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]", children: "LOCATION" }),
-            /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A]", children: "KATHMANDU · NEPAL HIMALAYA" })
-          ] })
-        ] }),
+        /* @__PURE__ */ jsx("div", { className: "flex flex-col border-t border-[#1A1A1A]/10 w-full max-w-[400px]", children: tiles.map((tile) => /* @__PURE__ */ jsxs("div", { className: "py-6 flex flex-col md:flex-row md:items-center justify-between border-b border-[#1A1A1A]/10 gap-2", children: [
+          /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]", children: tile.label }),
+          /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A]", children: tile.value })
+        ] }, tile._key)) }),
         /* @__PURE__ */ jsx(
           "div",
           {
@@ -2840,55 +2931,65 @@ function LegacyLineage() {
     ] })
   ] }) });
 }
-function LegacyRevival() {
+const DEFAULT_PILLARS = [
+  { _key: "1", label: "FOCUS", quote: "Five mountains, read carefully — instead of a long catalogue." },
+  { _key: "2", label: "EDITIONS", quote: "Five editions — Alpine, Bespoke, Crafted, Definitive, Explorer — clearly defined." },
+  { _key: "3", label: "LEADERSHIP", quote: "Sherpa-led at every layer of the expedition, from sirdar to summit decision." }
+];
+function LegacyRevival({ page }) {
+  var _a;
+  const pillars = ((_a = page == null ? void 0 : page.revivalPillars) == null ? void 0 : _a.length) ? page.revivalPillars : DEFAULT_PILLARS;
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#0A3A77] text-white py-24 md:py-40 px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto flex flex-col gap-16 md:gap-24", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6 border-b border-white/20 pb-16", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block", children: "06 — THE REVIVAL" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-tight text-white max-w-[24ch]", children: "The same house, read again — for a quieter, more global audience." })
+      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block", children: (page == null ? void 0 : page.revivalEyebrow) ?? "06 — THE REVIVAL" }),
+      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-tight text-white max-w-[24ch]", children: (page == null ? void 0 : page.revivalHeading) ?? "The same house, read again — for a quieter, more global audience." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-32", children: [
       /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-5 flex flex-col gap-8", children: [
-        /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] italic text-[26px] text-[#C8CDD2] mb-4", children: '"Refined, not reinvented."' }),
+        /* @__PURE__ */ jsxs("h3", { className: "font-['Cormorant_Garamond'] italic text-[26px] text-[#C8CDD2] mb-4", children: [
+          '"',
+          (page == null ? void 0 : page.revivalLeftQuote) ?? "Refined, not reinvented.",
+          '"'
+        ] }),
         /* @__PURE__ */ jsxs("div", { className: "font-['Cormorant_Garamond'] text-[17px] leading-[1.75] text-[#C8CDD2] flex flex-col gap-8", children: [
-          /* @__PURE__ */ jsx("p", { children: "The revival of Thamserku is not a relaunch. The team that runs the house, the Sherpas who lead the climbs, and the principles that shape the editions are the same as they have been for decades." }),
-          /* @__PURE__ */ jsx("p", { children: "What has changed is the way the house presents itself. Fewer mountains. Clearer editions. A quieter editorial voice. A way of speaking to a global audience without losing the Sherpa lineage that defines us." }),
-          /* @__PURE__ */ jsx("p", { children: "It is the same expedition house, read again." })
+          /* @__PURE__ */ jsx("p", { children: (page == null ? void 0 : page.revivalLeftParagraph1) ?? "The revival of Thamserku is not a relaunch. The team that runs the house, the Sherpas who lead the climbs, and the principles that shape the editions are the same as they have been for decades." }),
+          /* @__PURE__ */ jsx("p", { children: (page == null ? void 0 : page.revivalLeftParagraph2) ?? "What has changed is the way the house presents itself. Fewer mountains. Clearer editions. A quieter editorial voice. A way of speaking to a global audience without losing the Sherpa lineage that defines us." }),
+          /* @__PURE__ */ jsx("p", { children: (page == null ? void 0 : page.revivalLeftParagraph3) ?? "It is the same expedition house, read again." })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "col-span-1 md:col-span-7 flex flex-col gap-8 md:gap-12 mt-8 md:mt-0", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 border-t border-white/20 pt-6", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: "FOCUS" }),
-          /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[22px] md:text-[28px] text-white", children: '"Five mountains, read carefully — instead of a long catalogue."' })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 border-t border-white/20 pt-6", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: "EDITIONS" }),
-          /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[22px] md:text-[28px] text-white", children: '"Five editions — Alpine, Bespoke, Crafted, Definitive, Explorer — clearly defined."' })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 border-t border-white/20 pt-6", children: [
-          /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: "LEADERSHIP" }),
-          /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[22px] md:text-[28px] text-white", children: '"Sherpa-led at every layer of the expedition, from sirdar to summit decision."' })
+      /* @__PURE__ */ jsx("div", { className: "col-span-1 md:col-span-7 flex flex-col gap-8 md:gap-12 mt-8 md:mt-0", children: pillars.map((pillar) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 border-t border-white/20 pt-6", children: [
+        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: pillar.label }),
+        /* @__PURE__ */ jsxs("p", { className: "font-['Cormorant_Garamond'] italic text-[22px] md:text-[28px] text-white", children: [
+          '"',
+          pillar.quote,
+          '"'
         ] })
-      ] })
+      ] }, pillar._key)) })
     ] })
   ] }) });
 }
-function LegacyPhilosophy() {
+function LegacyPhilosophy({ page }) {
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#F4F2EC] text-[#1A1A1A] py-32 md:py-48 px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[880px] mx-auto flex flex-col items-center text-center gap-16 md:gap-24", children: [
-    /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: "07 — PHILOSOPHY" }),
+    /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block", children: (page == null ? void 0 : page.philosophyEyebrow) ?? "07 — PHILOSOPHY" }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-8 md:gap-12 w-full max-w-[800px]", children: [
       /* @__PURE__ */ jsxs("h2", { className: "font-['Cormorant_Garamond'] font-light text-5xl md:text-[64px] lg:text-[80px] leading-[1.1] text-[#1A1A1A] tracking-tight", children: [
-        "We do not conquer the mountain. ",
-        /* @__PURE__ */ jsx("span", { className: "italic text-[#0A3A77] block mt-4", children: "We learn from it." })
+        (page == null ? void 0 : page.philosophyHeadlinePart1) ?? "We do not conquer the mountain.",
+        " ",
+        /* @__PURE__ */ jsx("span", { className: "italic text-[#0A3A77] block mt-4", children: (page == null ? void 0 : page.philosophyHeadlinePart2) ?? "We learn from it." })
       ] }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Inter'] font-light text-[#5A6673] text-[17px] leading-relaxed max-w-[56ch] mx-auto mt-4", children: "And we pass that learning on to the people who climb with us." })
+      /* @__PURE__ */ jsx("p", { className: "font-['Inter'] font-light text-[#5A6673] text-[17px] leading-relaxed max-w-[56ch] mx-auto mt-4", children: (page == null ? void 0 : page.philosophySubline) ?? "And we pass that learning on to the people who climb with us." })
     ] })
   ] }) });
 }
-function LegacyNewsletterBanner() {
+function LegacyNewsletterBanner({ page }) {
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#F4F2EC] py-[120px] md:py-[160px] px-8 flex justify-center", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-[880px] flex flex-col items-center text-center", children: [
-    /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8", children: "FIELD NOTES — NEWSLETTER FROM THE EXPEDITION DESK" }),
-    /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[44px] md:text-[56px] text-[#1A1A1A] leading-tight max-w-[26ch] mb-6", children: '"A quiet letter, four times a year."' }),
-    /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#5A6673] text-[16px] leading-[1.7] max-w-[60ch] mb-12", children: "Field reports, route judgements, and Himalayan readings from our expedition desk. No marketing. No frequency beyond what is honest. Unsubscribe anytime." }),
+    /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8", children: (page == null ? void 0 : page.newsletterEyebrow) ?? "FIELD NOTES — NEWSLETTER FROM THE EXPEDITION DESK" }),
+    /* @__PURE__ */ jsxs("h2", { className: "font-['Radley'] font-light text-[44px] md:text-[56px] text-[#1A1A1A] leading-tight max-w-[26ch] mb-6", children: [
+      '"',
+      (page == null ? void 0 : page.newsletterHeading) ?? "A quiet letter, four times a year.",
+      '"'
+    ] }),
+    /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#5A6673] text-[16px] leading-[1.7] max-w-[60ch] mb-12", children: (page == null ? void 0 : page.newsletterBody) ?? "Field reports, route judgements, and Himalayan readings from our expedition desk. No marketing. No frequency beyond what is honest. Unsubscribe anytime." }),
     /* @__PURE__ */ jsxs(
       "form",
       {
@@ -2916,7 +3017,7 @@ function LegacyNewsletterBanner() {
         ]
       }
     ),
-    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]", children: "BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS." })
+    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]", children: (page == null ? void 0 : page.newsletterPrivacyNote) ?? "BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS." })
   ] }) });
 }
 function LegacyClosing() {
@@ -2961,18 +3062,40 @@ function LegacyClosing() {
     ] })
   ] });
 }
+async function loader$2() {
+  return getLegacyPageData();
+}
 const LegacyPage = UNSAFE_withComponentProps(function LegacyPage2() {
+  const data = useLoaderData();
+  const page = data.legacyPage ?? void 0;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return /* @__PURE__ */ jsxs("div", {
     className: "w-full min-h-screen bg-[#F4F2EC] text-[#1A1A1A]",
-    children: [/* @__PURE__ */ jsx(LegacyHero, {}), /* @__PURE__ */ jsx(LegacyOrigin, {}), /* @__PURE__ */ jsx(LegacyChairman, {}), /* @__PURE__ */ jsx(LegacyTimeline, {}), /* @__PURE__ */ jsx(LegacyLineage, {}), /* @__PURE__ */ jsx(LegacyRevival, {}), /* @__PURE__ */ jsx(LegacyPhilosophy, {}), /* @__PURE__ */ jsx(LegacyNewsletterBanner, {}), /* @__PURE__ */ jsx(LegacyClosing, {}), /* @__PURE__ */ jsx(Footer, {})]
+    children: [/* @__PURE__ */ jsx(LegacyHero, {
+      page
+    }), /* @__PURE__ */ jsx(LegacyOrigin, {
+      page
+    }), /* @__PURE__ */ jsx(LegacyChairman, {
+      letter: (page == null ? void 0 : page.chairmanLetter) ?? void 0
+    }), /* @__PURE__ */ jsx(LegacyTimeline, {
+      page
+    }), /* @__PURE__ */ jsx(LegacyLineage, {
+      page
+    }), /* @__PURE__ */ jsx(LegacyRevival, {
+      page
+    }), /* @__PURE__ */ jsx(LegacyPhilosophy, {
+      page
+    }), /* @__PURE__ */ jsx(LegacyNewsletterBanner, {
+      page
+    }), /* @__PURE__ */ jsx(LegacyClosing, {}), /* @__PURE__ */ jsx(Footer, {})]
   });
 });
 const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: LegacyPage
+  default: LegacyPage,
+  loader: loader$2
 }, Symbol.toStringTag, { value: "Module" }));
 function TeamHero() {
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full h-screen min-h-[800px] bg-[#1A1A1A] text-white flex flex-col justify-end pb-16 md:pb-32 overflow-hidden", children: [
@@ -3471,15 +3594,21 @@ const route6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   __proto__: null,
   default: TeamPage
 }, Symbol.toStringTag, { value: "Module" }));
-const heroBgImage = "/assets/Deboche_Trail_View_(22)-YjjbiAm0.jpg";
-const EnquiryHero = () => {
+const EnquiryHero = ({ data }) => {
+  const heroImgSrc = (data == null ? void 0 : data.heroImage) ? urlFor(data.heroImage).url() : void 0;
+  const headline = data == null ? void 0 : data.heroHeadline;
+  const subheading = data == null ? void 0 : data.heroSubheading;
+  const metaResponse = data == null ? void 0 : data.heroMetaResponse;
+  const metaHandledBy = data == null ? void 0 : data.heroMetaHandledBy;
+  const metaLanguages = data == null ? void 0 : data.heroMetaLanguages;
+  const metaConfidentiality = data == null ? void 0 : data.heroMetaConfidentiality;
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen bg-[#1A1A1A] flex flex-col overflow-hidden", children: [
     /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-0 pointer-events-none", children: [
-      /* @__PURE__ */ jsx(
+      heroImgSrc && /* @__PURE__ */ jsx(
         ImageWithFallback,
         {
-          src: heroBgImage,
-          alt: "Deboche Trail View",
+          src: heroImgSrc,
+          alt: "Expedition landscape",
           className: "w-full h-full object-cover opacity-30 mix-blend-overlay saturate-[0.8] contrast-110"
         }
       ),
@@ -3488,52 +3617,55 @@ const EnquiryHero = () => {
     /* @__PURE__ */ jsx(Nav, {}),
     /* @__PURE__ */ jsxs("div", { className: "relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end h-full mt-32 md:mt-48 flex-grow pb-32", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-6", children: "THE EXPEDITION DESK — SCHEDULE A CONSULTATION" }),
-      /* @__PURE__ */ jsx("h1", { className: "font-['Cormorant_Garamond'] font-light text-5xl md:text-[72px] lg:text-[104px] leading-[1.05] mb-8 max-w-[22ch] text-white tracking-tight", children: "Every Thamserku journey begins with a private conversation." }),
-      /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base md:text-[17px] leading-relaxed max-w-[60ch]", children: "Choose a time on our calendar, or write to us in your own words. A senior advisor will respond personally — quietly, and within 48 hours." })
+      /* @__PURE__ */ jsx("h1", { className: "font-['Cormorant_Garamond'] font-light text-5xl md:text-[72px] lg:text-[104px] leading-[1.05] mb-8 max-w-[22ch] text-white tracking-tight", children: headline }),
+      /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base md:text-[17px] leading-relaxed max-w-[60ch]", children: subheading })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "relative z-20 w-full border-t border-[#2E353C] mt-auto", children: /* @__PURE__ */ jsx("div", { className: "max-w-[1440px] mx-auto px-8 py-6", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-[#2E353C]", children: [
       /* @__PURE__ */ jsxs("div", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] md:pr-6 py-2 md:py-0", children: [
         "RESPONSE ",
         /* @__PURE__ */ jsx("span", { className: "mx-2 text-[#5A6673]", children: "·" }),
-        " WITHIN 48 HOURS"
+        " ",
+        metaResponse
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] md:px-6 py-2 md:py-0", children: [
         "HANDLED BY ",
         /* @__PURE__ */ jsx("span", { className: "mx-2 text-[#5A6673]", children: "·" }),
-        " SENIOR EXPEDITION STAFF"
+        " ",
+        metaHandledBy
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] md:px-6 py-2 md:py-0", children: [
         "LANGUAGES ",
         /* @__PURE__ */ jsx("span", { className: "mx-2 text-[#5A6673]", children: "·" }),
-        " ENGLISH ",
-        /* @__PURE__ */ jsx("span", { className: "mx-2 text-[#5A6673]", children: "·" }),
-        " NEPALI"
+        " ",
+        metaLanguages
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] md:pl-6 py-2 md:py-0", children: [
         "CONFIDENTIALITY ",
         /* @__PURE__ */ jsx("span", { className: "mx-2 text-[#5A6673]", children: "·" }),
-        " ASSURED"
+        " ",
+        metaConfidentiality
       ] })
     ] }) }) })
   ] });
 };
-const EnquiryInvitation = () => {
+const EnquiryInvitation = ({ data }) => {
+  const heading = data == null ? void 0 : data.invitationHeading;
+  const body = data == null ? void 0 : data.invitationBody;
   return /* @__PURE__ */ jsx("section", { className: "bg-[#F4F2EC] py-24 md:py-48", children: /* @__PURE__ */ jsx("div", { className: "max-w-[1440px] mx-auto px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8", children: [
     /* @__PURE__ */ jsx("div", { className: "md:col-span-4 lg:col-span-3", children: /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]", children: "02 — THE INVITATION" }) }),
     /* @__PURE__ */ jsxs("div", { className: "md:col-span-8 lg:col-span-7", children: [
-      /* @__PURE__ */ jsxs("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[40px] lg:text-[48px] leading-[1.2] mb-12 max-w-[32ch] text-[#1A1A1A]", children: [
-        "Every Thamserku journey begins with a private conversation. ",
-        /* @__PURE__ */ jsx("span", { className: "italic text-[#0A3A77]", children: "Not a booking page." })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-[#5A6673] text-base md:text-[16px] leading-relaxed max-w-[60ch] font-light", children: "The form below is short by design. We would rather understand a few things well — your background, the mountain you have in mind, and the rhythm you are hoping to climb in — than collect details we do not yet need. Anything missing, we will ask in a follow-up letter." })
+      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[40px] lg:text-[48px] leading-[1.2] mb-12 max-w-[32ch] text-[#1A1A1A]", children: heading }),
+      /* @__PURE__ */ jsx("p", { className: "text-[#5A6673] text-base md:text-[16px] leading-relaxed max-w-[60ch] font-light", children: body })
     ] })
   ] }) }) });
 };
-const TrustStatement = () => {
+const TrustStatement = ({ data }) => {
+  const quote = data == null ? void 0 : data.trustQuote;
+  const body = data == null ? void 0 : data.trustBody;
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#1A1A1A] py-[100px] md:py-[120px] px-8 flex justify-center", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-[880px] flex flex-col items-center text-center", children: [
     /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8", children: "HANDLED PERSONALLY — BY THE SENIOR EXPEDITION TEAM" }),
-    /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[40px] md:text-[52px] text-white leading-[1.15] max-w-[28ch] mb-6", children: '"Every consultation is read, written, and shaped by senior expedition staff. Nothing is automated."' }),
-    /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#C8CDD2] text-[16px] leading-[1.65] max-w-[60ch]", children: "A senior advisor in Kathmandu reviews every consultation personally, usually within 48 hours. Your conversation is private from first letter to descent — no shared inboxes, no junior gatekeepers." })
+    /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[40px] md:text-[52px] text-white leading-[1.15] max-w-[28ch] mb-6", children: quote }),
+    /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#C8CDD2] text-[16px] leading-[1.65] max-w-[60ch]", children: body })
   ] }) });
 };
 const ScheduleCalendar = () => {
@@ -3601,7 +3733,19 @@ const ScheduleCalendar = () => {
     ] })
   ] }) });
 };
-const EnquiryForm = () => {
+const EnquiryForm = ({
+  data,
+  expeditions,
+  submitted,
+  errors
+}) => {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+  const uploadFetcher = useFetcher();
+  const isUploading = uploadFetcher.state !== "idle";
+  const uploadedAssetId = uploadFetcher.data && "assetId" in uploadFetcher.data ? uploadFetcher.data.assetId : void 0;
+  const uploadedFilename = uploadFetcher.data && "filename" in uploadFetcher.data ? uploadFetcher.data.filename : void 0;
+  const uploadError = uploadFetcher.data && "error" in uploadFetcher.data ? uploadFetcher.data.error : void 0;
   const [activeInterest, setActiveInterest] = useState([]);
   const [activeEdition, setActiveEdition] = useState("");
   const [trekkingExp, setTrekkingExp] = useState("");
@@ -3610,36 +3754,91 @@ const EnquiryForm = () => {
   const [privateGroup, setPrivateGroup] = useState("");
   const [privacyLevel, setPrivacyLevel] = useState("");
   const [contactMethod, setContactMethod] = useState("");
+  const fileInputRef = useRef(null);
+  const handleFileChange = (e) => {
+    var _a;
+    const file = (_a = e.target.files) == null ? void 0 : _a[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append("file", file);
+    uploadFetcher.submit(fd, {
+      method: "post",
+      action: "/api/upload-cv",
+      encType: "multipart/form-data"
+    });
+  };
   const toggleInterest = (interest) => {
-    if (activeInterest.includes(interest)) {
-      setActiveInterest(activeInterest.filter((i) => i !== interest));
-    } else {
-      setActiveInterest([...activeInterest, interest]);
-    }
+    setActiveInterest(
+      (prev) => prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
+    );
   };
   const toggleAltitude = (alt) => {
-    if (altitudeExp.includes(alt)) {
-      setAltitudeExp(altitudeExp.filter((a) => a !== alt));
-    } else {
-      setAltitudeExp([...altitudeExp, alt]);
-    }
+    setAltitudeExp(
+      (prev) => prev.includes(alt) ? prev.filter((a) => a !== alt) : [...prev, alt]
+    );
   };
+  const sectionLabel = data == null ? void 0 : data.formSectionLabel;
+  const heading = data == null ? void 0 : data.formHeading;
+  const subheading = data == null ? void 0 : data.formSubheading;
+  const alternativeLabel = data == null ? void 0 : data.formAlternativeLabel;
+  const alternativeSubheading = data == null ? void 0 : data.formAlternativeSubheading;
+  const chapterATitle = data == null ? void 0 : data.formChapterATitle;
+  const chapterBTitle = data == null ? void 0 : data.formChapterBTitle;
+  const chapterCTitle = data == null ? void 0 : data.formChapterCTitle;
+  const chapterDTitle = data == null ? void 0 : data.formChapterDTitle;
+  const chapterDSubheading = data == null ? void 0 : data.formChapterDSubheading;
+  const chapterETitle = data == null ? void 0 : data.formChapterETitle;
+  const chapterFTitle = data == null ? void 0 : data.formChapterFTitle;
+  const editionOptions = (data == null ? void 0 : data.formEditionOptions) ?? [];
+  const seasonOptions = (data == null ? void 0 : data.formSeasonOptions) ?? [];
+  const groupOptions = (data == null ? void 0 : data.formGroupOptions) ?? [];
+  const privacyOptions = (data == null ? void 0 : data.formPrivacyOptions) ?? [];
+  const contactOptions = (data == null ? void 0 : data.formContactOptions) ?? [];
+  const trekkingOptions = (data == null ? void 0 : data.formTrekkingOptions) ?? [];
+  const altitudeOptions = (data == null ? void 0 : data.formAltitudeOptions) ?? [];
+  const mountainOptions = [
+    ...(expeditions ?? []).map((e) => e.name.toUpperCase()),
+    "OTHER · NOT SURE"
+  ];
+  if (submitted) {
+    return /* @__PURE__ */ jsx("section", { id: "letter-path", className: "bg-white py-24 md:py-48", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[880px] mx-auto px-8 flex flex-col items-center text-center", children: [
+      /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-12", children: /* @__PURE__ */ jsx(CheckCircle, { className: "w-5 h-5 text-[#0A3A77]", strokeWidth: 1.5 }) }),
+      /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8", children: "LETTER RECEIVED" }),
+      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-[1.1] mb-8 text-[#1A1A1A] max-w-[22ch]", children: "Your letter is in our hands." }),
+      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[20px] max-w-[52ch] mb-16", children: "We read every enquiry personally. You will hear from our desk within 48 hours — quietly, and without formality." }),
+      /* @__PURE__ */ jsx("div", { className: "h-[1px] w-24 bg-[#C8CDD2] mb-8" }),
+      /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: [
+        "THAMSERKU EXPEDITIONS ",
+        /* @__PURE__ */ jsx("span", { className: "mx-2", children: "·" }),
+        " DESK"
+      ] })
+    ] }) });
+  }
   return /* @__PURE__ */ jsx("section", { id: "letter-path", className: "bg-white py-24 md:py-48", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[880px] mx-auto px-8", children: [
     /* @__PURE__ */ jsxs("div", { className: "mb-24 flex flex-col items-center text-center", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "OR WRITE TO US — PATH II" }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[22px] max-w-[56ch]", children: "Prefer to write to us in your own words? The letter path is below — read carefully by the senior expedition desk." })
+      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: alternativeLabel }),
+      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[22px] max-w-[56ch]", children: alternativeSubheading })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "mb-24", children: [
-      /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: "03 — THE REQUEST" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-[1.1] mb-6 text-[#1A1A1A] max-w-[22ch]", children: "A short, considered letter to our expedition desk." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[20px] max-w-[56ch]", children: "Six chapters. Fewer questions, asked carefully." }),
+      /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: sectionLabel }),
+      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[56px] leading-[1.1] mb-6 text-[#1A1A1A] max-w-[22ch]", children: heading }),
+      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[20px] max-w-[56ch]", children: subheading }),
       /* @__PURE__ */ jsx("div", { className: "h-[1px] w-full bg-[#E5E7EB] mt-12" })
     ] }),
-    /* @__PURE__ */ jsxs("form", { className: "space-y-32", children: [
+    /* @__PURE__ */ jsxs(Form, { method: "post", className: "space-y-32", children: [
+      activeInterest.map((interest) => /* @__PURE__ */ jsx("input", { type: "hidden", name: "expeditionInterest", value: interest }, interest)),
+      /* @__PURE__ */ jsx("input", { type: "hidden", name: "preferredEdition", value: activeEdition }),
+      /* @__PURE__ */ jsx("input", { type: "hidden", name: "trekkingExperience", value: trekkingExp }),
+      altitudeExp.map((alt) => /* @__PURE__ */ jsx("input", { type: "hidden", name: "altitudeExperience", value: alt }, alt)),
+      /* @__PURE__ */ jsx("input", { type: "hidden", name: "preferredSeason", value: preferredSeason }),
+      /* @__PURE__ */ jsx("input", { type: "hidden", name: "groupPreference", value: privateGroup }),
+      /* @__PURE__ */ jsx("input", { type: "hidden", name: "privacyLevel", value: privacyLevel }),
+      /* @__PURE__ */ jsx("input", { type: "hidden", name: "preferredContact", value: contactMethod }),
+      uploadedAssetId && /* @__PURE__ */ jsx("input", { type: "hidden", name: "climbingCvAssetId", value: uploadedAssetId }),
       /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-12", children: [
           /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "CHAPTER A" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: "Who you are." })
+          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: chapterATitle })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
@@ -3651,10 +3850,12 @@ const EnquiryForm = () => {
               "input",
               {
                 type: "text",
+                name: "fullName",
                 placeholder: "How would you like us to address you?",
-                className: "w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50"
+                className: `w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/50 ${(errors == null ? void 0 : errors.fullName) ? "border-red-400 focus:border-red-500" : "border-[#5A6673] focus:border-[#0A3A77]"}`
               }
-            )
+            ),
+            (errors == null ? void 0 : errors.fullName) && /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-red-500 mt-2", children: errors.fullName })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
             /* @__PURE__ */ jsxs("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: [
@@ -3665,10 +3866,12 @@ const EnquiryForm = () => {
               "input",
               {
                 type: "email",
+                name: "email",
                 placeholder: "name@domain.com",
-                className: "w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50"
+                className: `w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/50 ${(errors == null ? void 0 : errors.email) ? "border-red-400 focus:border-red-500" : "border-[#5A6673] focus:border-[#0A3A77]"}`
               }
-            )
+            ),
+            (errors == null ? void 0 : errors.email) && /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-red-500 mt-2", children: errors.email })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
             /* @__PURE__ */ jsx("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "A.3 — PHONE / WHATSAPP" }),
@@ -3676,6 +3879,7 @@ const EnquiryForm = () => {
               "input",
               {
                 type: "tel",
+                name: "phone",
                 placeholder: "Your number with country code",
                 className: "w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50"
               }
@@ -3688,12 +3892,20 @@ const EnquiryForm = () => {
               /* @__PURE__ */ jsx("span", { className: "ml-1", children: "·" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "relative border-b border-[#5A6673] pb-3 cursor-pointer group", children: [
-              /* @__PURE__ */ jsxs("select", { defaultValue: "", className: "w-full bg-transparent text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl appearance-none focus:outline-none cursor-pointer group-hover:text-[#0A3A77] transition-colors text-[#5A6673]/50", children: [
-                /* @__PURE__ */ jsx("option", { value: "", disabled: true, children: "Select country" }),
-                /* @__PURE__ */ jsx("option", { value: "us", className: "not-italic font-sans text-base", children: "United States" }),
-                /* @__PURE__ */ jsx("option", { value: "uk", className: "not-italic font-sans text-base", children: "United Kingdom" }),
-                /* @__PURE__ */ jsx("option", { value: "other", className: "not-italic font-sans text-base", children: "Other" })
-              ] }),
+              /* @__PURE__ */ jsxs(
+                "select",
+                {
+                  name: "countryOfResidence",
+                  defaultValue: "",
+                  className: "w-full bg-transparent text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl appearance-none focus:outline-none cursor-pointer group-hover:text-[#0A3A77] transition-colors text-[#5A6673]/50",
+                  children: [
+                    /* @__PURE__ */ jsx("option", { value: "", disabled: true, children: "Select country" }),
+                    /* @__PURE__ */ jsx("option", { value: "us", className: "not-italic font-sans text-base", children: "United States" }),
+                    /* @__PURE__ */ jsx("option", { value: "uk", className: "not-italic font-sans text-base", children: "United Kingdom" }),
+                    /* @__PURE__ */ jsx("option", { value: "other", className: "not-italic font-sans text-base", children: "Other" })
+                  ]
+                }
+              ),
               /* @__PURE__ */ jsx(ChevronDown, { className: "absolute right-0 top-1 w-5 h-5 text-[#5A6673] group-hover:text-[#0A3A77] pointer-events-none" })
             ] })
           ] }),
@@ -3702,7 +3914,7 @@ const EnquiryForm = () => {
               "A.5 — PREFERRED METHOD OF CONTACT ",
               /* @__PURE__ */ jsx("span", { className: "ml-1", children: "·" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["EMAIL", "PHONE", "WHATSAPP"].map((method) => /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: contactOptions.map((method) => /* @__PURE__ */ jsx(
               "button",
               {
                 type: "button",
@@ -3718,7 +3930,7 @@ const EnquiryForm = () => {
       /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-12", children: [
           /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "CHAPTER B" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: "The mountain you have in mind." })
+          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: chapterBTitle })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
@@ -3726,7 +3938,7 @@ const EnquiryForm = () => {
               "B.1 — EXPEDITION INTEREST ",
               /* @__PURE__ */ jsx("span", { className: "ml-1", children: "·" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["EVEREST", "MANASLU", "DHAULAGIRI", "MAKALU", "HIMCHULI", "OTHER · NOT SURE"].map((interest) => /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: mountainOptions.map((interest) => /* @__PURE__ */ jsx(
               "button",
               {
                 type: "button",
@@ -3744,6 +3956,7 @@ const EnquiryForm = () => {
               "input",
               {
                 type: "text",
+                name: "otherExpeditionNote",
                 placeholder: "e.g. a first 8,000m peak, a quieter Himalayan objective, a non-summit Himalayan journey...",
                 className: "w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50"
               }
@@ -3754,14 +3967,14 @@ const EnquiryForm = () => {
       /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-12", children: [
           /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "CHAPTER C" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: "The edition you have in mind." })
+          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: chapterCTitle })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "space-y-10", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
           /* @__PURE__ */ jsxs("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: [
             "C.1 — PREFERRED EDITION ",
             /* @__PURE__ */ jsx("span", { className: "ml-1", children: "·" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["A — ALPINE", "B — BESPOKE", "C — CRAFTED", "D — DEFINITIVE", "E — EXPLORER", "NOT SURE YET"].map((edition) => /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: editionOptions.map((edition) => /* @__PURE__ */ jsx(
             "button",
             {
               type: "button",
@@ -3777,8 +3990,8 @@ const EnquiryForm = () => {
       /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-12", children: [
           /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "CHAPTER D" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A] mb-4", children: "Your background in altitude." }),
-          /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[16px] max-w-[56ch]", children: "We ask this carefully — not to filter you, but to recommend the right edition and the right rhythm of preparation." })
+          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A] mb-4", children: chapterDTitle }),
+          /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[16px] max-w-[56ch]", children: chapterDSubheading })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
@@ -3786,7 +3999,7 @@ const EnquiryForm = () => {
               "D.1 — TREKKING EXPERIENCE ",
               /* @__PURE__ */ jsx("span", { className: "ml-1", children: "·" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["LIMITED", "INTERMEDIATE", "EXTENSIVE"].map((level) => /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: trekkingOptions.map((level) => /* @__PURE__ */ jsx(
               "button",
               {
                 type: "button",
@@ -3799,7 +4012,7 @@ const EnquiryForm = () => {
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
             /* @__PURE__ */ jsx("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: "D.2 — ALTITUDE EXPERIENCE" }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["BELOW 4,000 M", "4,000 — 6,000 M", "6,000 — 7,000 M", "7,000 — 8,000 M", "ABOVE 8,000 M"].map((alt) => /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: altitudeOptions.map((alt) => /* @__PURE__ */ jsx(
               "button",
               {
                 type: "button",
@@ -3819,6 +4032,7 @@ const EnquiryForm = () => {
               "textarea",
               {
                 rows: 4,
+                name: "fitnessBackground",
                 placeholder: "A short paragraph about your training rhythm — running, hiking, strength, altitude exposure, anything relevant.",
                 className: "w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none"
               }
@@ -3826,23 +4040,62 @@ const EnquiryForm = () => {
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
             /* @__PURE__ */ jsx("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "D.4 — UPLOAD CLIMBING CV OR PRIOR EXPEDITION DETAILS" }),
-            /* @__PURE__ */ jsxs("div", { className: "w-full border border-[#C8CDD2] hover:border-[#1A1A1A] transition-colors p-8 flex flex-col items-center justify-center cursor-pointer group", children: [
-              /* @__PURE__ */ jsx(Upload, { className: "w-5 h-5 text-[#5A6673] group-hover:text-[#1A1A1A] mb-4 transition-colors" }),
-              /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] mb-2", children: "OPTIONAL · PDF · DOC · IMAGES · MAX 10 MB" }),
-              /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[16px] text-center max-w-[48ch]", children: "If you have a climbing CV, prior expedition reports, or photographs, attach them here. They help our desk write a more accurate first response." })
-            ] })
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                ref: fileInputRef,
+                type: "file",
+                accept: ".pdf,.doc,.docx,.jpg,.jpeg,.png",
+                className: "sr-only",
+                onChange: handleFileChange
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              "button",
+              {
+                type: "button",
+                onClick: () => {
+                  var _a;
+                  return (_a = fileInputRef.current) == null ? void 0 : _a.click();
+                },
+                disabled: isUploading,
+                className: "w-full border border-[#C8CDD2] hover:border-[#1A1A1A] transition-colors p-8 flex flex-col items-center justify-center cursor-pointer group disabled:cursor-default disabled:opacity-70",
+                children: [
+                  isUploading && /* @__PURE__ */ jsxs(Fragment, { children: [
+                    /* @__PURE__ */ jsx(Loader, { className: "w-5 h-5 text-[#5A6673] mb-4 animate-spin" }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]", children: "UPLOADING…" })
+                  ] }),
+                  !isUploading && uploadedAssetId && /* @__PURE__ */ jsxs(Fragment, { children: [
+                    /* @__PURE__ */ jsx(Paperclip, { className: "w-5 h-5 text-[#0A3A77] mb-4" }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] mb-1", children: "FILE ATTACHED" }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px] text-center break-all", children: uploadedFilename }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] mt-2", children: "CLICK TO REPLACE" })
+                  ] }),
+                  !isUploading && uploadError && /* @__PURE__ */ jsxs(Fragment, { children: [
+                    /* @__PURE__ */ jsx(AlertCircle, { className: "w-5 h-5 text-red-400 mb-4" }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-red-400 mb-1", children: "UPLOAD FAILED · CLICK TO RETRY" }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px] text-center", children: uploadError })
+                  ] }),
+                  !isUploading && !uploadedAssetId && !uploadError && /* @__PURE__ */ jsxs(Fragment, { children: [
+                    /* @__PURE__ */ jsx(Upload, { className: "w-5 h-5 text-[#5A6673] group-hover:text-[#1A1A1A] mb-4 transition-colors" }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] mb-2", children: "OPTIONAL · PDF · DOC · IMAGES · MAX 10 MB" }),
+                    /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[16px] text-center max-w-[48ch]", children: "If you have a climbing CV, prior expedition reports, or photographs, attach them here. They help our desk write a more accurate first response." })
+                  ] })
+                ]
+              }
+            )
           ] })
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-12", children: [
           /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "CHAPTER E" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: "Travel preferences." })
+          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: chapterETitle })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
             /* @__PURE__ */ jsx("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: "E.1 — PREFERRED SEASON" }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["SPRING", "AUTUMN", "OPEN"].map((season) => /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: seasonOptions.map((season) => /* @__PURE__ */ jsx(
               "button",
               {
                 type: "button",
@@ -3862,6 +4115,7 @@ const EnquiryForm = () => {
               "input",
               {
                 type: "number",
+                name: "numberOfGuests",
                 min: "1",
                 max: "10",
                 placeholder: "1",
@@ -3874,7 +4128,7 @@ const EnquiryForm = () => {
               "E.3 — PRIVATE OR GROUP PREFERENCE ",
               /* @__PURE__ */ jsx("span", { className: "ml-1", children: "·" })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["PRIVATE", "SMALL GROUP", "OPEN"].map((pref) => /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: groupOptions.map((pref) => /* @__PURE__ */ jsx(
               "button",
               {
                 type: "button",
@@ -3887,7 +4141,7 @@ const EnquiryForm = () => {
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
             /* @__PURE__ */ jsx("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: "E.4 — PRIVACY LEVEL" }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: ["STANDARD", "HIGH", "MAXIMUM"].map((level) => /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: privacyOptions.map((level) => /* @__PURE__ */ jsx(
               "button",
               {
                 type: "button",
@@ -3909,6 +4163,7 @@ const EnquiryForm = () => {
               "textarea",
               {
                 rows: 3,
+                name: "medicalConsiderations",
                 placeholder: "Any medical history, medications, or considerations our team should be aware of when planning.",
                 className: "w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none"
               }
@@ -3920,7 +4175,7 @@ const EnquiryForm = () => {
       /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-12", children: [
           /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "CHAPTER F" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: "Anything you would like us to know." })
+          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[28px] text-[#1A1A1A]", children: chapterFTitle })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "space-y-10", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
           /* @__PURE__ */ jsxs("label", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: [
@@ -3931,6 +4186,7 @@ const EnquiryForm = () => {
             "textarea",
             {
               rows: 6,
+              name: "messageToDesk",
               placeholder: "Write to us in your own words — your timing, your intention, anything that matters to you about this journey.",
               className: "w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#0A3A77] transition-colors placeholder:text-[#5A6673]/50 resize-none"
             }
@@ -3947,57 +4203,49 @@ const EnquiryForm = () => {
           "button",
           {
             type: "submit",
-            className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#0A3A77] hover:text-white transition-colors",
-            children: "SEND THE LETTER →"
+            disabled: isSubmitting || isUploading,
+            className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#0A3A77] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+            children: isSubmitting ? "SENDING…" : isUploading ? "UPLOADING FILE…" : "SEND THE LETTER →"
           }
         )
       ] }) })
     ] })
   ] }) });
 };
-const WhatTheCallCovers = () => {
+const WhatTheCallCovers = ({ data }) => {
+  const heading = data == null ? void 0 : data.callCoversHeading;
+  const subheading = data == null ? void 0 : data.callCoversSubheading;
+  const moments = (data == null ? void 0 : data.callCoversMoments) ?? [];
+  const footnote = data == null ? void 0 : data.callCoversFootnote;
   return /* @__PURE__ */ jsx("section", { className: "w-full bg-[#1A1A1A] py-[140px] md:py-[180px] px-8 flex justify-center", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-[1180px] flex flex-col items-center", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center text-center mb-24", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8", children: "WHAT THE CONVERSATION COVERS" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[56px] md:text-[72px] text-white leading-[1.1] max-w-[22ch] mb-6", children: '"Forty-five minutes, read carefully."' }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] max-w-[56ch]", children: "Every consultation is shaped to your background, your timing, and your intention." })
+      /* @__PURE__ */ jsxs("h2", { className: "font-['Radley'] font-light text-[56px] md:text-[72px] text-white leading-[1.1] max-w-[22ch] mb-6", children: [
+        '"',
+        heading,
+        '"'
+      ] }),
+      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] max-w-[56ch]", children: subheading })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-24", children: [
-      /* @__PURE__ */ jsxs("div", { className: "border-t border-[#C8CDD2]/20 bg-[#2E353C]/20 p-8 md:p-10 flex flex-col items-start text-left", children: [
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6", children: "MOMENT I — UNDERSTANDING" }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-tight mb-4", children: "We listen first." }),
-        /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#C8CDD2] text-[15px] leading-[1.65]", children: "You share your background, your timing, and what brings you to a Himalayan expedition. The advisor listens before recommending anything." })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "border-t border-[#C8CDD2]/20 bg-[#2E353C]/20 p-8 md:p-10 flex flex-col items-start text-left", children: [
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6", children: "MOMENT II — THE MOUNTAIN" }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-tight mb-4", children: "We discuss the right peak." }),
-        /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#C8CDD2] text-[15px] leading-[1.65]", children: "Based on your readiness, we discuss which of our five mountains is the right reading for your journey — Everest, Manaslu, Dhaulagiri, Makalu, or Himchuli." })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "border-t border-[#C8CDD2]/20 bg-[#2E353C]/20 p-8 md:p-10 flex flex-col items-start text-left", children: [
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6", children: "MOMENT III — THE EDITION" }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-tight mb-4", children: "We shape the edition." }),
-        /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#C8CDD2] text-[15px] leading-[1.65]", children: "We walk you through how each edition (Alpine, Bespoke, Crafted, Definitive, Explorer) would shape your expedition — and recommend what fits." })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "border-t border-[#C8CDD2]/20 bg-[#2E353C]/20 p-8 md:p-10 flex flex-col items-start text-left", children: [
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6", children: "MOMENT IV — NEXT STEPS" }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-tight mb-4", children: "We confirm direction." }),
-        /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#C8CDD2] text-[15px] leading-[1.65]", children: "By the end of the conversation, you have a clear sense of the mountain, edition, season, and what a tailored proposal would look like." })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[16px] max-w-[60ch] text-center", children: "Consultations are exploratory. Nothing is sold during the call. A tailored proposal follows only if direction is set." })
+    /* @__PURE__ */ jsx("div", { className: "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-24", children: moments.map((moment) => /* @__PURE__ */ jsxs("div", { className: "border-t border-[#C8CDD2]/20 bg-[#2E353C]/20 p-8 md:p-10 flex flex-col items-start text-left", children: [
+      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6", children: moment.marker }),
+      /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-tight mb-4", children: moment.title }),
+      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] text-[#C8CDD2] text-[15px] leading-[1.65]", children: moment.description })
+    ] }, moment._key)) }),
+    /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[16px] max-w-[60ch] text-center", children: footnote })
   ] }) });
 };
-const EnquiryProcess = () => {
+const EnquiryProcess = ({ data }) => {
+  const heading = data == null ? void 0 : data.processHeading;
+  const steps = (data == null ? void 0 : data.processSteps) ?? [];
+  const footnote = data == null ? void 0 : data.processFootnote;
   return /* @__PURE__ */ jsxs("section", { className: "relative bg-[#1A1A1A] py-24 md:py-48 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
       "div",
       {
         className: "absolute inset-0 z-0 pointer-events-none opacity-[0.03]",
         style: {
-          backgroundImage: `
-            linear-gradient(to right, #C8CDD2 1px, transparent 1px),
-            linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)
-          `,
+          backgroundImage: `linear-gradient(to right, #C8CDD2 1px, transparent 1px), linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)`,
           backgroundSize: "64px 64px"
         }
       }
@@ -4005,105 +4253,46 @@ const EnquiryProcess = () => {
     /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-[1440px] mx-auto px-8", children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-24", children: [
         /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: "04 — WHAT HAPPENS NEXT" }),
-        /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[44px] lg:text-[56px] leading-[1.1] text-white max-w-[22ch]", children: "Four quiet steps, after you write to us." })
+        /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[44px] lg:text-[56px] leading-[1.1] text-white max-w-[22ch]", children: heading })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-24", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx("span", { className: "font-['Cormorant_Garamond'] font-light text-[#C8CDD2] text-xl", children: "01" }) }),
-          /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: [
-            "STEP 01 ",
-            /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-            " REVIEW"
-          ] }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-white mb-4", children: "We read your letter." }),
-          /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base leading-relaxed line-clamp-3", children: "Your letter is reviewed by senior expedition staff at our Kathmandu desk, usually within 48 hours. Nothing is automated." })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx("span", { className: "font-['Cormorant_Garamond'] font-light text-[#C8CDD2] text-xl", children: "02" }) }),
-          /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: [
-            "STEP 02 ",
-            /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-            " ADVISOR CONTACT"
-          ] }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-white mb-4", children: "An advisor writes back." }),
-          /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base leading-relaxed line-clamp-3", children: "A dedicated advisor responds personally — by email, phone, or WhatsApp, depending on your preference. The conversation begins." })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx("span", { className: "font-['Cormorant_Garamond'] font-light text-[#C8CDD2] text-xl", children: "03" }) }),
-          /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: [
-            "STEP 03 ",
-            /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-            " RECOMMENDATION"
-          ] }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-white mb-4", children: "A mountain and an edition are recommended." }),
-          /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base leading-relaxed line-clamp-3", children: "Based on your background, your timing, and your intention, we recommend the mountain and edition that fit. We may ask a few more questions before recommending." })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx("span", { className: "font-['Cormorant_Garamond'] font-light text-[#C8CDD2] text-xl", children: "04" }) }),
-          /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: [
-            "STEP 04 ",
-            /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-            " TAILORED PROPOSAL"
-          ] }),
-          /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-white mb-4", children: "A private proposal is shaped." }),
-          /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base leading-relaxed line-clamp-3", children: "Once the direction is set, a tailored proposal is prepared — itinerary, leadership, logistics, and pricing — written specifically for your expedition." })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "text-center pt-12 border-t border-[#2E353C]", children: /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[16px] max-w-[60ch] mx-auto", children: "Note · No part of this process is automated. Every step is read, written, and shaped by people." }) })
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-24", children: steps.map((step) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
+        /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx("span", { className: "font-['Cormorant_Garamond'] font-light text-[#C8CDD2] text-xl", children: step.stepNumber }) }),
+        /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: step.marker }),
+        /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-white mb-4", children: step.title }),
+        /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base leading-relaxed line-clamp-3", children: step.description })
+      ] }, step._key)) }),
+      /* @__PURE__ */ jsx("div", { className: "text-center pt-12 border-t border-[#2E353C]", children: /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[16px] max-w-[60ch] mx-auto", children: footnote }) })
     ] })
   ] });
 };
-const EnquiryAlternative = () => {
+const EnquiryAlternative = ({ data }) => {
+  const heading = data == null ? void 0 : data.alternativeHeading;
+  const options = (data == null ? void 0 : data.alternativeOptions) ?? [];
   return /* @__PURE__ */ jsx("section", { className: "bg-[#F4F2EC] py-24 md:py-48", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto px-8", children: [
     /* @__PURE__ */ jsxs("div", { className: "mb-24", children: [
       /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6", children: "05 — IF A FORM IS NOT YOUR WAY" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[36px] lg:text-[48px] leading-[1.1] text-[#1A1A1A] max-w-[28ch]", children: "Some readers prefer to write directly. We welcome that." })
+      /* @__PURE__ */ jsx("h2", { className: "font-['Cormorant_Garamond'] font-light text-4xl md:text-[36px] lg:text-[48px] leading-[1.1] text-[#1A1A1A] max-w-[28ch]", children: heading })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-12 mb-24", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col group cursor-pointer", children: [
-        /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "EXPEDITION DESK" }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-[#1A1A1A] mb-8", children: "Write directly to our desk." }),
-        /* @__PURE__ */ jsx("div", { className: "mt-auto", children: /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] border-b border-[#C8CDD2] pb-1 group-hover:border-[#1A1A1A] transition-colors", children: [
-          "desk@thamserkuexpeditions.com ",
-          /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3 ml-2" })
-        ] }) })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col group cursor-pointer", children: [
-        /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: "BY PHONE OR WHATSAPP" }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-[#1A1A1A] mb-8", children: "Speak with a senior advisor." }),
-        /* @__PURE__ */ jsx("div", { className: "mt-auto", children: /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] border-b border-[#C8CDD2] pb-1 group-hover:border-[#1A1A1A] transition-colors", children: [
-          "+977 [PLACEHOLDER NUMBER] ",
-          /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3 ml-2" })
-        ] }) })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col group cursor-pointer", children: [
-        /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: [
-          "IN PERSON ",
-          /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-          " KATHMANDU"
-        ] }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-[#1A1A1A] mb-8", children: "Visit us when you arrive in Nepal." }),
-        /* @__PURE__ */ jsx("div", { className: "mt-auto", children: /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] border-b border-[#C8CDD2] pb-1 group-hover:border-[#1A1A1A] transition-colors", children: [
-          "BY APPOINTMENT ",
-          /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-          " YETI GROUP ",
-          /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-          " KATHMANDU ",
-          /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3 ml-2" })
-        ] }) })
-      ] })
-    ] }),
+    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-12 mb-24", children: options.map((option) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col group cursor-pointer", children: [
+      /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4", children: option.label }),
+      /* @__PURE__ */ jsx("h3", { className: "font-['Cormorant_Garamond'] text-[24px] text-[#1A1A1A] mb-8", children: option.title }),
+      /* @__PURE__ */ jsx("div", { className: "mt-auto", children: /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] border-b border-[#C8CDD2] pb-1 group-hover:border-[#1A1A1A] transition-colors", children: [
+        option.value,
+        " ",
+        /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3 ml-2" })
+      ] }) })
+    ] }, option._key)) }),
     /* @__PURE__ */ jsx("div", { className: "pt-12 border-t border-[#C8CDD2]/50", children: /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#5A6673] text-[16px] max-w-[60ch]", children: "We answer in the same way, regardless of the channel — quietly, personally, and within 48 hours." }) })
   ] }) });
 };
-const EnquiryClosing = () => {
+const EnquiryClosing = ({ data }) => {
+  const label = data == null ? void 0 : data.closingLabel;
+  const heading = data == null ? void 0 : data.closingHeading;
+  const body = data == null ? void 0 : data.closingBody;
   return /* @__PURE__ */ jsx("section", { className: "bg-[#0A3A77] py-32 md:py-48 flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[880px] mx-auto px-8 text-center flex flex-col items-center", children: [
-    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12", children: "06 — A QUIET CLOSING" }),
-    /* @__PURE__ */ jsxs("h2", { className: "font-['Radley'] font-light text-5xl md:text-[56px] lg:text-[80px] leading-[1.1] text-white max-w-[24ch] mb-12", children: [
-      '"Speak with the expedition desk." ',
-      /* @__PURE__ */ jsx("span", { className: "italic text-[#C8CDD2] block mt-4", children: "We will read your letter carefully." })
-    ] }),
-    /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base md:text-[17px] leading-relaxed max-w-[56ch] mb-16", children: "Whether your journey begins this season or in three years, the conversation is the same. Quiet, considered, and handled by people who have spent decades reading the Himalayas." }),
+    /* @__PURE__ */ jsx("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12", children: label }),
+    /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-5xl md:text-[56px] lg:text-[80px] leading-[1.1] text-white max-w-[24ch] mb-12", children: heading }),
+    /* @__PURE__ */ jsx("p", { className: "text-[#C8CDD2] font-light text-base md:text-[17px] leading-relaxed max-w-[56ch] mb-16", children: body }),
     /* @__PURE__ */ jsxs("p", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: [
       "THAMSERKU EXPEDITIONS ",
       /* @__PURE__ */ jsx("span", { className: "mx-2", children: "·" }),
@@ -4115,15 +4304,240 @@ const EnquiryClosing = () => {
     ] })
   ] }) });
 };
+const writeClient = createClient({
+  projectId: "ugjhuor8",
+  dataset: "production",
+  apiVersion: "2026-05-21",
+  useCdn: false,
+  token: process.env.SANITY_WRITE_TOKEN
+});
+function row(label, value) {
+  if (!(value == null ? void 0 : value.trim())) return "";
+  return `
+    <tr>
+      <td style="padding:12px 0;border-bottom:1px solid #F4F2EC;width:36%;vertical-align:top;">
+        <span style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#5A6673;">${label}</span>
+      </td>
+      <td style="padding:12px 0 12px 20px;border-bottom:1px solid #F4F2EC;vertical-align:top;">
+        <span style="font-family:Georgia,serif;font-size:15px;color:#1A1A1A;white-space:pre-wrap;">${value}</span>
+      </td>
+    </tr>`;
+}
+function section(title, rows) {
+  if (!rows.trim()) return "";
+  return `
+    <div style="margin-bottom:36px;">
+      <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#0A3A77;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #0A3A77;">${title}</p>
+      <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
+    </div>`;
+}
+function buildHtml(data) {
+  var _a, _b, _c, _d;
+  const submittedDate = new Date(data.submittedAt).toLocaleString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "UTC"
+  });
+  const contactRows = [
+    row("Email", data.email),
+    row("Phone / WhatsApp", data.phone),
+    row("Country", data.countryOfResidence),
+    row("Preferred Contact", data.preferredContact)
+  ].join("");
+  const expeditionRows = [
+    row("Mountains", (_a = data.expeditionInterest) == null ? void 0 : _a.join(", ")),
+    row("Note", data.otherExpeditionNote)
+  ].join("");
+  const timingRows = row("Preferred Edition", data.preferredEdition);
+  const experienceRows = [
+    row("Trekking Experience", data.trekkingExperience),
+    row("Altitude Experience", (_b = data.altitudeExperience) == null ? void 0 : _b.join(", ")),
+    row("Fitness & Training", data.fitnessBackground),
+    row("Climbing CV", data.hasClimbingCv ? "Attached — view in Sanity Studio" : void 0)
+  ].join("");
+  const logisticsRows = [
+    row("Season", data.preferredSeason),
+    row("Number of Guests", (_c = data.numberOfGuests) == null ? void 0 : _c.toString()),
+    row("Group Preference", data.groupPreference),
+    row("Privacy Level", data.privacyLevel),
+    row("Medical Considerations", data.medicalConsiderations)
+  ].join("");
+  const messageBlock = ((_d = data.messageToDesk) == null ? void 0 : _d.trim()) ? `<div style="margin-bottom:36px;">
+        <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#0A3A77;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #0A3A77;">F — Message to the Desk</p>
+        <p style="font-family:Georgia,serif;font-size:16px;font-style:italic;color:#1A1A1A;line-height:1.7;margin:0;white-space:pre-wrap;">${data.messageToDesk}</p>
+      </div>` : "";
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>New Enquiry — ${data.fullName}</title></head>
+<body style="margin:0;padding:0;background:#F4F2EC;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F4F2EC;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:white;max-width:600px;width:100%;">
+        <tr>
+          <td style="background:#0A3A77;padding:32px 48px;">
+            <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#C8CDD2;margin:0 0 8px;">THAMSERKU EXPEDITIONS · NEW ENQUIRY</p>
+            <p style="font-family:Georgia,serif;font-size:28px;font-weight:300;color:white;margin:0;">${data.fullName}</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:48px;">
+            <p style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.1em;color:#5A6673;margin:0 0 4px;">${data.email}</p>
+            <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.08em;color:#C8CDD2;margin:0 0 40px;">${submittedDate} UTC</p>
+            <hr style="border:none;border-top:1px solid #E5E7EB;margin:0 0 40px;">
+            ${section("A — Contact", contactRows)}
+            ${section("B — Expedition Interest", expeditionRows)}
+            ${section("C — Timing & Edition", timingRows)}
+            ${section("D — Experience", experienceRows)}
+            ${section("E — Logistics", logisticsRows)}
+            ${messageBlock}
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#F4F2EC;padding:24px 48px;border-top:1px solid #E5E7EB;">
+            <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#5A6673;margin:0;">THAMSERKU EXPEDITIONS · YETI GROUP · KATHMANDU · NEPAL HIMALAYA</p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+async function sendEnquiryEmail(to, data) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM_EMAIL ?? "noreply@thamserku.com";
+  if (!apiKey) return;
+  const resend = new Resend(apiKey);
+  await resend.emails.send({
+    from,
+    to,
+    subject: `New Enquiry — ${data.fullName}`,
+    html: buildHtml(data)
+  });
+}
+async function loader$1() {
+  return getConsultationPageData();
+}
+async function action$1({
+  request
+}) {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
+  const formData = await request.formData();
+  const fullName = ((_a = formData.get("fullName")) == null ? void 0 : _a.trim()) ?? "";
+  const email = ((_b = formData.get("email")) == null ? void 0 : _b.trim()) ?? "";
+  const errors = {};
+  if (!fullName) errors.fullName = "Please enter your name.";
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Please enter a valid email address.";
+  if (Object.keys(errors).length > 0) {
+    return {
+      success: false,
+      errors
+    };
+  }
+  const cvAssetId = ((_c = formData.get("climbingCvAssetId")) == null ? void 0 : _c.trim()) || void 0;
+  const climbingCv = cvAssetId ? {
+    _type: "file",
+    asset: {
+      _type: "reference",
+      _ref: cvAssetId
+    }
+  } : void 0;
+  const expeditionInterest = formData.getAll("expeditionInterest").filter(Boolean);
+  const altitudeExperience = formData.getAll("altitudeExperience").filter(Boolean);
+  const guestsRaw = formData.get("numberOfGuests");
+  const numberOfGuests = guestsRaw ? Number(guestsRaw) || void 0 : void 0;
+  const submittedAt = (/* @__PURE__ */ new Date()).toISOString();
+  await writeClient.create({
+    _type: "enquiry",
+    submittedAt,
+    fullName,
+    email,
+    phone: ((_d = formData.get("phone")) == null ? void 0 : _d.trim()) || void 0,
+    countryOfResidence: formData.get("countryOfResidence") || void 0,
+    preferredContact: formData.get("preferredContact") || void 0,
+    expeditionInterest: expeditionInterest.length ? expeditionInterest : void 0,
+    otherExpeditionNote: ((_e = formData.get("otherExpeditionNote")) == null ? void 0 : _e.trim()) || void 0,
+    preferredEdition: formData.get("preferredEdition") || void 0,
+    trekkingExperience: formData.get("trekkingExperience") || void 0,
+    altitudeExperience: altitudeExperience.length ? altitudeExperience : void 0,
+    fitnessBackground: ((_f = formData.get("fitnessBackground")) == null ? void 0 : _f.trim()) || void 0,
+    climbingCv,
+    preferredSeason: formData.get("preferredSeason") || void 0,
+    numberOfGuests,
+    groupPreference: formData.get("groupPreference") || void 0,
+    privacyLevel: formData.get("privacyLevel") || void 0,
+    medicalConsiderations: ((_g = formData.get("medicalConsiderations")) == null ? void 0 : _g.trim()) || void 0,
+    messageToDesk: ((_h = formData.get("messageToDesk")) == null ? void 0 : _h.trim()) || void 0
+  });
+  try {
+    const settings = await serverClient.fetch(`*[_type == "siteSettings"][0]{ enquiryEmail }`);
+    if (settings == null ? void 0 : settings.enquiryEmail) {
+      await sendEnquiryEmail(settings.enquiryEmail, {
+        fullName,
+        email,
+        phone: ((_i = formData.get("phone")) == null ? void 0 : _i.trim()) || void 0,
+        countryOfResidence: formData.get("countryOfResidence") || void 0,
+        preferredContact: formData.get("preferredContact") || void 0,
+        expeditionInterest: expeditionInterest.length ? expeditionInterest : void 0,
+        otherExpeditionNote: ((_j = formData.get("otherExpeditionNote")) == null ? void 0 : _j.trim()) || void 0,
+        preferredEdition: formData.get("preferredEdition") || void 0,
+        trekkingExperience: formData.get("trekkingExperience") || void 0,
+        altitudeExperience: altitudeExperience.length ? altitudeExperience : void 0,
+        fitnessBackground: ((_k = formData.get("fitnessBackground")) == null ? void 0 : _k.trim()) || void 0,
+        hasClimbingCv: !!climbingCv,
+        preferredSeason: formData.get("preferredSeason") || void 0,
+        numberOfGuests,
+        groupPreference: formData.get("groupPreference") || void 0,
+        privacyLevel: formData.get("privacyLevel") || void 0,
+        medicalConsiderations: ((_l = formData.get("medicalConsiderations")) == null ? void 0 : _l.trim()) || void 0,
+        messageToDesk: ((_m = formData.get("messageToDesk")) == null ? void 0 : _m.trim()) || void 0,
+        submittedAt
+      });
+    }
+  } catch {
+  }
+  return {
+    success: true
+  };
+}
 const EnquiryPage = UNSAFE_withComponentProps(function EnquiryPage2() {
+  const data = useLoaderData();
+  const actionData = useActionData();
+  const page = data.consultationPage ?? void 0;
+  const submitted = (actionData == null ? void 0 : actionData.success) === true;
+  const errors = actionData && !actionData.success ? actionData.errors : void 0;
   return /* @__PURE__ */ jsxs("main", {
     className: "min-h-screen bg-[#1A1A1A]",
-    children: [/* @__PURE__ */ jsx(EnquiryHero, {}), /* @__PURE__ */ jsx(EnquiryInvitation, {}), /* @__PURE__ */ jsx(TrustStatement, {}), /* @__PURE__ */ jsx(ScheduleCalendar, {}), /* @__PURE__ */ jsx(EnquiryForm, {}), /* @__PURE__ */ jsx(WhatTheCallCovers, {}), /* @__PURE__ */ jsx(EnquiryProcess, {}), /* @__PURE__ */ jsx(EnquiryAlternative, {}), /* @__PURE__ */ jsx(EnquiryClosing, {}), /* @__PURE__ */ jsx(Footer, {})]
+    children: [/* @__PURE__ */ jsx(EnquiryHero, {
+      data: page
+    }), /* @__PURE__ */ jsx(EnquiryInvitation, {
+      data: page
+    }), /* @__PURE__ */ jsx(TrustStatement, {
+      data: page
+    }), /* @__PURE__ */ jsx(ScheduleCalendar, {}), /* @__PURE__ */ jsx(EnquiryForm, {
+      data: page,
+      expeditions: data.expeditions,
+      submitted,
+      errors
+    }), /* @__PURE__ */ jsx(WhatTheCallCovers, {
+      data: page
+    }), /* @__PURE__ */ jsx(EnquiryProcess, {
+      data: page
+    }), /* @__PURE__ */ jsx(EnquiryAlternative, {
+      data: page
+    }), /* @__PURE__ */ jsx(EnquiryClosing, {
+      data: page
+    }), /* @__PURE__ */ jsx(Footer, {})]
   });
 });
 const route7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: EnquiryPage
+  action: action$1,
+  default: EnquiryPage,
+  loader: loader$1
 }, Symbol.toStringTag, { value: "Module" }));
 const ArchiveHero = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-end pb-32 md:pb-48 px-8 overflow-hidden", children: [
@@ -4658,7 +5072,7 @@ const route8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   __proto__: null,
   default: ExpeditionArchive
 }, Symbol.toStringTag, { value: "Module" }));
-const YetiHero = () => {
+const YetiHero = ({ page }) => {
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-end pb-32 md:pb-48 px-8 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
       "div",
@@ -4685,288 +5099,206 @@ const YetiHero = () => {
         ] }),
         /* @__PURE__ */ jsx("div", { className: "h-[1px] w-full max-w-[300px] bg-[#C8CDD2]/30 mt-4" })
       ] }),
-      /* @__PURE__ */ jsx("h1", { className: "font-['Radley'] font-light text-[64px] md:text-[80px] lg:text-[112px] text-white leading-[1.05] text-center max-w-[22ch] mb-8", children: "The operating ecosystem behind every expedition." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[18px] text-[#C8CDD2] leading-[1.55] max-w-[64ch] text-center mb-24", children: "Air support, mountain lodges, regional access, and field continuity — quietly maintained by the Yeti Group, so the climb in front of you receives our full attention." }),
+      (page == null ? void 0 : page.heroHeadline) && /* @__PURE__ */ jsx("h1", { className: "font-['Radley'] font-light text-[64px] md:text-[80px] lg:text-[112px] text-white leading-[1.05] text-center max-w-[22ch] mb-8", children: page.heroHeadline }),
+      (page == null ? void 0 : page.heroSubheading) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[18px] text-[#C8CDD2] leading-[1.55] max-w-[64ch] text-center mb-24", children: page.heroSubheading }),
       /* @__PURE__ */ jsx("div", { className: "w-full border-t border-[#C8CDD2]/30", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-[1000px] mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-[#C8CDD2]/30 border-b border-[#C8CDD2]/30", children: [
         /* @__PURE__ */ jsx("div", { className: "py-4 md:py-6 flex justify-center", children: /* @__PURE__ */ jsxs("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center", children: [
           "OPERATIONS ",
           /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-          " KATHMANDU"
+          " ",
+          (page == null ? void 0 : page.heroStatOperations) ?? "—"
         ] }) }),
         /* @__PURE__ */ jsx("div", { className: "py-4 md:py-6 flex justify-center", children: /* @__PURE__ */ jsxs("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center", children: [
           "REGIONS ",
           /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-          " 5 HIMALAYAN"
+          " ",
+          (page == null ? void 0 : page.heroStatRegions) ?? "—"
         ] }) }),
         /* @__PURE__ */ jsx("div", { className: "py-4 md:py-6 flex justify-center", children: /* @__PURE__ */ jsxs("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center", children: [
           "CONTINUITY ",
           /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-          " MULTI-GENERATIONAL"
+          " ",
+          (page == null ? void 0 : page.heroStatContinuity) ?? "—"
         ] }) }),
         /* @__PURE__ */ jsx("div", { className: "py-4 md:py-6 flex justify-center", children: /* @__PURE__ */ jsxs("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center", children: [
           "STATUS ",
           /* @__PURE__ */ jsx("span", { className: "mx-1", children: "·" }),
-          " UHNI-LEVEL ASSURANCE"
+          " ",
+          (page == null ? void 0 : page.heroStatStatus) ?? "—"
         ] }) })
-      ] }) }),
-      /* @__PURE__ */ jsx("div", { className: "mt-8", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] text-center block", children: "[CLIENT TO CONFIRM] — OPERATIONAL CLAIMS AND PARTNERSHIPS UNDER REVIEW BEFORE PUBLICATION." }) })
+      ] }) })
     ] })
   ] });
 };
-const YetiDefinition = () => {
+const YetiDefinition = ({ page }) => {
   return /* @__PURE__ */ jsx("section", { className: "bg-[#F4F2EC] py-[140px] md:py-[180px] px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8", children: [
     /* @__PURE__ */ jsxs("div", { className: "md:col-span-5 flex flex-col items-start", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8", children: "THE DEFINITION — § I" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-[#1A1A1A] leading-[1.1] max-w-[16ch] mb-6", children: "Infrastructure is what you do not see." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] max-w-[30ch]", children: "Quietly held, behind every season." })
+      (page == null ? void 0 : page.definitionHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-[#1A1A1A] leading-[1.1] max-w-[16ch] mb-6", children: page.definitionHeading }),
+      (page == null ? void 0 : page.definitionTagline) && /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] max-w-[30ch]", children: page.definitionTagline })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "md:col-span-7 flex flex-col gap-6 pt-2 md:pt-16", children: [
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#5A6673] leading-[1.75] max-w-[60ch]", children: "Yeti Infrastructure is the operating ecosystem Thamserku draws on across every Himalayan season. It is not a marketing partnership or a co-branded service. It is the operational fabric — aviation, hospitality, regional presence, and field continuity — that the Yeti Group has maintained in Nepal for decades." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#5A6673] leading-[1.75] max-w-[60ch]", children: "For the climber, it means an expedition is supported by infrastructure that exists year-round, not only during a season. For our senior expedition staff, it means continuity: the same crews, the same lodges, the same regional partners, season after season." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#5A6673] leading-[1.75] max-w-[60ch]", children: "This page describes the four operational pillars that matter most to a Himalayan expedition. None of them are positioning claims. All are working operations." })
+      (page == null ? void 0 : page.definitionBody1) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#5A6673] leading-[1.75] max-w-[60ch]", children: page.definitionBody1 }),
+      (page == null ? void 0 : page.definitionBody2) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#5A6673] leading-[1.75] max-w-[60ch]", children: page.definitionBody2 }),
+      (page == null ? void 0 : page.definitionBody3) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#5A6673] leading-[1.75] max-w-[60ch]", children: page.definitionBody3 })
     ] })
   ] }) });
 };
-const YetiAirSupport = () => {
+const YetiAirSupport = ({ page }) => {
+  const imageUrl = (page == null ? void 0 : page.airImage) ? urlFor(page.airImage).width(1200).url() : null;
   return /* @__PURE__ */ jsx("section", { className: "bg-[#1A1A1A] py-[140px] md:py-[180px] px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center", children: [
-    /* @__PURE__ */ jsxs("div", { className: "md:col-span-6 w-full aspect-[16/10] border border-[#5A6673] flex flex-col items-center justify-center p-6 relative", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2", children: "[IMAGE PLACEHOLDER]" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2", children: "HELICOPTER IN A HIMALAYAN VALLEY — OPERATIONAL FRAME" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center opacity-60", children: "[CLIENT TO CONFIRM]" })
-    ] }),
+    /* @__PURE__ */ jsx("div", { className: "md:col-span-6 w-full aspect-[16/10] relative overflow-hidden", children: imageUrl && /* @__PURE__ */ jsx("img", { src: imageUrl, alt: "", className: "absolute inset-0 w-full h-full object-cover" }) }),
     /* @__PURE__ */ jsx("div", { className: "hidden md:block md:col-span-1" }),
     /* @__PURE__ */ jsxs("div", { className: "md:col-span-5 flex flex-col items-start", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8", children: "PILLAR I — AIR SUPPORT" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-white leading-[1.1] max-w-[16ch] mb-6", children: "Aerial coordination, when it matters." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] max-w-[30ch] mb-8", children: "Helicopter access. Aerial logistics. Rescue support." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch] mb-12", children: "Helicopter access between Kathmandu, Lukla, and base camps across the Khumbu, Gorkha, and Annapurna regions — coordinated through the Yeti Group's aviation network. Aerial logistics for high-camp staging where conditions allow. Medical evacuation and rescue support coordinated through the same operational channel." }),
+      (page == null ? void 0 : page.airHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-white leading-[1.1] max-w-[16ch] mb-6", children: page.airHeading }),
+      (page == null ? void 0 : page.airTagline) && /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] max-w-[30ch] mb-8", children: page.airTagline }),
+      (page == null ? void 0 : page.airBody) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch] mb-12", children: page.airBody }),
       /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col border-t border-white/20", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "CHANNELS" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: "KATHMANDU · LUKLA · HIMALAYAN VALLEYS" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.airChannels) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "USE CASES" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: "ACCESS · STAGING · RESCUE" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.airUseCases) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "AVAILABILITY" }),
-          /* @__PURE__ */ jsxs("span", { className: "font-['Radley'] text-[16px] text-white", children: [
-            "SEASONAL · ",
-            /* @__PURE__ */ jsx("span", { className: "opacity-60", children: "[CLIENT TO CONFIRM]" })
-          ] })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.airAvailability) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "COORDINATION" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: "YETI GROUP AVIATION" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.airCoordination) ?? "—" })
         ] })
       ] })
     ] })
   ] }) });
 };
-const YetiMountainLodges = () => {
+const YetiMountainLodges = ({ page }) => {
+  const imageUrl = (page == null ? void 0 : page.lodgesImage) ? urlFor(page.lodgesImage).width(1200).url() : null;
   return /* @__PURE__ */ jsx("section", { className: "bg-[#F4F2EC] py-[140px] md:py-[180px] px-8 border-t border-[#C8CDD2]/30", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center", children: [
     /* @__PURE__ */ jsxs("div", { className: "md:col-span-5 flex flex-col items-start order-2 md:order-1", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8", children: "PILLAR II — MOUNTAIN LODGES" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-[#1A1A1A] leading-[1.1] max-w-[16ch] mb-6", children: "Rest, before the route." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] max-w-[30ch] mb-8", children: "Acclimatisation rhythm. Recovery. Quiet continuity." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.75] max-w-[50ch] mb-12", children: "Operational lodges along approach routes — Lukla, Namche, Tengboche, Dingboche, and beyond — used for considered acclimatisation rhythm and recovery. These are not destination hotels. They are operational rest points maintained year-round, with the same teams, the same standards, and the discretion expected of every Thamserku expedition." }),
+      (page == null ? void 0 : page.lodgesHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-[#1A1A1A] leading-[1.1] max-w-[16ch] mb-6", children: page.lodgesHeading }),
+      (page == null ? void 0 : page.lodgesTagline) && /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] max-w-[30ch] mb-8", children: page.lodgesTagline }),
+      (page == null ? void 0 : page.lodgesBody) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.75] max-w-[50ch] mb-12", children: page.lodgesBody }),
       /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col border-t border-[#C8CDD2]", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-[#C8CDD2]", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "REGIONS" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: "KHUMBU · GORKHA · ANNAPURNA" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: (page == null ? void 0 : page.lodgesRegions) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-[#C8CDD2]", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "USE CASES" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: "APPROACH · ACCLIMATISATION · RECOVERY" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: (page == null ? void 0 : page.lodgesUseCases) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-[#C8CDD2]", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "STANDARD" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: "OPERATIONAL · DISCREET" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: (page == null ? void 0 : page.lodgesStandard) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-[#C8CDD2]", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "STAFFING" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: "YEAR-ROUND TEAMS" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-[#1A1A1A]", children: (page == null ? void 0 : page.lodgesStaffing) ?? "—" })
         ] })
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "hidden md:block md:col-span-1 order-2" }),
-    /* @__PURE__ */ jsxs("div", { className: "md:col-span-6 w-full aspect-[16/10] border border-[#5A6673] flex flex-col items-center justify-center p-6 relative order-1 md:order-3", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2", children: "[IMAGE PLACEHOLDER]" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2", children: "MOUNTAIN LODGE — KHUMBU APPROACH — OPERATIONAL FRAME" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center opacity-60", children: "[CLIENT TO CONFIRM]" })
-    ] })
+    /* @__PURE__ */ jsx("div", { className: "md:col-span-6 w-full aspect-[16/10] relative overflow-hidden order-1 md:order-3", children: imageUrl && /* @__PURE__ */ jsx("img", { src: imageUrl, alt: "", className: "absolute inset-0 w-full h-full object-cover" }) })
   ] }) });
 };
-const YetiRegionalAccess = () => {
+const YetiRegionalAccess = ({ page }) => {
+  const imageUrl = (page == null ? void 0 : page.accessImage) ? urlFor(page.accessImage).width(1200).url() : null;
   return /* @__PURE__ */ jsx("section", { className: "bg-[#1A1A1A] py-[140px] md:py-[180px] px-8 border-t border-white/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center", children: [
-    /* @__PURE__ */ jsxs("div", { className: "md:col-span-6 w-full aspect-[16/10] border border-[#5A6673] flex flex-col items-center justify-center p-6 relative", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2", children: "[IMAGE PLACEHOLDER]" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2", children: "LOGISTICS DESK · KATHMANDU OPERATIONS — OPERATIONAL FRAME" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center opacity-60", children: "[CLIENT TO CONFIRM]" })
-    ] }),
+    /* @__PURE__ */ jsx("div", { className: "md:col-span-6 w-full aspect-[16/10] relative overflow-hidden", children: imageUrl && /* @__PURE__ */ jsx("img", { src: imageUrl, alt: "", className: "absolute inset-0 w-full h-full object-cover" }) }),
     /* @__PURE__ */ jsx("div", { className: "hidden md:block md:col-span-1" }),
     /* @__PURE__ */ jsxs("div", { className: "md:col-span-5 flex flex-col items-start", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8", children: "PILLAR III — REGIONAL ACCESS" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-white leading-[1.1] max-w-[16ch] mb-6", children: "Permits, regions, and quiet passage." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] max-w-[30ch] mb-8", children: "Decades of regional presence." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch] mb-12", children: "Continuous regional presence across the five Himalayan regions where Thamserku operates — Khumbu, Gorkha, Dhaulagiri, Mahalangur, and Annapurna. Backed by decades of permits, partnerships, and quiet field relationships. This is the layer of an expedition no client should have to think about; it is also the layer that fails most often elsewhere." }),
+      (page == null ? void 0 : page.accessHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-white leading-[1.1] max-w-[16ch] mb-6", children: page.accessHeading }),
+      (page == null ? void 0 : page.accessTagline) && /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] max-w-[30ch] mb-8", children: page.accessTagline }),
+      (page == null ? void 0 : page.accessBody) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch] mb-12", children: page.accessBody }),
       /* @__PURE__ */ jsxs("div", { className: "w-full flex flex-col border-t border-white/20", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "REGIONS" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: "KHUMBU · GORKHA · DHAULAGIRI · MAHALANGUR · ANNAPURNA" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.accessRegions) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "USE CASES" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: "PERMITS · PARTNERSHIPS · ACCESS" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.accessUseCases) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "CONTINUITY" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: "NEARLY FOUR DECADES" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.accessContinuity) ?? "—" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1 py-5 border-b border-white/20", children: [
           /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]", children: "HANDLING" }),
-          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: "KATHMANDU OPERATIONS" })
+          /* @__PURE__ */ jsx("span", { className: "font-['Radley'] text-[16px] text-white", children: (page == null ? void 0 : page.accessHandling) ?? "—" })
         ] })
       ] })
     ] })
   ] }) });
 };
-const YetiFieldContinuity = () => {
+const YetiFieldContinuity = ({ page }) => {
+  const imageUrl = (page == null ? void 0 : page.continuityImage) ? urlFor(page.continuityImage).width(1200).url() : null;
   return /* @__PURE__ */ jsx("section", { className: "bg-[#0A3A77] py-[160px] md:py-[200px] px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center", children: [
     /* @__PURE__ */ jsxs("div", { className: "md:col-span-5 flex flex-col items-start", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8", children: "PILLAR IV — FIELD CONTINUITY" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-white leading-[1.1] max-w-[18ch] mb-6", children: "The same hands, season after season." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[24px] max-w-[30ch] mb-8", children: "Multi-generational. Nepal-based. On the ground." }),
+      (page == null ? void 0 : page.continuityHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-white leading-[1.1] max-w-[18ch] mb-6", children: page.continuityHeading }),
+      (page == null ? void 0 : page.continuityTagline) && /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[24px] max-w-[30ch] mb-8", children: page.continuityTagline }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-6", children: [
-        /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch]", children: "Yeti Infrastructure is operated by a multi-generational field team supported from Kathmandu. The same senior Sherpas, the same base camp managers, the same logistics coordinators — across seasons, across peaks, across the years. This continuity is what allows the same standards of care from first letter to descent." }),
-        /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch]", children: "It is also the reason our judgement on the mountain extends as far as it does. Field knowledge is earned slowly. We do not rotate teams. We grow them." })
+        (page == null ? void 0 : page.continuityBody1) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch]", children: page.continuityBody1 }),
+        (page == null ? void 0 : page.continuityBody2) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.75] max-w-[50ch]", children: page.continuityBody2 })
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "hidden md:block md:col-span-1" }),
-    /* @__PURE__ */ jsxs("div", { className: "md:col-span-6 w-full aspect-[16/10] border border-white flex flex-col items-center justify-center p-6 relative", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] text-center mb-2", children: "[IMAGE PLACEHOLDER]" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] text-center mb-2", children: "FIELD TEAM AT WORK — ROUTE PREPARATION — OPERATIONAL FRAME" }),
-      /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] text-center opacity-60", children: "[CLIENT TO CONFIRM]" })
-    ] })
+    /* @__PURE__ */ jsx("div", { className: "md:col-span-6 w-full aspect-[16/10] relative overflow-hidden", children: imageUrl && /* @__PURE__ */ jsx("img", { src: imageUrl, alt: "", className: "absolute inset-0 w-full h-full object-cover" }) })
   ] }) });
 };
-const PEAK_DATA = [
-  {
-    code: "EVR",
-    name: "Everest",
-    altitude: "8,848.86 m · Khumbu, Nepal",
-    notes: [
-      { label: "AIR", desc: "Kathmandu / Lukla / Khumbu helicopter network" },
-      { label: "LODGES", desc: "Lukla, Namche, Tengboche, Dingboche, Lobuche approach lodges" },
-      { label: "ACCESS", desc: "Khumbu / Solukhumbu regional partnerships" },
-      { label: "CONTINUITY", desc: "Senior Sherpa team continuous across Everest seasons" }
-    ]
-  },
-  {
-    code: "MAN",
-    name: "Manaslu",
-    altitude: "8,163 m · Gorkha, Nepal",
-    notes: [
-      { label: "AIR", desc: "Kathmandu / Gorkha helicopter coordination" },
-      { label: "LODGES", desc: "Approach lodges along the Manaslu Conservation Area" },
-      { label: "ACCESS", desc: "Gorkha district permits and regional access" },
-      { label: "CONTINUITY", desc: "Autumn-season specialist team, Sherpas from Solukhumbu" }
-    ]
-  },
-  {
-    code: "DHA",
-    name: "Dhaulagiri",
-    altitude: "8,167 m · Myagdi, Nepal",
-    notes: [
-      { label: "AIR", desc: "Kathmandu / Pokhara / Myagdi helicopter coordination" },
-      { label: "LODGES", desc: "Approach lodges along the Dhaulagiri circuit" },
-      { label: "ACCESS", desc: "Myagdi district permits, remote-mountain logistics" },
-      { label: "CONTINUITY", desc: "Solitude-specialist Sherpa team across seasons" }
-    ]
-  },
-  {
-    code: "MAK",
-    name: "Makalu",
-    altitude: "8,485 m · Mahalangur, Nepal",
-    notes: [
-      { label: "AIR", desc: "Kathmandu / Tumlingtar / Mahalangur helicopter coordination" },
-      { label: "LODGES", desc: "Approach lodges along the Makalu Barun corridor" },
-      { label: "ACCESS", desc: "Mahalangur regional partnerships and permit handling" },
-      { label: "CONTINUITY", desc: "Technical-climb specialist Sherpa team" }
-    ]
-  },
-  {
-    code: "HIM",
-    name: "Himchuli",
-    altitude: "6,441 m · Annapurna, Nepal",
-    notes: [
-      { label: "AIR", desc: "Kathmandu / Pokhara helicopter coordination" },
-      { label: "LODGES", desc: "Approach lodges along the Annapurna Conservation Area" },
-      { label: "ACCESS", desc: "Annapurna regional permits and cultural-route partnerships" },
-      { label: "CONTINUITY", desc: "Quieter-objective and Explorer Edition support team" }
-    ]
-  }
-];
-const YetiPeakSpecificApplication = () => {
+const YetiPeakSpecificApplication = ({
+  expeditions,
+  page
+}) => {
+  if (!expeditions.length) return null;
   return /* @__PURE__ */ jsx("section", { className: "bg-[#1A1A1A] py-[140px] md:py-[180px] px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1320px] mx-auto flex flex-col items-center", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center mb-24 md:mb-32", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-8", children: "PEAK-SPECIFIC APPLICATION — § II" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-white leading-[1.1] text-center max-w-[22ch] mb-6", children: "How the infrastructure applies, peak by peak." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] text-center max-w-[56ch]", children: "Five mountains. Same operational foundation. Different operational shapes." })
+      (page == null ? void 0 : page.peakSectionHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-white leading-[1.1] text-center max-w-[22ch] mb-6", children: page.peakSectionHeading }),
+      (page == null ? void 0 : page.peakSectionTagline) && /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[22px] text-center max-w-[56ch]", children: page.peakSectionTagline })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "w-full flex flex-col border-t border-white/20", children: PEAK_DATA.map((peak, idx) => /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-8 py-[60px] md:py-[80px] border-b border-white/20", children: [
-      /* @__PURE__ */ jsx("div", { className: "md:col-span-1 hidden md:block", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: peak.code }) }),
+    /* @__PURE__ */ jsx("div", { className: "w-full flex flex-col border-t border-white/20", children: expeditions.map((exp) => /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-8 py-[60px] md:py-[80px] border-b border-white/20", children: [
+      /* @__PURE__ */ jsx("div", { className: "md:col-span-1 hidden md:block", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: exp.code }) }),
       /* @__PURE__ */ jsxs("div", { className: "md:col-span-3 flex flex-col gap-2", children: [
-        /* @__PURE__ */ jsx("div", { className: "md:hidden mb-2", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: peak.code }) }),
-        /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[28px] md:text-[32px] text-white leading-none", children: peak.name }),
-        /* @__PURE__ */ jsx("span", { className: "font-['Lexend'] text-[14px] text-[#C8CDD2]", children: peak.altitude })
+        /* @__PURE__ */ jsx("div", { className: "md:hidden mb-2", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]", children: exp.code }) }),
+        /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[28px] md:text-[32px] text-white leading-none", children: exp.name }),
+        /* @__PURE__ */ jsxs("span", { className: "font-['Lexend'] text-[14px] text-[#C8CDD2]", children: [
+          exp.altitude,
+          exp.region ? ` · ${exp.region}` : ""
+        ] })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6", children: peak.notes.map((note, nIdx) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1", children: [
-        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]", children: note.label }),
-        /* @__PURE__ */ jsx("span", { className: "font-['Lexend'] text-[14px] text-[#C8CDD2]", children: note.desc })
-      ] }, nIdx)) })
-    ] }, idx)) }),
-    /* @__PURE__ */ jsx("div", { className: "mt-16 w-full flex justify-center", children: /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] text-center max-w-[60ch]", children: "[CLIENT TO CONFIRM] — PEAK-SPECIFIC OPERATIONAL DETAILS PENDING CONFIRMATION." }) })
+      /* @__PURE__ */ jsx("div", { className: "md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6", children: [
+        { label: "AIR", value: exp.yetiAirNote },
+        { label: "LODGES", value: exp.yetiLodgesNote },
+        { label: "ACCESS", value: exp.yetiAccessNote },
+        { label: "CONTINUITY", value: exp.yetiContinuityNote }
+      ].map(({ label, value }) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1", children: [
+        /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]", children: label }),
+        /* @__PURE__ */ jsx("span", { className: "font-['Lexend'] text-[14px] text-[#C8CDD2]", children: value ?? "—" })
+      ] }, label)) })
+    ] }, exp._id)) })
   ] }) });
 };
-const FAQS = [
-  {
-    q: "What is Yeti Infrastructure, and how does it relate to Thamserku?",
-    a: "[DUMMY FAQ] — Placeholder answer. Yeti Infrastructure is the operating ecosystem Thamserku draws on across every Himalayan expedition — air support, mountain lodges, regional access, and field continuity. Thamserku operates as part of the Yeti Group, the wider Nepali Himalayan group through which this infrastructure is continuously maintained."
-  },
-  {
-    q: "How does the Yeti Group support a Thamserku expedition specifically?",
-    a: "[DUMMY FAQ] — Placeholder answer. Practical operational support: helicopter access and rescue coordination, mountain lodges along approach routes, regional permits and partnerships, and a multi-generational field team. None of this is visible during a successful expedition — which is the point."
-  },
-  {
-    q: "How does the helicopter and air coordination work?",
-    a: "[DUMMY FAQ] — Placeholder answer. Helicopter access between Kathmandu, Lukla, and Himalayan valleys, coordinated through the Yeti Group's aviation network. Used for client transfer to and from base camps, high-camp staging where conditions allow, and medical evacuation or rescue support if required."
-  },
-  {
-    q: "How are lodges, regional access, and logistics handled?",
-    a: "[DUMMY FAQ] — Placeholder answer. Operational lodges along approach routes are maintained year-round with continuous staffing. Regional permits are handled by Kathmandu operations across all five Himalayan regions where we climb. Logistics — transport, supply chains, and field movement — are coordinated end-to-end by senior staff."
-  },
-  {
-    q: "How does Yeti Infrastructure improve safety and coordination during an expedition?",
-    a: "[DUMMY FAQ] — Placeholder answer. Field continuity matters most for safety: the same senior Sherpa team, the same medical advisor, and the same regional partners across seasons. Decisions made at altitude are made by people whose judgement has been earned year after year. This is the deepest layer of expedition safety, and it is the layer we do not improvise on."
-  }
-];
-const YetiFAQ = () => {
+const YetiFAQ = ({ page }) => {
+  const faqs2 = (page == null ? void 0 : page.faqs) ?? [];
   const [openStates, setOpenStates] = useState({});
   const toggleFaq = (idx) => {
-    setOpenStates((prev) => ({
-      ...prev,
-      [idx]: !prev[idx]
-    }));
+    setOpenStates((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
   return /* @__PURE__ */ jsx("section", { className: "bg-[#F4F2EC] py-[140px] md:py-[180px] px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[880px] mx-auto flex flex-col items-center", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center mb-20 md:mb-24 w-full", children: [
       /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] text-center mb-8", children: "FREQUENTLY ASKED — INFRASTRUCTURE" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-[#1A1A1A] leading-[1.1] text-center max-w-[22ch] mb-6", children: "Five quiet answers, before you write to us." }),
-      /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] text-center max-w-[56ch]", children: "The most common questions about the Yeti operating ecosystem." })
+      (page == null ? void 0 : page.faqHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[48px] md:text-[64px] text-[#1A1A1A] leading-[1.1] text-center max-w-[22ch] mb-6", children: page.faqHeading }),
+      (page == null ? void 0 : page.faqTagline) && /* @__PURE__ */ jsx("p", { className: "font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] text-center max-w-[56ch]", children: page.faqTagline })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "w-full flex flex-col border-b border-[#5A6673]/30", children: FAQS.map((faq, idx) => {
+    faqs2.length > 0 && /* @__PURE__ */ jsx("div", { className: "w-full flex flex-col border-b border-[#5A6673]/30", children: faqs2.map((faq, idx) => {
       const num = (idx + 1).toString().padStart(2, "0");
       const isOpen = !!openStates[idx];
       return /* @__PURE__ */ jsxs("div", { className: "flex flex-col border-t border-[#5A6673]/30", children: [
@@ -4985,7 +5317,7 @@ const YetiFAQ = () => {
                   num,
                   " —"
                 ] }),
-                /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[22px] md:text-[24px] text-[#1A1A1A] leading-[1.3] group-hover:text-[#1A1A1A] transition-colors max-w-[60ch]", children: faq.q })
+                /* @__PURE__ */ jsx("h3", { className: "font-['Radley'] font-light text-[22px] md:text-[24px] text-[#1A1A1A] leading-[1.3] group-hover:text-[#1A1A1A] transition-colors max-w-[60ch]", children: faq.question })
               ] }),
               /* @__PURE__ */ jsx(
                 "span",
@@ -5011,11 +5343,11 @@ const YetiFAQ = () => {
                 num,
                 " —"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[15px] text-[#5A6673] leading-[1.65] max-w-[60ch]", children: faq.a })
+              /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[15px] text-[#5A6673] leading-[1.65] max-w-[60ch]", children: faq.answer })
             ] }) })
           }
         )
-      ] }, idx);
+      ] }, faq._key);
     }) }),
     /* @__PURE__ */ jsx("div", { className: "mt-20 flex justify-center w-full", children: /* @__PURE__ */ jsx(
       Link,
@@ -5027,11 +5359,11 @@ const YetiFAQ = () => {
     ) })
   ] }) });
 };
-const YetiClosing = () => {
+const YetiClosing = ({ page }) => {
   return /* @__PURE__ */ jsx("section", { className: "bg-[#1A1A1A] py-[160px] md:py-[200px] px-8 border-t border-white/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[880px] mx-auto flex flex-col items-center", children: [
     /* @__PURE__ */ jsx("span", { className: "font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-10", children: "CONTINUE PRIVATELY — § VIII" }),
-    /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.05] text-center max-w-[24ch] mb-8", children: "The infrastructure is here. The conversation is private." }),
-    /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-16", children: "Share your background, your timing, and your intention. A senior advisor will walk you through how the infrastructure applies to your specific expedition — quietly, and within 48 hours." }),
+    (page == null ? void 0 : page.closingHeading) && /* @__PURE__ */ jsx("h2", { className: "font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.05] text-center max-w-[24ch] mb-8", children: page.closingHeading }),
+    (page == null ? void 0 : page.closingBody) && /* @__PURE__ */ jsx("p", { className: "font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-16", children: page.closingBody }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-6 w-full sm:w-auto items-center justify-center", children: [
       /* @__PURE__ */ jsx(
         Link,
@@ -5052,15 +5384,40 @@ const YetiClosing = () => {
     ] })
   ] }) });
 };
+async function loader() {
+  return getYetiPageData();
+}
 const YetiInfrastructure = UNSAFE_withComponentProps(function YetiInfrastructure2() {
+  const data = useLoaderData();
+  const page = data.yetiPage ?? void 0;
   return /* @__PURE__ */ jsxs("main", {
     className: "min-h-screen bg-[#1A1A1A]",
-    children: [/* @__PURE__ */ jsx(Nav, {}), /* @__PURE__ */ jsx(YetiHero, {}), /* @__PURE__ */ jsx(YetiDefinition, {}), /* @__PURE__ */ jsx(YetiAirSupport, {}), /* @__PURE__ */ jsx(YetiMountainLodges, {}), /* @__PURE__ */ jsx(YetiRegionalAccess, {}), /* @__PURE__ */ jsx(YetiFieldContinuity, {}), /* @__PURE__ */ jsx(YetiPeakSpecificApplication, {}), /* @__PURE__ */ jsx(YetiFAQ, {}), /* @__PURE__ */ jsx(YetiClosing, {}), /* @__PURE__ */ jsx(Footer, {})]
+    children: [/* @__PURE__ */ jsx(Nav, {}), /* @__PURE__ */ jsx(YetiHero, {
+      page
+    }), /* @__PURE__ */ jsx(YetiDefinition, {
+      page
+    }), /* @__PURE__ */ jsx(YetiAirSupport, {
+      page
+    }), /* @__PURE__ */ jsx(YetiMountainLodges, {
+      page
+    }), /* @__PURE__ */ jsx(YetiRegionalAccess, {
+      page
+    }), /* @__PURE__ */ jsx(YetiFieldContinuity, {
+      page
+    }), /* @__PURE__ */ jsx(YetiPeakSpecificApplication, {
+      expeditions: data.expeditions,
+      page
+    }), /* @__PURE__ */ jsx(YetiFAQ, {
+      page
+    }), /* @__PURE__ */ jsx(YetiClosing, {
+      page
+    }), /* @__PURE__ */ jsx(Footer, {})]
   });
 });
 const route9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: YetiInfrastructure
+  default: YetiInfrastructure,
+  loader
 }, Symbol.toStringTag, { value: "Module" }));
 const PathwayHero = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-end pb-32 md:pb-48 px-8 overflow-hidden", children: [
@@ -6637,7 +6994,55 @@ const route13 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   __proto__: null,
   default: MainFAQ
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-aR5omASP.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-DlOtFGHp.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/x-D5S7rJ5i.js", "/assets/arrow-right-CELJmarN.js"], "css": ["/assets/root-CaQE96AK.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/Home": { "id": "app/pages/Home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/Home-J-FAFGN5.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/ImageWithFallback-vyu9qACq.js", "/assets/move-right-CZvfNjiM.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/Everest": { "id": "app/pages/Everest", "parentId": "root", "path": "everest", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/Everest-D_7_7vl1.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/arrow-right-CELJmarN.js", "/assets/x-D5S7rJ5i.js", "/assets/move-right-CZvfNjiM.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/AtlasPage": { "id": "app/pages/AtlasPage", "parentId": "root", "path": "atlas", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/AtlasPage-B9GTjBl9.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/chevron-down-C_ySuRmZ.js", "/assets/move-right-CZvfNjiM.js", "/assets/ImageWithFallback-vyu9qACq.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/EditionsPage": { "id": "app/pages/EditionsPage", "parentId": "root", "path": "editions", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/EditionsPage-CdBKdxzM.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/LegacyPage": { "id": "app/pages/LegacyPage", "parentId": "root", "path": "legacy", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/LegacyPage-Bf5pWslO.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/TeamPage": { "id": "app/pages/TeamPage", "parentId": "root", "path": "team", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/TeamPage-BQn9DFnA.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/EnquiryPage": { "id": "app/pages/EnquiryPage", "parentId": "root", "path": "consultation", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/EnquiryPage-NlNSNfQa.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/ImageWithFallback-vyu9qACq.js", "/assets/chevron-down-C_ySuRmZ.js", "/assets/x-D5S7rJ5i.js", "/assets/arrow-right-CELJmarN.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/ExpeditionArchive": { "id": "app/pages/ExpeditionArchive", "parentId": "root", "path": "archive", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/ExpeditionArchive-BCtW48Q4.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/YetiInfrastructure": { "id": "app/pages/YetiInfrastructure", "parentId": "root", "path": "yeti-infrastructure", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/YetiInfrastructure-CwvdcoZO.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/SevenThousandMeterPathway": { "id": "app/pages/SevenThousandMeterPathway", "parentId": "root", "path": "7000m", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/SevenThousandMeterPathway-DeLL5gM0.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/PrivateExpeditions": { "id": "app/pages/PrivateExpeditions", "parentId": "root", "path": "private", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/PrivateExpeditions-D_FtMts0.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/FieldNotes": { "id": "app/pages/FieldNotes", "parentId": "root", "path": "field-notes", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/FieldNotes-u6-mTbYS.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/MainFAQ": { "id": "app/pages/MainFAQ", "parentId": "root", "path": "faq", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/MainFAQ-CYWn081K.js", "imports": ["/assets/chunk-4N6VE7H7-BsUNPCpb.js", "/assets/Footer-CCMXc-zB.js", "/assets/x-D5S7rJ5i.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-c413fc44.js", "version": "c413fc44", "sri": void 0 };
+async function action({
+  request
+}) {
+  if (!process.env.SANITY_WRITE_TOKEN) {
+    return Response.json({
+      error: "Upload service not configured"
+    }, {
+      status: 503
+    });
+  }
+  const formData = await request.formData();
+  const file = formData.get("file");
+  if (!file || file.size === 0) {
+    return Response.json({
+      error: "No file provided"
+    }, {
+      status: 400
+    });
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    return Response.json({
+      error: "File exceeds 10 MB limit"
+    }, {
+      status: 413
+    });
+  }
+  try {
+    const asset = await writeClient.assets.upload("file", file, {
+      filename: file.name,
+      contentType: file.type || "application/octet-stream"
+    });
+    return Response.json({
+      assetId: asset._id,
+      filename: file.name
+    });
+  } catch (err) {
+    console.error("[upload-cv] Sanity upload failed:", err);
+    return Response.json({
+      error: "Upload failed — check SANITY_WRITE_TOKEN"
+    }, {
+      status: 500
+    });
+  }
+}
+const route14 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  action
+}, Symbol.toStringTag, { value: "Module" }));
+const serverManifest = { "entry": { "module": "/assets/entry.client-DhXu_2kP.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-BLfCdLmH.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/x-CjswOQux.js", "/assets/arrow-right-CXMgjyZR.js"], "css": ["/assets/root-Bp22R9X3.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/Home": { "id": "app/pages/Home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/Home-DUlV1U5Z.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/ImageWithFallback-C-4tLBf4.js", "/assets/move-right-B4aXw_WS.js", "/assets/sanity-D6OBggE9.js", "/assets/index-BsUSgnD2.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/Everest": { "id": "app/pages/Everest", "parentId": "root", "path": "everest", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/Everest-CfmkxccU.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/arrow-right-CXMgjyZR.js", "/assets/x-CjswOQux.js", "/assets/move-right-B4aXw_WS.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/AtlasPage": { "id": "app/pages/AtlasPage", "parentId": "root", "path": "atlas", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/AtlasPage-sXty_lBA.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/chevron-down--AiO4_kS.js", "/assets/move-right-B4aXw_WS.js", "/assets/ImageWithFallback-C-4tLBf4.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/EditionsPage": { "id": "app/pages/EditionsPage", "parentId": "root", "path": "editions", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/EditionsPage-BsmMklfT.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/sanity-D6OBggE9.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/LegacyPage": { "id": "app/pages/LegacyPage", "parentId": "root", "path": "legacy", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/LegacyPage-DtAN66eU.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/sanity-D6OBggE9.js", "/assets/index-BsUSgnD2.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/TeamPage": { "id": "app/pages/TeamPage", "parentId": "root", "path": "team", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/TeamPage-Cm86EW6p.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/EnquiryPage": { "id": "app/pages/EnquiryPage", "parentId": "root", "path": "consultation", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/EnquiryPage-Sbsb9a_I.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/ImageWithFallback-C-4tLBf4.js", "/assets/sanity-D6OBggE9.js", "/assets/x-CjswOQux.js", "/assets/chevron-down--AiO4_kS.js", "/assets/arrow-right-CXMgjyZR.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/ExpeditionArchive": { "id": "app/pages/ExpeditionArchive", "parentId": "root", "path": "archive", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/ExpeditionArchive-kXF7rYZ8.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/YetiInfrastructure": { "id": "app/pages/YetiInfrastructure", "parentId": "root", "path": "yeti-infrastructure", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/YetiInfrastructure-DsAe4HPi.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/sanity-D6OBggE9.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/SevenThousandMeterPathway": { "id": "app/pages/SevenThousandMeterPathway", "parentId": "root", "path": "7000m", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/SevenThousandMeterPathway-aHiHXFWk.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/PrivateExpeditions": { "id": "app/pages/PrivateExpeditions", "parentId": "root", "path": "private", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/PrivateExpeditions-9ujOTxgL.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/FieldNotes": { "id": "app/pages/FieldNotes", "parentId": "root", "path": "field-notes", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/FieldNotes-CniJLVyl.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/pages/MainFAQ": { "id": "app/pages/MainFAQ", "parentId": "root", "path": "faq", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/MainFAQ-Ct3gE1Rz.js", "imports": ["/assets/chunk-4N6VE7H7-vZHmD9S5.js", "/assets/Footer-C-XKjUML.js", "/assets/x-CjswOQux.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "app/api/upload-cv": { "id": "app/api/upload-cv", "parentId": "root", "path": "api/upload-cv", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": false, "hasErrorBoundary": false, "module": "/assets/upload-cv-l0sNRNKZ.js", "imports": [], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-c3c0fc7e.js", "version": "c3c0fc7e", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "unstable_optimizeDeps": false, "v8_passThroughRequests": false, "unstable_trailingSlashAwareDataRequests": false, "unstable_previewServerPrerendering": false, "v8_middleware": false, "v8_splitRouteModules": false, "v8_viteEnvironmentApi": false };
@@ -6759,6 +7164,14 @@ const routes = {
     index: void 0,
     caseSensitive: void 0,
     module: route13
+  },
+  "app/api/upload-cv": {
+    id: "app/api/upload-cv",
+    parentId: "root",
+    path: "api/upload-cv",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route14
   }
 };
 const allowedActionOrigins = false;
