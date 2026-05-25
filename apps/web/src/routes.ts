@@ -2,6 +2,7 @@ import { type RouteConfig, index, route } from '@react-router/dev/routes'
 
 export default [
   index('./app/pages/Home.tsx'),
+  route('everest', './app/pages/Everest.tsx'),
   route('expeditions/:slug', './app/pages/ExpeditionDossier.tsx'),
   route('atlas', './app/pages/AtlasPage.tsx'),
   route('editions', './app/pages/EditionsPage.tsx'),

@@ -1,3 +1,5 @@
+import { useLoaderData } from "react-router";
+import { getExpeditionBySlug, type SanityExpeditionDossier } from "../../lib/queries";
 import { EverestHero } from "../components/everest/EverestHero";
 import { QuickFacts } from "../components/everest/QuickFacts";
 import { Overview } from "../components/everest/Overview";
@@ -15,7 +17,14 @@ import { ExpeditionFAQ } from "../components/everest/ExpeditionFAQ";
 import { EverestClosing } from "../components/everest/EverestClosing";
 import { Footer } from "../components/Footer";
 
+export async function loader() {
+  const expedition = await getExpeditionBySlug("everest");
+  return { expedition };
+}
+
 export default function Everest() {
+  const { expedition } = useLoaderData() as { expedition: SanityExpeditionDossier | null };
+
   return (
     <div className="bg-[#1A1A1A] min-h-screen text-white font-['Lexend'] selection:bg-[#0A3A77] selection:text-white">
       <main>
@@ -33,7 +42,12 @@ export default function Everest() {
         <Availability />
         <Inclusions />
         <ExpeditionFAQ />
-        <EverestClosing />
+        <EverestClosing
+          name={expedition?.name}
+          closingImage={expedition?.closingImage}
+          closingStatement={expedition?.closingStatement}
+          slug={expedition?.slug?.current}
+        />
       </main>
       <Footer />
     </div>
