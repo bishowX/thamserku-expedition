@@ -20,7 +20,7 @@ export default function EditionsPage() {
       <EditionsHero editions={data.editions} page={data.editionsPage ?? undefined} />
       <EditionsManifesto page={data.editionsPage ?? undefined} />
       <EditionsBands editions={data.editions} />
-      <EditionsComparison editions={data.editions} expeditions={data.expeditions} />
+      <EditionsComparison editions={data.editions} expeditions={data.expeditions} page={data.editionsPage ?? undefined} />
       <EditionsAvailability expeditions={data.expeditions} editions={data.editions} />
       <EditionsClosing page={data.editionsPage ?? undefined} />
       <Footer />

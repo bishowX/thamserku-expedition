@@ -39,7 +39,6 @@ export type SanityEditionFull = SanityEdition & {
   body2?: string;
   image?: { asset: { _ref: string } } | null;
   colorVariant?: 'dark' | 'light' | 'blue';
-  isFlagship?: boolean;
   character?: string;
   privacyLevel?: string;
   comfortLevel?: string;
@@ -184,6 +183,9 @@ export type EditionsPageData = {
     manifestoEyebrow?: string;
     manifestoHeading?: string;
     manifestoBody?: string;
+    comparisonEyebrow?: string;
+    comparisonHeadline?: string;
+    comparisonNote?: string;
     closingHeading?: string;
     closingBody?: string;
   } | null;
@@ -342,11 +344,13 @@ export async function getLegacyPageData(): Promise<LegacyPageData> {
 export async function getEditionsPageData(): Promise<EditionsPageData> {
   return serverClient.fetch(`{
     "editionsPage": *[_type == "editionsPage"][0] {
-      heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody, closingHeading, closingBody
+      heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody,
+      comparisonEyebrow, comparisonHeadline, comparisonNote,
+      closingHeading, closingBody
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug,
-      tag, body1, body2, image, colorVariant, isFlagship,
+      tag, body1, body2, image, colorVariant,
       character, privacyLevel, comfortLevel, comparisonStyle, bestFor,
       "mountainNames": *[_type == "expedition" && references(^._id)] | order(number asc).name
     },

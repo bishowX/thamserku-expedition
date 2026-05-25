@@ -42,8 +42,6 @@ export default defineType({
         layout: 'radio',
       },
     }),
-    defineField({ name: 'isFlagship', title: 'Flagship Edition', type: 'boolean', description: 'Enables special flagship sizing and layout (Definitive only).' }),
-
     // Comparison table
     defineField({ name: 'character', title: 'Character', type: 'string', description: 'e.g. Disciplined' }),
     defineField({ name: 'privacyLevel', title: 'Privacy Level', type: 'string', description: 'e.g. Standard' }),

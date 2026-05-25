@@ -1,5 +1,11 @@
 import type { SanityEditionFull, SanityExpeditionForMatrix } from "../../../lib/queries";
 
+type PageData = {
+  comparisonEyebrow?: string;
+  comparisonHeadline?: string;
+  comparisonNote?: string;
+};
+
 type Row = {
   label: string;
   getValue: (ed: SanityEditionFull, expeditions: SanityExpeditionForMatrix[]) => string;
@@ -24,20 +30,26 @@ const ROWS: Row[] = [
 export function EditionsComparison({
   editions,
   expeditions,
+  page,
 }: {
   editions: SanityEditionFull[];
   expeditions: SanityExpeditionForMatrix[];
+  page?: PageData;
 }) {
+  const eyebrow = page?.comparisonEyebrow ?? "04 — AT A GLANCE";
+  const headline = page?.comparisonHeadline ?? "Five editions, read side by side.";
+  const note = page?.comparisonNote ?? "Note · Editions are not ranked. They are different ways of reading the same mountain. Speak with the expedition desk to find which edition fits your background and intent.";
+
   if (!editions.length) return null;
 
   return (
     <section className="w-full bg-white text-[#1A1A1A] py-24 px-8">
       <div className="w-full max-w-[1440px] mx-auto">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
-          04 — AT A GLANCE
+          {eyebrow}
         </p>
         <h2 className="font-['Radley'] font-light text-4xl md:text-[56px] leading-[1.1] mb-24 max-w-[20ch]">
-          Five editions, read side by side.
+          {headline}
         </h2>
 
         <div className="w-full overflow-x-auto">
@@ -72,7 +84,7 @@ export function EditionsComparison({
         </div>
 
         <p className="font-['Radley'] italic text-[#5A6673] text-[16px] mt-16 max-w-[80ch]">
-          Note · Editions are not ranked. They are different ways of reading the same mountain. Speak with the expedition desk to find which edition fits your background and intent.
+          {note}
         </p>
       </div>
     </section>
