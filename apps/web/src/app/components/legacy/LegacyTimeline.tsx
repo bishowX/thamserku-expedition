@@ -58,7 +58,7 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
   const chapters = page?.timelineChapters?.length ? page.timelineChapters : DEFAULT_CHAPTERS;
 
   return (
-    <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 md:py-40 overflow-hidden">
+    <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-12 md:gap-24">
         <div className="flex flex-col gap-8 mb-16">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block">

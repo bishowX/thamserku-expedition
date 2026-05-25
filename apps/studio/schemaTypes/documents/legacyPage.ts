@@ -10,7 +10,6 @@ export default defineType({
     { name: 'chairman', title: "03 — Chairman's Letter" },
     { name: 'timeline', title: '04 — Timeline' },
     { name: 'lineage', title: '05 — Lineage' },
-    { name: 'revival', title: '06 — Revival' },
     { name: 'philosophy', title: '07 — Philosophy' },
     { name: 'newsletter', title: '08 — Newsletter' },
   ],
@@ -83,28 +82,6 @@ export default defineType({
           defineField({ name: 'value', title: 'Value', type: 'string', description: 'e.g. THAMSERKU EXPEDITIONS' }),
         ],
         preview: { select: { title: 'label', subtitle: 'value' } },
-      }],
-    }),
-
-    // 06 — Revival
-    defineField({ name: 'revivalEyebrow', title: 'Eyebrow', type: 'string', group: 'revival', description: 'e.g. 06 — THE REVIVAL' }),
-    defineField({ name: 'revivalHeading', title: 'Heading', type: 'text', rows: 2, group: 'revival' }),
-    defineField({ name: 'revivalLeftQuote', title: 'Left Column — Italic Quote', type: 'string', group: 'revival' }),
-    defineField({ name: 'revivalLeftParagraph1', title: 'Left Column — Paragraph 1', type: 'text', rows: 4, group: 'revival' }),
-    defineField({ name: 'revivalLeftParagraph2', title: 'Left Column — Paragraph 2', type: 'text', rows: 4, group: 'revival' }),
-    defineField({ name: 'revivalLeftParagraph3', title: 'Left Column — Paragraph 3', type: 'text', rows: 4, group: 'revival' }),
-    defineField({
-      name: 'revivalPillars',
-      title: 'Right Column — Pillars',
-      type: 'array',
-      group: 'revival',
-      of: [{
-        type: 'object',
-        fields: [
-          defineField({ name: 'label', title: 'Label', type: 'string', description: 'e.g. FOCUS' }),
-          defineField({ name: 'quote', title: 'Italic Quote', type: 'text', rows: 2 }),
-        ],
-        preview: { select: { title: 'label', subtitle: 'quote' } },
       }],
     }),
 

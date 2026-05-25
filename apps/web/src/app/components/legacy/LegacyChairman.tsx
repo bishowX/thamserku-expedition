@@ -15,7 +15,7 @@ export function LegacyChairman({ letter }: { letter?: ChairmanLetterData }) {
   const imgSrc = letter?.image ? urlFor(letter.image).width(800).url() : chairmanImage;
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] text-white py-24 md:py-40 px-8 overflow-hidden">
+    <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden">
       <div
         className="absolute inset-0 z-0 opacity-5 pointer-events-none"
         style={{

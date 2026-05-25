@@ -6,7 +6,6 @@ import { LegacyOrigin } from "../components/legacy/LegacyOrigin";
 import { LegacyChairman } from "../components/legacy/LegacyChairman";
 import { LegacyTimeline } from "../components/legacy/LegacyTimeline";
 import { LegacyLineage } from "../components/legacy/LegacyLineage";
-import { LegacyRevival } from "../components/legacy/LegacyRevival";
 import { LegacyPhilosophy } from "../components/legacy/LegacyPhilosophy";
 import { LegacyNewsletterBanner } from "../components/legacy/LegacyNewsletterBanner";
 import { LegacyClosing } from "../components/legacy/LegacyClosing";
@@ -31,7 +30,6 @@ export default function LegacyPage() {
       <LegacyChairman letter={page?.chairmanLetter ?? undefined} />
       <LegacyTimeline page={page} />
       <LegacyLineage page={page} />
-      <LegacyRevival page={page} />
       <LegacyPhilosophy page={page} />
       <LegacyNewsletterBanner page={page} />
       <LegacyClosing />

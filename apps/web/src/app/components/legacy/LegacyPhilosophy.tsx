@@ -4,7 +4,7 @@ type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyPhilosophy({ page }: { page?: PageData }) {
   return (
-    <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-32 md:py-48 px-8">
+    <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8">
       <div className="max-w-[880px] mx-auto flex flex-col items-center text-center gap-16 md:gap-24">
 
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block">

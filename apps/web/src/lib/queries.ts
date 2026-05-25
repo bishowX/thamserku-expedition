@@ -251,12 +251,6 @@ export type LegacyTimelineChapter = {
   image?: { asset: { _ref: string } } | null;
 };
 
-export type LegacyRevivalPillar = {
-  _key: string;
-  label: string;
-  quote: string;
-};
-
 export type LegacyLineageDataTile = {
   _key: string;
   label: string;
@@ -307,13 +301,6 @@ export type LegacyPageData = {
     lineageBody1?: string;
     lineageBody2?: string;
     lineageDataTiles?: LegacyLineageDataTile[];
-    revivalEyebrow?: string;
-    revivalHeading?: string;
-    revivalLeftQuote?: string;
-    revivalLeftParagraph1?: string;
-    revivalLeftParagraph2?: string;
-    revivalLeftParagraph3?: string;
-    revivalPillars?: LegacyRevivalPillar[];
     philosophyEyebrow?: string;
     philosophyHeadlinePart1?: string;
     philosophyHeadlinePart2?: string;
@@ -337,9 +324,6 @@ export async function getLegacyPageData(): Promise<LegacyPageData> {
       timelineChapters[] { _key, roman, years, title, description, image },
       lineageEyebrow, lineageHeading, lineageBody1, lineageBody2,
       lineageDataTiles[] { _key, label, value },
-      revivalEyebrow, revivalHeading, revivalLeftQuote,
-      revivalLeftParagraph1, revivalLeftParagraph2, revivalLeftParagraph3,
-      revivalPillars[] { _key, label, quote },
       philosophyEyebrow, philosophyHeadlinePart1, philosophyHeadlinePart2, philosophySubline,
       newsletterEyebrow, newsletterHeading, newsletterBody, newsletterPrivacyNote
     }
