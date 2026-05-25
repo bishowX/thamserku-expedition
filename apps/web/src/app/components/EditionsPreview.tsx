@@ -34,14 +34,14 @@ export function EditionsPreview({ editions, data }: { editions?: SanityEdition[]
           </div>
           <div className="md:w-1/2">
             {data?.editionsHeading && (
-              <h2 className="font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6">
+              <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-6">
                 {data.editionsHeading}
               </h2>
             )}
           </div>
           <div className="md:w-1/4">
             {data?.editionsIntro && (
-              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]">
+              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-[1.6]">
                 {data.editionsIntro}
               </p>
             )}
@@ -54,21 +54,21 @@ export function EditionsPreview({ editions, data }: { editions?: SanityEdition[]
               key={idx}
               className="group flex flex-col md:flex-row border-t border-white/10 hover:bg-white/5 transition-colors duration-300 items-start md:items-center py-8 gap-8"
             >
-              <div className="md:w-1/12 font-['Radley'] text-[64px] text-[#C8CDD2] font-light leading-none">
+              <div className="md:w-1/12 font-['Radley'] text-fluid-display text-[#C8CDD2] font-light leading-none">
                 {ed.letter}
               </div>
 
               <div className="md:w-3/12 flex flex-col gap-1">
-                <h3 className="font-['Radley'] font-light text-[28px] leading-tight">
+                <h3 className="font-['Radley'] font-light text-fluid-lg leading-tight">
                   {ed.name}
                 </h3>
-                <span className="font-['Lexend'] font-light text-[13px] text-[#C8CDD2]">
+                <span className="font-['Lexend'] font-light text-fluid-body-sm text-[#C8CDD2]">
                   {ed.sub}
                 </span>
               </div>
 
               <div className="md:w-3/12">
-                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[14px] leading-relaxed">
+                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body-sm leading-relaxed">
                   "{ed.positioning}"
                 </p>
               </div>

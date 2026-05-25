@@ -55,14 +55,14 @@ export function AtlasPreview({ expeditions, data }: { expeditions?: SanityExpedi
           </div>
           <div className="md:w-1/2">
             {data?.atlasHeading && (
-              <h2 className="font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6">
+              <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-6">
                 {data.atlasHeading}
               </h2>
             )}
           </div>
           <div className="md:w-1/4">
             {data?.atlasIntro && (
-              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.6]">
+              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-[1.6]">
                 {data.atlasIntro}
               </p>
             )}
@@ -93,10 +93,10 @@ export function AtlasPreview({ expeditions, data }: { expeditions?: SanityExpedi
                   <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#C8CDD2] mb-8">
                     {exp.code}
                   </div>
-                  <h3 className="font-['Radley'] font-light text-[44px] leading-none mb-4">
+                  <h3 className="font-['Radley'] font-light text-fluid-mountain leading-none mb-4">
                     {exp.name}
                   </h3>
-                  <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-relaxed max-w-[40ch]">
+                  <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-relaxed max-w-[40ch]">
                     {exp.positioning}
                   </p>
                 </div>

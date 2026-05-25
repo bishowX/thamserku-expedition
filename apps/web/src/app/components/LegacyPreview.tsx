@@ -19,7 +19,7 @@ function splitAtLastSentence(text: string): [string, string] {
 const bodyComponents = {
   block: {
     normal: ({ children }: { children?: React.ReactNode }) => (
-      <p className="font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.8]">{children}</p>
+      <p className="font-['Lexend'] font-light text-fluid-body text-[#5A6673] leading-[1.8]">{children}</p>
     ),
   },
 };
@@ -52,7 +52,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
               06 — LEGACY
             </span>
-            <h2 className="font-['Radley'] font-light text-4xl md:text-[56px] leading-[1.1] text-[#1A1A1A]">
+            <h2 className="font-['Radley'] font-light text-fluid-xl leading-[1.1] text-[#1A1A1A]">
               {headingPart1}{" "}
               <em className="text-[#0A3A77] not-italic italic">{headingPart2}</em>
             </h2>
@@ -67,7 +67,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
           {(quote || attribution) && (
             <div className="mt-4 border-l-2 border-[#C8CDD2] pl-6 py-2">
               {quote && (
-                <div className="font-['Radley'] italic text-[28px] text-[#1A1A1A] leading-none mb-2">
+                <div className="font-['Radley'] italic text-fluid-lg text-[#1A1A1A] leading-none mb-2">
                   {quote}
                 </div>
               )}

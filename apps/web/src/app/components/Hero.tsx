@@ -29,10 +29,10 @@ export function Hero({ data }: { data?: HeroData }) {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-8">
         <div className="max-w-4xl">
-          <h1 className="font-['Radley'] font-light text-6xl md:text-8xl tracking-tight leading-[1.1] mb-6">
+          <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6">
             {headline}
           </h1>
-          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-xl md:text-2xl max-w-[56ch] leading-relaxed">
+          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body max-w-[56ch] leading-relaxed">
             {subheading}
           </p>
         </div>

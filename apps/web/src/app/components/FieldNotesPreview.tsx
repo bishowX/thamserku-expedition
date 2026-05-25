@@ -45,7 +45,7 @@ export function FieldNotesPreview({ fieldNotes }: { fieldNotes?: SanityFieldNote
             </span>
           </div>
           <div className="md:w-1/2">
-            <h2 className="font-['Radley'] font-light text-4xl md:text-5xl leading-[1.1] mb-6">
+            <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-6">
               Short studies in Himalayan judgement.
             </h2>
           </div>
@@ -76,12 +76,10 @@ export function FieldNotesPreview({ fieldNotes }: { fieldNotes?: SanityFieldNote
                 <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673]">
                   {note.code}
                 </div>
-                <h3 className={`font-['Radley'] font-light leading-[1.2] ${
-                  note.cols === 6 ? 'text-3xl md:text-4xl' : 'text-2xl md:text-[28px]'
-                }`}>
+                <h3 className="font-['Radley'] font-light text-fluid-lg leading-[1.2]">
                   {note.title}
                 </h3>
-                <p className="font-['Lexend'] font-light text-[#5A6673] text-[15px] leading-relaxed">
+                <p className="font-['Lexend'] font-light text-[#5A6673] text-fluid-body leading-relaxed">
                   {note.excerpt}
                 </p>
                 <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#C8CDD2] mt-4 pt-4 border-t border-[#E5E7EB]">
@@ -98,11 +96,11 @@ export function FieldNotesPreview({ fieldNotes }: { fieldNotes?: SanityFieldNote
               FIELD NOTES — NEWSLETTER
             </span>
 
-            <h3 className="font-['Radley'] font-light text-[36px] md:text-[48px] leading-[1.1] text-[#1A1A1A] max-w-[22ch] mb-6">
+            <h3 className="font-['Radley'] font-light text-fluid-xl leading-[1.1] text-[#1A1A1A] max-w-[22ch] mb-6">
               Receive Field Notes from the expedition desk.
             </h3>
 
-            <p className="font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.65] max-w-[56ch] mb-12">
+            <p className="font-['Lexend'] font-light text-fluid-body text-[#5A6673] leading-[1.65] max-w-[56ch] mb-12">
               A quiet quarterly letter of field reports, route judgement and Himalayan readings.
             </p>
 

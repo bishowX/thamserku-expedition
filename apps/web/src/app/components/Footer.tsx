@@ -11,12 +11,12 @@ export function Footer() {
             <div className="block h-9 md:h-10 aspect-[1115.63/208]">
               <ThamserkuLogo />
             </div>
-            <p className="font-['Radley'] italic font-light text-2xl text-white max-w-[20ch] leading-[1.3]">
+            <p className="font-['Radley'] italic font-light text-fluid-md text-white max-w-[20ch] leading-[1.3]">
               The Spirit of the Himalayas, refined for the world.
             </p>
           </div>
           
-          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['Lexend'] font-light text-[14px]">
+          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['Lexend'] font-light text-fluid-body-sm">
             <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               EXPEDITIONS
             </h4>
@@ -27,7 +27,7 @@ export function Footer() {
             <Link to="/private" className="hover:text-white transition-colors">Private Expeditions</Link>
           </div>
           
-          <div className="w-full md:w-3/12 flex flex-col gap-6 font-['Lexend'] font-light text-[14px]">
+          <div className="w-full md:w-3/12 flex flex-col gap-6 font-['Lexend'] font-light text-fluid-body-sm">
             <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               THE HOUSE
             </h4>
@@ -36,7 +36,7 @@ export function Footer() {
             <Link to="/archive" className="hover:text-white transition-colors">Expedition Archive</Link>
           </div>
           
-          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['Lexend'] font-light text-[14px]">
+          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['Lexend'] font-light text-fluid-body-sm">
             <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               EDITORIAL & HELP
             </h4>

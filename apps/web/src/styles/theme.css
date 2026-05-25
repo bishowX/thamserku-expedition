@@ -15,6 +15,20 @@
   --color-ring: var(--ring);
 }
 
+/* Fluid typography — 375px → 1440px viewport
+   Generates text-fluid-* utility classes */
+@theme {
+  --text-fluid-display:  clamp(2.25rem, 1.634rem + 2.63vw, 4rem);       /* 36px → 64px */
+  --text-fluid-section:  clamp(2rem, 1.473rem + 2.25vw, 3.5rem);        /* 32px → 56px */
+  --text-fluid-heading:  clamp(1.75rem, 1.31rem + 1.88vw, 3rem);        /* 28px → 48px */
+  --text-fluid-mountain: clamp(1.625rem, 1.23rem + 1.69vw, 2.75rem);    /* 26px → 44px */
+  --text-fluid-xl:       clamp(1.5rem, 1.148rem + 1.5vw, 2.5rem);       /* 24px → 40px */
+  --text-fluid-lg:       clamp(1.125rem, 0.905rem + 0.94vw, 1.75rem);   /* 18px → 28px */
+  --text-fluid-md:       clamp(1rem, 0.869rem + 0.56vw, 1.375rem);      /* 16px → 22px */
+  --text-fluid-body:     clamp(0.875rem, 0.831rem + 0.19vw, 1rem);      /* 14px → 16px */
+  --text-fluid-body-sm:  clamp(0.8125rem, 0.768rem + 0.19vw, 0.9375rem); /* 13px → 15px */
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -29,27 +43,27 @@
   }
 
   h1 {
-    font-size: var(--text-2xl);
+    font-size: var(--text-fluid-display);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.1;
   }
 
   h2 {
-    font-size: var(--text-xl);
+    font-size: var(--text-fluid-heading);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.1;
   }
 
   h3 {
-    font-size: var(--text-lg);
+    font-size: var(--text-fluid-lg);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   h4 {
-    font-size: var(--text-base);
+    font-size: var(--text-fluid-md);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.3;
   }
 
   label {

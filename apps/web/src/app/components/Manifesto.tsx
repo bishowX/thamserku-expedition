@@ -28,11 +28,11 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
           </span>
         </div>
         <div className="md:w-3/4 flex flex-col gap-10">
-          <h2 className="font-['Radley'] font-light text-4xl md:text-[48px] leading-[1.2] max-w-3xl">
+          <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.2] max-w-3xl">
             {part1}{" "}
             <em className="text-[#0A3A77] italic">{part2}</em>
           </h2>
-          <p className="font-['Lexend'] font-light text-[#5A6673] text-[15px] leading-[1.8] max-w-[56ch]">
+          <p className="font-['Lexend'] font-light text-[#5A6673] text-fluid-body leading-[1.8] max-w-[56ch]">
             {body}
           </p>
         </div>

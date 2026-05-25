@@ -27,11 +27,11 @@ export function Closing({ data }: { data?: ClosingData }) {
           07 — BEGIN PRIVATELY
         </span>
 
-        <h2 className="font-['Radley'] font-light text-5xl md:text-[80px] leading-[1.1] mb-2">
+        <h2 className="font-['Radley'] font-light text-fluid-display leading-[1.1] mb-2">
           {heading}
         </h2>
 
-        <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[16px] leading-[1.8] max-w-[48ch] mb-4">
+        <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-[1.8] max-w-[48ch] mb-4">
           {body}
         </p>
 
