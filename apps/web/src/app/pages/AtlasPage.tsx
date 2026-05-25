@@ -1,3 +1,4 @@
+import { useState, useMemo } from "react";
 import { useLoaderData } from "react-router";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
@@ -19,12 +20,73 @@ export async function loader() {
 export default function AtlasPage() {
   const { atlasPage, expeditions } = useLoaderData() as AtlasPageData;
 
+  const [mountain, setMountain] = useState("All");
+  const [technicalLevel, setTechnicalLevel] = useState("All");
+  const [edition, setEdition] = useState("All");
+
+  const mountains = useMemo(
+    () => [...new Set(expeditions.map((e) => e.name).filter(Boolean))].sort(),
+    [expeditions]
+  );
+
+  const technicalLevels = useMemo(
+    () => [...new Set(expeditions.map((e) => e.style).filter(Boolean))].sort(),
+    [expeditions]
+  );
+
+  const editions = useMemo(() => {
+    const seen = new Map<string, string>();
+    expeditions.forEach((e) =>
+      e.editions?.forEach((ed) => {
+        if (!seen.has(ed.letter)) seen.set(ed.letter, ed.name ?? ed.letter);
+      })
+    );
+    return [...seen.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([letter, name]) => ({ value: letter, label: name }));
+  }, [expeditions]);
+
+  const filtered = useMemo(
+    () =>
+      expeditions.filter((exp) => {
+        if (mountain !== "All" && exp.name !== mountain) return false;
+        if (technicalLevel !== "All" && exp.style !== technicalLevel)
+          return false;
+        if (
+          edition !== "All" &&
+          !exp.editions?.some((ed) => ed.letter === edition)
+        )
+          return false;
+        return true;
+      }),
+    [expeditions, mountain, technicalLevel, edition]
+  );
+
+  function reset() {
+    setMountain("All");
+    setTechnicalLevel("All");
+    setEdition("All");
+  }
+
   return (
     <div className="w-full min-h-screen bg-[#1A1A1A] text-white">
       <Nav hideOnScrollDown />
       <AtlasListingHero data={atlasPage ?? undefined} />
-      <AtlasControls />
-      <AtlasIndex expeditions={expeditions} />
+      <AtlasControls
+        mountains={mountains}
+        technicalLevels={technicalLevels}
+        editions={editions}
+        mountain={mountain}
+        technicalLevel={technicalLevel}
+        edition={edition}
+        setMountain={setMountain}
+        setTechnicalLevel={setTechnicalLevel}
+        setEdition={setEdition}
+        onReset={reset}
+        filteredCount={filtered.length}
+        data={atlasPage ?? undefined}
+      />
+      <AtlasIndex expeditions={filtered} />
       <AtlasComparison />
       <SevenThousandMeterPathwayInsert />
       <AtlasSeasonalGuide />

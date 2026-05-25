@@ -529,6 +529,8 @@ export type AtlasPageData = {
     heroHeadline?: string;
     heroSubheading?: string;
     heroImage?: { asset: { _ref: string } } | null;
+    controlsEyebrow?: string;
+    controlsSubline?: string;
   } | null;
   expeditions: SanityExpedition[];
 };
@@ -536,7 +538,7 @@ export type AtlasPageData = {
 export async function getAtlasPageData(): Promise<AtlasPageData> {
   return serverClient.fetch(`{
     "atlasPage": *[_type == "atlasPage"][0] {
-      heroHeadline, heroSubheading, heroImage
+      heroHeadline, heroSubheading, heroImage, controlsEyebrow, controlsSubline
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
       _id, number, code, name, slug, altitude, region, season, style, positioning, image,
