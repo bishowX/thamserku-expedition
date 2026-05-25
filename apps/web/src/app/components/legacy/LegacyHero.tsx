@@ -34,16 +34,6 @@ export function LegacyHero({ page }: { page?: PageData }) {
         </p>
       </div>
 
-      <div className="hidden md:block relative z-20 w-full border-t border-white/20 mt-auto bg-[#1A1A1A]/30 backdrop-blur-sm">
-        <div className="max-w-[1440px] mx-auto px-8 py-5">
-          <div className="flex flex-wrap md:flex-nowrap gap-y-4 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-white/20 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white">
-            <div className="md:pr-8 py-2 md:py-0 whitespace-nowrap">{page?.heroMetaFeature ?? 'FEATURE · LEGACY'}</div>
-            <div className="md:px-8 py-2 md:py-0 whitespace-nowrap">{page?.heroMetaAtlas ?? 'THE HIMALAYAN ATLAS'}</div>
-            <div className="md:px-8 py-2 md:py-0 whitespace-nowrap">{page?.heroMetaReadTime ?? 'READ TIME · 12 MIN'}</div>
-            <div className="md:px-8 py-2 md:py-0 whitespace-nowrap">{page?.heroMetaEra ?? 'NEPAL · 1987 — TODAY'}</div>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
