@@ -5,7 +5,7 @@ import type { SanityEditionFull } from "../../../lib/queries";
 const BG_CLASS: Record<string, string> = {
   dark: "bg-[#1A1A1A]",
   light: "bg-[#F4F2EC]",
-  blue: "bg-[#0A3A77]",
+  blue: "bg-[#2E353C]",
 };
 
 const LETTER_COLOR: Record<string, string> = {
@@ -140,7 +140,11 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-8 mt-20">
                   <Link
-                    to={ed.slug?.current ? `/editions/${ed.slug.current}` : "/editions"}
+                    to={
+                      ed.slug?.current
+                        ? `/editions/${ed.slug.current}`
+                        : "/editions"
+                    }
                     className={`inline-flex items-center justify-center px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border ${
                       isDark
                         ? "border-white text-white hover:bg-white hover:text-[#0A3A77]"
@@ -152,7 +156,9 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
                   <Link
                     to="/consultation"
                     className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors ${
-                      isDark ? "text-[#C8CDD2] hover:text-white" : "text-[#5A6673] hover:text-[#1A1A1A]"
+                      isDark
+                        ? "text-[#C8CDD2] hover:text-white"
+                        : "text-[#5A6673] hover:text-[#1A1A1A]"
                     }`}
                   >
                     SCHEDULE A CONSULTATION →
