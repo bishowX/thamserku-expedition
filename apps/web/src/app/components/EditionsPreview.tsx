@@ -3,9 +3,10 @@ import { Link } from "react-router";
 import type { SanityEdition } from "../../lib/queries";
 
 type EditionsData = {
-  editionsHeading?: string
-  editionsIntro?: string
-}
+  editionsEyebrow?: string;
+  editionsHeading?: string;
+  editionsIntro?: string;
+};
 
 function toDisplayData(ed: SanityEdition) {
   return {
@@ -14,22 +15,31 @@ function toDisplayData(ed: SanityEdition) {
     sub: ed.subtitle,
     positioning: ed.positioning,
     who: ed.targetAudience,
-    slug: ed.slug?.current ?? '',
-  }
+    slug: ed.slug?.current ?? "",
+  };
 }
 
-export function EditionsPreview({ editions, data }: { editions?: SanityEdition[]; data?: EditionsData }) {
-  if (!editions?.length) return null
+export function EditionsPreview({
+  editions,
+  data,
+}: {
+  editions?: SanityEdition[];
+  data?: EditionsData;
+}) {
+  if (!editions?.length) return null;
 
-  const items = editions.map(toDisplayData)
+  const items = editions.map(toDisplayData);
 
   return (
-    <section id="editions" className="w-full bg-[#0A3A77] text-white py-32 px-8">
+    <section
+      id="editions"
+      className="w-full bg-[#2E353C] text-white py-24 px-8"
+    >
       <div className="max-w-7xl mx-auto flex flex-col gap-16">
         <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start mb-12">
           <div className="md:w-1/4">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-              05 — EDITIONS
+              {data?.editionsEyebrow ?? "04 — EDITIONS"}
             </span>
           </div>
           <div className="md:w-1/2">
@@ -68,14 +78,14 @@ export function EditionsPreview({ editions, data }: { editions?: SanityEdition[]
               </div>
 
               <div className="md:w-3/12">
-                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body-sm leading-relaxed">
+                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-relaxed">
                   "{ed.positioning}"
                 </p>
               </div>
 
               <div className="md:w-3/12">
-                <p className="font-['JetBrains_Mono'] uppercase tracking-[0.1em] text-[10px] text-[#C8CDD2] leading-relaxed max-w-[40ch]">
-                  {ed.who}
+                <p className="font-['JetBrains_Mono'] capitalize tracking-[0.1em] text-[15px] text-[#C8CDD2] leading-relaxed max-w-[40ch]">
+                  {ed.who.toLocaleLowerCase()}
                 </p>
               </div>
 

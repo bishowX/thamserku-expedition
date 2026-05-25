@@ -26,6 +26,7 @@ export default defineType({
     defineField({ name: 'atlasIntro', title: 'Intro', type: 'text', rows: 2, group: 'atlas' }),
 
     // Editions
+    defineField({ name: 'editionsEyebrow', title: 'Eyebrow', type: 'string', group: 'editions', description: 'e.g. 04 — EDITIONS' }),
     defineField({ name: 'editionsHeading', title: 'Heading', type: 'string', group: 'editions' }),
     defineField({ name: 'editionsIntro', title: 'Intro', type: 'text', rows: 2, group: 'editions' }),
 

@@ -149,6 +149,7 @@ export type HomePageData = {
     atlasEyebrow: string;
     atlasHeading: string;
     atlasIntro: string;
+    editionsEyebrow: string;
     editionsHeading: string;
     editionsIntro: string;
     manifestoEyebrow: string;
@@ -185,7 +186,7 @@ export type EditionsPageData = {
 export async function getHomePageData(): Promise<HomePageData> {
   return serverClient.fetch(`{
     "homePage": *[_type == "homePage"][0] {
-      heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody,
+      heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody,
       closingHeading, closingBody,
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
       chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
