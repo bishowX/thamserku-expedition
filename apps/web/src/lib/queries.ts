@@ -535,6 +535,15 @@ export type AtlasPageData = {
     comparisonEyebrow?: string;
     comparisonHeadline?: string;
     comparisonNote?: string;
+    pathwayEyebrow?: string;
+    pathwayHeading?: string;
+    pathwaySubheading?: string;
+    pathwayBody?: string;
+    pathwayCta1Label?: string;
+    pathwayCta1Href?: string;
+    pathwayCta2Label?: string;
+    pathwayCta2Href?: string;
+    pathwayFootnote?: string;
   } | null;
   expeditions: SanityExpedition[];
 };
@@ -543,7 +552,9 @@ export async function getAtlasPageData(): Promise<AtlasPageData> {
   return serverClient.fetch(`{
     "atlasPage": *[_type == "atlasPage"][0] {
       heroHeadline, heroSubheading, heroImage, controlsEyebrow, controlsSubline,
-      comparisonEyebrow, comparisonHeadline, comparisonNote
+      comparisonEyebrow, comparisonHeadline, comparisonNote,
+      pathwayEyebrow, pathwayHeading, pathwaySubheading, pathwayBody,
+      pathwayCta1Label, pathwayCta1Href, pathwayCta2Label, pathwayCta2Href, pathwayFootnote
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
       _id, number, code, name, slug, altitude, region, season, style, bestFor, positioning, image,

@@ -8,6 +8,7 @@ export default defineType({
     { name: 'hero', title: 'Hero' },
     { name: 'controls', title: 'Controls' },
     { name: 'comparison', title: 'Comparison' },
+    { name: 'pathway', title: '7,000m Pathway' },
   ],
   fields: [
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'string', group: 'hero' }),
@@ -18,6 +19,15 @@ export default defineType({
     defineField({ name: 'comparisonEyebrow', title: 'Eyebrow', type: 'string', group: 'comparison', description: 'e.g. 04 — AT A GLANCE' }),
     defineField({ name: 'comparisonHeadline', title: 'Headline', type: 'string', group: 'comparison', description: 'e.g. Five mountains, read side by side.' }),
     defineField({ name: 'comparisonNote', title: 'Footer Note', type: 'text', rows: 2, group: 'comparison', description: 'Italic note shown below the comparison table' }),
+    defineField({ name: 'pathwayEyebrow', title: 'Eyebrow', type: 'string', group: 'pathway', description: 'e.g. BEFORE THE 8,000M PEAKS — A QUALIFYING PATHWAY' }),
+    defineField({ name: 'pathwayHeading', title: 'Heading', type: 'string', group: 'pathway' }),
+    defineField({ name: 'pathwaySubheading', title: 'Subheading', type: 'string', group: 'pathway', description: 'Italic blue line beneath heading' }),
+    defineField({ name: 'pathwayBody', title: 'Body', type: 'text', rows: 3, group: 'pathway' }),
+    defineField({ name: 'pathwayCta1Label', title: 'CTA 1 Label', type: 'string', group: 'pathway' }),
+    defineField({ name: 'pathwayCta1Href', title: 'CTA 1 Link', type: 'string', group: 'pathway', description: 'e.g. /consultation?intent=7000m' }),
+    defineField({ name: 'pathwayCta2Label', title: 'CTA 2 Label', type: 'string', group: 'pathway' }),
+    defineField({ name: 'pathwayCta2Href', title: 'CTA 2 Link', type: 'string', group: 'pathway', description: 'e.g. /7000m' }),
+    defineField({ name: 'pathwayFootnote', title: 'Footnote', type: 'string', group: 'pathway' }),
   ],
   preview: {
     prepare: () => ({ title: 'Atlas Page' }),

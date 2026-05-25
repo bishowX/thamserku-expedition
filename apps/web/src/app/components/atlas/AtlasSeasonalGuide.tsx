@@ -1,8 +1,21 @@
 export function AtlasSeasonalGuide() {
-  const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-  
+  const months = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
+
   return (
-    <section className="w-full bg-white text-[#1A1A1A] py-32 px-8">
+    <section className="w-full bg-white text-[#1A1A1A] py-24 px-8">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-24">
         <div>
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block mb-6">
@@ -18,7 +31,10 @@ export function AtlasSeasonalGuide() {
           {/* Header row */}
           <div className="grid grid-cols-12 mb-8 md:mb-16 gap-x-2">
             {months.map((month, i) => (
-              <div key={i} className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] border-l border-[#1A1A1A]/10 pl-2 h-[480px] md:h-[240px]">
+              <div
+                key={i}
+                className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] border-l border-[#1A1A1A]/10 pl-2 h-[480px] md:h-[240px]"
+              >
                 {month}
               </div>
             ))}
@@ -30,7 +46,13 @@ export function AtlasSeasonalGuide() {
             <div className="absolute top-0 left-[25%] w-[16.666%] pr-4 border-l border-transparent pl-2 hidden md:block">
               <div className="h-[4px] bg-[#0A3A77] w-full mb-3" />
               <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#0A3A77] leading-[1.8]">
-                EVEREST<br/>DHAULAGIRI<br/>MAKALU<br/>HIMCHULI
+                EVEREST
+                <br />
+                DHAULAGIRI
+                <br />
+                MAKALU
+                <br />
+                HIMCHULI
               </div>
             </div>
 
@@ -38,10 +60,12 @@ export function AtlasSeasonalGuide() {
             <div className="absolute top-0 left-[66.666%] w-[25%] pr-4 border-l border-transparent pl-2 hidden md:block">
               <div className="h-[4px] bg-[#5A6673] w-full mb-3" />
               <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] leading-[1.8]">
-                MANASLU<br/>HIMCHULI
+                MANASLU
+                <br />
+                HIMCHULI
               </div>
             </div>
-            
+
             {/* Mobile Fallback Bands */}
             <div className="md:hidden absolute top-0 left-[25%] w-[16.666%] pl-1">
               <div className="h-[120px] bg-[#0A3A77] w-[4px]" />
@@ -59,7 +83,8 @@ export function AtlasSeasonalGuide() {
               SPRING WINDOW
             </div>
             <p className="font-['Lexend'] font-light text-[#5A6673] text-[15px] leading-relaxed">
-              "The most established Himalayan summit window. Long days, stable weather patterns, and the season most 8,000m expeditions are run."
+              "The most established Himalayan summit window. Long days, stable
+              weather patterns, and the season most 8,000m expeditions are run."
             </p>
           </div>
           <div>
@@ -67,7 +92,8 @@ export function AtlasSeasonalGuide() {
               AUTUMN WINDOW
             </div>
             <p className="font-['Lexend'] font-light text-[#5A6673] text-[15px] leading-relaxed">
-              "A drier, clearer season favoured by Manaslu and quieter objectives. Cold sets in early; the window is shorter."
+              "A drier, clearer season favoured by Manaslu and quieter
+              objectives. Cold sets in early; the window is shorter."
             </p>
           </div>
           <div>
@@ -75,7 +101,8 @@ export function AtlasSeasonalGuide() {
               OFF-SEASON
             </div>
             <p className="font-['Lexend'] font-light text-[#5A6673] text-[15px] leading-relaxed">
-              "Monsoon and deep winter are not climbing seasons at Thamserku. The mountain is at rest, and so are we."
+              "Monsoon and deep winter are not climbing seasons at Thamserku.
+              The mountain is at rest, and so are we."
             </p>
           </div>
         </div>
