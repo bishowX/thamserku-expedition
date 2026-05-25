@@ -21,7 +21,7 @@ export function Footer() {
               EXPEDITIONS
             </h4>
             <Link to="/atlas" className="hover:text-white transition-colors">Expedition Atlas</Link>
-            <Link to="/everest" className="hover:text-white transition-colors">Everest</Link>
+            <Link to="/expeditions/everest" className="hover:text-white transition-colors">Everest</Link>
             <Link to="/editions" className="hover:text-white transition-colors">Editions</Link>
             <Link to="/7000m" className="hover:text-white transition-colors">7,000m Qualifying Pathway</Link>
             <Link to="/private" className="hover:text-white transition-colors">Private Expeditions</Link>

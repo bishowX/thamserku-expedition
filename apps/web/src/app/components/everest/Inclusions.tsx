@@ -1,4 +1,11 @@
-const inclusionsData = [
+type InclusionCategory = { category: string; prefix: string; items: string[] };
+
+type Props = {
+  expeditionName?: string;
+  inclusionCategories?: InclusionCategory[] | null;
+};
+
+const FALLBACK_CATEGORIES: InclusionCategory[] = [
   {
     category: "EXPEDITION LEADERSHIP",
     prefix: "L",
@@ -32,16 +39,19 @@ const inclusionsData = [
   }
 ];
 
-export function Inclusions() {
+export function Inclusions({ expeditionName, inclusionCategories }: Props) {
+  const name = expeditionName || 'Expedition';
+  const categories = inclusionCategories ?? FALLBACK_CATEGORIES;
+
   return (
     <section className="w-full bg-[#F4F2EC] py-[140px] md:py-[180px] text-[#1A1A1A]">
       <div className="w-full max-w-[1440px] mx-auto px-8">
-        
+
         {/* Section header */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
           <div className="md:col-span-5 flex flex-col">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
-              WHAT IS INCLUDED — EVEREST
+              WHAT IS INCLUDED — {name.toUpperCase()}
             </span>
             <h2 className="font-['Radley'] font-light text-[48px] md:text-[64px] leading-[1.05] text-[#1A1A1A] max-w-[14ch]">
               "Everything considered, in one expedition."
@@ -49,22 +59,22 @@ export function Inclusions() {
           </div>
           <div className="md:col-span-7 flex flex-col justify-end md:pb-4">
             <p className="font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.75] max-w-[60ch]">
-              Every Thamserku Everest expedition is supported from the first private conversation through descent. Exact inclusions vary by edition and are confirmed in a tailored proposal.
+              Every Thamserku {name} expedition is supported from the first private conversation through descent. Exact inclusions vary by edition and are confirmed in a tailored proposal.
             </p>
           </div>
         </div>
 
         {/* Inclusions grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 mb-20">
-          {inclusionsData.map((col, cIdx) => (
+          {categories.map((col, cIdx) => (
             <div key={cIdx} className="flex flex-col">
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
                 {col.category}
               </span>
               <div className="flex flex-col border-t border-[#5A6673]/30">
                 {col.items.map((item, iIdx) => (
-                  <div 
-                    key={iIdx} 
+                  <div
+                    key={iIdx}
                     className="flex items-start gap-6 py-6 border-b border-[#5A6673]/30"
                   >
                     <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] pt-1 min-w-[32px]">
@@ -84,13 +94,6 @@ export function Inclusions() {
         <p className="font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] max-w-[60ch] mb-24">
           Editions vary. Definitive expeditions add private camp configuration, concierge planning, and maximum discretion. Your tailored proposal will specify exact inclusions.
         </p>
-
-        {/* Placeholder note */}
-        <div className="w-full">
-          <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]">
-            [CLIENT TO CONFIRM] — INCLUSIONS LIST INDICATIVE; FINAL INCLUSIONS PER EDITION CONFIRMED IN TAILORED PROPOSAL.
-          </span>
-        </div>
 
       </div>
     </section>

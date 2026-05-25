@@ -14,8 +14,10 @@ type Pages = {
   "/": {
     params: {};
   };
-  "/everest": {
-    params: {};
+  "/expeditions/:slug": {
+    params: {
+      "slug": string;
+    };
   };
   "/atlas": {
     params: {};
@@ -58,15 +60,15 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/everest" | "/atlas" | "/editions" | "/legacy" | "/team" | "/consultation" | "/archive" | "/yeti-infrastructure" | "/7000m" | "/private" | "/field-notes" | "/faq" | "/api/upload-cv";
+    page: "/" | "/expeditions/:slug" | "/atlas" | "/editions" | "/legacy" | "/team" | "/consultation" | "/archive" | "/yeti-infrastructure" | "/7000m" | "/private" | "/field-notes" | "/faq" | "/api/upload-cv";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
     page: "/";
   };
-  "./app/pages/Everest.tsx": {
-    id: "app/pages/Everest";
-    page: "/everest";
+  "./app/pages/ExpeditionDossier.tsx": {
+    id: "app/pages/ExpeditionDossier";
+    page: "/expeditions/:slug";
   };
   "./app/pages/AtlasPage.tsx": {
     id: "app/pages/AtlasPage";
@@ -121,7 +123,7 @@ type RouteFiles = {
 type RouteModules = {
   "root": typeof import("./src/root.tsx");
   "app/pages/Home": typeof import("./src/./app/pages/Home.tsx");
-  "app/pages/Everest": typeof import("./src/./app/pages/Everest.tsx");
+  "app/pages/ExpeditionDossier": typeof import("./src/./app/pages/ExpeditionDossier.tsx");
   "app/pages/AtlasPage": typeof import("./src/./app/pages/AtlasPage.tsx");
   "app/pages/EditionsPage": typeof import("./src/./app/pages/EditionsPage.tsx");
   "app/pages/LegacyPage": typeof import("./src/./app/pages/LegacyPage.tsx");

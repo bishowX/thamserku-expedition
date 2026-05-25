@@ -1,4 +1,13 @@
-export function QuickFacts() {
+type Props = {
+  altitude?: string;
+  region?: string;
+  duration?: string;
+  season?: string;
+  expeditionStyleFact?: string;
+  pricing?: string;
+};
+
+export function QuickFacts({ altitude, region, duration, season, expeditionStyleFact, pricing }: Props) {
   return (
     <section className="bg-[#1A1A1A] w-full text-white pt-16 pb-0 md:pt-24 border-b border-white/10">
       <div className="max-w-[1440px] mx-auto px-8 mb-8">
@@ -8,18 +17,13 @@ export function QuickFacts() {
       </div>
       <div className="w-full border-t border-white/20">
         <div className="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 divide-x divide-y lg:divide-y-0 divide-white/20">
-          <Fact title="ALTITUDE" value="8,848.86 m" />
-          <Fact title="REGION" value="Khumbu, Nepal" />
-          <Fact title="DURATION" value="60–65 days" />
-          <Fact title="SEASON" value="Spring, April–May" />
-          <Fact title="EXPEDITION STYLE" value="Sherpa-led, oxygen-supported" />
-          <Fact title="PRICING" value="By private consultation" />
+          <Fact title="ALTITUDE" value={altitude || '—'} />
+          <Fact title="REGION" value={region || '—'} />
+          <Fact title="DURATION" value={duration || '—'} />
+          <Fact title="SEASON" value={season || '—'} />
+          <Fact title="EXPEDITION STYLE" value={expeditionStyleFact || '—'} />
+          <Fact title="PRICING" value={pricing || '—'} />
         </div>
-      </div>
-      <div className="max-w-[1440px] mx-auto px-8 py-4 border-t border-white/10">
-        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
-          [CLIENT TO CONFIRM] — EACH DOSSIER FACT VALUE PENDING VERIFICATION.
-        </span>
       </div>
     </section>
   );

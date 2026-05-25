@@ -30,7 +30,7 @@ export const PathwayClosing = () => {
           </Link>
           
           <Link 
-            to="/everest" 
+            to="/expeditions/everest" 
             className="w-full sm:w-auto border border-white/30 text-[#C8CDD2] px-10 py-5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white hover:text-white transition-colors whitespace-nowrap"
           >
             EXPLORE EVEREST →

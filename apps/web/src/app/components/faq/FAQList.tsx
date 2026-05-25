@@ -83,7 +83,7 @@ const FAQ_DATA: FAQCategory[] = [
         aNum: "A.05",
         answer: "We typically recommend prior altitude experience above 6,000m or 7,000m before an Everest expedition. The 7,000m Qualifying Pathway page describes the considered preparation context. Specific recommendations depend on your background and are discussed in private consultation. [Placeholder answer.]",
         linkText: "READ THE EVEREST PAGE →",
-        linkTo: "/everest"
+        linkTo: "/expeditions/everest"
       }
     ]
   },

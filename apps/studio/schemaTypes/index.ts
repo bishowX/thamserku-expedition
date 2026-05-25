@@ -10,11 +10,20 @@ import chairmanLetter from './documents/chairmanLetter'
 import consultationPage from './documents/consultationPage'
 import siteSettings from './documents/siteSettings'
 import yetiInfrastructurePage from './documents/yetiInfrastructurePage'
+import sherpa from './documents/sherpa'
 import yetiPillar from './objects/yetiPillar'
 import timelineEra from './objects/timelineEra'
 import consultationMoment from './objects/consultationMoment'
 import consultationStep from './objects/consultationStep'
 import consultationContactOption from './objects/consultationContactOption'
+import audienceTile from './objects/audienceTile'
+import journeyStage from './objects/journeyStage'
+import routeWaypoint from './objects/routeWaypoint'
+import availableSeason from './objects/availableSeason'
+import faqItem from './objects/faqItem'
+import safetyModule from './objects/safetyModule'
+import preparationColumn from './objects/preparationColumn'
+import inclusionCategory from './objects/inclusionCategory'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
@@ -27,6 +36,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // Collections
   expedition,
   edition,
+  sherpa,
   fieldNote,
   chairmanLetter,
   enquiry,
@@ -36,4 +46,12 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   consultationMoment,
   consultationStep,
   consultationContactOption,
+  audienceTile,
+  journeyStage,
+  routeWaypoint,
+  availableSeason,
+  faqItem,
+  safetyModule,
+  preparationColumn,
+  inclusionCategory,
 ]

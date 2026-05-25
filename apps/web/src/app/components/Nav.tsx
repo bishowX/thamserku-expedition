@@ -16,8 +16,8 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
   const getCtaInfo = () => {
     switch (location.pathname) {
-      case "/everest":
-        return { label: "Schedule a Everest Consultation", link: "/consultation?peak=everest" };
+      case "/expeditions/everest":
+        return { label: "Schedule an Everest Consultation", link: "/consultation?peak=everest" };
       case "/7000m":
         return { label: "Plan Your Qualifying Ascent", link: "/consultation?intent=7000m" };
       case "/private":
@@ -109,7 +109,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
           {/* EXPEDITIONS GROUP */}
           <div className="text-[10px] text-[#C8CDD2] mb-6">EXPEDITIONS</div>
           <Link to="/atlas" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Expedition Atlas</Link>
-          <Link to="/everest" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Everest</Link>
+          <Link to="/expeditions/everest" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Everest</Link>
           <Link to="/editions" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Editions</Link>
           <Link to="/7000m" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>7,000m Qualifying Pathway</Link>
           <Link to="/private" className="hover:text-[#C8CDD2] transition-colors pb-8 mb-8 border-b border-white/10" onClick={() => setMobileMenuOpen(false)}>Private Expeditions</Link>

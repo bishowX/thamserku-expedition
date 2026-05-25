@@ -414,6 +414,114 @@ export type ConsultationPageData = {
   expeditions: Array<{ _id: string; name: string; code: string }>;
 };
 
+export type SanityAudienceTile = { label: string; subline: string; description: string };
+export type SanityJourneyStage = { title: string; description: string; image?: { asset: { _ref: string } } | null };
+export type SanityRouteWaypoint = { name: string; altitude: string };
+export type SanityAvailableSeason = {
+  name: string;
+  dates: string;
+  statusAlpine?: string;
+  statusBespoke?: string;
+  statusCrafted?: string;
+  statusDefinitive?: string;
+};
+export type SanityFaqItem = { question: string; answer: string };
+export type SanityInclusionCategory = { category: string; prefix: string; items: string[] };
+export type SanitySafetyModule = { label: string; title: string; description: string };
+export type SanityPreparationColumn = { title: string; items: string[] };
+export type SanitySherpa = {
+  name: string;
+  portrait?: { asset: { _ref: string } } | null;
+  region?: string;
+  yearsActive?: string;
+  mountainsSupported?: string;
+  philosophyLine?: string;
+};
+
+export type SanityExpeditionDossier = {
+  _id: string;
+  number: string;
+  code: string;
+  name: string;
+  slug: { current: string };
+  altitude: string;
+  region: string;
+  season: string;
+  style: string;
+  positioning: string;
+  image?: { asset: { _ref: string } } | null;
+  heroImage?: { asset: { _ref: string } } | null;
+  heroTagline?: string;
+  heroSubtext?: string;
+  duration?: string;
+  expeditionStyleFact?: string;
+  pricing?: string;
+  overviewHeadline?: string;
+  overviewBody?: string;
+  overviewSideImage?: { asset: { _ref: string } } | null;
+  whoItIsForHeadline?: string;
+  audienceTiles?: SanityAudienceTile[];
+  journeyStages?: SanityJourneyStage[];
+  routeWaypoints?: SanityRouteWaypoint[];
+  routePhilosophy?: string;
+  acclimatisationNote?: string;
+  summitWindowNote?: string;
+  yetiAirNote?: string;
+  yetiLodgesNote?: string;
+  yetiAccessNote?: string;
+  yetiContinuityNote?: string;
+  editions?: Array<{ letter: string; name: string; subtitle: string; positioning: string; targetAudience: string }>;
+  safetySupportHeadline?: string;
+  safetyModules?: SanitySafetyModule[] | null;
+  preparationHeadline?: string;
+  preparationColumns?: SanityPreparationColumn[] | null;
+  leadSherpa?: SanitySherpa | null;
+  availableSeasons?: SanityAvailableSeason[];
+  inclusionCategories?: SanityInclusionCategory[] | null;
+  faqs?: SanityFaqItem[];
+  closingImage?: { asset: { _ref: string } } | null;
+  closingStatement?: string;
+};
+
+export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditionDossier | null> {
+  return serverClient.fetch(
+    `*[_type == "expedition" && slug.current == $slug][0]{
+      _id, number, code, name, slug,
+      altitude, region, season, style, positioning, image,
+      heroImage, heroTagline, heroSubtext,
+      duration, expeditionStyleFact, pricing,
+      overviewHeadline, overviewBody, overviewSideImage,
+      whoItIsForHeadline,
+      audienceTiles[]{ label, subline, description },
+      journeyStages[]{ title, description, image },
+      routeWaypoints[]{ name, altitude },
+      routePhilosophy, acclimatisationNote, summitWindowNote,
+      yetiAirNote, yetiLodgesNote, yetiAccessNote, yetiContinuityNote,
+      safetySupportHeadline,
+      safetyModules[]{ label, title, description },
+      preparationHeadline,
+      preparationColumns[]{ title, items },
+      editions[]->{ letter, name, subtitle, positioning, targetAudience },
+      leadSherpa->{ name, portrait, region, yearsActive, mountainsSupported, philosophyLine },
+      availableSeasons[]{ name, dates, statusAlpine, statusBespoke, statusCrafted, statusDefinitive },
+      inclusionCategories[]{ category, prefix, items },
+      faqs[]{ question, answer },
+      closingImage, closingStatement
+    }`,
+    { slug }
+  );
+}
+
+export async function getExpeditions(): Promise<SanityExpedition[]> {
+  return serverClient.fetch(
+    `*[_type == "expedition"] | order(number asc) {
+      _id, number, code, name, slug,
+      altitude, region, season, style, positioning, image,
+      editions[]->{ _id, letter, name, slug }
+    }`
+  );
+}
+
 export async function getConsultationPageData(): Promise<ConsultationPageData> {
   return serverClient.fetch(`{
     "consultationPage": *[_type == "consultationPage"][0] {

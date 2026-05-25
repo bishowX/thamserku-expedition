@@ -32,7 +32,7 @@ export function AtlasClosing() {
           <Link to="/consultation" className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:bg-transparent hover:text-white transition-colors flex items-center justify-center gap-3">
             Schedule a Consultation <MoveRight className="w-4 h-4" strokeWidth={1} />
           </Link>
-          <Link to="/everest" className="border border-white/30 text-white px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3">
+          <Link to="/expeditions/everest" className="border border-white/30 text-white px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3">
             View Everest <MoveRight className="w-4 h-4" strokeWidth={1} />
           </Link>
         </div>
