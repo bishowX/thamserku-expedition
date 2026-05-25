@@ -552,6 +552,16 @@ export type AtlasPageData = {
     autumnWindowDescription?: string;
     offSeasonLabel?: string;
     offSeasonDescription?: string;
+    faqEyebrow?: string;
+    faqHeadline?: string;
+    faqSubheading?: string;
+    faqCtaLabel?: string;
+    faqs?: Array<{ _key: string; question: string; answer: string }>;
+    closingEyebrow?: string;
+    closingHeadline?: string;
+    closingBody?: string;
+    closingFootnote?: string;
+    closingImage?: { asset: { _ref: string } } | null;
   } | null;
   expeditions: SanityExpedition[];
 };
@@ -566,7 +576,11 @@ export async function getAtlasPageData(): Promise<AtlasPageData> {
       seasonalGuideEyebrow, seasonalGuideHeadline,
       springWindowLabel, springWindowDescription,
       autumnWindowLabel, autumnWindowDescription,
-      offSeasonLabel, offSeasonDescription
+      offSeasonLabel, offSeasonDescription,
+      faqEyebrow, faqHeadline, faqSubheading, faqCtaLabel,
+      faqs[] { _key, question, answer },
+      closingEyebrow, closingHeadline, closingBody,
+      closingFootnote, closingImage
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
       _id, number, code, name, slug, altitude, region, season, style, bestFor, positioning, image,

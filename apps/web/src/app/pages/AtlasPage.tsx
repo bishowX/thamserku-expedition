@@ -8,7 +8,6 @@ import { AtlasIndex } from "../components/atlas/AtlasIndex";
 import { AtlasComparison } from "../components/atlas/AtlasComparison";
 import { SevenThousandMeterPathwayInsert } from "../components/atlas/SevenThousandMeterPathwayInsert";
 import { AtlasSeasonalGuide } from "../components/atlas/AtlasSeasonalGuide";
-import { AtlasWhy } from "../components/atlas/AtlasWhy";
 import { AtlasFAQ } from "../components/atlas/AtlasFAQ";
 import { AtlasClosing } from "../components/atlas/AtlasClosing";
 import { getAtlasPageData, type AtlasPageData } from "../../lib/queries";
@@ -90,9 +89,8 @@ export default function AtlasPage() {
       <AtlasComparison expeditions={expeditions} data={atlasPage ?? undefined} />
       <SevenThousandMeterPathwayInsert data={atlasPage ?? undefined} />
       <AtlasSeasonalGuide expeditions={expeditions} data={atlasPage ?? undefined} />
-      <AtlasWhy />
-      <AtlasFAQ />
-      <AtlasClosing />
+      <AtlasFAQ data={atlasPage ?? undefined} />
+      <AtlasClosing data={atlasPage ?? undefined} />
       <Footer />
     </div>
   );

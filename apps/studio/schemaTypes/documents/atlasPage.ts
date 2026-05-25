@@ -10,6 +10,8 @@ export default defineType({
     { name: 'comparison', title: 'Comparison' },
     { name: 'pathway', title: '7,000m Pathway' },
     { name: 'seasonalGuide', title: 'Seasonal Guide' },
+    { name: 'faq', title: 'FAQ' },
+    { name: 'closing', title: 'Closing' },
   ],
   fields: [
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'string', group: 'hero' }),
@@ -37,6 +39,33 @@ export default defineType({
     defineField({ name: 'autumnWindowDescription', title: 'Autumn Window Description', type: 'text', rows: 3, group: 'seasonalGuide' }),
     defineField({ name: 'offSeasonLabel', title: 'Off-Season Label', type: 'string', group: 'seasonalGuide' }),
     defineField({ name: 'offSeasonDescription', title: 'Off-Season Description', type: 'text', rows: 3, group: 'seasonalGuide' }),
+    defineField({ name: 'faqEyebrow', title: 'Eyebrow', type: 'string', group: 'faq', description: 'e.g. FREQUENTLY ASKED — ATLAS' }),
+    defineField({ name: 'faqHeadline', title: 'Headline', type: 'string', group: 'faq' }),
+    defineField({ name: 'faqSubheading', title: 'Subheading', type: 'string', group: 'faq' }),
+    defineField({ name: 'faqCtaLabel', title: 'CTA Label', type: 'string', group: 'faq' }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQ Items',
+      type: 'array',
+      group: 'faq',
+      of: [
+        defineField({
+          name: 'faqItem',
+          title: 'FAQ Item',
+          type: 'object',
+          fields: [
+            defineField({ name: 'question', title: 'Question', type: 'string' }),
+            defineField({ name: 'answer', title: 'Answer', type: 'text', rows: 4 }),
+          ],
+          preview: { select: { title: 'question' } },
+        }),
+      ],
+    }),
+    defineField({ name: 'closingEyebrow', title: 'Eyebrow', type: 'string', group: 'closing', description: 'e.g. 07 — BEGIN PRIVATELY' }),
+    defineField({ name: 'closingHeadline', title: 'Headline', type: 'text', rows: 3, group: 'closing' }),
+    defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 3, group: 'closing' }),
+    defineField({ name: 'closingFootnote', title: 'Footnote', type: 'string', group: 'closing' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
   ],
   preview: {
     prepare: () => ({ title: 'Atlas Page' }),
