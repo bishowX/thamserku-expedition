@@ -16,6 +16,7 @@ export default defineType({
   ],
   fields: [
     // Hero
+    defineField({ name: 'heroImage', title: 'Background Image', type: 'image', group: 'hero', options: { hotspot: true } }),
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'string', group: 'hero' }),
     defineField({ name: 'heroSubheading', title: 'Subheading', type: 'text', rows: 3, group: 'hero' }),
 
