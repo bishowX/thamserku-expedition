@@ -7,11 +7,11 @@ export default defineType({
   groups: [
     { name: 'hero', title: 'Hero' },
     { name: 'manifesto', title: 'Manifesto' },
+    { name: 'infrastructure', title: 'Yeti Infrastructure' },
     { name: 'atlas', title: 'Atlas' },
     { name: 'editions', title: 'Editions' },
     { name: 'fieldNotes', title: 'Field Notes' },
     { name: 'legacy', title: 'Legacy' },
-    { name: 'infrastructure', title: 'Yeti Infrastructure' },
     { name: 'closing', title: 'Closing' },
   ],
   fields: [
@@ -71,6 +71,7 @@ export default defineType({
     defineField({ name: 'legacyTimeline', title: 'Timeline', type: 'array', group: 'legacy', of: [{ type: 'timelineEra' }] }),
 
     // Yeti Infrastructure
+    defineField({ name: 'infrastructureEyebrow', title: 'Eyebrow', type: 'string', group: 'infrastructure', description: 'e.g. SECTION III — YETI INFRASTRUCTURE' }),
     defineField({ name: 'infrastructureHeading', title: 'Heading', type: 'string', group: 'infrastructure' }),
     defineField({ name: 'infrastructureIntro', title: 'Intro', type: 'text', rows: 3, group: 'infrastructure' }),
     defineField({ name: 'infrastructurePillars', title: 'Pillars', type: 'array', group: 'infrastructure', of: [{ type: 'yetiPillar' }] }),

@@ -3,6 +3,7 @@ import { MoveRight } from "lucide-react";
 import type { SanityYetiPillar } from "../../lib/queries";
 
 type YetiData = {
+  infrastructureEyebrow?: string;
   infrastructureHeading?: string;
   infrastructureIntro?: string;
   infrastructurePillars?: SanityYetiPillar[];
@@ -32,6 +33,8 @@ const FALLBACK_PILLARS = [
 ];
 
 export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
+  const eyebrow =
+    data?.infrastructureEyebrow ?? "SECTION III — YETI INFRASTRUCTURE";
   const heading =
     data?.infrastructureHeading ??
     "An operating foundation behind every expedition.";
@@ -47,11 +50,11 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
     : FALLBACK_PILLARS;
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-[140px] md:py-[180px] overflow-hidden text-white">
+    <section className="relative w-full bg-[#1A1A1A] py-[80px] overflow-hidden text-white">
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(to right, #272727 1px, transparent 1px), linear-gradient(to bottom, #272727 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, #202121 1px, transparent 1px), linear-gradient(to bottom, #202121 1px, transparent 1px)`,
           backgroundSize: "64px 64px",
         }}
       />
@@ -60,7 +63,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-24 md:mb-32">
           <div className="md:col-span-5 flex flex-col">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
-              SECTION III — YETI INFRASTRUCTURE
+              {eyebrow}
             </span>
             <h2 className="font-['Radley'] font-light text-fluid-section leading-[1.05] text-white max-w-[18ch]">
               {heading}
@@ -74,11 +77,11 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mb-16">
           {pillars.map((pillar, idx) => (
             <div
               key={idx}
-              className="flex flex-col bg-[#2E353C]/20 border-t border-r last:border-r-0 border-b lg:border-b-0 border-[#C8CDD2]/30 p-8 lg:p-10"
+              className="flex flex-col bg-[#24282c59] border-t border-r last:border-r-0 border-b lg:border-b-0 border-[#c8cdd24d] p-8"
             >
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">
                 {pillar.eyebrow}
@@ -93,7 +96,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
           ))}
         </div>
 
-        <div className="w-full max-w-[880px] mx-auto flex justify-end">
+        <div className="w-full mx-auto flex justify-end">
           <Link
             to="/yeti-infrastructure"
             className="group flex items-center gap-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors"

@@ -159,6 +159,7 @@ export type HomePageData = {
     chairmanLetter?: ChairmanLetterData | null;
     legacyHeading: string;
     legacyTimeline: SanityTimelineEra[];
+    infrastructureEyebrow: string;
     infrastructureHeading: string;
     infrastructureIntro: string;
     infrastructurePillars: SanityYetiPillar[];
@@ -188,7 +189,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
       chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
       legacyHeading, legacyTimeline,
-      infrastructureHeading, infrastructureIntro, infrastructurePillars
+      infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
       _id, number, code, name, slug, altitude, region, season, style, positioning, image,
