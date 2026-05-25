@@ -54,6 +54,7 @@ export default defineType({
     defineField({ name: 'manifestoBody', title: 'Body', type: 'text', rows: 4, group: 'manifesto' }),
 
     // Legacy
+    defineField({ name: 'legacyEyebrow', title: 'Eyebrow', type: 'string', group: 'legacy', description: 'e.g. 05 — LEGACY' }),
     defineField({
       name: 'chairmanLetter',
       title: "Chairman's Letter",
@@ -70,7 +71,6 @@ export default defineType({
       group: 'legacy',
       description: 'The last sentence will render in italic blue.',
     }),
-    defineField({ name: 'legacyTimeline', title: 'Timeline', type: 'array', group: 'legacy', of: [{ type: 'timelineEra' }] }),
 
     // Yeti Infrastructure
     defineField({ name: 'infrastructureEyebrow', title: 'Eyebrow', type: 'string', group: 'infrastructure', description: 'e.g. SECTION III — YETI INFRASTRUCTURE' }),

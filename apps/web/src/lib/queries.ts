@@ -136,10 +136,6 @@ export type SanityYetiPillar = {
   body: string;
 };
 
-export type SanityTimelineEra = {
-  decade: string;
-  era: string;
-};
 
 export type HomePageData = {
   homePage: {
@@ -159,8 +155,8 @@ export type HomePageData = {
     closingBody: string;
     featuredFieldNotes: SanityFieldNote[];
     chairmanLetter?: ChairmanLetterData | null;
+    legacyEyebrow: string;
     legacyHeading: string;
-    legacyTimeline: SanityTimelineEra[];
     infrastructureEyebrow: string;
     infrastructureHeading: string;
     infrastructureIntro: string;
@@ -190,7 +186,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       closingHeading, closingBody,
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
       chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
-      legacyHeading, legacyTimeline,
+      legacyEyebrow, legacyHeading,
       infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
