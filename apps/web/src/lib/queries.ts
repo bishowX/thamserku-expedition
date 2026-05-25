@@ -524,6 +524,27 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
   );
 }
 
+export type AtlasPageData = {
+  atlasPage: {
+    heroHeadline?: string;
+    heroSubheading?: string;
+    heroImage?: { asset: { _ref: string } } | null;
+  } | null;
+  expeditions: SanityExpedition[];
+};
+
+export async function getAtlasPageData(): Promise<AtlasPageData> {
+  return serverClient.fetch(`{
+    "atlasPage": *[_type == "atlasPage"][0] {
+      heroHeadline, heroSubheading, heroImage
+    },
+    "expeditions": *[_type == "expedition"] | order(number asc) {
+      _id, number, code, name, slug, altitude, region, season, style, positioning, image,
+      editions[]->{ _id, letter, name, slug }
+    }
+  }`);
+}
+
 export async function getExpeditions(): Promise<SanityExpedition[]> {
   return serverClient.fetch(
     `*[_type == "expedition"] | order(number asc) {

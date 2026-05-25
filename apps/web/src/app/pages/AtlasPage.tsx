@@ -10,20 +10,19 @@ import { AtlasSeasonalGuide } from "../components/atlas/AtlasSeasonalGuide";
 import { AtlasWhy } from "../components/atlas/AtlasWhy";
 import { AtlasFAQ } from "../components/atlas/AtlasFAQ";
 import { AtlasClosing } from "../components/atlas/AtlasClosing";
-import { getExpeditions, type SanityExpedition } from "../../lib/queries";
+import { getAtlasPageData, type AtlasPageData } from "../../lib/queries";
 
 export async function loader() {
-  const expeditions = await getExpeditions();
-  return { expeditions };
+  return getAtlasPageData();
 }
 
 export default function AtlasPage() {
-  const { expeditions } = useLoaderData() as { expeditions: SanityExpedition[] };
+  const { atlasPage, expeditions } = useLoaderData() as AtlasPageData;
 
   return (
     <div className="w-full min-h-screen bg-[#1A1A1A] text-white">
       <Nav hideOnScrollDown />
-      <AtlasListingHero />
+      <AtlasListingHero data={atlasPage ?? undefined} />
       <AtlasControls />
       <AtlasIndex expeditions={expeditions} />
       <AtlasComparison />

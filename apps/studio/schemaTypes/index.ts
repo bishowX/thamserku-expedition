@@ -4,6 +4,7 @@ import edition from './documents/edition'
 import editionsPage from './documents/editionsPage'
 import expedition from './documents/expedition'
 import fieldNote from './documents/fieldNote'
+import atlasPage from './documents/atlasPage'
 import homePage from './documents/homePage'
 import legacyPage from './documents/legacyPage'
 import chairmanLetter from './documents/chairmanLetter'
@@ -27,6 +28,7 @@ import inclusionCategory from './objects/inclusionCategory'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
+  atlasPage,
   homePage,
   editionsPage,
   legacyPage,
