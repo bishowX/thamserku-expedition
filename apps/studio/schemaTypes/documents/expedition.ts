@@ -30,6 +30,7 @@ export default defineType({
     defineField({ group: 'identity', name: 'region', title: 'Region', type: 'string' }),
     defineField({ group: 'identity', name: 'season', title: 'Season', type: 'string', description: 'e.g. Spring · Autumn' }),
     defineField({ group: 'identity', name: 'style', title: 'Style', type: 'string', description: 'Atlas card label e.g. Disciplined passage' }),
+    defineField({ group: 'identity', name: 'bestFor', title: 'Best For', type: 'string', description: 'Short phrase for the comparison table e.g. Disciplined 8,000m aspirants' }),
     defineField({ group: 'identity', name: 'positioning', title: 'Positioning Tagline', type: 'text', rows: 3 }),
     defineField({
       group: 'identity',

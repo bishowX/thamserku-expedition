@@ -17,6 +17,7 @@ export type SanityExpedition = {
   region: string;
   season: string;
   style: string;
+  bestFor?: string;
   positioning: string;
   image?: { asset: { _ref: string } } | null;
   editions: SanityEditionRef[];
@@ -531,6 +532,9 @@ export type AtlasPageData = {
     heroImage?: { asset: { _ref: string } } | null;
     controlsEyebrow?: string;
     controlsSubline?: string;
+    comparisonEyebrow?: string;
+    comparisonHeadline?: string;
+    comparisonNote?: string;
   } | null;
   expeditions: SanityExpedition[];
 };
@@ -538,10 +542,11 @@ export type AtlasPageData = {
 export async function getAtlasPageData(): Promise<AtlasPageData> {
   return serverClient.fetch(`{
     "atlasPage": *[_type == "atlasPage"][0] {
-      heroHeadline, heroSubheading, heroImage, controlsEyebrow, controlsSubline
+      heroHeadline, heroSubheading, heroImage, controlsEyebrow, controlsSubline,
+      comparisonEyebrow, comparisonHeadline, comparisonNote
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
-      _id, number, code, name, slug, altitude, region, season, style, positioning, image,
+      _id, number, code, name, slug, altitude, region, season, style, bestFor, positioning, image,
       editions[]->{ _id, letter, name, slug }
     }
   }`);

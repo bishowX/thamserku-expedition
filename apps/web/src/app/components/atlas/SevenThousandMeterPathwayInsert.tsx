@@ -3,7 +3,7 @@ import { MoveRight } from "lucide-react";
 
 export function SevenThousandMeterPathwayInsert() {
   return (
-    <section className="w-full bg-[#F4F2EC] py-[140px] md:py-[180px] text-[#1A1A1A]">
+    <section className="w-full bg-[#F4F2EC] py-24 text-[#1A1A1A]">
       <div className="w-full max-w-[1440px] mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-12">
           {/* Left column */}
@@ -23,7 +23,8 @@ export function SevenThousandMeterPathwayInsert() {
           <div className="md:col-span-7 flex flex-col md:pt-16">
             <div className="font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.75] max-w-[60ch] mb-12">
               <p>
-                A 7,000m qualifying ascent can become the ground where altitude, judgement and discipline are properly earned.
+                A 7,000m qualifying ascent can become the ground where altitude,
+                judgement and discipline are properly earned.
               </p>
             </div>
 
@@ -50,7 +51,8 @@ export function SevenThousandMeterPathwayInsert() {
             </div>
 
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]">
-              [ROUTE TBC] — FIVE 7,000M ROUTE OPTIONS PENDING CLIENT CONFIRMATION.
+              [ROUTE TBC] — FIVE 7,000M ROUTE OPTIONS PENDING CLIENT
+              CONFIRMATION.
             </span>
           </div>
         </div>
