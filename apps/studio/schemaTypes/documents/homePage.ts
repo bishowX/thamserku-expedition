@@ -6,10 +6,10 @@ export default defineType({
   type: 'document',
   groups: [
     { name: 'hero', title: 'Hero' },
+    { name: 'manifesto', title: 'Manifesto' },
     { name: 'atlas', title: 'Atlas' },
     { name: 'editions', title: 'Editions' },
     { name: 'fieldNotes', title: 'Field Notes' },
-    { name: 'manifesto', title: 'Manifesto' },
     { name: 'legacy', title: 'Legacy' },
     { name: 'infrastructure', title: 'Yeti Infrastructure' },
     { name: 'closing', title: 'Closing' },
@@ -40,6 +40,7 @@ export default defineType({
     }),
 
     // Manifesto
+    defineField({ name: 'manifestoEyebrow', title: 'Eyebrow', type: 'string', group: 'manifesto', description: 'e.g. 02 — MANIFESTO' }),
     defineField({
       name: 'manifestoHeading',
       title: 'Heading',
