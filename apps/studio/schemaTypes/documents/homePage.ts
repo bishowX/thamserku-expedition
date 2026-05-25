@@ -86,8 +86,10 @@ export default defineType({
     defineField({ name: 'infrastructurePillars', title: 'Pillars', type: 'array', group: 'infrastructure', of: [{ type: 'yetiPillar' }] }),
 
     // Closing
+    defineField({ name: 'closingEyebrow', title: 'Eyebrow', type: 'string', group: 'closing', description: 'e.g. 07 — BEGIN PRIVATELY' }),
     defineField({ name: 'closingHeading', title: 'Heading', type: 'string', group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 2, group: 'closing' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
   ],
   preview: {
     select: { subtitle: 'heroHeadline' },

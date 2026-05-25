@@ -158,8 +158,10 @@ export type HomePageData = {
     newsletterBody: string;
     newsletterCta: string;
     newsletterPrivacyNote: string;
+    closingEyebrow: string;
     closingHeading: string;
     closingBody: string;
+    closingImage?: { asset: { _ref: string } } | null;
     featuredFieldNotes: SanityFieldNote[];
     chairmanLetter?: ChairmanLetterData | null;
     legacyEyebrow: string;
@@ -192,7 +194,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody,
       fieldNotesEyebrow, fieldNotesHeading,
       newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
-      closingHeading, closingBody,
+      closingEyebrow, closingHeading, closingBody, closingImage,
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
       chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
       legacyEyebrow, legacyHeading,
