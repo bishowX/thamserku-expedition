@@ -301,14 +301,13 @@ export type LegacyPageData = {
     lineageBody1?: string;
     lineageBody2?: string;
     lineageDataTiles?: LegacyLineageDataTile[];
-    philosophyEyebrow?: string;
-    philosophyHeadlinePart1?: string;
-    philosophyHeadlinePart2?: string;
-    philosophySubline?: string;
     newsletterEyebrow?: string;
     newsletterHeading?: string;
     newsletterBody?: string;
     newsletterPrivacyNote?: string;
+    closingEyebrow?: string;
+    closingHeading?: string;
+    closingImage?: { asset: { _ref: string } } | null;
   } | null;
 };
 
@@ -324,8 +323,8 @@ export async function getLegacyPageData(): Promise<LegacyPageData> {
       timelineChapters[] { _key, roman, years, title, description, image },
       lineageEyebrow, lineageHeading, lineageBody1, lineageBody2,
       lineageDataTiles[] { _key, label, value },
-      philosophyEyebrow, philosophyHeadlinePart1, philosophyHeadlinePart2, philosophySubline,
-      newsletterEyebrow, newsletterHeading, newsletterBody, newsletterPrivacyNote
+      newsletterEyebrow, newsletterHeading, newsletterBody, newsletterPrivacyNote,
+      closingEyebrow, closingHeading, closingImage
     }
   }`);
 }

@@ -1,28 +1,32 @@
 import { Link } from "react-router";
+import { urlFor } from "../../../lib/sanity";
+import type { LegacyPageData } from "../../../lib/queries";
 
-export function LegacyClosing() {
+type PageData = LegacyPageData['legacyPage'];
+
+export function LegacyClosing({ page }: { page?: PageData }) {
+  const bgImage = page?.closingImage ? urlFor(page.closingImage).width(1920).url() : null;
+
   return (
     <section className="relative w-full bg-[#1A1A1A] text-white py-24 overflow-hidden min-h-[600px] flex flex-col justify-center">
       {/* Background silhouette */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-end">
-        <div 
+        <div
           className="w-full h-[60%] bg-cover bg-bottom bg-no-repeat opacity-[0.15] mix-blend-screen"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1656086358330-723c94f30ba7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaW1hbGF5YW4lMjBtb3VudGFpbiUyMHJpZGdlbGluZSUyMHNpbGhvdWV0dGUlMjBkYXJrfGVufDF8fHx8MTc3NzQ1NjYxNnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')`,
-          }}
+          style={bgImage ? { backgroundImage: `url('${bgImage}')` } : {}}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/80 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto w-full px-8 flex flex-col gap-16 md:gap-24 mt-32">
-        
+
         {/* Header */}
         <div className="flex flex-col gap-6">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block">
-            08 — CONTINUE READING
+            {page?.closingEyebrow ?? "08 — CONTINUE READING"}
           </span>
           <h2 className="font-['Cormorant_Garamond'] font-light text-5xl md:text-[72px] leading-tight text-white max-w-[24ch]">
-            Read the rest of the house.
+            {page?.closingHeading ?? "Read the rest of the house."}
           </h2>
         </div>
 

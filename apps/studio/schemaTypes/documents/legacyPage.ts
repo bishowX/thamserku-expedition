@@ -10,8 +10,8 @@ export default defineType({
     { name: 'chairman', title: "03 — Chairman's Letter" },
     { name: 'timeline', title: '04 — Timeline' },
     { name: 'lineage', title: '05 — Lineage' },
-    { name: 'philosophy', title: '07 — Philosophy' },
-    { name: 'newsletter', title: '08 — Newsletter' },
+    { name: 'newsletter', title: '07 — Newsletter' },
+    { name: 'closing', title: '08 — Continue Reading' },
   ],
   fields: [
     // 01 — Hero
@@ -85,17 +85,16 @@ export default defineType({
       }],
     }),
 
-    // 07 — Philosophy
-    defineField({ name: 'philosophyEyebrow', title: 'Eyebrow', type: 'string', group: 'philosophy', description: 'e.g. 07 — PHILOSOPHY' }),
-    defineField({ name: 'philosophyHeadlinePart1', title: 'Headline — Part 1', type: 'string', group: 'philosophy', description: 'Renders standard weight' }),
-    defineField({ name: 'philosophyHeadlinePart2', title: 'Headline — Part 2 (Blue Italic)', type: 'string', group: 'philosophy', description: 'Renders italic in brand blue on its own line' }),
-    defineField({ name: 'philosophySubline', title: 'Subline', type: 'string', group: 'philosophy' }),
-
-    // 08 — Newsletter
+    // 07 — Newsletter
     defineField({ name: 'newsletterEyebrow', title: 'Eyebrow', type: 'string', group: 'newsletter' }),
     defineField({ name: 'newsletterHeading', title: 'Heading / Quote', type: 'string', group: 'newsletter', description: 'Rendered wrapped in quotes' }),
     defineField({ name: 'newsletterBody', title: 'Body', type: 'text', rows: 3, group: 'newsletter' }),
     defineField({ name: 'newsletterPrivacyNote', title: 'Privacy Note', type: 'string', group: 'newsletter' }),
+
+    // 08 — Continue Reading
+    defineField({ name: 'closingEyebrow', title: 'Eyebrow', type: 'string', group: 'closing', description: 'e.g. 08 — CONTINUE READING' }),
+    defineField({ name: 'closingHeading', title: 'Heading', type: 'string', group: 'closing' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', options: { hotspot: true }, group: 'closing' }),
   ],
   preview: { prepare: () => ({ title: 'Legacy Page' }) },
 })
