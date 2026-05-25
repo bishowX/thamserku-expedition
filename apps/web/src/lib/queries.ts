@@ -544,6 +544,14 @@ export type AtlasPageData = {
     pathwayCta2Label?: string;
     pathwayCta2Href?: string;
     pathwayFootnote?: string;
+    seasonalGuideEyebrow?: string;
+    seasonalGuideHeadline?: string;
+    springWindowLabel?: string;
+    springWindowDescription?: string;
+    autumnWindowLabel?: string;
+    autumnWindowDescription?: string;
+    offSeasonLabel?: string;
+    offSeasonDescription?: string;
   } | null;
   expeditions: SanityExpedition[];
 };
@@ -554,7 +562,11 @@ export async function getAtlasPageData(): Promise<AtlasPageData> {
       heroHeadline, heroSubheading, heroImage, controlsEyebrow, controlsSubline,
       comparisonEyebrow, comparisonHeadline, comparisonNote,
       pathwayEyebrow, pathwayHeading, pathwaySubheading, pathwayBody,
-      pathwayCta1Label, pathwayCta1Href, pathwayCta2Label, pathwayCta2Href, pathwayFootnote
+      pathwayCta1Label, pathwayCta1Href, pathwayCta2Label, pathwayCta2Href, pathwayFootnote,
+      seasonalGuideEyebrow, seasonalGuideHeadline,
+      springWindowLabel, springWindowDescription,
+      autumnWindowLabel, autumnWindowDescription,
+      offSeasonLabel, offSeasonDescription
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
       _id, number, code, name, slug, altitude, region, season, style, bestFor, positioning, image,

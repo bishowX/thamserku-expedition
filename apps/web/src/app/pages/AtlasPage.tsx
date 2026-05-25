@@ -89,7 +89,7 @@ export default function AtlasPage() {
       <AtlasIndex expeditions={filtered} />
       <AtlasComparison expeditions={expeditions} data={atlasPage ?? undefined} />
       <SevenThousandMeterPathwayInsert data={atlasPage ?? undefined} />
-      <AtlasSeasonalGuide />
+      <AtlasSeasonalGuide expeditions={expeditions} data={atlasPage ?? undefined} />
       <AtlasWhy />
       <AtlasFAQ />
       <AtlasClosing />

@@ -9,6 +9,7 @@ export default defineType({
     { name: 'controls', title: 'Controls' },
     { name: 'comparison', title: 'Comparison' },
     { name: 'pathway', title: '7,000m Pathway' },
+    { name: 'seasonalGuide', title: 'Seasonal Guide' },
   ],
   fields: [
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'string', group: 'hero' }),
@@ -28,6 +29,14 @@ export default defineType({
     defineField({ name: 'pathwayCta2Label', title: 'CTA 2 Label', type: 'string', group: 'pathway' }),
     defineField({ name: 'pathwayCta2Href', title: 'CTA 2 Link', type: 'string', group: 'pathway', description: 'e.g. /7000m' }),
     defineField({ name: 'pathwayFootnote', title: 'Footnote', type: 'string', group: 'pathway' }),
+    defineField({ name: 'seasonalGuideEyebrow', title: 'Eyebrow', type: 'string', group: 'seasonalGuide', description: 'e.g. 05 — SEASONAL GUIDE' }),
+    defineField({ name: 'seasonalGuideHeadline', title: 'Headline', type: 'string', group: 'seasonalGuide' }),
+    defineField({ name: 'springWindowLabel', title: 'Spring Window Label', type: 'string', group: 'seasonalGuide' }),
+    defineField({ name: 'springWindowDescription', title: 'Spring Window Description', type: 'text', rows: 3, group: 'seasonalGuide' }),
+    defineField({ name: 'autumnWindowLabel', title: 'Autumn Window Label', type: 'string', group: 'seasonalGuide' }),
+    defineField({ name: 'autumnWindowDescription', title: 'Autumn Window Description', type: 'text', rows: 3, group: 'seasonalGuide' }),
+    defineField({ name: 'offSeasonLabel', title: 'Off-Season Label', type: 'string', group: 'seasonalGuide' }),
+    defineField({ name: 'offSeasonDescription', title: 'Off-Season Description', type: 'text', rows: 3, group: 'seasonalGuide' }),
   ],
   preview: {
     prepare: () => ({ title: 'Atlas Page' }),
