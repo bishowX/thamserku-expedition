@@ -1,16 +1,21 @@
 import { Link } from "react-router";
 
 type PageData = {
+  closingEyebrow?: string;
   closingHeading?: string;
   closingBody?: string;
+  closingFootnote?: string;
 };
 
 export function EditionsClosing({ page }: { page?: PageData }) {
+  const eyebrow = page?.closingEyebrow ?? "06 — BEGIN PRIVATELY";
+  const footnote = page?.closingFootnote ?? "RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF";
+
   return (
     <section className="w-full bg-[#0A3A77] text-white py-24 px-8 flex flex-col items-center justify-center text-center">
       <div className="w-full max-w-[800px] flex flex-col items-center">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">
-          06 — BEGIN PRIVATELY
+          {eyebrow}
         </p>
 
         {page?.closingHeading && (
@@ -41,7 +46,7 @@ export function EditionsClosing({ page }: { page?: PageData }) {
         </div>
 
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] opacity-80">
-          RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF
+          {footnote}
         </p>
       </div>
     </section>

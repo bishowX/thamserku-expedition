@@ -1,22 +1,34 @@
 import type { SanityEditionFull, SanityExpeditionForMatrix } from "../../../lib/queries";
 
+type PageData = {
+  availabilityEyebrow?: string;
+  availabilityHeadline?: string;
+  availabilityNote?: string;
+};
+
 export function EditionsAvailability({
   expeditions,
   editions,
+  page,
 }: {
   expeditions: SanityExpeditionForMatrix[];
   editions: SanityEditionFull[];
+  page?: PageData;
 }) {
+  const eyebrow = page?.availabilityEyebrow ?? "05 — AVAILABILITY ATLAS";
+  const headline = page?.availabilityHeadline ?? "Which editions are offered on which mountains.";
+  const note = page?.availabilityNote ?? "Note · Explorer Edition is offered as a separate Everest Base Camp / Everest Experience product, not as a summit climb.";
+
   if (!expeditions.length || !editions.length) return null;
 
   return (
     <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden">
       <div className="relative z-10 w-full max-w-[1440px] mx-auto">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
-          05 — AVAILABILITY ATLAS
+          {eyebrow}
         </p>
         <h2 className="font-['Radley'] font-light text-4xl md:text-[56px] leading-[1.1] mb-24 max-w-[20ch]">
-          Which editions are offered on which mountains.
+          {headline}
         </h2>
 
         <div className="w-full overflow-x-auto">
@@ -65,7 +77,7 @@ export function EditionsAvailability({
         </div>
 
         <p className="font-['Radley'] italic text-[#C8CDD2] text-[16px] mt-16 max-w-[80ch]">
-          Note · Explorer Edition is offered as a separate Everest Base Camp / Everest Experience product, not as a summit climb.
+          {note}
         </p>
       </div>
     </section>

@@ -186,8 +186,13 @@ export type EditionsPageData = {
     comparisonEyebrow?: string;
     comparisonHeadline?: string;
     comparisonNote?: string;
+    availabilityEyebrow?: string;
+    availabilityHeadline?: string;
+    availabilityNote?: string;
+    closingEyebrow?: string;
     closingHeading?: string;
     closingBody?: string;
+    closingFootnote?: string;
   } | null;
   editions: SanityEditionFull[];
   expeditions: SanityExpeditionForMatrix[];
@@ -346,7 +351,8 @@ export async function getEditionsPageData(): Promise<EditionsPageData> {
     "editionsPage": *[_type == "editionsPage"][0] {
       heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody,
       comparisonEyebrow, comparisonHeadline, comparisonNote,
-      closingHeading, closingBody
+      availabilityEyebrow, availabilityHeadline, availabilityNote,
+      closingEyebrow, closingHeading, closingBody, closingFootnote
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug,
