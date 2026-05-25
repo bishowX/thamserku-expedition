@@ -180,6 +180,8 @@ export type EditionsPageData = {
   editionsPage: {
     heroHeadline?: string;
     heroSubheading?: string;
+    heroImage?: { asset: { _ref: string } } | null;
+    manifestoEyebrow?: string;
     manifestoHeading?: string;
     manifestoBody?: string;
     closingHeading?: string;
@@ -340,7 +342,7 @@ export async function getLegacyPageData(): Promise<LegacyPageData> {
 export async function getEditionsPageData(): Promise<EditionsPageData> {
   return serverClient.fetch(`{
     "editionsPage": *[_type == "editionsPage"][0] {
-      heroHeadline, heroSubheading, manifestoHeading, manifestoBody, closingHeading, closingBody
+      heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody, closingHeading, closingBody
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug,
