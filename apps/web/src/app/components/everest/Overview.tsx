@@ -11,7 +11,7 @@ export function Overview({ overviewHeadline, overviewBody, overviewSideImage }: 
   const sideImageSrc = overviewSideImage ? urlFor(overviewSideImage as SanityImageSource).width(400).url() : null;
 
   return (
-    <section className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-24 md:py-32">
+    <section className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-24">
       <div className="max-w-[1440px] mx-auto px-8 grid grid-cols-1 md:grid-cols-12 gap-12">
         <div className="md:col-span-4 lg:col-span-3">
           <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">

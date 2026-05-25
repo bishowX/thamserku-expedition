@@ -19,7 +19,7 @@ export function LeadSherpa({ sherpa, expeditionName }: Props) {
   const portraitSrc = sherpa?.portrait ? urlFor(sherpa.portrait as SanityImageSource).width(800).url() : null;
 
   return (
-    <section className="w-full bg-[#F4F2EC] py-[140px] md:py-[180px] text-[#1A1A1A]">
+    <section className="w-full bg-[#F4F2EC] py-24 text-[#1A1A1A]">
       <div className="w-full max-w-[1440px] mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-12">
           <div className="md:col-span-5 flex flex-col gap-6">

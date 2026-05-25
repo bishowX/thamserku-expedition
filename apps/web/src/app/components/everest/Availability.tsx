@@ -40,7 +40,7 @@ const FALLBACK_STATUS = (seasonIndex: number, editionIndex: number) => {
 export function Availability({ expeditionName, availableSeasons, slug }: Props) {
   const seasons = availableSeasons ?? [];
   return (
-    <section className="w-full bg-[#1A1A1A] py-[120px] md:py-[160px] text-white">
+    <section className="w-full bg-[#1A1A1A] py-24 text-white">
       <div className="w-full max-w-[1440px] mx-auto px-8 flex flex-col items-center">
         <div className="w-full max-w-[880px] flex flex-col items-center text-center mb-20 md:mb-24">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">

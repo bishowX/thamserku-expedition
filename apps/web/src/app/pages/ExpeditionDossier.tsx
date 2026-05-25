@@ -36,10 +36,6 @@ export default function ExpeditionDossier() {
           heroImage={expedition.heroImage}
           heroTagline={expedition.heroTagline}
           heroSubtext={expedition.heroSubtext}
-          altitude={expedition.altitude}
-          region={expedition.region}
-          season={expedition.season}
-          style={expedition.style}
           slug={expedition.slug.current}
         />
         <QuickFacts

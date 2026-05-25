@@ -18,7 +18,7 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
   };
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-[140px] md:py-[180px] overflow-hidden">
+    <section className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden">
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{

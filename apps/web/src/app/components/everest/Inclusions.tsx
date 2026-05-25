@@ -44,7 +44,7 @@ export function Inclusions({ expeditionName, inclusionCategories }: Props) {
   const categories = inclusionCategories ?? FALLBACK_CATEGORIES;
 
   return (
-    <section className="w-full bg-[#F4F2EC] py-[140px] md:py-[180px] text-[#1A1A1A]">
+    <section className="w-full bg-[#F4F2EC] py-24 text-[#1A1A1A]">
       <div className="w-full max-w-[1440px] mx-auto px-8">
 
         {/* Section header */}

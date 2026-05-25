@@ -9,14 +9,10 @@ type Props = {
   heroImage?: { asset: { _ref: string } } | null;
   heroTagline?: string;
   heroSubtext?: string;
-  altitude?: string;
-  region?: string;
-  season?: string;
-  style?: string;
   slug: string;
 };
 
-export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, altitude, region, season, style, slug }: Props) {
+export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug }: Props) {
   const imageSrc = heroImage ? urlFor(heroImage as SanityImageSource).width(1920).url() : null;
 
   return (
@@ -41,7 +37,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, alti
       </div>
 
       <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end h-full mt-24">
-        <h1 className="font-['Radley'] font-light text-5xl md:text-7xl lg:text-[88px] leading-[1.1] mb-6 max-w-[18ch]">
+        <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6 max-w-[18ch]">
           {heroTagline || `${name} Expedition`}
         </h1>
 
@@ -63,15 +59,6 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, alti
           <button className="border border-white/30 text-white px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3">
             Read the Dossier <ArrowDown className="w-4 h-4" strokeWidth={1} />
           </button>
-        </div>
-      </div>
-
-      <div className="hidden md:block absolute bottom-0 left-0 w-full z-20 border-y border-white/20 bg-[#1A1A1A]/30 backdrop-blur-sm">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-          <div className="px-8 py-5">ALTITUDE · {altitude || '—'}</div>
-          <div className="px-8 py-5">REGION · {region || '—'}</div>
-          <div className="px-8 py-5">SEASON · {season || '—'}</div>
-          <div className="px-8 py-5">STYLE · {style || '—'}</div>
         </div>
       </div>
     </section>
