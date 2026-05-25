@@ -31,6 +31,9 @@ export default defineType({
     defineField({ name: 'editionsIntro', title: 'Intro', type: 'text', rows: 2, group: 'editions' }),
 
     // Field Notes
+    defineField({ name: 'fieldNotesEyebrow', title: 'Eyebrow', type: 'string', group: 'fieldNotes', description: 'e.g. 06 — FIELD NOTES' }),
+    defineField({ name: 'fieldNotesHeading', title: 'Heading', type: 'string', group: 'fieldNotes' }),
+    defineField({ name: 'fieldNotesIntro', title: 'Intro', type: 'text', rows: 2, group: 'fieldNotes' }),
     defineField({
       name: 'featuredFieldNotes',
       title: 'Featured Field Notes',

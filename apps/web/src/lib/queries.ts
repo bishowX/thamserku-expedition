@@ -151,6 +151,9 @@ export type HomePageData = {
     manifestoEyebrow: string;
     manifestoHeading: string;
     manifestoBody: string;
+    fieldNotesEyebrow: string;
+    fieldNotesHeading: string;
+    fieldNotesIntro: string;
     closingHeading: string;
     closingBody: string;
     featuredFieldNotes: SanityFieldNote[];
@@ -183,6 +186,7 @@ export async function getHomePageData(): Promise<HomePageData> {
   return serverClient.fetch(`{
     "homePage": *[_type == "homePage"][0] {
       heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody,
+      fieldNotesEyebrow, fieldNotesHeading, fieldNotesIntro,
       closingHeading, closingBody,
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
       chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },

@@ -28,7 +28,7 @@ export default function Home() {
         <AtlasPreview expeditions={data.expeditions.length > 0 ? data.expeditions : undefined} data={data.homePage ?? undefined} />
         <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} data={data.homePage ?? undefined} />
         <LegacyPreview data={data.homePage ?? undefined} />
-        <FieldNotesPreview fieldNotes={data.homePage?.featuredFieldNotes ?? []} />
+        <FieldNotesPreview fieldNotes={data.homePage?.featuredFieldNotes ?? []} data={data.homePage ?? undefined} />
         <Closing data={data.homePage ?? undefined} />
       </main>
       <Footer />
