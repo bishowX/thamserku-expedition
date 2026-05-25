@@ -21,6 +21,7 @@ export default defineType({
     defineField({ name: 'heroSubheading', title: 'Subheading', type: 'text', rows: 3, group: 'hero' }),
 
     // Atlas
+    defineField({ name: 'atlasEyebrow', title: 'Eyebrow', type: 'string', group: 'atlas', description: 'e.g. 03 — EXPEDITION ATLAS' }),
     defineField({ name: 'atlasHeading', title: 'Heading', type: 'string', group: 'atlas', description: 'e.g. Five mountains. Five different kinds of preparation.' }),
     defineField({ name: 'atlasIntro', title: 'Intro', type: 'text', rows: 2, group: 'atlas' }),
 
