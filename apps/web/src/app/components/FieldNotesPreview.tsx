@@ -62,7 +62,11 @@ function toDisplayNote(note: SanityFieldNote, idx: number) {
 type FieldNotesData = {
   fieldNotesEyebrow?: string;
   fieldNotesHeading?: string;
-  fieldNotesIntro?: string;
+  newsletterEyebrow?: string;
+  newsletterHeading?: string;
+  newsletterBody?: string;
+  newsletterCta?: string;
+  newsletterPrivacyNote?: string;
 };
 
 export function FieldNotesPreview({
@@ -94,12 +98,6 @@ export function FieldNotesPreview({
               {data?.fieldNotesHeading ??
                 "Short studies in Himalayan judgement."}
             </h2>
-          </div>
-          <div className="md:w-1/4">
-            <p className="font-['Lexend'] font-light text-[#5A6673] text-[15px] leading-[1.6]">
-              {data?.fieldNotesIntro ??
-                "Editorial dispatches intended to inform how you arrive at the mountain, not to sell it."}
-            </p>
           </div>
         </div>
 
@@ -144,16 +142,15 @@ export function FieldNotesPreview({
         >
           <div className="max-w-[720px] mx-auto flex flex-col items-center text-center">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
-              FIELD NOTES — NEWSLETTER
+              {data?.newsletterEyebrow ?? "FIELD NOTES — NEWSLETTER"}
             </span>
 
             <h3 className="font-['Radley'] font-light text-fluid-xl leading-[1.1] text-[#1A1A1A] max-w-[22ch] mb-6">
-              Receive Field Notes from the expedition desk.
+              {data?.newsletterHeading ?? "Receive Field Notes from the expedition desk."}
             </h3>
 
             <p className="font-['Lexend'] font-light text-fluid-body text-[#5A6673] leading-[1.65] max-w-[56ch] mb-12">
-              A quiet quarterly letter of field reports, route judgement and
-              Himalayan readings.
+              {data?.newsletterBody ?? "A quiet quarterly letter of field reports, route judgement and Himalayan readings."}
             </p>
 
             <form
@@ -170,13 +167,12 @@ export function FieldNotesPreview({
                 type="submit"
                 className="w-full md:w-auto border border-[#0A3A77]/30 px-8 py-3.5 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] hover:border-[#0A3A77] transition-colors"
               >
-                Subscribe →
+                {data?.newsletterCta ?? "Subscribe →"}
               </button>
             </form>
 
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
-              BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE
-              YOUR DETAILS.
+              {data?.newsletterPrivacyNote ?? "BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS."}
             </span>
           </div>
         </div>
