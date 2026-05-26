@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { X, ArrowRight } from "lucide-react";
-import { Link } from "react-router";
+
+// TODO: Replace with the actual WhatsApp number (include country code, no + or spaces, e.g. "9771234567890")
+const WHATSAPP_NUMBER = "PENDING";
 
 export function FloatingContactPrompt() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
   const lastScrollY = useRef(0);
   const lastDirection = useRef<"up" | "down">("up");
   const thresholdY = useRef(0);
@@ -14,7 +14,6 @@ export function FloatingContactPrompt() {
       const currentScrollY = window.scrollY;
       const heroHeight = window.innerHeight;
 
-      // State A — At top of page
       if (currentScrollY <= heroHeight - 100) {
         setIsVisible(false);
         lastDirection.current = currentScrollY > lastScrollY.current ? "down" : "up";
@@ -25,20 +24,15 @@ export function FloatingContactPrompt() {
       const isScrollingDown = currentScrollY > lastScrollY.current;
 
       if (isScrollingDown) {
-        // Scrolling DOWN
         if (lastDirection.current === "up") {
           lastDirection.current = "down";
         }
-        // State B & C — Scrolling past hero or continuously down
         setIsVisible(true);
       } else if (currentScrollY < lastScrollY.current) {
-        // Scrolling UP
         if (lastDirection.current === "down") {
           lastDirection.current = "up";
           thresholdY.current = currentScrollY;
         }
-
-        // State D — Direction reversal threshold
         if (thresholdY.current - currentScrollY >= 100) {
           setIsVisible(false);
         }
@@ -52,123 +46,21 @@ export function FloatingContactPrompt() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle Escape key to close drawer
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isExpanded) {
-        setIsExpanded(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isExpanded]);
-
   return (
-    <>
-      {/* Collapsed Button */}
-      <button
-        onClick={() => setIsExpanded(true)}
-        className={`fixed z-50 bottom-4 left-4 right-4 md:bottom-6 md:left-auto md:right-6 w-[calc(100%-32px)] md:w-auto bg-[#1A1A1A]/90 backdrop-blur-md border border-white/50 px-[22px] py-[18px] md:py-[16px] flex items-center justify-center transition-all ease-out ${
-          isVisible && !isExpanded ? 'opacity-100 pointer-events-auto duration-[250ms] delay-[50ms]' : 'opacity-0 pointer-events-none duration-[200ms]'
-        } hover:bg-[#1A1A1A]`}
-        aria-label="Open expedition desk contact panel"
-        aria-hidden={!isVisible || isExpanded}
-        tabIndex={isVisible && !isExpanded ? 0 : -1}
-      >
-        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[12px] md:text-[11px] text-white">
-          SPEAK WITH THE EXPEDITION DESK
-        </span>
-      </button>
-
-      {/* Expanded Drawer Backdrop */}
-      <div 
-        className={`fixed inset-0 bg-black/20 z-40 transition-opacity duration-[250ms] ease-in ${isExpanded ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setIsExpanded(false)}
-      />
-
-      {/* Expanded Drawer */}
-      <div 
-        className={`fixed z-50 bottom-0 left-0 w-full md:left-auto md:bottom-6 md:right-6 md:w-[420px] md:max-w-[92vw] bg-[#1A1A1A]/96 backdrop-blur-lg border-t md:border border-white/20 p-6 md:p-8 transition-all duration-[300ms] ease-out ${
-          isExpanded 
-            ? 'opacity-100 pointer-events-auto translate-y-0 md:translate-x-0' 
-            : 'opacity-0 pointer-events-none translate-y-[120%] md:translate-y-0 md:translate-x-[120%]'
-        }`}
-        role="dialog"
-        aria-modal={isExpanded}
-        aria-hidden={!isExpanded}
-      >
-        {/* Header */}
-        <div className="flex justify-between items-start mb-6">
-          <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-            THE EXPEDITION DESK
-          </span>
-          <button 
-            onClick={() => setIsExpanded(false)}
-            className="border border-transparent hover:border-white/50 p-0.5 transition-colors"
-            aria-label="Close contact panel"
-          >
-            <X className="w-5 h-5 text-white" strokeWidth={1} />
-          </button>
-        </div>
-
-        {/* Headline */}
-        <h2 className="font-['Radley'] font-light text-[24px] md:text-[32px] leading-[1.15] text-white mb-4">
-          Need guidance?
-        </h2>
-
-        {/* Body */}
-        <p className="font-['Lexend'] font-light text-[14px] md:text-[15px] text-[#C8CDD2] leading-[1.6] mb-7">
-          Not sure which mountain or edition is right for you? Begin with a private message to the expedition desk.
-        </p>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col gap-2.5 mb-6">
-          <a 
-            href="#whatsapp-pending"
-            className="flex flex-col border border-white/40 hover:border-white/70 px-[18px] py-[14px] transition-colors group text-left"
-          >
-            <div className="flex justify-between items-center w-full">
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white">
-                WHATSAPP THE EXPEDITION DESK
-              </span>
-              <ArrowRight className="w-3 h-3 text-white transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
-            </div>
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mt-1 block">
-              [CLIENT TO CONFIRM] — WHATSAPP NUMBER PENDING.
-            </span>
-          </a>
-
-          <Link 
-            to="/consultation"
-            className="flex justify-between items-center border border-white/40 hover:border-white/70 px-[18px] py-[14px] transition-colors group"
-          >
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white">
-              SCHEDULE A CONSULTATION
-            </span>
-            <ArrowRight className="w-3 h-3 text-white transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
-          </Link>
-
-          <a 
-            href="#email-pending"
-            className="flex flex-col border border-white/40 hover:border-white/70 px-[18px] py-[14px] transition-colors group text-left"
-          >
-            <div className="flex justify-between items-center w-full">
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white">
-                EMAIL THE DESK
-              </span>
-              <ArrowRight className="w-3 h-3 text-white transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
-            </div>
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mt-1 block">
-              [CLIENT TO CONFIRM] — EMAIL ADDRESS PENDING.
-            </span>
-          </a>
-        </div>
-
-        {/* Privacy */}
-        <p className="font-['Cormorant_Garamond'] italic text-[14px] text-[#C8CDD2]">
-          Handled discreetly by senior expedition staff.
-        </p>
-      </div>
-    </>
+    <a
+      href={`https://wa.me/${WHATSAPP_NUMBER}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`fixed z-50 bottom-6 right-6 w-14 h-14 bg-[#25D366] flex items-center justify-center shadow-lg transition-all ease-out hover:bg-[#1ebe5d] hover:scale-105 ${
+        isVisible ? "opacity-100 pointer-events-auto duration-[250ms] delay-[50ms]" : "opacity-0 pointer-events-none duration-[200ms]"
+      }`}
+      aria-label="Chat with the expedition desk on WhatsApp"
+      aria-hidden={!isVisible}
+      tabIndex={isVisible ? 0 : -1}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="w-7 h-7 fill-white">
+        <path d="M476.9 161.1C435 119.1 379.2 96 319.9 96C197.5 96 97.9 195.6 97.9 318C97.9 357.1 108.1 395.3 127.5 429L96 544L213.7 513.1C246.1 530.8 282.6 540.1 319.8 540.1L319.9 540.1C442.2 540.1 544 440.5 544 318.1C544 258.8 518.8 203.1 476.9 161.1zM319.9 502.7C286.7 502.7 254.2 493.8 225.9 477L219.2 473L149.4 491.3L168 423.2L163.6 416.2C145.1 386.8 135.4 352.9 135.4 318C135.4 216.3 218.2 133.5 320 133.5C369.3 133.5 415.6 152.7 450.4 187.6C485.2 222.5 506.6 268.8 506.5 318.1C506.5 419.9 421.6 502.7 319.9 502.7zM421.1 364.5C415.6 361.7 388.3 348.3 383.2 346.5C378.1 344.6 374.4 343.7 370.7 349.3C367 354.9 356.4 367.3 353.1 371.1C349.9 374.8 346.6 375.3 341.1 372.5C308.5 356.2 287.1 343.4 265.6 306.5C259.9 296.7 271.3 297.4 281.9 276.2C283.7 272.5 282.8 269.3 281.4 266.5C280 263.7 268.9 236.4 264.3 225.3C259.8 214.5 255.2 216 251.8 215.8C248.6 215.6 244.9 215.6 241.2 215.6C237.5 215.6 231.5 217 226.4 222.5C221.3 228.1 207 241.5 207 268.8C207 296.1 226.9 322.5 229.6 326.2C232.4 329.9 268.7 385.9 324.4 410C359.6 425.2 373.4 426.5 391 423.9C401.7 422.3 423.8 410.5 428.4 397.5C433 384.5 433 373.4 431.6 371.1C430.3 368.6 426.6 367.2 421.1 364.5z"/>
+      </svg>
+    </a>
   );
 }

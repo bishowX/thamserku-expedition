@@ -1,6 +1,7 @@
 import { PortableText } from "@portabletext/react";
 import { urlFor } from "../../../lib/sanity";
 import type { ChairmanLetterData } from "../../../lib/queries";
+import { ChairmanSignature } from "./ChairmanSignature";
 
 function splitAtLastSentence(text: string): [string, string] {
   const idx = text.lastIndexOf(". ");
@@ -64,6 +65,9 @@ export function LegacyChairman({ letter }: { letter?: ChairmanLetterData }) {
 
           {(letter?.signature || letter?.organization) && (
             <div className="mt-4 border-l-2 border-white/20 pl-6 py-2">
+              <div className="mb-3">
+                <ChairmanSignature />
+              </div>
               {letter.signature && (
                 <div className="font-['Radley'] italic text-fluid-lg text-white leading-none mb-2">
                   {letter.signature}

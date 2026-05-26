@@ -7,7 +7,10 @@ export default defineType({
   groups: [
     { name: 'hero', title: '01 — Hero' },
     { name: 'faqs', title: '02 — FAQs' },
-    { name: 'closing', title: '03 — Closing' },
+    { name: 'quickFaqs', title: '03 — Quick FAQs' },
+    { name: 'relatedPages', title: '04 — Related Pages' },
+    { name: 'newsletter', title: '05 — Newsletter Banner' },
+    { name: 'closing', title: '06 — Closing' },
   ],
   fields: [
     // 01 — Hero
@@ -15,6 +18,9 @@ export default defineType({
     defineField({ name: 'heroSubline', title: 'Subline', type: 'text', rows: 2, group: 'hero' }),
 
     // 02 — FAQs
+    defineField({ name: 'categoryNavEyebrow', title: 'Category Nav Eyebrow', type: 'string', group: 'faqs', description: 'e.g. "JUMP TO A CATEGORY — § I"' }),
+    defineField({ name: 'categoryNavHeadline', title: 'Category Nav Headline', type: 'string', group: 'faqs', description: 'e.g. "Seven categories of question."' }),
+    defineField({ name: 'listEyebrow', title: 'FAQ List Eyebrow', type: 'string', group: 'faqs', description: 'e.g. "FIFTEEN QUIET ANSWERS"' }),
     defineField({
       name: 'categories',
       title: 'FAQ Categories',
@@ -46,9 +52,57 @@ export default defineType({
       }],
     }),
 
-    // 03 — Closing
+    // 03 — Quick FAQs
+    defineField({ name: 'quickFaqEyebrow', title: 'Eyebrow', type: 'string', group: 'quickFaqs', description: 'e.g. "FREQUENTLY ASKED — THAMSERKU"' }),
+    defineField({ name: 'quickFaqHeadline', title: 'Headline', type: 'string', group: 'quickFaqs' }),
+    defineField({ name: 'quickFaqSubheading', title: 'Subheading', type: 'string', group: 'quickFaqs' }),
+    defineField({
+      name: 'quickFaqs',
+      title: 'Quick FAQ Items',
+      type: 'array',
+      group: 'quickFaqs',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'question', title: 'Question', type: 'string' }),
+          defineField({ name: 'answer', title: 'Answer', type: 'text', rows: 4 }),
+        ],
+        preview: { select: { title: 'question' } },
+      }],
+    }),
+
+    // 04 — Related Pages
+    defineField({ name: 'relatedPagesEyebrow', title: 'Eyebrow', type: 'string', group: 'relatedPages', description: 'e.g. "READ THE PAGES — § II"' }),
+    defineField({ name: 'relatedPagesHeadline', title: 'Headline', type: 'string', group: 'relatedPages', description: 'e.g. "Each question links to a page."' }),
+    defineField({
+      name: 'relatedPages',
+      title: 'Related Pages',
+      type: 'array',
+      group: 'relatedPages',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string', description: 'e.g. "RELATED PAGE — ABOUT"' }),
+          defineField({ name: 'title', title: 'Title', type: 'string' }),
+          defineField({ name: 'desc', title: 'Description', type: 'string' }),
+          defineField({ name: 'linkText', title: 'Link Text', type: 'string' }),
+          defineField({ name: 'linkTo', title: 'Link To', type: 'string', description: 'e.g. "/legacy"' }),
+        ],
+        preview: { select: { title: 'title', subtitle: 'eyebrow' } },
+      }],
+    }),
+
+    // 04 — Newsletter Banner
+    defineField({ name: 'newsletterEyebrow', title: 'Eyebrow', type: 'string', group: 'newsletter', description: 'e.g. "FIELD NOTES — NEWSLETTER"' }),
+    defineField({ name: 'newsletterHeadline', title: 'Headline', type: 'string', group: 'newsletter' }),
+    defineField({ name: 'newsletterBody', title: 'Body', type: 'text', rows: 3, group: 'newsletter' }),
+    defineField({ name: 'newsletterPrivacyLine', title: 'Privacy Line', type: 'string', group: 'newsletter' }),
+    defineField({ name: 'newsletterBottomNote', title: 'Bottom Note', type: 'string', group: 'newsletter', description: 'Text before the Field Notes link' }),
+
+    // 05 — Closing
     defineField({ name: 'closingHeadline', title: 'Closing Headline', type: 'string', group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Closing Body', type: 'text', rows: 3, group: 'closing' }),
+    defineField({ name: 'closingDisclaimerLine', title: 'Disclaimer Line', type: 'string', group: 'closing', description: 'e.g. "ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF."' }),
   ],
   preview: { prepare: () => ({ title: 'FAQ Page' }) },
 })

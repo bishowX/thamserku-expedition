@@ -672,13 +672,43 @@ export type FAQPageCategory = {
   items: FAQPageItem[];
 };
 
+export type FAQRelatedPage = {
+  eyebrow: string;
+  title: string;
+  desc: string;
+  linkText: string;
+  linkTo: string;
+};
+
+export type FAQQuickItem = {
+  _key: string;
+  question: string;
+  answer: string;
+};
+
 export type FAQPageData = {
   faqPage: {
     heroHeadline?: string;
     heroSubline?: string;
+    categoryNavEyebrow?: string;
+    categoryNavHeadline?: string;
+    listEyebrow?: string;
     categories?: FAQPageCategory[];
+    quickFaqEyebrow?: string;
+    quickFaqHeadline?: string;
+    quickFaqSubheading?: string;
+    quickFaqs?: FAQQuickItem[];
+    relatedPagesEyebrow?: string;
+    relatedPagesHeadline?: string;
+    relatedPages?: FAQRelatedPage[];
+    newsletterEyebrow?: string;
+    newsletterHeadline?: string;
+    newsletterBody?: string;
+    newsletterPrivacyLine?: string;
+    newsletterBottomNote?: string;
     closingHeadline?: string;
     closingBody?: string;
+    closingDisclaimerLine?: string;
   } | null;
 };
 
@@ -686,8 +716,15 @@ export async function getFAQPageData(): Promise<FAQPageData> {
   return serverClient.fetch(`{
     "faqPage": *[_type == "faqPage"][0] {
       heroHeadline, heroSubline,
+      categoryNavEyebrow, categoryNavHeadline,
+      listEyebrow,
       categories[] { label, title, subtitle, items[] { question, answer, linkText, linkTo } },
-      closingHeadline, closingBody
+      quickFaqEyebrow, quickFaqHeadline, quickFaqSubheading,
+      quickFaqs[] { _key, question, answer },
+      relatedPagesEyebrow, relatedPagesHeadline,
+      relatedPages[] { eyebrow, title, desc, linkText, linkTo },
+      newsletterEyebrow, newsletterHeadline, newsletterBody, newsletterPrivacyLine, newsletterBottomNote,
+      closingHeadline, closingBody, closingDisclaimerLine
     }
   }`);
 }
@@ -778,6 +815,7 @@ export async function getTeamPageData(): Promise<TeamPageData> {
 
 export type PathwayPillar = {
   _key: string;
+  eyebrow?: string;
   title: string;
   body: string;
 };
@@ -792,16 +830,60 @@ export type PathwayRoute = {
   image?: { asset: { _ref: string } } | null;
 };
 
+export type PathwayFaqItem = {
+  _key: string;
+  question: string;
+  answer: string;
+};
+
+export type DiagramStep = {
+  _key: string;
+  altitudeLabel: string;
+  stepLabel: string;
+  title: string;
+  description: string;
+};
+
+export type DiagramTimingNote = {
+  _key: string;
+  label: string;
+  body: string;
+};
+
 export type SevenThousandMeterPageData = {
   sevenThousandMeterPage: {
     heroHeadline?: string;
     heroSubline?: string;
+    planningContextEyebrow?: string;
     planningContextHeadline?: string;
+    planningContextSubtitle?: string;
     planningContextBody?: string;
+    planningContextNote?: string;
+    pillarsEyebrow?: string;
+    pillarsHeading?: string;
     pillars?: PathwayPillar[];
+    routesSectionEyebrow?: string;
+    routesSectionHeadline?: string;
+    routesSectionSubtitle?: string;
     routes?: PathwayRoute[];
     explorerRoutesHeadline?: string;
     explorerRoutesBody?: string;
+    diagramEyebrow?: string;
+    diagramHeadline?: string;
+    diagramSubheading?: string;
+    diagramSteps?: DiagramStep[];
+    diagramTimingNotes?: DiagramTimingNote[];
+    cautionEyebrow?: string;
+    cautionHeadline?: string;
+    cautionBody?: string;
+    cautionNote?: string;
+    cautionFootnote?: string;
+    faqEyebrow?: string;
+    faqHeadline?: string;
+    faqSubheading?: string;
+    faqCtaLabel?: string;
+    faqs?: PathwayFaqItem[];
+    closingEyebrow?: string;
     closingHeadline?: string;
     closingBody?: string;
   } | null;
@@ -811,11 +893,20 @@ export async function getSevenThousandMeterPageData(): Promise<SevenThousandMete
   return serverClient.fetch(`{
     "sevenThousandMeterPage": *[_type == "sevenThousandMeterPage"][0] {
       heroHeadline, heroSubline,
-      planningContextHeadline, planningContextBody,
-      pillars[] { _key, title, body },
+      planningContextEyebrow, planningContextHeadline, planningContextSubtitle,
+      planningContextBody, planningContextNote,
+      pillarsEyebrow, pillarsHeading,
+      pillars[] { _key, eyebrow, title, body },
+      routesSectionEyebrow, routesSectionHeadline, routesSectionSubtitle,
       routes[] { _key, peakName, altitude, region, character, description, image },
       explorerRoutesHeadline, explorerRoutesBody,
-      closingHeadline, closingBody
+      diagramEyebrow, diagramHeadline, diagramSubheading,
+      diagramSteps[] { _key, altitudeLabel, stepLabel, title, description },
+      diagramTimingNotes[] { _key, label, body },
+      cautionEyebrow, cautionHeadline, cautionBody, cautionNote, cautionFootnote,
+      faqEyebrow, faqHeadline, faqSubheading, faqCtaLabel,
+      faqs[] { _key, question, answer },
+      closingEyebrow, closingHeadline, closingBody
     }
   }`);
 }

@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-type PageData = { closingHeadline?: string; closingBody?: string };
+type PageData = { closingHeadline?: string; closingBody?: string; closingDisclaimerLine?: string };
 
 export const FAQClosing = ({ page }: { page?: PageData }) => {
   return (
@@ -41,7 +41,7 @@ export const FAQClosing = ({ page }: { page?: PageData }) => {
 
         {/* Small bottom line */}
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center">
-          ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF.
+          {page?.closingDisclaimerLine ?? 'ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF.'}
         </span>
 
       </div>
