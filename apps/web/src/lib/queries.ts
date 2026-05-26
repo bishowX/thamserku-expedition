@@ -853,15 +853,6 @@ export type AvailableEdition = {
   specs?: AvailableEditionSpec[];
 };
 
-export type SupportModule = {
-  _key?: string;
-  numeral: string;
-  eyebrow: string;
-  title: string;
-  body: string;
-  practice: string;
-};
-
 export type PrivateExpeditionsPageData = {
   privateExpeditionsPage: {
     heroHeadline?: string;
@@ -879,15 +870,16 @@ export type PrivateExpeditionsPageData = {
     availableEditionsHeadline?: string;
     availableEditionsTagline?: string;
     availableEditions?: AvailableEdition[];
-    supportModulesEyebrow?: string;
-    supportModulesHeadline?: string;
-    supportModulesTagline?: string;
-    supportModules?: SupportModule[];
     consultationEyebrow?: string;
     consultationHeadline?: string;
     consultationTagline?: string;
     consultationNote?: string;
     consultationSteps?: PrivateConsultationStep[];
+    faqEyebrow?: string;
+    faqHeadline?: string;
+    faqSubheading?: string;
+    faqCtaLabel?: string;
+    faqs?: Array<{ _key: string; question: string; answer: string }>;
     closingEyebrow?: string;
     closingHeadline?: string;
     closingBody?: string;
@@ -904,10 +896,10 @@ export async function getPrivateExpeditionsPageData(): Promise<PrivateExpedition
       audiences[] { _key, title, subtitle, body },
       availableEditionsEyebrow, availableEditionsHeadline, availableEditionsTagline,
       availableEditions[] { _key, letter, pullQuote, headline, body, whoItIsFor, bestReadOn, specs[] { _key, label, value } },
-      supportModulesEyebrow, supportModulesHeadline, supportModulesTagline,
-      supportModules[] { _key, numeral, eyebrow, title, body, practice },
       consultationEyebrow, consultationHeadline, consultationTagline, consultationNote,
       consultationSteps[] { _key, step, title, body },
+      faqEyebrow, faqHeadline, faqSubheading, faqCtaLabel,
+      faqs[] { _key, question, answer },
       closingEyebrow, closingHeadline, closingBody, closingNote
     }
   }`);

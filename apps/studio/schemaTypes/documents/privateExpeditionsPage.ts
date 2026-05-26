@@ -9,8 +9,8 @@ export default defineType({
     { name: 'philosophy', title: '02 — Philosophy' },
     { name: 'audiences', title: '03 — Audiences' },
     { name: 'availableEditions', title: '04 — Available Editions' },
-    { name: 'supportModules', title: '05 — Support Modules' },
-    { name: 'consultationSteps', title: '06 — Consultation Steps' },
+    { name: 'consultationSteps', title: '05 — Consultation Steps' },
+    { name: 'faq', title: '06 — FAQ' },
     { name: 'closing', title: '07 — Closing' },
   ],
   fields: [
@@ -82,29 +82,7 @@ export default defineType({
       }],
     }),
 
-    // 05 — Support Modules
-    defineField({ name: 'supportModulesEyebrow', title: 'Eyebrow', type: 'string', group: 'supportModules' }),
-    defineField({ name: 'supportModulesHeadline', title: 'Headline', type: 'string', group: 'supportModules' }),
-    defineField({ name: 'supportModulesTagline', title: 'Tagline', type: 'string', group: 'supportModules' }),
-    defineField({
-      name: 'supportModules',
-      title: 'Support Modules',
-      type: 'array',
-      group: 'supportModules',
-      of: [{
-        type: 'object',
-        fields: [
-          defineField({ name: 'numeral', title: 'Numeral', type: 'string', description: 'e.g. I.' }),
-          defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string', description: 'e.g. MODULE I — DISCRETION' }),
-          defineField({ name: 'title', title: 'Title', type: 'string' }),
-          defineField({ name: 'body', title: 'Body', type: 'text', rows: 4 }),
-          defineField({ name: 'practice', title: 'In Practice', type: 'text', rows: 3 }),
-        ],
-        preview: { select: { title: 'title', subtitle: 'eyebrow' } },
-      }],
-    }),
-
-    // 06 — Consultation Steps
+    // 05 — Consultation Steps
     defineField({ name: 'consultationEyebrow', title: 'Eyebrow', type: 'string', group: 'consultationSteps' }),
     defineField({ name: 'consultationHeadline', title: 'Headline', type: 'string', group: 'consultationSteps' }),
     defineField({ name: 'consultationTagline', title: 'Tagline', type: 'string', group: 'consultationSteps' }),
@@ -122,6 +100,26 @@ export default defineType({
           defineField({ name: 'body', title: 'Body', type: 'text', rows: 4 }),
         ],
         preview: { select: { title: 'title', subtitle: 'step' } },
+      }],
+    }),
+
+    // 06 — FAQ
+    defineField({ name: 'faqEyebrow', title: 'Eyebrow', type: 'string', group: 'faq', description: 'e.g. FREQUENTLY ASKED — PRIVATE EXPEDITIONS' }),
+    defineField({ name: 'faqHeadline', title: 'Headline', type: 'string', group: 'faq' }),
+    defineField({ name: 'faqSubheading', title: 'Subheading', type: 'string', group: 'faq' }),
+    defineField({ name: 'faqCtaLabel', title: 'CTA Label', type: 'string', group: 'faq' }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQ Items',
+      type: 'array',
+      group: 'faq',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'question', title: 'Question', type: 'string' }),
+          defineField({ name: 'answer', title: 'Answer', type: 'text', rows: 4 }),
+        ],
+        preview: { select: { title: 'question' } },
       }],
     }),
 

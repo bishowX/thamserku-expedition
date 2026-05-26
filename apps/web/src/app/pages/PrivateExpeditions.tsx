@@ -6,8 +6,8 @@ import { PrivateHero } from '../components/private/PrivateHero';
 import { PrivatePhilosophy } from '../components/private/PrivatePhilosophy';
 import { PrivateWhoItIsFor } from '../components/private/PrivateWhoItIsFor';
 import { PrivateAvailableEditions } from '../components/private/PrivateAvailableEditions';
-import { PrivateSupportModules } from '../components/private/PrivateSupportModules';
 import { PrivateConsultationPathway } from '../components/private/PrivateConsultationPathway';
+import { PrivateFAQ } from '../components/private/PrivateFAQ';
 import { PrivateClosing } from '../components/private/PrivateClosing';
 import { Footer } from '../components/Footer';
 
@@ -29,8 +29,8 @@ export default function PrivateExpeditions() {
       <PrivatePhilosophy page={data.privateExpeditionsPage ?? undefined} />
       <PrivateWhoItIsFor page={data.privateExpeditionsPage ?? undefined} audiences={data.privateExpeditionsPage?.audiences ?? []} />
       <PrivateAvailableEditions page={data.privateExpeditionsPage ?? undefined} />
-      <PrivateSupportModules page={data.privateExpeditionsPage ?? undefined} />
-      <PrivateConsultationPathway page={data.privateExpeditionsPage ?? undefined} consultationSteps={data.privateExpeditionsPage?.consultationSteps ?? []} />
+<PrivateConsultationPathway page={data.privateExpeditionsPage ?? undefined} consultationSteps={data.privateExpeditionsPage?.consultationSteps ?? []} />
+      <PrivateFAQ page={data.privateExpeditionsPage ?? undefined} />
       <PrivateClosing page={data.privateExpeditionsPage ?? undefined} />
       <Footer />
     </main>
