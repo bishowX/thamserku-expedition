@@ -3,7 +3,7 @@ const appointmentUrl = import.meta.env.VITE_GOOGLE_CALENDAR_URL as string | unde
 
 export const ScheduleCalendar = () => {
   return (
-    <section id="calendar" className="w-full bg-[#F4F2EC] py-[140px] md:py-[180px] px-8 flex justify-center">
+ <section id="calendar" className="w-full bg-[#F4F2EC] py-24 px-8 flex justify-center">
       <div className="w-full max-w-[1080px] flex flex-col items-center">
 
         {/* Section Header */}
@@ -29,7 +29,7 @@ export const ScheduleCalendar = () => {
               href={appointmentUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[12px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#0A3A77] hover:text-white transition-colors"
+              className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[12px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#2E353C] hover:text-white transition-colors"
             >
               OPEN BOOKING CALENDAR →
             </a>

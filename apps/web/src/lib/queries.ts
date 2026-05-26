@@ -127,6 +127,7 @@ export type SanityFieldNote = {
   byline: string;
   readTime: number;
   slug: { current: string };
+  coverImage?: { asset: { _ref: string } } | null;
 };
 
 export type SanityYetiPillar = {
@@ -205,7 +206,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       fieldNotesEyebrow, fieldNotesHeading,
       newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
       closingEyebrow, closingHeading, closingBody, closingImage,
-      featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug },
+      featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug, coverImage },
       chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
       legacyEyebrow, legacyHeading,
       infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars
@@ -619,6 +620,244 @@ export async function getConsultationPageData(): Promise<ConsultationPageData> {
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {
       _id, name, code
+    }
+  }`);
+}
+
+// ─── Field Notes Page ───────────────────────────────────────────────────────
+
+export type FieldNotesCategory = {
+  name: string;
+  description: string;
+  articleCount: string;
+};
+
+export type FieldNotesPageData = {
+  fieldNotesPage: {
+    heroHeadline?: string;
+    heroSubline?: string;
+    categories?: FieldNotesCategory[];
+    closingHeadline?: string;
+    closingBody?: string;
+  } | null;
+  fieldNotes: SanityFieldNote[];
+};
+
+export async function getFieldNotesPageData(): Promise<FieldNotesPageData> {
+  return serverClient.fetch(`{
+    "fieldNotesPage": *[_type == "fieldNotesPage"][0] {
+      heroHeadline, heroSubline,
+      categories[] { name, description, articleCount },
+      closingHeadline, closingBody
+    },
+    "fieldNotes": *[_type == "fieldNote"] | order(publishedAt desc) {
+      _id, code, title, excerpt, byline, readTime, slug, coverImage, publishedAt
+    }
+  }`);
+}
+
+// ─── FAQ Page ────────────────────────────────────────────────────────────────
+
+export type FAQPageItem = {
+  question: string;
+  answer: string;
+  linkText: string;
+  linkTo: string;
+};
+
+export type FAQPageCategory = {
+  label: string;
+  title: string;
+  subtitle: string;
+  items: FAQPageItem[];
+};
+
+export type FAQPageData = {
+  faqPage: {
+    heroHeadline?: string;
+    heroSubline?: string;
+    categories?: FAQPageCategory[];
+    closingHeadline?: string;
+    closingBody?: string;
+  } | null;
+};
+
+export async function getFAQPageData(): Promise<FAQPageData> {
+  return serverClient.fetch(`{
+    "faqPage": *[_type == "faqPage"][0] {
+      heroHeadline, heroSubline,
+      categories[] { label, title, subtitle, items[] { question, answer, linkText, linkTo } },
+      closingHeadline, closingBody
+    }
+  }`);
+}
+
+// ─── Archive Page ────────────────────────────────────────────────────────────
+
+export type SanityArchiveRecord = {
+  _id: string;
+  code: string;
+  year: number;
+  peak: string;
+  route: string;
+  region: string;
+  editionType: string;
+  status: string;
+  description: string;
+  image?: { asset: { _ref: string } } | null;
+  notableDetail: string;
+  isFeatured: boolean;
+};
+
+export type ArchivePageData = {
+  archivePage: {
+    heroHeadline?: string;
+    heroSubline?: string;
+    introTitle?: string;
+    introBody?: string;
+    closingHeadline?: string;
+    closingBody?: string;
+  } | null;
+  records: SanityArchiveRecord[];
+};
+
+export async function getArchivePageData(): Promise<ArchivePageData> {
+  return serverClient.fetch(`{
+    "archivePage": *[_type == "archivePage"][0] {
+      heroHeadline, heroSubline, introTitle, introBody, closingHeadline, closingBody
+    },
+    "records": *[_type == "archiveRecord"] | order(year desc) {
+      _id, code, year, peak, route, region, editionType, status, description, image, notableDetail, isFeatured
+    }
+  }`);
+}
+
+// ─── Team Page ───────────────────────────────────────────────────────────────
+
+export type TeamLeadershipMember = {
+  _key: string;
+  name: string;
+  role: string;
+  basedIn: string;
+  yearsWithHouse: string;
+  expertise: string;
+  languages: string;
+  portrait?: { asset: { _ref: string } } | null;
+};
+
+export type TeamPageData = {
+  teamPage: {
+    heroHeadline?: string;
+    heroSubline?: string;
+    heroImage?: { asset: { _ref: string } } | null;
+    manifestoPullQuote?: string;
+    manifestoBody1?: string;
+    manifestoBody2?: string;
+    leadership?: TeamLeadershipMember[];
+    closingHeadline?: string;
+    closingBody?: string;
+  } | null;
+  sherpas: Array<SanitySherpa & { _id: string; role?: string; expertise?: string; languages?: string }>;
+};
+
+export async function getTeamPageData(): Promise<TeamPageData> {
+  return serverClient.fetch(`{
+    "teamPage": *[_type == "teamPage"][0] {
+      heroHeadline, heroSubline, heroImage,
+      manifestoPullQuote, manifestoBody1, manifestoBody2,
+      leadership[] { _key, name, role, portrait, basedIn, yearsWithHouse, expertise, languages },
+      closingHeadline, closingBody
+    },
+    "sherpas": *[_type == "sherpa"] | order(name asc) {
+      _id, name, portrait, region, yearsActive, mountainsSupported, philosophyLine, role, expertise, languages
+    }
+  }`);
+}
+
+// ─── 7,000m Pathway Page ─────────────────────────────────────────────────────
+
+export type PathwayPillar = {
+  _key: string;
+  title: string;
+  body: string;
+};
+
+export type PathwayRoute = {
+  _key: string;
+  peakName: string;
+  altitude: string;
+  region: string;
+  character: string;
+  description: string;
+  image?: { asset: { _ref: string } } | null;
+};
+
+export type SevenThousandMeterPageData = {
+  sevenThousandMeterPage: {
+    heroHeadline?: string;
+    heroSubline?: string;
+    planningContextHeadline?: string;
+    planningContextBody?: string;
+    pillars?: PathwayPillar[];
+    routes?: PathwayRoute[];
+    explorerRoutesHeadline?: string;
+    explorerRoutesBody?: string;
+    closingHeadline?: string;
+    closingBody?: string;
+  } | null;
+};
+
+export async function getSevenThousandMeterPageData(): Promise<SevenThousandMeterPageData> {
+  return serverClient.fetch(`{
+    "sevenThousandMeterPage": *[_type == "sevenThousandMeterPage"][0] {
+      heroHeadline, heroSubline,
+      planningContextHeadline, planningContextBody,
+      pillars[] { _key, title, body },
+      routes[] { _key, peakName, altitude, region, character, description, image },
+      explorerRoutesHeadline, explorerRoutesBody,
+      closingHeadline, closingBody
+    }
+  }`);
+}
+
+// ─── Private Expeditions Page ────────────────────────────────────────────────
+
+export type PrivateAudience = {
+  _key: string;
+  title: string;
+  subtitle: string;
+  body: string;
+};
+
+export type PrivateConsultationStep = {
+  _key: string;
+  step: string;
+  title: string;
+  body: string;
+};
+
+export type PrivateExpeditionsPageData = {
+  privateExpeditionsPage: {
+    heroHeadline?: string;
+    heroSubline?: string;
+    philosophyHeadline?: string;
+    philosophyTagline?: string;
+    philosophyBody?: string;
+    audiences?: PrivateAudience[];
+    consultationSteps?: PrivateConsultationStep[];
+    closingHeadline?: string;
+    closingBody?: string;
+  } | null;
+};
+
+export async function getPrivateExpeditionsPageData(): Promise<PrivateExpeditionsPageData> {
+  return serverClient.fetch(`{
+    "privateExpeditionsPage": *[_type == "privateExpeditionsPage"][0] {
+      heroHeadline, heroSubline,
+      philosophyHeadline, philosophyTagline, philosophyBody,
+      audiences[] { _key, title, subtitle, body },
+      consultationSteps[] { _key, step, title, body },
+      closingHeadline, closingBody
     }
   }`);
 }

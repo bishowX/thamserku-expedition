@@ -1,15 +1,16 @@
-import { urlFor } from '../../../lib/sanity';
-import type { YetiPageData } from '../../../lib/queries';
+import { urlFor } from "../../../lib/sanity";
+import type { YetiPageData } from "../../../lib/queries";
 
-type PageData = YetiPageData['yetiPage'];
+type PageData = YetiPageData["yetiPage"];
 
 export const YetiFieldContinuity = ({ page }: { page?: PageData }) => {
-  const imageUrl = page?.continuityImage ? urlFor(page.continuityImage).width(1200).url() : null;
+  const imageUrl = page?.continuityImage
+    ? urlFor(page.continuityImage).width(1200).url()
+    : null;
 
   return (
-    <section className="bg-[#0A3A77] py-[160px] md:py-[200px] px-8">
+ <section className="bg-[#2E353C] py-24 px-8">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center">
-
         <div className="md:col-span-5 flex flex-col items-start">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
             PILLAR IV — FIELD CONTINUITY
@@ -45,10 +46,13 @@ export const YetiFieldContinuity = ({ page }: { page?: PageData }) => {
 
         <div className="md:col-span-6 w-full aspect-[16/10] relative overflow-hidden">
           {imageUrl && (
-            <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <img
+              src={imageUrl}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
           )}
         </div>
-
       </div>
     </section>
   );

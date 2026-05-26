@@ -1,4 +1,6 @@
 
+type PrivateAudience = { title: string; subtitle: string; body: string; _key?: string };
+
 const AUDIENCES = [
   {
     eyebrow: "READER I — UHNI PRINCIPALS",
@@ -22,11 +24,15 @@ const AUDIENCES = [
   }
 ];
 
-export const PrivateWhoItIsFor = () => {
+export const PrivateWhoItIsFor = ({ audiences }: { audiences?: PrivateAudience[] }) => {
+  const displayAudiences = audiences && audiences.length > 0
+    ? audiences.map((a) => ({ eyebrow: a.title, title: a.subtitle, desc: a.body }))
+    : AUDIENCES;
+
   return (
-    <section className="bg-[#1A1A1A] py-[140px] md:py-[180px] px-8">
+ <section className="bg-[#1A1A1A] py-24 px-8">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center">
-        
+
         {/* Section Header */}
         <div className="flex flex-col items-center mb-24 md:mb-32">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-8">
@@ -40,11 +46,11 @@ export const PrivateWhoItIsFor = () => {
           </p>
         </div>
 
-        {/* Four-audience grid */}
+        {/* Audience grid */}
         <div className="w-full max-w-[1320px] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-          {AUDIENCES.map((audience, idx) => (
-            <div 
-              key={idx} 
+          {displayAudiences.map((audience, idx) => (
+            <div
+              key={idx}
               className="flex flex-col bg-[#2E353C]/30 border-t border-[#C8CDD2]/30 px-6 py-10"
             >
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6 block min-h-[3em]">

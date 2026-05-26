@@ -1,7 +1,7 @@
 
 export const PathwayTwoExpeditionDiagram = () => {
   return (
-    <section className="bg-[#0A3A77] py-[160px] md:py-[200px] px-8">
+ <section className="bg-[#2E353C] py-24 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
         
         {/* Section Header */}
@@ -25,10 +25,10 @@ export const PathwayTwoExpeditionDiagram = () => {
           
           {/* Waypoint 1 */}
           <div className="flex-1 flex flex-col items-center relative z-10 px-4">
-            <span className="absolute -top-10 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white bg-[#0A3A77] px-2">
+            <span className="absolute -top-10 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white bg-[#2E353C] px-2">
               7,000 M
             </span>
-            <div className="w-4 h-4 rounded-full border border-white bg-[#0A3A77] mb-8" />
+            <div className="w-4 h-4 rounded-full border border-white bg-[#2E353C] mb-8" />
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-4">
               STEP I — QUALIFYING ASCENT
             </span>
@@ -42,10 +42,10 @@ export const PathwayTwoExpeditionDiagram = () => {
 
           {/* Waypoint 2 */}
           <div className="flex-1 flex flex-col items-center relative z-10 px-4">
-            <span className="absolute -top-10 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white bg-[#0A3A77] px-2">
+            <span className="absolute -top-10 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white bg-[#2E353C] px-2">
               RECOVERY · KATHMANDU
             </span>
-            <div className="w-3 h-3 rounded-full border border-white bg-[#0A3A77] mb-[34px]" />
+            <div className="w-3 h-3 rounded-full border border-white bg-[#2E353C] mb-[34px]" />
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-4">
               STEP II — RECOVERY & REVIEW
             </span>
@@ -59,10 +59,10 @@ export const PathwayTwoExpeditionDiagram = () => {
 
           {/* Waypoint 3 */}
           <div className="flex-1 flex flex-col items-center relative z-10 px-4">
-            <span className="absolute -top-10 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white bg-[#0A3A77] px-2">
+            <span className="absolute -top-10 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white bg-[#2E353C] px-2">
               8,000 M+
             </span>
-            <div className="w-4 h-4 rounded-full border border-white bg-[#0A3A77] mb-8" />
+            <div className="w-4 h-4 rounded-full border border-white bg-[#2E353C] mb-8" />
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-4">
               STEP III — FLAGSHIP OBJECTIVE
             </span>
@@ -82,7 +82,7 @@ export const PathwayTwoExpeditionDiagram = () => {
           
           <div className="flex gap-8 relative z-10">
             <div className="flex flex-col items-center pt-2">
-              <div className="w-4 h-4 rounded-full border border-white bg-[#0A3A77]" />
+              <div className="w-4 h-4 rounded-full border border-white bg-[#2E353C]" />
             </div>
             <div className="flex flex-col">
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white mb-2">
@@ -102,7 +102,7 @@ export const PathwayTwoExpeditionDiagram = () => {
 
           <div className="flex gap-8 relative z-10">
             <div className="flex flex-col items-center pt-2 w-[16px] pl-[2px]">
-              <div className="w-3 h-3 rounded-full border border-white bg-[#0A3A77]" />
+              <div className="w-3 h-3 rounded-full border border-white bg-[#2E353C]" />
             </div>
             <div className="flex flex-col">
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white mb-2">
@@ -122,7 +122,7 @@ export const PathwayTwoExpeditionDiagram = () => {
 
           <div className="flex gap-8 relative z-10">
             <div className="flex flex-col items-center pt-2">
-              <div className="w-4 h-4 rounded-full border border-white bg-[#0A3A77]" />
+              <div className="w-4 h-4 rounded-full border border-white bg-[#2E353C]" />
             </div>
             <div className="flex flex-col">
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-white mb-2">

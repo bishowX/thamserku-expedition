@@ -54,7 +54,7 @@ const RELATED_PAGES = [
 
 export const FAQRelatedPages = () => {
   return (
-    <section className="bg-[#F4F2EC] py-[100px] md:py-[120px] px-8">
+ <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
         
         {/* Section Header */}

@@ -1,8 +1,10 @@
 import { Link } from 'react-router';
 
-export const FAQClosing = () => {
+type PageData = { closingHeadline?: string; closingBody?: string };
+
+export const FAQClosing = ({ page }: { page?: PageData }) => {
   return (
-    <section className="bg-[#0A3A77] py-[160px] md:py-[200px] px-8">
+ <section className="bg-[#2E353C] py-24 px-8">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
         
         {/* Eyebrow */}
@@ -12,12 +14,12 @@ export const FAQClosing = () => {
 
         {/* Headline */}
         <h2 className="font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.1] text-center max-w-[26ch] mb-8">
-          Your question is not on this page?
+          {page?.closingHeadline ?? 'Your question is not on this page?'}
         </h2>
 
         {/* Sub-paragraph */}
         <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-16">
-          Write to the expedition desk. A senior advisor will respond personally — quietly, and within 48 hours — and the conversation begins.
+          {page?.closingBody ?? 'Write to the expedition desk. A senior advisor will respond personally — quietly, and within 48 hours — and the conversation begins.'}
         </p>
 
         {/* CTAs */}

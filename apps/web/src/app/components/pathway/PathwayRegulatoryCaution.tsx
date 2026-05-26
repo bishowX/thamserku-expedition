@@ -1,7 +1,7 @@
 
 export const PathwayRegulatoryCaution = () => {
   return (
-    <section className="bg-[#F4F2EC] py-[100px] md:py-[120px] px-8">
+ <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[1080px] mx-auto flex flex-col items-center">
         
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] text-center mb-6">

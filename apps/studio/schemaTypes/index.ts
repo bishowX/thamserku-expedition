@@ -12,6 +12,13 @@ import consultationPage from './documents/consultationPage'
 import siteSettings from './documents/siteSettings'
 import yetiInfrastructurePage from './documents/yetiInfrastructurePage'
 import sherpa from './documents/sherpa'
+import fieldNotesPage from './documents/fieldNotesPage'
+import faqPage from './documents/faqPage'
+import archivePage from './documents/archivePage'
+import archiveRecord from './documents/archiveRecord'
+import teamPage from './documents/teamPage'
+import sevenThousandMeterPage from './documents/sevenThousandMeterPage'
+import privateExpeditionsPage from './documents/privateExpeditionsPage'
 import yetiPillar from './objects/yetiPillar'
 import timelineEra from './objects/timelineEra'
 import consultationMoment from './objects/consultationMoment'
@@ -35,11 +42,18 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   yetiInfrastructurePage,
   consultationPage,
   siteSettings,
+  fieldNotesPage,
+  faqPage,
+  archivePage,
+  teamPage,
+  sevenThousandMeterPage,
+  privateExpeditionsPage,
   // Collections
   expedition,
   edition,
   sherpa,
   fieldNote,
+  archiveRecord,
   chairmanLetter,
   enquiry,
   // Objects

@@ -39,7 +39,7 @@ const MODULES = [
 
 export const PrivateSupportModules = () => {
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-[140px] md:py-[180px] px-8 overflow-hidden">
+ <section className="relative w-full bg-[#1A1A1A] py-24 px-8 overflow-hidden">
       {/* Faint cartographic grid overlay */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"

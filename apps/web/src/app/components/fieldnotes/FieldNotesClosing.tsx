@@ -1,8 +1,10 @@
 import { Link } from 'react-router';
 
-export const FieldNotesClosing = () => {
+type PageData = { closingHeadline?: string; closingBody?: string };
+
+export const FieldNotesClosing = ({ page }: { page?: PageData }) => {
   return (
-    <section className="bg-[#1A1A1A] py-[160px] md:py-[200px] px-8 border-t border-white/10">
+ <section className="bg-[#1A1A1A] py-24 px-8 border-t border-white/10">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
         
         {/* Eyebrow */}
@@ -12,12 +14,12 @@ export const FieldNotesClosing = () => {
 
         {/* Headline */}
         <h2 className="font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.05] text-center max-w-[24ch] mb-8">
-          When you are ready, the conversation is private.
+          {page?.closingHeadline ?? 'When you are ready, the conversation is private.'}
         </h2>
 
         {/* Sub-paragraph */}
         <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-16">
-          Field Notes is read by the curious. The expedition desk is read by the prepared. When you are ready to begin a private conversation, a senior advisor will respond within 48 hours.
+          {page?.closingBody ?? 'Field Notes is read by the curious. The expedition desk is read by the prepared. When you are ready to begin a private conversation, a senior advisor will respond within 48 hours.'}
         </p>
 
         {/* CTAs */}

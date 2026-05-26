@@ -1,4 +1,6 @@
 
+type ConsultationStep = { step: string; title: string; body: string; _key?: string };
+
 const STEPS = [
   {
     marker: "STEP I",
@@ -22,9 +24,13 @@ const STEPS = [
   }
 ];
 
-export const PrivateConsultationPathway = () => {
+export const PrivateConsultationPathway = ({ consultationSteps }: { consultationSteps?: ConsultationStep[] }) => {
+  const displaySteps = consultationSteps && consultationSteps.length > 0
+    ? consultationSteps.map((s) => ({ marker: s.step, title: s.title, desc: s.body }))
+    : STEPS;
+
   return (
-    <section className="bg-[#F4F2EC] py-[140px] md:py-[180px] px-8">
+ <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
         
         {/* Section Header */}
@@ -42,7 +48,7 @@ export const PrivateConsultationPathway = () => {
 
         {/* Four-step pathway */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {STEPS.map((step, idx) => (
+          {displaySteps.map((step, idx) => (
             <div 
               key={idx} 
               className="flex flex-col border-t border-[#5A6673]/30 px-6 py-8 md:py-10"

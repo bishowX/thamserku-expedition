@@ -9,7 +9,7 @@ type Props = {
 
 export function QuickFacts({ altitude, region, duration, season, expeditionStyleFact, pricing }: Props) {
   return (
-    <section className="bg-[#1A1A1A] w-full text-white py-24 border-b border-white/10">
+ <section className="bg-[#1A1A1A] w-full text-white py-24 border-b border-white/10">
       <div className="max-w-[1440px] mx-auto px-8 mb-8">
         <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           02 — DOSSIER FACTS

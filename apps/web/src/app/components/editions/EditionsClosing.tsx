@@ -14,7 +14,7 @@ export function EditionsClosing({ page }: { page?: PageData }) {
     "RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF";
 
   return (
-    <section className="w-full bg-[#2E353C] text-white py-24 px-8 flex flex-col items-center justify-center text-center">
+ <section className="w-full bg-[#2E353C] text-white py-24 px-8 flex flex-col items-center justify-center text-center">
       <div className="w-full max-w-[800px] flex flex-col items-center">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">
           {eyebrow}

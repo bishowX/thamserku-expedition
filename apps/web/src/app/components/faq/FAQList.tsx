@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import type { FAQPageCategory } from '../../../lib/queries';
 
 type FAQItem = {
   qNum: string;
@@ -205,8 +206,28 @@ const FAQ_DATA: FAQCategory[] = [
   }
 ];
 
-export const FAQList = () => {
+export const FAQList = ({ categories: sanityCategories }: { categories?: FAQPageCategory[] }) => {
   const [openStates, setOpenStates] = useState<Record<string, boolean>>({});
+
+  // Use Sanity data if available, otherwise fall back to hardcoded
+  const hasSanity = sanityCategories && sanityCategories.length > 0;
+  const renderData: FAQCategory[] = hasSanity
+    ? sanityCategories!.map((cat, catIdx) => ({
+        id: cat.label.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        numLabel: `CATEGORY ${['I','II','III','IV','V','VI','VII','VIII','IX','X'][catIdx] ?? String(catIdx + 1)}`,
+        label: cat.label,
+        title: cat.title,
+        subtitle: cat.subtitle,
+        items: (cat.items ?? []).map((item, itemIdx) => ({
+          qNum: `Q.${String(itemIdx + 1).padStart(2, '0')}`,
+          question: item.question,
+          aNum: `A.${String(itemIdx + 1).padStart(2, '0')}`,
+          answer: item.answer,
+          linkText: item.linkText,
+          linkTo: item.linkTo,
+        })),
+      }))
+    : FAQ_DATA;
 
   const toggleFaq = (key: string) => {
     setOpenStates(prev => ({
@@ -216,7 +237,7 @@ export const FAQList = () => {
   };
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-[140px] md:py-[180px] px-8 overflow-hidden">
+ <section className="relative w-full bg-[#1A1A1A] py-24 px-8 overflow-hidden">
       {/* Faint cartographic grid overlay */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -237,7 +258,7 @@ export const FAQList = () => {
           </span>
         </div>
 
-        {FAQ_DATA.map((category, catIdx) => (
+        {renderData.map((category, catIdx) => (
           <div key={catIdx} id={category.id} className="w-full flex flex-col scroll-mt-32">
             
             {/* Category section header */}

@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useLoaderData } from "react-router";
+import { getPrivateExpeditionsPageData, type PrivateExpeditionsPageData } from "../../lib/queries";
 import { Nav } from '../components/Nav';
 import { PrivateHero } from '../components/private/PrivateHero';
 import { PrivatePhilosophy } from '../components/private/PrivatePhilosophy';
@@ -8,17 +11,27 @@ import { PrivateConsultationPathway } from '../components/private/PrivateConsult
 import { PrivateClosing } from '../components/private/PrivateClosing';
 import { Footer } from '../components/Footer';
 
+export async function loader() {
+  return getPrivateExpeditionsPageData();
+}
+
 export default function PrivateExpeditions() {
+  const data = useLoaderData() as PrivateExpeditionsPageData;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
-      <PrivateHero />
-      <PrivatePhilosophy />
-      <PrivateWhoItIsFor />
+      <PrivateHero page={data.privateExpeditionsPage ?? undefined} />
+      <PrivatePhilosophy page={data.privateExpeditionsPage ?? undefined} />
+      <PrivateWhoItIsFor audiences={data.privateExpeditionsPage?.audiences ?? []} />
       <PrivateAvailableEditions />
       <PrivateSupportModules />
-      <PrivateConsultationPathway />
-      <PrivateClosing />
+      <PrivateConsultationPathway consultationSteps={data.privateExpeditionsPage?.consultationSteps ?? []} />
+      <PrivateClosing page={data.privateExpeditionsPage ?? undefined} />
       <Footer />
     </main>
   );

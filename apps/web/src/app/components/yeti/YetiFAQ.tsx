@@ -13,7 +13,7 @@ export const YetiFAQ = ({ page }: { page?: PageData }) => {
   };
 
   return (
-    <section className="bg-[#F4F2EC] py-[140px] md:py-[180px] px-8">
+ <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
 
         <div className="flex flex-col items-center mb-20 md:mb-24 w-full">

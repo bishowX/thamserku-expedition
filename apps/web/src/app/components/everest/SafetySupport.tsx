@@ -42,7 +42,7 @@ export function SafetySupport({ safetySupportHeadline, safetyModules }: Props) {
   const modules = safetyModules ?? FALLBACK_MODULES;
 
   return (
-    <section className="bg-[#FFFFFF] w-full text-[#1A1A1A] py-24">
+ <section className="bg-[#FFFFFF] w-full text-[#1A1A1A] py-24">
       <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-24">
         <div className="flex flex-col gap-8">
           <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">

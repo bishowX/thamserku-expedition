@@ -2,7 +2,7 @@ import { ChevronDown } from 'lucide-react';
 
 export const ArchiveFilters = () => {
   return (
-    <section className="bg-[#1A1A1A] py-[60px] md:py-[80px] px-8 border-b border-white/10">
+ <section className="bg-[#1A1A1A] py-24 px-8 border-b border-white/10">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
         
         {/* Full-width filter bar */}

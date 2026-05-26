@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 export const FAQNewsletterBanner = () => {
   return (
-    <section className="bg-[#1A1A1A] py-[120px] md:py-[160px] px-8">
+ <section className="bg-[#1A1A1A] py-24 px-8">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
         
         {/* Eyebrow */}

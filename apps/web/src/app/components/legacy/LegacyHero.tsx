@@ -1,20 +1,21 @@
 import { Nav } from "../Nav";
-import heroImage from "../../../assets/images/Copy_of_Everest_for_Breakfast_(3).jpg";
 import { urlFor } from "../../../lib/sanity";
 import type { LegacyPageData } from "../../../lib/queries";
 
 type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyHero({ page }: { page?: PageData }) {
-  const bgImage = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : heroImage;
+  const bgImage = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : null;
 
   return (
     <section className="relative w-full h-screen min-h-[800px] bg-[#1A1A1A] text-white flex flex-col overflow-hidden">
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 mix-blend-luminosity sepia-[.2]"
-          style={{ backgroundImage: `url('${bgImage}')` }}
-        />
+        {bgImage && (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 mix-blend-luminosity sepia-[.2]"
+            style={{ backgroundImage: `url('${bgImage}')` }}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-transparent to-[#1A1A1A]/90" />
       </div>
 

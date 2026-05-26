@@ -96,7 +96,7 @@ export const EnquiryForm = ({
   // Confirmation panel shown after successful submission
   if (submitted) {
     return (
-      <section id="letter-path" className="bg-white py-24 md:py-48">
+ <section id="letter-path" className="bg-white py-24">
         <div className="max-w-[880px] mx-auto px-8 flex flex-col items-center text-center">
           <div className="w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-12">
             <CheckCircle className="w-5 h-5 text-[#0A3A77]" strokeWidth={1.5} />
@@ -120,7 +120,7 @@ export const EnquiryForm = ({
   }
 
   return (
-    <section id="letter-path" className="bg-white py-24 md:py-48">
+ <section id="letter-path" className="bg-white py-24">
       <div className="max-w-[880px] mx-auto px-8">
 
         {/* Alternative Path Header */}
@@ -230,7 +230,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {contactOptions.map(method => (
                     <button key={method} type="button" onClick={() => setContactMethod(method)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${contactMethod === method ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${contactMethod === method ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {method}
                     </button>
                   ))}
@@ -251,7 +251,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {mountainOptions.map(interest => (
                     <button key={interest} type="button" onClick={() => toggleInterest(interest)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${activeInterest.includes(interest) ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${activeInterest.includes(interest) ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {interest}
                     </button>
                   ))}
@@ -282,7 +282,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {editionOptions.map(edition => (
                     <button key={edition} type="button" onClick={() => setActiveEdition(edition)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${activeEdition === edition ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${activeEdition === edition ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {edition}
                     </button>
                   ))}
@@ -307,7 +307,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {trekkingOptions.map(level => (
                     <button key={level} type="button" onClick={() => setTrekkingExp(level)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${trekkingExp === level ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${trekkingExp === level ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {level}
                     </button>
                   ))}
@@ -318,7 +318,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {altitudeOptions.map(alt => (
                     <button key={alt} type="button" onClick={() => toggleAltitude(alt)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${altitudeExp.includes(alt) ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${altitudeExp.includes(alt) ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {alt}
                     </button>
                   ))}
@@ -393,7 +393,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {seasonOptions.map(season => (
                     <button key={season} type="button" onClick={() => setPreferredSeason(season)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${preferredSeason === season ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${preferredSeason === season ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {season}
                     </button>
                   ))}
@@ -415,7 +415,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {groupOptions.map(pref => (
                     <button key={pref} type="button" onClick={() => setPrivateGroup(pref)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${privateGroup === pref ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${privateGroup === pref ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {pref}
                     </button>
                   ))}
@@ -426,7 +426,7 @@ export const EnquiryForm = ({
                 <div className="flex flex-wrap gap-4">
                   {privacyOptions.map(level => (
                     <button key={level} type="button" onClick={() => setPrivacyLevel(level)}
-                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${privacyLevel === level ? 'bg-[#0A3A77] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
+                      className={`px-6 py-3 border font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.22em] transition-colors ${privacyLevel === level ? 'bg-[#2E353C] text-white border-[#0A3A77]' : 'bg-transparent text-[#1A1A1A] border-[#C8CDD2] hover:border-[#1A1A1A]'}`}>
                       {level}
                     </button>
                   ))}
@@ -474,7 +474,7 @@ export const EnquiryForm = ({
               <button
                 type="submit"
                 disabled={isSubmitting || isUploading}
-                className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#0A3A77] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] px-8 py-4 hover:bg-[#2E353C] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'SENDING…' : isUploading ? 'UPLOADING FILE…' : 'SEND THE LETTER →'}
               </button>

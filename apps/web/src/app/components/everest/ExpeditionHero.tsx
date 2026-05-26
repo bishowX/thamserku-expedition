@@ -16,7 +16,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
   const imageSrc = heroImage ? urlFor(heroImage as SanityImageSource).width(1920).url() : null;
 
   return (
-    <section className="relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden pb-16 md:pb-24">
+ <section className="relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden py-24">
       <div className="absolute inset-0 z-0">
         {imageSrc ? (
           <img src={imageSrc} alt={`${name} hero`} className="w-full h-full object-cover object-center" />

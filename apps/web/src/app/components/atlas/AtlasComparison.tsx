@@ -19,7 +19,7 @@ export function AtlasComparison({ expeditions, data }: Props) {
     "Note · Altitude is one variable among many. Speak with the expedition desk to understand which mountain is right for your background and intent.";
 
   return (
-    <section className="w-full bg-[#2E353C] text-white py-24 px-8">
+ <section className="w-full bg-[#2E353C] text-white py-24 px-8">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-16">
         <div className="flex flex-col md:flex-row gap-12 justify-between items-start mb-12">
           <div>

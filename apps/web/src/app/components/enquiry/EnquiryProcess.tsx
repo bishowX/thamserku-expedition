@@ -6,7 +6,7 @@ export const EnquiryProcess = ({ data }: { data?: ConsultationPage }) => {
   const footnote = data?.processFootnote;
 
   return (
-    <section className="relative bg-[#1A1A1A] py-24 md:py-48 overflow-hidden">
+ <section className="relative bg-[#1A1A1A] py-24 overflow-hidden">
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
         style={{

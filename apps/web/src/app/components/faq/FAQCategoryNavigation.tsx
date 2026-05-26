@@ -1,5 +1,6 @@
+import type { FAQPageCategory } from '../../../lib/queries';
 
-const CATEGORIES = [
+const FALLBACK_CATEGORIES = [
   { id: "#about", num: "CATEGORY I", label: "ABOUT", title: "About Thamserku", count: "3 QUESTIONS" },
   { id: "#planning", num: "CATEGORY II", label: "EXPEDITION PLANNING", title: "Choosing & Planning an Expedition", count: "1 QUESTION" },
   { id: "#everest", num: "CATEGORY III", label: "EVEREST & 8,000M", title: "Everest and 8,000m Preparation", count: "1 QUESTION" },
@@ -9,9 +10,21 @@ const CATEGORIES = [
   { id: "#consultation", num: "CATEGORY VII", label: "CONSULTATION", title: "Booking & Consultation Process", count: "2 QUESTIONS" }
 ];
 
-export const FAQCategoryNavigation = () => {
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+
+export const FAQCategoryNavigation = ({ categories: sanityCategories }: { categories?: FAQPageCategory[] }) => {
+  const hasSanity = sanityCategories && sanityCategories.length > 0;
+  const items = hasSanity
+    ? sanityCategories!.map((cat, idx) => ({
+        id: `#${cat.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+        num: `CATEGORY ${ROMAN[idx] ?? String(idx + 1)}`,
+        label: cat.label,
+        title: cat.title,
+        count: `${cat.items?.length ?? 0} ${cat.items?.length === 1 ? 'QUESTION' : 'QUESTIONS'}`,
+      }))
+    : FALLBACK_CATEGORIES;
   return (
-    <section className="bg-[#F4F2EC] py-[80px] md:py-[100px] px-8 border-b border-[#5A6673]/30">
+ <section className="bg-[#F4F2EC] py-24 px-8 border-b border-[#5A6673]/30">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
         
         {/* Section Header */}
@@ -26,7 +39,7 @@ export const FAQCategoryNavigation = () => {
 
         {/* Category navigation grid */}
         <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 border-t border-[#5A6673]/30">
-          {CATEGORIES.map((cat, idx) => (
+          {items.map((cat, idx) => (
             <a 
               key={idx} 
               href={cat.id}

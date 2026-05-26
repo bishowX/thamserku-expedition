@@ -18,7 +18,7 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
   };
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden">
+ <section className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden">
       <div className="relative z-10 w-full max-w-[880px] mx-auto px-8 flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-24 md:mb-32">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">

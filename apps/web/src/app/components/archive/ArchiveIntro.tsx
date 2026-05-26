@@ -1,7 +1,9 @@
 
-export const ArchiveIntro = () => {
+type PageData = { introTitle?: string; introBody?: string };
+
+export const ArchiveIntro = ({ page }: { page?: PageData }) => {
   return (
-    <section className="bg-[#F4F2EC] py-[140px] md:py-[180px] px-8">
+ <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8">
         
         {/* Left column (5 cols) */}
@@ -10,7 +12,7 @@ export const ArchiveIntro = () => {
             THE READING — § I
           </span>
           <h2 className="font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-[#1A1A1A] leading-[1.1] max-w-[16ch] mb-6">
-            An archive, read carefully.
+            {page?.introTitle ?? 'An archive, read carefully.'}
           </h2>
           <p className="font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] max-w-[28ch]">
             Stewardship, not celebration.

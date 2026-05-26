@@ -123,7 +123,7 @@ export function AtlasIndex({ expeditions }: Props) {
                       className={`border px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors flex items-center justify-center gap-3 ${
                         isDark
                           ? "border-white bg-white text-[#0A3A77] hover:bg-transparent hover:text-white"
-                          : "border-[#0A3A77] bg-[#0A3A77] text-white hover:bg-transparent hover:text-[#0A3A77]"
+                          : "border-[#0A3A77] bg-[#2E353C] text-white hover:bg-transparent hover:text-[#0A3A77]"
                       }`}
                     >
                       Read the Dossier{" "}

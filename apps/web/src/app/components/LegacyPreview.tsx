@@ -1,6 +1,5 @@
 import { PortableText } from "@portabletext/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import chairmanImage from "../../assets/images/Mt-Everest-8848m-no-label-2.jpg";
 import { urlFor } from "../../lib/sanity";
 import type { ChairmanLetterData } from "../../lib/queries";
 
@@ -31,9 +30,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
     data?.legacyHeading ?? "",
   );
   const letter = data?.chairmanLetter;
-  const imgSrc = letter?.image
-    ? urlFor(letter.image).width(800).url()
-    : chairmanImage;
+  const imgSrc = letter?.image ? urlFor(letter.image).width(800).url() : null;
   const quote = letter?.signature;
   const attribution = letter?.organization;
 
@@ -45,11 +42,13 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-start">
         <div className="w-full md:w-5/12">
           <div className="aspect-[4/5] bg-[#E5E7EB] overflow-hidden">
-            <ImageWithFallback
-              src={imgSrc}
-              alt="Legacy"
-              className="w-full h-full object-cover saturate-[0.6] contrast-110 sepia-[0.2]"
-            />
+            {imgSrc && (
+              <ImageWithFallback
+                src={imgSrc}
+                alt="Legacy"
+                className="w-full h-full object-cover saturate-[0.6] contrast-110 sepia-[0.2]"
+              />
+            )}
           </div>
         </div>
 

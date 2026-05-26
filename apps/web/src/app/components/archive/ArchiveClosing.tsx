@@ -1,8 +1,10 @@
 import { Link } from 'react-router';
 
-export const ArchiveClosing = () => {
+type PageData = { closingHeadline?: string; closingBody?: string };
+
+export const ArchiveClosing = ({ page }: { page?: PageData }) => {
   return (
-    <section className="bg-[#1A1A1A] py-[160px] md:py-[200px] px-8 border-t border-white/10">
+ <section className="bg-[#1A1A1A] py-24 px-8 border-t border-white/10">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
         
         {/* Eyebrow */}
@@ -12,12 +14,12 @@ export const ArchiveClosing = () => {
 
         {/* Headline */}
         <h2 className="font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.05] text-center max-w-[24ch] mb-8">
-          Read the mountains the house climbs today.
+          {page?.closingHeadline ?? 'Read the mountains the house climbs today.'}
         </h2>
 
         {/* Sub-paragraph */}
         <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[56ch] mb-16">
-          The archive records where we have been. The Expedition Atlas describes where we climb now. Begin a private consultation when you are ready.
+          {page?.closingBody ?? 'The archive records where we have been. The Expedition Atlas describes where we climb now. Begin a private consultation when you are ready.'}
         </p>
 
         {/* CTAs */}

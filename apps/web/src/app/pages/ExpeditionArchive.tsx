@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useLoaderData } from "react-router";
+import { getArchivePageData, type ArchivePageData } from "../../lib/queries";
 import { Nav } from '../components/Nav';
 import { ArchiveHero } from '../components/archive/ArchiveHero';
 import { ArchiveIntro } from '../components/archive/ArchiveIntro';
@@ -9,18 +12,28 @@ import { ArchiveVerification } from '../components/archive/ArchiveVerification';
 import { ArchiveClosing } from '../components/archive/ArchiveClosing';
 import { Footer } from '../components/Footer';
 
+export async function loader() {
+  return getArchivePageData();
+}
+
 export default function ExpeditionArchive() {
+  const data = useLoaderData() as ArchivePageData;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
-      <ArchiveHero />
-      <ArchiveIntro />
+      <ArchiveHero page={data.archivePage ?? undefined} />
+      <ArchiveIntro page={data.archivePage ?? undefined} />
       <ArchiveFilters />
-      <ArchiveGrid />
-      <ArchiveFeaturedRecords />
+      <ArchiveGrid records={data.records} />
+      <ArchiveFeaturedRecords featuredRecords={data.records.filter(r => r.isFeatured)} />
       <ArchiveRecordDetail />
       <ArchiveVerification />
-      <ArchiveClosing />
+      <ArchiveClosing page={data.archivePage ?? undefined} />
       <Footer />
     </main>
   );

@@ -4,7 +4,7 @@ type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyNewsletterBanner({ page }: { page?: PageData }) {
   return (
-    <section className="w-full bg-[#F4F2EC] py-24 px-8 flex justify-center">
+ <section className="w-full bg-[#F4F2EC] py-24 px-8 flex justify-center">
       <div className="w-full max-w-[880px] flex flex-col items-center text-center">
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
           {page?.newsletterEyebrow ?? 'FIELD NOTES — NEWSLETTER FROM THE EXPEDITION DESK'}
@@ -31,7 +31,7 @@ export function LegacyNewsletterBanner({ page }: { page?: PageData }) {
           <div className="hidden md:block w-[1px] h-[30px] bg-[#5A6673]/30 mx-6" />
           <button
             type="submit"
-            className="w-full md:w-auto shrink-0 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] hover:bg-[#0A3A77] hover:text-white transition-colors"
+            className="w-full md:w-auto shrink-0 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] border border-[#0A3A77] hover:bg-[#2E353C] hover:text-white transition-colors"
           >
             SUBSCRIBE TO FIELD NOTES →
           </button>

@@ -12,7 +12,7 @@ export const YetiPeakSpecificApplication = ({
   if (!expeditions.length) return null;
 
   return (
-    <section className="bg-[#1A1A1A] py-[140px] md:py-[180px] px-8">
+ <section className="bg-[#1A1A1A] py-24 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
 
         <div className="flex flex-col items-center mb-24 md:mb-32">

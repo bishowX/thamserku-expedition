@@ -6,7 +6,7 @@ export const EnquiryAlternative = ({ data }: { data?: ConsultationPage }) => {
   const options = data?.alternativeOptions ?? [];
 
   return (
-    <section className="bg-[#F4F2EC] py-24 md:py-48">
+ <section className="bg-[#F4F2EC] py-24">
       <div className="max-w-[1440px] mx-auto px-8">
 
         <div className="mb-24">

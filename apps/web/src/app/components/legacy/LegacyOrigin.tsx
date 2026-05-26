@@ -5,7 +5,7 @@ type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyOrigin({ page }: { page?: PageData }) {
   return (
-    <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8">
+ <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
 
         {/* Left Column (Narrow) */}
@@ -46,11 +46,13 @@ export function LegacyOrigin({ page }: { page?: PageData }) {
         {/* Right Column (Narrow) */}
         <div className="col-span-1 md:col-span-3 flex flex-col gap-4">
           <div className="w-full aspect-[4/5] bg-gray-200 overflow-hidden relative grayscale-[0.8] sepia-[0.3]">
-            <img
-              src={page?.originImage ? urlFor(page.originImage).width(600).url() : 'https://images.unsplash.com/photo-1678501265684-9b76ea299692?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGVycGElMjB2aW50YWdlJTIwa2h1bWJ1JTIwYXBwcm9hY2h8ZW58MXx8fHwxNzc3NDU2NjEwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'}
-              alt="Origin"
-              className="w-full h-full object-cover mix-blend-multiply opacity-80"
-            />
+            {page?.originImage && (
+              <img
+                src={urlFor(page.originImage).width(600).url()}
+                alt="Origin"
+                className="w-full h-full object-cover mix-blend-multiply opacity-80"
+              />
+            )}
           </div>
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block mt-2">
             {page?.originImageCaption ?? 'KHUMBU APPROACH · ARCHIVAL'}

@@ -148,7 +148,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
                     className={`inline-flex items-center justify-center px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border ${
                       isDark
                         ? "border-white text-white hover:bg-white hover:text-[#0A3A77]"
-                        : "border-[#0A3A77] text-[#0A3A77] hover:bg-[#0A3A77] hover:text-white"
+                        : "border-[#0A3A77] text-[#0A3A77] hover:bg-[#2E353C] hover:text-white"
                     }`}
                   >
                     READ THE COLLECTION →

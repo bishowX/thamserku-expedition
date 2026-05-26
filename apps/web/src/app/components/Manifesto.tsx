@@ -24,7 +24,7 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
   const eyebrow = data?.manifestoEyebrow ?? "02 — MANIFESTO";
 
   return (
-    <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-30 px-8">
+ <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 md:gap-24">
         <div className="md:w-1/4">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">

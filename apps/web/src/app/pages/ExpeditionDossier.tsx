@@ -29,7 +29,7 @@ export default function ExpeditionDossier() {
   const { expedition } = useLoaderData() as { expedition: SanityExpeditionDossier };
 
   return (
-    <div className="bg-[#1A1A1A] min-h-screen text-white font-['Lexend'] selection:bg-[#0A3A77] selection:text-white">
+    <div className="bg-[#1A1A1A] min-h-screen text-white font-['Lexend'] selection:bg-[#2E353C] selection:text-white">
       <main>
         <ExpeditionHero
           name={expedition.name}

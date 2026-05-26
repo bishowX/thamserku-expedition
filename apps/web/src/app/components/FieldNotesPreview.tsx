@@ -1,6 +1,5 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import approachImage from "../../assets/images/Copy_of_Nuptse.jpg";
-import campImage from "../../assets/images/Copy_of_EBC_PC-Carol_Sachs_(34).jpg";
+import { urlFor } from "../../lib/sanity";
 import type { SanityFieldNote } from "../../lib/queries";
 
 const FALLBACK_NOTES = [
@@ -10,7 +9,7 @@ const FALLBACK_NOTES = [
     excerpt:
       "A walk-in is never only a walk-in. It is the first read of weather, of body, of crew, and of how the mountain is breathing this season.",
     byline: "EXPEDITION DESK · 8 MIN READ",
-    image: approachImage as string,
+    image: null,
   },
   {
     code: "FN / 02 — CAMP",
@@ -18,7 +17,7 @@ const FALLBACK_NOTES = [
     excerpt:
       "What an expedition actually feels like when the noise is removed.",
     byline: "FIELD TEAM · 6 MIN READ",
-    image: campImage as string,
+    image: null,
   },
   {
     code: "FN / 03 — JUDGEMENT",
@@ -26,8 +25,7 @@ const FALLBACK_NOTES = [
     excerpt:
       "The quiet calculations that decide whether a day is a climbing day.",
     byline: "SIRDAR NOTES · 9 MIN READ",
-    image:
-      "https://images.unsplash.com/photo-1549364472-0972cec89cd8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxDbGltYmVyJTIwbW91bnRhaW4lMjByaWRnZSUyMHNub3d8ZW58MXx8fHwxNzc3NDQ2MzExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: null,
   },
   {
     code: "FN / 04 — WEATHER",
@@ -35,19 +33,11 @@ const FALLBACK_NOTES = [
     excerpt:
       "Understanding the brief moments when the atmosphere allows passage to the summit.",
     byline: "METEOROLOGY · 7 MIN READ",
-    image:
-      "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
+    image: null,
   },
 ];
 
-const FALLBACK_IMAGES = [
-  approachImage as string,
-  campImage as string,
-  "https://images.unsplash.com/photo-1549364472-0972cec89cd8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxDbGltYmVyJTIwbW91bnRhaW4lMjByaWRnZSUyMHNub3d8ZW58MXx8fHwxNzc3NDQ2MzExfDA&ixlib=rb-4.1.0&q=80&w=1080",
-  "https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
-];
-
-function toDisplayNote(note: SanityFieldNote, idx: number) {
+function toDisplayNote(note: SanityFieldNote) {
   return {
     code: note.code,
     title: note.title,
@@ -55,7 +45,7 @@ function toDisplayNote(note: SanityFieldNote, idx: number) {
     byline: note.readTime
       ? `${note.byline} · ${note.readTime} MIN READ`
       : note.byline,
-    image: FALLBACK_IMAGES[idx] ?? FALLBACK_IMAGES[0],
+    image: note.coverImage ? urlFor(note.coverImage).width(800).url() : null,
   };
 }
 
@@ -78,7 +68,7 @@ export function FieldNotesPreview({
 }) {
   const notes =
     fieldNotes && fieldNotes.length > 0
-      ? fieldNotes.slice(0, 4).map(toDisplayNote)
+      ? fieldNotes.slice(0, 4).map((n) => toDisplayNote(n))
       : FALLBACK_NOTES;
 
   return (
@@ -107,12 +97,14 @@ export function FieldNotesPreview({
               key={idx}
               className="flex flex-col gap-4 group cursor-pointer"
             >
-              <div className="w-full overflow-hidden bg-[#F4F2EC] aspect-square">
-                <ImageWithFallback
-                  src={note.image}
-                  alt={note.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+              <div className="w-full overflow-hidden bg-[#E5E7EB] aspect-square">
+                {note.image && (
+                  <ImageWithFallback
+                    src={note.image}
+                    alt={note.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                )}
               </div>
 
               <div className="flex flex-col gap-4">

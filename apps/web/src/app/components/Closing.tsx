@@ -19,18 +19,20 @@ export function Closing({ data }: { data?: ClosingData }) {
     "Every Thamserku journey begins with a private conversation — with our expedition desk, not a booking page.";
   const bgSrc = data?.closingImage
     ? urlFor(data.closingImage).width(1920).url()
-    : "https://images.unsplash.com/photo-1761844318449-9090457ba38c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxIaW1hbGF5YW4lMjByYW5nZSUyMHR3aWxpZ2h0JTIwc2lsaG91ZXR0ZXxlbnwxfHx8fDE3Nzc0NDYzMjF8MA&ixlib=rb-4.1.0&q=80&w=1080";
+    : null;
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden flex flex-col items-center justify-center text-center">
-      <div className="absolute inset-0 z-0">
-        <ImageWithFallback
-          src={bgSrc}
-          alt="Closing background"
-          className="w-full h-full object-cover opacity-20 mix-blend-luminosity"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A] opacity-80" />
-      </div>
+ <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden flex flex-col items-center justify-center text-center">
+      {bgSrc && (
+        <div className="absolute inset-0 z-0">
+          <ImageWithFallback
+            src={bgSrc}
+            alt="Closing background"
+            className="w-full h-full object-cover opacity-20 mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A] opacity-80" />
+        </div>
+      )}
 
       <div className="relative z-10 w-full max-w-[880px] mx-auto flex flex-col items-center gap-8">
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">

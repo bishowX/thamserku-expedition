@@ -1,4 +1,3 @@
-import heroImage from "../../../assets/images/Copy_of_Lukla_(14).jpg";
 import { urlFor } from "../../../lib/sanity";
 
 type AtlasHeroData = {
@@ -13,18 +12,18 @@ export function AtlasListingHero({ data }: { data?: AtlasHeroData }) {
   const subheading =
     data?.heroSubheading ??
     "Thamserku reads each Himalayan summit as a passage of its own. Choose by altitude, region, season or character — then begin a private conversation with the expedition desk.";
-  const bgSrc = data?.heroImage
-    ? urlFor(data.heroImage).width(1920).url()
-    : (heroImage as string);
+  const bgSrc = data?.heroImage ? urlFor(data.heroImage).width(1920).url() : null;
 
   return (
-    <section className="relative w-full min-h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden pb-16 md:pb-32">
+ <section className="relative w-full min-h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden py-24">
       <div className="absolute inset-0 z-0">
-        <img
-          src={bgSrc}
-          alt="Atlas hero background"
-          className="w-full h-full object-cover opacity-70"
-        />
+        {bgSrc && (
+          <img
+            src={bgSrc}
+            alt="Atlas hero background"
+            className="w-full h-full object-cover opacity-70"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1A1A1A]/60 to-[#1A1A1A]" />
       </div>
 

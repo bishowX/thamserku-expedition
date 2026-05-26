@@ -47,7 +47,7 @@ export const PrivateAvailableEditions = () => {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-6">
-              <Link to="/editions" className="border border-[#0A3A77] text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] hover:bg-[#0A3A77] hover:text-white transition-colors text-center">
+              <Link to="/editions" className="border border-[#0A3A77] text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] hover:bg-[#2E353C] hover:text-white transition-colors text-center">
                 READ THE CRAFTED EDITION →
               </Link>
               <Link to="/consultation?intent=private" className="border border-[#1A1A1A]/30 text-[#5A6673] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] hover:border-[#1A1A1A] hover:text-[#1A1A1A] transition-colors text-center">
@@ -59,7 +59,7 @@ export const PrivateAvailableEditions = () => {
       </div>
 
       {/* Band III.2 — Definitive Edition (Deep Blue) */}
-      <div className="w-full bg-[#0A3A77] py-[220px] md:py-[260px] px-8 overflow-hidden">
+      <div className="w-full bg-[#2E353C] py-[220px] md:py-[260px] px-8 overflow-hidden">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row-reverse items-center md:items-start gap-12 md:gap-24 relative">
           <div className="md:w-5/12 flex flex-col items-start md:sticky md:top-32 pt-8">
             <span className="font-['Radley'] font-light text-[280px] md:text-[360px] text-white leading-[0.8] tracking-tighter">
@@ -150,7 +150,7 @@ export const PrivateAvailableEditions = () => {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-6">
-              <Link to="/editions" className="border border-[#0A3A77] text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] hover:bg-[#0A3A77] hover:text-white transition-colors text-center">
+              <Link to="/editions" className="border border-[#0A3A77] text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] hover:bg-[#2E353C] hover:text-white transition-colors text-center">
                 READ THE EXPLORER EDITION →
               </Link>
               <Link to="/consultation?intent=private" className="border border-[#1A1A1A]/30 text-[#5A6673] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] hover:border-[#1A1A1A] hover:text-[#1A1A1A] transition-colors text-center">

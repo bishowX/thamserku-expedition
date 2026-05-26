@@ -19,20 +19,20 @@ export function AtlasClosing({ data }: Props) {
   const body = data?.closingBody ?? "Share your background, your timing, and your intention. Our expedition desk will respond with the mountain — and the edition — that fits.";
   const footnote = data?.closingFootnote ?? "RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF";
 
-  const bgSrc = data?.closingImage
-    ? urlFor(data.closingImage).width(1920).url()
-    : "https://images.unsplash.com/photo-1745252288608-ed7c56a8d15e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxIaW1hbGF5YW4lMjByaWRnZWxpbmUlMjBzaWxob3VldHRlfGVufDF8fHx8MTc3NzQ1MjE0N3ww&ixlib=rb-4.1.0&q=80&w=1080";
+  const bgSrc = data?.closingImage ? urlFor(data.closingImage).width(1920).url() : null;
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden min-h-[800px] flex flex-col justify-center items-center text-center">
-      <div className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity">
-        <ImageWithFallback
-          src={bgSrc}
-          alt="Himalayan Silhouette"
-          className="w-full h-full object-cover object-bottom"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A] via-[#1A1A1A]/80 to-transparent" />
-      </div>
+ <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden min-h-[800px] flex flex-col justify-center items-center text-center">
+      {bgSrc && (
+        <div className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity">
+          <ImageWithFallback
+            src={bgSrc}
+            alt="Himalayan Silhouette"
+            className="w-full h-full object-cover object-bottom"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A] via-[#1A1A1A]/80 to-transparent" />
+        </div>
+      )}
 
       <div className="relative z-10 max-w-[800px] mx-auto flex flex-col items-center">
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-12">

@@ -8,7 +8,7 @@ export function LegacyClosing({ page }: { page?: PageData }) {
   const bgImage = page?.closingImage ? urlFor(page.closingImage).width(1920).url() : null;
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] text-white py-24 overflow-hidden min-h-[600px] flex flex-col justify-center">
+ <section className="relative w-full bg-[#1A1A1A] text-white py-24 overflow-hidden min-h-[600px] flex flex-col justify-center">
       {/* Background silhouette */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-end">
         <div

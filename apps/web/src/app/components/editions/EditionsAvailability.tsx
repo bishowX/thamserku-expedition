@@ -22,7 +22,7 @@ export function EditionsAvailability({
   if (!expeditions.length || !editions.length) return null;
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden">
+ <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden">
       <div className="relative z-10 w-full max-w-[1440px] mx-auto">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
           {eyebrow}

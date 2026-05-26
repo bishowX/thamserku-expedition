@@ -7,7 +7,7 @@ export const YetiMountainLodges = ({ page }: { page?: PageData }) => {
   const imageUrl = page?.lodgesImage ? urlFor(page.lodgesImage).width(1200).url() : null;
 
   return (
-    <section className="bg-[#F4F2EC] py-[140px] md:py-[180px] px-8 border-t border-[#C8CDD2]/30">
+ <section className="bg-[#F4F2EC] py-24 px-8 border-t border-[#C8CDD2]/30">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center">
 
         <div className="md:col-span-5 flex flex-col items-start order-2 md:order-1">

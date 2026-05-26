@@ -12,7 +12,7 @@ export function LegacyLineage({ page }: { page?: PageData }) {
   const tiles = page?.lineageDataTiles?.length ? page.lineageDataTiles : DEFAULT_TILES;
 
   return (
-    <section className="w-full bg-white text-[#1A1A1A] py-24 px-8">
+ <section className="w-full bg-white text-[#1A1A1A] py-24 px-8">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-16 md:gap-24">
 
         {/* Header */}

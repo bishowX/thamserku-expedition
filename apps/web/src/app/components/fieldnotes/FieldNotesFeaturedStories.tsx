@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import type { SanityFieldNote } from '../../../lib/queries';
 
 const STORIES = [
   {
@@ -24,11 +25,14 @@ const STORIES = [
   }
 ];
 
-export const FieldNotesFeaturedStories = () => {
+export const FieldNotesFeaturedStories = ({ fieldNotes }: { fieldNotes?: SanityFieldNote[] }) => {
+  const hasSanity = fieldNotes && fieldNotes.length > 0;
+  const featured = hasSanity ? fieldNotes.slice(0, 3) : null;
+
   return (
-    <section className="bg-[#1A1A1A] py-[140px] md:py-[180px] px-8">
+ <section className="bg-[#1A1A1A] py-24 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
-        
+
         {/* Section Header */}
         <div className="flex flex-col items-center mb-24 md:mb-32">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-8">
@@ -44,52 +48,90 @@ export const FieldNotesFeaturedStories = () => {
 
         {/* Featured grid */}
         <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {STORIES.map((story, idx) => (
-            <div 
-              key={idx} 
-              className="flex flex-col border-y border-[#5A6673]/30 px-6 py-8"
-            >
-              {/* Image Placeholder */}
-              <div className="w-full aspect-[4/5] border border-[#5A6673] flex flex-col items-center justify-center p-4 mb-8">
-                <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2">
-                  [IMAGE PLACEHOLDER]
-                </span>
-                <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center opacity-60">
-                  [{story.imageType}]
-                </span>
-              </div>
+          {featured
+            ? featured.map((note) => (
+                <div
+                  key={note._id}
+                  className="flex flex-col border-y border-[#5A6673]/30 px-6 py-8"
+                >
+                  {/* Image Placeholder */}
+                  <div className="w-full aspect-[4/5] border border-[#5A6673] flex flex-col items-center justify-center p-4 mb-8">
+                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2">
+                      [IMAGE PLACEHOLDER]
+                    </span>
+                  </div>
 
-              {/* Eyebrow & Title */}
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-4 block">
-                {story.eyebrow}
-              </span>
-              <h3 className="font-['Radley'] font-light text-[24px] md:text-[28px] text-white leading-[1.2] mb-6">
-                {story.title}
-              </h3>
+                  {/* Eyebrow & Title */}
+                  <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-4 block">
+                    {note.code} · {note.readTime} MIN READ
+                  </span>
+                  <h3 className="font-['Radley'] font-light text-[24px] md:text-[28px] text-white leading-[1.2] mb-6">
+                    {note.title}
+                  </h3>
 
-              {/* Excerpt */}
-              <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65] flex-grow mb-10">
-                {story.excerpt}
-              </p>
+                  {/* Excerpt */}
+                  <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65] flex-grow mb-10">
+                    {note.excerpt}
+                  </p>
 
-              {/* Footer row */}
-              <div className="flex justify-between items-center border-t border-[#5A6673]/30 pt-4">
-                <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
-                  {story.byline}
-                </span>
-                <Link to="#" className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#0A3A77] hover:text-white transition-colors">
-                  READ THE PIECE →
-                </Link>
-              </div>
+                  {/* Footer row */}
+                  <div className="flex justify-between items-center border-t border-[#5A6673]/30 pt-4">
+                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
+                      {note.byline}
+                    </span>
+                    <Link to={`/field-notes/${note.slug?.current ?? '#'}`} className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#0A3A77] hover:text-white transition-colors">
+                      READ THE PIECE →
+                    </Link>
+                  </div>
+                </div>
+              ))
+            : STORIES.map((story, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col border-y border-[#5A6673]/30 px-6 py-8"
+                >
+                  {/* Image Placeholder */}
+                  <div className="w-full aspect-[4/5] border border-[#5A6673] flex flex-col items-center justify-center p-4 mb-8">
+                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center mb-2">
+                      [IMAGE PLACEHOLDER]
+                    </span>
+                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center opacity-60">
+                      [{story.imageType}]
+                    </span>
+                  </div>
 
-              {/* Dummy marker */}
-              <div className="w-full flex justify-end mt-4">
-                <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] opacity-40">
-                  [DUMMY CONTENT]
-                </span>
-              </div>
-            </div>
-          ))}
+                  {/* Eyebrow & Title */}
+                  <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-4 block">
+                    {story.eyebrow}
+                  </span>
+                  <h3 className="font-['Radley'] font-light text-[24px] md:text-[28px] text-white leading-[1.2] mb-6">
+                    {story.title}
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65] flex-grow mb-10">
+                    {story.excerpt}
+                  </p>
+
+                  {/* Footer row */}
+                  <div className="flex justify-between items-center border-t border-[#5A6673]/30 pt-4">
+                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
+                      {story.byline}
+                    </span>
+                    <Link to="#" className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#0A3A77] hover:text-white transition-colors">
+                      READ THE PIECE →
+                    </Link>
+                  </div>
+
+                  {/* Dummy marker */}
+                  <div className="w-full flex justify-end mt-4">
+                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] opacity-40">
+                      [DUMMY CONTENT]
+                    </span>
+                  </div>
+                </div>
+              ))
+          }
         </div>
 
       </div>

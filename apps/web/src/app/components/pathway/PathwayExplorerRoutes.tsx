@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 export const PathwayExplorerRoutes = () => {
   return (
-    <section className="bg-[#1A1A1A] py-[120px] md:py-[160px] px-8 border-t border-[#C8CDD2]/10">
+ <section className="bg-[#1A1A1A] py-24 px-8 border-t border-[#C8CDD2]/10">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center">
         
         {/* Left column (5 cols) - Image Placeholder */}

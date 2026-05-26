@@ -5,7 +5,7 @@ export const EnquiryInvitation = ({ data }: { data?: ConsultationPage }) => {
   const body = data?.invitationBody;
 
   return (
-    <section className="bg-[#F4F2EC] py-24 md:py-48">
+ <section className="bg-[#F4F2EC] py-24">
       <div className="max-w-[1440px] mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           <div className="md:col-span-4 lg:col-span-3">

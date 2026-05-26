@@ -7,7 +7,7 @@ export const WhatTheCallCovers = ({ data }: { data?: ConsultationPage }) => {
   const footnote = data?.callCoversFootnote;
 
   return (
-    <section className="w-full bg-[#1A1A1A] py-[140px] md:py-[180px] px-8 flex justify-center">
+ <section className="w-full bg-[#1A1A1A] py-24 px-8 flex justify-center">
       <div className="w-full max-w-[1180px] flex flex-col items-center">
 
         <div className="flex flex-col items-center text-center mb-24">

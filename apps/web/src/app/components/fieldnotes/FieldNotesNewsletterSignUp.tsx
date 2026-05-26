@@ -1,7 +1,7 @@
 
 export const FieldNotesNewsletterSignUp = () => {
   return (
-    <section id="newsletter" className="bg-[#0A3A77] py-[160px] md:py-[200px] px-8 scroll-mt-20">
+ <section id="newsletter" className="bg-[#2E353C] py-24 px-8 scroll-mt-20">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
         
         {/* Eyebrow */}

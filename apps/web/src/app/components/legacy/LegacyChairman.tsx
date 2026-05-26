@@ -1,5 +1,4 @@
 import { PortableText } from "@portabletext/react";
-import chairmanImage from "../../../assets/images/Mt-Everest-8848m-no-label-1.jpg";
 import { urlFor } from "../../../lib/sanity";
 import type { ChairmanLetterData } from "../../../lib/queries";
 
@@ -20,25 +19,25 @@ const bodyComponents = {
 };
 
 export function LegacyChairman({ letter }: { letter?: ChairmanLetterData }) {
-  const imgSrc = letter?.image
-    ? urlFor(letter.image).width(800).url()
-    : chairmanImage;
+  const imgSrc = letter?.image ? urlFor(letter.image).width(800).url() : null;
 
   const [headingPart1, headingPart2] = splitAtLastSentence(
     letter?.heading ?? ""
   );
 
   return (
-    <section className="w-full bg-[#1A1A1A] text-white py-24 px-8">
+ <section className="w-full bg-[#1A1A1A] text-white py-24 px-8">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-start">
 
         <div className="w-full md:w-5/12">
           <div className="aspect-[4/5] bg-[#E5E7EB] overflow-hidden">
-            <img
-              src={imgSrc}
-              alt="Chairman"
-              className="w-full h-full object-cover saturate-[0.6] contrast-110 sepia-[0.2]"
-            />
+            {imgSrc && (
+              <img
+                src={imgSrc}
+                alt="Chairman"
+                className="w-full h-full object-cover saturate-[0.6] contrast-110 sepia-[0.2]"
+              />
+            )}
           </div>
         </div>
 

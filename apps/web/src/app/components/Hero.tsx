@@ -18,7 +18,7 @@ export function Hero({ data }: { data?: HeroData }) {
   const bgImage = data?.heroImage ? urlFor(data.heroImage).width(1920).url() : undefined;
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center text-white pb-32 pt-48 px-8 overflow-hidden">
+ <section className="relative w-full min-h-screen flex flex-col justify-center text-white py-24 px-8 overflow-hidden">
       <div className="absolute inset-0 z-0">
         {bgImage && (
           <img

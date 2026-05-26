@@ -1,8 +1,10 @@
 import { Link } from "react-router";
 
-export function TeamClosing() {
+type PageData = { closingHeadline?: string; closingBody?: string };
+
+export function TeamClosing({ page }: { page?: PageData }) {
   return (
-    <section className="w-full bg-[#0A3A77] text-white py-32 md:py-48 px-8">
+ <section className="w-full bg-[#2E353C] text-white py-24 px-8">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center text-center gap-12 md:gap-16">
         
         {/* Eyebrow */}
@@ -13,11 +15,11 @@ export function TeamClosing() {
         {/* Content */}
         <div className="flex flex-col items-center gap-8 w-full max-w-[800px]">
           <h2 className="font-['Cormorant_Garamond'] font-light text-5xl md:text-[60px] lg:text-[80px] leading-[1.05] text-white tracking-tight">
-            Schedule a consultation. Meet the team that will guide your journey.
+            {page?.closingHeadline ?? 'Schedule a consultation. Meet the team that will guide your journey.'}
           </h2>
-          
+
           <p className="font-['Inter'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mx-auto mt-4">
-            Every Thamserku expedition begins with a private conversation. We will introduce the team — the leadership, the sirdar, and the climbing Sherpas — who will walk with you through the season.
+            {page?.closingBody ?? 'Every Thamserku expedition begins with a private conversation. We will introduce the team — the leadership, the sirdar, and the climbing Sherpas — who will walk with you through the season.'}
           </p>
         </div>
 

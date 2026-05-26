@@ -27,7 +27,7 @@ export function SevenThousandMeterPathwayInsert({ data }: Props) {
   const footnote = data?.pathwayFootnote ?? "[ROUTE TBC] — FIVE 7,000M ROUTE OPTIONS PENDING CLIENT CONFIRMATION.";
 
   return (
-    <section className="w-full bg-[#F4F2EC] py-24 text-[#1A1A1A]">
+ <section className="w-full bg-[#F4F2EC] py-24 text-[#1A1A1A]">
       <div className="w-full max-w-[1440px] mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-12">
           {/* Left column */}

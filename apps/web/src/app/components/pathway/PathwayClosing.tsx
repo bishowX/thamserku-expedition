@@ -1,8 +1,10 @@
 import { Link } from 'react-router';
 
-export const PathwayClosing = () => {
+type PageData = { closingHeadline?: string; closingBody?: string };
+
+export const PathwayClosing = ({ page }: { page?: PageData }) => {
   return (
-    <section className="bg-[#1A1A1A] py-[160px] md:py-[200px] px-8 border-t border-white/10">
+ <section className="bg-[#1A1A1A] py-24 px-8 border-t border-white/10">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
         
         {/* Eyebrow */}
@@ -12,12 +14,12 @@ export const PathwayClosing = () => {
 
         {/* Headline */}
         <h2 className="font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.05] text-center max-w-[24ch] mb-8">
-          Plan your qualifying ascent.
+          {page?.closingHeadline ?? 'Plan your qualifying ascent.'}
         </h2>
 
         {/* Sub-paragraph */}
         <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-16">
-          Share your background, your 8,000m objective, and your timing. A senior advisor will walk you through which 7,000m route fits your preparation — and how the pathway shapes around your readiness.
+          {page?.closingBody ?? 'Share your background, your 8,000m objective, and your timing. A senior advisor will walk you through which 7,000m route fits your preparation — and how the pathway shapes around your readiness.'}
         </p>
 
         {/* CTAs */}

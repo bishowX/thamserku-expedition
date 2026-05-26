@@ -1,3 +1,4 @@
+import type { PathwayPillar } from '../../../lib/queries';
 
 const REASONS = [
   {
@@ -22,9 +23,10 @@ const REASONS = [
   }
 ];
 
-export const PathwayWhyItMatters = () => {
+export const PathwayWhyItMatters = ({ pillars }: { pillars?: PathwayPillar[] }) => {
+  const hasSanity = pillars && pillars.length > 0;
   return (
-    <section className="relative bg-[#1A1A1A] py-[140px] md:py-[180px] px-8 border-t border-[#C8CDD2]/10 overflow-hidden">
+ <section className="relative bg-[#1A1A1A] py-24 px-8 border-t border-[#C8CDD2]/10 overflow-hidden">
       {/* Faint cartographic grid overlay */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -51,22 +53,37 @@ export const PathwayWhyItMatters = () => {
 
         {/* Four-pillar grid */}
         <div className="w-full max-w-[1320px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {REASONS.map((reason, idx) => (
-            <div 
-              key={idx} 
-              className="flex flex-col bg-[#2E353C]/30 border-t border-[#C8CDD2]/30 px-6 py-10"
-            >
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
-                {reason.eyebrow}
-              </span>
-              <h3 className="font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-[1.2] mb-6">
-                {reason.title}
-              </h3>
-              <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65]">
-                {reason.desc}
-              </p>
-            </div>
-          ))}
+          {hasSanity
+            ? pillars!.map((pillar, idx) => (
+                <div
+                  key={pillar._key ?? idx}
+                  className="flex flex-col bg-[#2E353C]/30 border-t border-[#C8CDD2]/30 px-6 py-10"
+                >
+                  <h3 className="font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-[1.2] mb-6">
+                    {pillar.title}
+                  </h3>
+                  <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65]">
+                    {pillar.body}
+                  </p>
+                </div>
+              ))
+            : REASONS.map((reason, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col bg-[#2E353C]/30 border-t border-[#C8CDD2]/30 px-6 py-10"
+                >
+                  <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
+                    {reason.eyebrow}
+                  </span>
+                  <h3 className="font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-[1.2] mb-6">
+                    {reason.title}
+                  </h3>
+                  <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65]">
+                    {reason.desc}
+                  </p>
+                </div>
+              ))
+          }
         </div>
 
       </div>

@@ -26,9 +26,9 @@ export default function Everest() {
   const { expedition } = useLoaderData() as { expedition: SanityExpeditionDossier | null };
 
   return (
-    <div className="bg-[#1A1A1A] min-h-screen text-white font-['Lexend'] selection:bg-[#0A3A77] selection:text-white">
+    <div className="bg-[#1A1A1A] min-h-screen text-white font-['Lexend'] selection:bg-[#2E353C] selection:text-white">
       <main>
-        <EverestHero />
+        <EverestHero heroImage={expedition?.heroImage} />
         <QuickFacts />
         <Overview />
         <WhoItIsFor />

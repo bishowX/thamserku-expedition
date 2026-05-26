@@ -5,7 +5,7 @@ export const TrustStatement = ({ data }: { data?: ConsultationPage }) => {
   const body = data?.trustBody;
 
   return (
-    <section className="w-full bg-[#1A1A1A] py-[100px] md:py-[120px] px-8 flex justify-center">
+ <section className="w-full bg-[#1A1A1A] py-24 px-8 flex justify-center">
       <div className="w-full max-w-[880px] flex flex-col items-center text-center">
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
           HANDLED PERSONALLY — BY THE SENIOR EXPEDITION TEAM

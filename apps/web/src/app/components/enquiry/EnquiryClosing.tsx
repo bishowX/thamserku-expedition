@@ -6,7 +6,7 @@ export const EnquiryClosing = ({ data }: { data?: ConsultationPage }) => {
   const body = data?.closingBody;
 
   return (
-    <section className="bg-[#0A3A77] py-32 md:py-48 flex items-center justify-center">
+ <section className="bg-[#2E353C] py-24 flex items-center justify-center">
       <div className="max-w-[880px] mx-auto px-8 text-center flex flex-col items-center">
 
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">

@@ -1,7 +1,7 @@
 
 export const ArchiveVerification = () => {
   return (
-    <section className="bg-[#F4F2EC] py-[120px] md:py-[160px] px-8">
+ <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center">
         
         {/* Section Header */}

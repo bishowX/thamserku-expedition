@@ -43,7 +43,7 @@ export function EditionsComparison({
   if (!editions.length) return null;
 
   return (
-    <section className="w-full bg-white text-[#1A1A1A] py-24 px-8">
+ <section className="w-full bg-white text-[#1A1A1A] py-24 px-8">
       <div className="w-full max-w-[1440px] mx-auto">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
           {eyebrow}

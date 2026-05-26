@@ -26,7 +26,7 @@ export function YetiInfrastructureSupport({
   const notes = [airNote, lodgesNote, accessNote, continuityNote];
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden text-white">
+ <section className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden text-white">
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{

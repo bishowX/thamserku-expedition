@@ -1,5 +1,4 @@
 import { Nav } from "../Nav";
-import heroImageFallback from "../../../assets/images/Copy_of_DSCF0876.jpg";
 import type { SanityEditionFull } from "../../../lib/queries";
 import { urlFor } from "../../../lib/sanity";
 
@@ -16,17 +15,17 @@ export function EditionsHero({
   editions: SanityEditionFull[];
   page?: PageData;
 }) {
-  const bgSrc = page?.heroImage
-    ? urlFor(page.heroImage).width(1920).url()
-    : (heroImageFallback as string);
+  const bgSrc = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : null;
 
   return (
-    <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-end pb-24 md:pb-32 overflow-hidden">
+ <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-end py-24 overflow-hidden">
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
-          style={{ backgroundImage: `url('${bgSrc}')` }}
-        />
+        {bgSrc && (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
+            style={{ backgroundImage: `url('${bgSrc}')` }}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1A1A1A]/60 to-[#1A1A1A]" />
       </div>
 
