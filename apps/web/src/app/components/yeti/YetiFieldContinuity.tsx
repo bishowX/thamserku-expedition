@@ -9,7 +9,7 @@ export const YetiFieldContinuity = ({ page }: { page?: PageData }) => {
     : null;
 
   return (
- <section className="bg-[#2E353C] py-24 px-8">
+ <section className="bg-[#191919] py-24 px-8">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center">
         <div className="md:col-span-5 flex flex-col items-start">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">

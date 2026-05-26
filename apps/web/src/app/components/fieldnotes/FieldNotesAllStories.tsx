@@ -1,29 +1,27 @@
-import type { SanityFieldNote } from '../../../lib/queries';
+import type { SanityFieldNote, FieldNotesPageFields } from '../../../lib/queries';
 
-export const FieldNotesAllStories = ({ fieldNotes }: { fieldNotes?: SanityFieldNote[] }) => {
+export const FieldNotesAllStories = ({ page, fieldNotes }: { page: FieldNotesPageFields; fieldNotes: SanityFieldNote[] }) => {
 
   return (
  <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col">
-        
-        {/* Section Header */}
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-0 mb-16 md:mb-24">
           <div className="md:col-span-5 flex flex-col">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
-              ALL STORIES — § III
+              {page.archiveEyebrow}
             </span>
             <h2 className="font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-[#1A1A1A] leading-[1.1] max-w-[16ch]">
-              The archive.
+              {page.archiveHeadline}
             </h2>
           </div>
           <div className="md:col-span-7 flex flex-col justify-end">
             <p className="font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] max-w-[56ch] md:pb-4">
-              Every Field Notes piece, from the expedition desk and the field. Filtered by category, sorted by most recent.
+              {page.archiveSubline}
             </p>
           </div>
         </div>
 
-        {/* Compact filter strip */}
         <div className="w-full flex flex-col md:flex-row justify-between border-y border-[#5A6673]/30 py-4 mb-16 gap-4 md:gap-0">
           <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[#5A6673]/30 flex-grow max-w-[800px]">
             <div className="py-2 md:py-0 md:pr-8 flex items-center cursor-pointer group">
@@ -52,28 +50,24 @@ export const FieldNotesAllStories = ({ fieldNotes }: { fieldNotes?: SanityFieldN
           </div>
         </div>
 
-        {/* All-stories list */}
         <div className="w-full flex flex-col border-t border-[#5A6673]/30 mb-20">
-          {(fieldNotes ?? []).map((note) => (
+          {fieldNotes.map((note) => (
             <div
               key={note._id}
               className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-0 py-[50px] md:py-[70px] border-b border-[#5A6673]/30 relative"
             >
-              {/* Col 1 */}
               <div className="md:col-span-1">
                 <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77]">
                   {note.code}
                 </span>
               </div>
 
-              {/* Col 2 */}
               <div className="md:col-span-2 flex flex-col">
                 <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-2">
                   FIELD NOTE
                 </span>
               </div>
 
-              {/* Col 3 */}
               <div className="md:col-span-6 flex flex-col md:px-8">
                 <h3 className="font-['Radley'] font-light text-[22px] md:text-[26px] text-[#1A1A1A] leading-[1.2] max-w-[56ch] mb-4">
                   {note.title}
@@ -83,14 +77,12 @@ export const FieldNotesAllStories = ({ fieldNotes }: { fieldNotes?: SanityFieldN
                 </p>
               </div>
 
-              {/* Col 4 */}
               <div className="md:col-span-2 flex items-start md:pt-1">
                 <span className="font-['Lexend'] font-light text-[14px] text-[#5A6673]">
                   {note.byline}
                 </span>
               </div>
 
-              {/* Col 5 */}
               <div className="md:col-span-1 flex justify-start md:justify-end md:pt-1">
                 <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
                   {note.readTime} MIN
@@ -100,7 +92,6 @@ export const FieldNotesAllStories = ({ fieldNotes }: { fieldNotes?: SanityFieldN
           ))}
         </div>
 
-        {/* Load More */}
         <div className="w-full flex justify-center">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] cursor-pointer hover:text-[#1A1A1A] transition-colors">
             LOAD OLDER PIECES →

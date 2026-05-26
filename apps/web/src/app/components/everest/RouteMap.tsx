@@ -1,5 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import terrainBg from "../../../assets/terrain-bg.svg";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Waypoint = { name: string; altitude: string };
 
@@ -54,34 +59,37 @@ export function RouteMap({
     return { x, y, name: wp.name, altitude: wp.altitude, isSummit: idx === n - 1 };
   });
 
+  const sectionRef = useRef<HTMLElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
 
-  useEffect(() => {
-    const path = pathRef.current;
-    const svg = svgRef.current;
-    if (!path || !svg || n < 2) return;
+  useGSAP(
+    () => {
+      const path = pathRef.current;
+      const section = sectionRef.current;
+      if (!path || !section || n < 2) return;
 
-    const len = path.getTotalLength();
-    path.style.strokeDasharray = String(len);
-    path.style.strokeDashoffset = String(len);
+      const len = path.getTotalLength();
+      gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
 
-    const update = () => {
-      const { bottom } = svg.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // 0 when SVG bottom hits viewport bottom (chart just fully in view)
-      // 1 when SVG bottom reaches 50% of viewport height
-      const progress = Math.max(0, Math.min(1, (vh - bottom) / (vh * 0.5)));
-      path.style.strokeDashoffset = String(len * (1 - progress));
-    };
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${window.innerHeight}`,
+          pin: true,
+          scrub: 1,
+          pinSpacing: true,
+        },
+      });
 
-    window.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => window.removeEventListener("scroll", update);
-  }, [n]);
+      tl.to(path, { strokeDashoffset: 0, ease: "none" });
+    },
+    { scope: sectionRef, dependencies: [n] }
+  );
 
   return (
- <section className="bg-[#2E353C] w-full text-white py-24 overflow-hidden relative">
+    <section ref={sectionRef} className="bg-[#2E353C] w-full text-white py-24 overflow-hidden relative">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img
           src={terrainBg}

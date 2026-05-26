@@ -54,18 +54,6 @@ export type SanityExpeditionForMatrix = {
   editionLetters: string[];
 };
 
-export type SanityExpeditionForYeti = {
-  _id: string;
-  code: string;
-  name: string;
-  altitude: string;
-  region: string;
-  yetiAirNote?: string;
-  yetiLodgesNote?: string;
-  yetiAccessNote?: string;
-  yetiContinuityNote?: string;
-};
-
 export type YetiPageData = {
   yetiPage: {
     heroHeadline?: string;
@@ -108,15 +96,12 @@ export type YetiPageData = {
     continuityBody1?: string;
     continuityBody2?: string;
     continuityImage?: { asset: { _ref: string } } | null;
-    peakSectionHeading?: string;
-    peakSectionTagline?: string;
     faqHeading?: string;
     faqTagline?: string;
     faqs?: Array<{ _key: string; question: string; answer: string }>;
     closingHeading?: string;
     closingBody?: string;
   } | null;
-  expeditions: SanityExpeditionForYeti[];
 };
 
 export type SanityFieldNote = {
@@ -231,14 +216,9 @@ export async function getYetiPageData(): Promise<YetiPageData> {
       lodgesHeading, lodgesTagline, lodgesBody, lodgesImage, lodgesRegions, lodgesUseCases, lodgesStandard, lodgesStaffing,
       accessHeading, accessTagline, accessBody, accessImage, accessRegions, accessUseCases, accessContinuity, accessHandling,
       continuityHeading, continuityTagline, continuityBody1, continuityBody2, continuityImage,
-      peakSectionHeading, peakSectionTagline,
       faqHeading, faqTagline,
       faqs[] { _key, question, answer },
       closingHeading, closingBody
-    },
-    "expeditions": *[_type == "expedition"] | order(number asc) {
-      _id, code, name, altitude, region,
-      yetiAirNote, yetiLodgesNote, yetiAccessNote, yetiContinuityNote
     }
   }`);
 }
@@ -596,14 +576,33 @@ export type FieldNotesCategory = {
   articleCount: string;
 };
 
+export type FieldNotesPageFields = {
+  heroHeadline: string;
+  heroSubline: string;
+  categoriesEyebrow: string;
+  categoriesHeadline: string;
+  categories: FieldNotesCategory[];
+  featuredEyebrow: string;
+  featuredHeadline: string;
+  featuredSubline: string;
+  archiveEyebrow: string;
+  archiveHeadline: string;
+  archiveSubline: string;
+  newsletterEyebrow: string;
+  newsletterHeadline: string;
+  newsletterHeadlineAccent: string;
+  newsletterBody: string;
+  newsletterBodySecondary: string;
+  newsletterInputPlaceholder: string;
+  newsletterPrivacyLine: string;
+  newsletterBottomNote: string;
+  closingEyebrow: string;
+  closingHeadline: string;
+  closingBody: string;
+};
+
 export type FieldNotesPageData = {
-  fieldNotesPage: {
-    heroHeadline?: string;
-    heroSubline?: string;
-    categories?: FieldNotesCategory[];
-    closingHeadline?: string;
-    closingBody?: string;
-  } | null;
+  fieldNotesPage: FieldNotesPageFields;
   fieldNotes: SanityFieldNote[];
 };
 
@@ -611,8 +610,14 @@ export async function getFieldNotesPageData(): Promise<FieldNotesPageData> {
   return serverClient.fetch(`{
     "fieldNotesPage": *[_type == "fieldNotesPage"][0] {
       heroHeadline, heroSubline,
+      categoriesEyebrow, categoriesHeadline,
       categories[] { name, description, articleCount },
-      closingHeadline, closingBody
+      featuredEyebrow, featuredHeadline, featuredSubline,
+      archiveEyebrow, archiveHeadline, archiveSubline,
+      newsletterEyebrow, newsletterHeadline, newsletterHeadlineAccent,
+      newsletterBody, newsletterBodySecondary, newsletterInputPlaceholder,
+      newsletterPrivacyLine, newsletterBottomNote,
+      closingEyebrow, closingHeadline, closingBody
     },
     "fieldNotes": *[_type == "fieldNote"] | order(publishedAt desc) {
       _id, code, title, excerpt, byline, readTime, slug, coverImage, publishedAt

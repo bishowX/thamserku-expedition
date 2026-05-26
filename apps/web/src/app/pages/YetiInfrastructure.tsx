@@ -6,7 +6,6 @@ import { YetiAirSupport } from '../components/yeti/YetiAirSupport';
 import { YetiMountainLodges } from '../components/yeti/YetiMountainLodges';
 import { YetiRegionalAccess } from '../components/yeti/YetiRegionalAccess';
 import { YetiFieldContinuity } from '../components/yeti/YetiFieldContinuity';
-import { YetiPeakSpecificApplication } from '../components/yeti/YetiPeakSpecificApplication';
 import { YetiFAQ } from '../components/yeti/YetiFAQ';
 import { YetiClosing } from '../components/yeti/YetiClosing';
 import { Footer } from '../components/Footer';
@@ -29,7 +28,6 @@ export default function YetiInfrastructure() {
       <YetiMountainLodges page={page} />
       <YetiRegionalAccess page={page} />
       <YetiFieldContinuity page={page} />
-      <YetiPeakSpecificApplication expeditions={data.expeditions} page={page} />
       <YetiFAQ page={page} />
       <YetiClosing page={page} />
       <Footer />

@@ -15,7 +15,7 @@ export async function loader() {
 }
 
 export default function FieldNotes() {
-  const data = useLoaderData() as FieldNotesPageData;
+  const { fieldNotesPage: page, fieldNotes } = useLoaderData() as FieldNotesPageData;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,12 +24,12 @@ export default function FieldNotes() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
-      <FieldNotesHero page={data.fieldNotesPage ?? undefined} />
-      <FieldNotesCategories categories={data.fieldNotesPage?.categories} />
-      <FieldNotesFeaturedStories fieldNotes={data.fieldNotes} />
-      <FieldNotesAllStories fieldNotes={data.fieldNotes} />
-      <FieldNotesNewsletterSignUp />
-      <FieldNotesClosing page={data.fieldNotesPage ?? undefined} />
+      <FieldNotesHero page={page} />
+      <FieldNotesCategories page={page} />
+      <FieldNotesFeaturedStories page={page} fieldNotes={fieldNotes} />
+      <FieldNotesAllStories page={page} fieldNotes={fieldNotes} />
+      <FieldNotesNewsletterSignUp page={page} />
+      <FieldNotesClosing page={page} />
       <Footer />
     </main>
   );
