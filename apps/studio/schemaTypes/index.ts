@@ -32,6 +32,7 @@ import faqItem from './objects/faqItem'
 import safetyModule from './objects/safetyModule'
 import preparationColumn from './objects/preparationColumn'
 import inclusionCategory from './objects/inclusionCategory'
+import archiveVerificationBlock from './objects/archiveVerificationBlock'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
@@ -70,4 +71,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   safetyModule,
   preparationColumn,
   inclusionCategory,
+  archiveVerificationBlock,
 ]

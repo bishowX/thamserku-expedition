@@ -1,6 +1,16 @@
-import type { SanityArchiveRecord } from '../../../lib/queries';
+import type { SanityArchiveRecord, ArchivePageData } from '../../../lib/queries';
 
-export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) => {
+type Props = {
+  records?: SanityArchiveRecord[];
+  page: ArchivePageData['archivePage'];
+};
+
+export const ArchiveGrid = ({ records, page }: Props) => {
+  const getStatusLabel = (status: string) => {
+    if (status === 'verified') return page?.statusVerifiedLabel;
+    if (status === 'permissionRequired') return page?.statusPermissionLabel;
+    return page?.statusPrivateLabel;
+  };
 
   return (
  <section className="relative w-full bg-[#1A1A1A] pt-8 pb-24 px-4 md:px-8">
@@ -9,7 +19,6 @@ export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) =>
         <div className="flex flex-col border-t border-white/20">
           {records?.map((record) => {
             const peakCode = record.peak.substring(0, 3).toUpperCase();
-            const statusLabel = record.status === 'verified' ? 'VERIFIED' : record.status === 'permissionRequired' ? '[PERMISSION REQUIRED]' : '[PRIVATE]';
             return (
               <div key={record._id} className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 py-6 border-b border-white/20 items-start">
 
@@ -52,7 +61,7 @@ export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) =>
                 <div className="md:col-span-2 flex flex-col gap-6">
                   <div className="flex flex-col gap-1">
                     <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-                      REGION — {record.region.toUpperCase()}, NEPAL
+                      {page?.gridRegionLabel} — {record.region.toUpperCase()}{page?.gridRegionSuffix?.toUpperCase()}
                     </span>
                     <span className="font-['Radley'] text-[16px] text-white">
                       {record.region}
@@ -61,7 +70,7 @@ export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) =>
 
                   <div className="flex flex-col gap-1">
                     <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-                      EDITION TYPE
+                      {page?.gridEditionTypeLabel}
                     </span>
                     <span className="font-['Radley'] text-[16px] text-white">
                       {record.editionType}
@@ -71,7 +80,7 @@ export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) =>
                   {record.notableDetail && (
                     <div className="flex flex-col gap-1">
                       <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-                        NOTE
+                        {page?.gridNoteLabel}
                       </span>
                       <span className="font-['Radley'] text-[16px] text-white">
                         {record.notableDetail}
@@ -85,7 +94,7 @@ export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) =>
                   <span className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] whitespace-nowrap md:text-right ${
                     record.status === 'verified' ? 'text-[#5A6673]' : 'text-[#0A3A77]'
                   }`}>
-                    {statusLabel}
+                    {getStatusLabel(record.status)}
                   </span>
                 </div>
 
@@ -97,11 +106,11 @@ export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) =>
         {/* Load More & Disclaimer */}
         <div className="mt-20 md:mt-24 flex flex-col items-center gap-8">
           <button className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] hover:text-white transition-colors text-center cursor-pointer">
-            LOAD OLDER RECORDS →
+            {page?.gridLoadMoreLabel}
           </button>
-          
+
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] text-center max-w-[60ch]">
-            [CLIENT TO CONFIRM] — FULL ARCHIVE AUDIT PENDING. EARLIEST RECORDS UNDER REVIEW.
+            {page?.gridDisclaimer}
           </span>
         </div>
 

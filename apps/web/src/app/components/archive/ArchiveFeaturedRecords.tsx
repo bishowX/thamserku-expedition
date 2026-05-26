@@ -1,20 +1,31 @@
-import type { SanityArchiveRecord } from '../../../lib/queries';
+import type { SanityArchiveRecord, ArchivePageData } from '../../../lib/queries';
 
-export const ArchiveFeaturedRecords = ({ featuredRecords }: { featuredRecords?: SanityArchiveRecord[] }) => {
+type Props = {
+  featuredRecords?: SanityArchiveRecord[];
+  page: ArchivePageData['archivePage'];
+};
+
+export const ArchiveFeaturedRecords = ({ featuredRecords, page }: Props) => {
+  const getStatusLabel = (status: string) => {
+    if (status === 'verified') return page?.statusVerifiedLabel;
+    if (status === 'permissionRequired') return page?.statusPermissionLabel;
+    return page?.statusPrivateLabel;
+  };
+
   return (
  <section className="bg-[#F4F2EC] py-24 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
-        
+
         {/* Section Header */}
         <div className="flex flex-col items-center mb-24 md:mb-32">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] text-center mb-8">
-            FEATURED — § III
+            {page?.featuredEyebrow}
           </span>
           <h2 className="font-['Radley'] font-light text-[48px] md:text-[56px] lg:text-[72px] text-[#1A1A1A] leading-[1.1] text-center max-w-[22ch] mb-6">
-            Three records, read with more time.
+            {page?.featuredHeading}
           </h2>
           <p className="font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] text-center max-w-[56ch]">
-            Expeditions where the story is worth more than a single row.
+            {page?.featuredSubline}
           </p>
         </div>
 
@@ -22,7 +33,6 @@ export const ArchiveFeaturedRecords = ({ featuredRecords }: { featuredRecords?: 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full">
           {featuredRecords?.map((record) => {
             const peakCode = record.peak.substring(0, 3).toUpperCase();
-            const statusLabel = record.status === 'verified' ? 'VERIFIED' : record.status === 'permissionRequired' ? '[PERMISSION REQUIRED]' : '[PRIVATE]';
             return (
               <div key={record._id} className="flex flex-col h-full">
 
@@ -32,14 +42,14 @@ export const ArchiveFeaturedRecords = ({ featuredRecords }: { featuredRecords?: 
                     [IMAGE PLACEHOLDER]
                   </span>
                   <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] text-center">
-                    FEATURED ARCHIVE — {peakCode}
+                    {page?.featuredCardLabel} ARCHIVE — {peakCode}
                   </span>
                 </div>
 
                 {/* Card Body */}
                 <div className="flex flex-col flex-1">
                   <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
-                    FEATURED <span className="mx-1">·</span> {record.peak.toUpperCase()} <span className="mx-1">·</span> {record.year}
+                    {page?.featuredCardLabel} <span className="mx-1">·</span> {record.peak.toUpperCase()} <span className="mx-1">·</span> {record.year}
                   </span>
 
                   <span className="font-['Radley'] font-light text-[56px] text-[#0A3A77] leading-[1] mb-6">
@@ -56,7 +66,7 @@ export const ArchiveFeaturedRecords = ({ featuredRecords }: { featuredRecords?: 
 
                   <div className="mt-auto">
                     <button className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#1A1A1A] hover:text-[#0A3A77] transition-colors pb-1 border-b border-transparent hover:border-[#0A3A77]">
-                      READ THE RECORD →
+                      {page?.featuredButtonLabel}
                     </button>
                   </div>
                 </div>
@@ -66,7 +76,7 @@ export const ArchiveFeaturedRecords = ({ featuredRecords }: { featuredRecords?: 
                   <span className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] ${
                     record.status === 'verified' ? 'text-[#5A6673]' : 'text-[#0A3A77]'
                   }`}>
-                    {statusLabel}
+                    {getStatusLabel(record.status)}
                   </span>
                 </div>
 

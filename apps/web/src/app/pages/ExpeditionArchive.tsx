@@ -18,6 +18,7 @@ export async function loader() {
 
 export default function ExpeditionArchive() {
   const data = useLoaderData() as ArchivePageData;
+  const page = data.archivePage;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,14 +27,14 @@ export default function ExpeditionArchive() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
-      <ArchiveHero page={data.archivePage ?? undefined} />
-      <ArchiveIntro page={data.archivePage ?? undefined} />
-      <ArchiveFilters />
-      <ArchiveGrid records={data.records} />
-      <ArchiveFeaturedRecords featuredRecords={data.records.filter(r => r.isFeatured)} />
-      <ArchiveRecordDetail />
-      <ArchiveVerification />
-      <ArchiveClosing page={data.archivePage ?? undefined} />
+      <ArchiveHero page={page} />
+      <ArchiveIntro page={page} />
+      <ArchiveFilters page={page} />
+      <ArchiveGrid records={data.records} page={page} />
+      <ArchiveFeaturedRecords featuredRecords={data.records.filter(r => r.isFeatured)} page={page} />
+      <ArchiveRecordDetail page={page} />
+      <ArchiveVerification page={page} />
+      <ArchiveClosing page={page} />
       <Footer />
     </main>
   );

@@ -700,6 +700,7 @@ export type SanityArchiveRecord = {
   code: string;
   year: number;
   peak: string;
+  altitude: string;
   route: string;
   region: string;
   editionType: string;
@@ -707,17 +708,75 @@ export type SanityArchiveRecord = {
   description: string;
   image?: { asset: { _ref: string } } | null;
   notableDetail: string;
+  source: string;
+  relatedRecord?: { _id: string; code: string; peak: string; year: number } | null;
   isFeatured: boolean;
+};
+
+export type ArchiveVerificationBlock = {
+  _key: string;
+  title: string;
+  subtitle: string;
+  body: string;
 };
 
 export type ArchivePageData = {
   archivePage: {
-    heroHeadline?: string;
-    heroSubline?: string;
-    introTitle?: string;
-    introBody?: string;
-    closingHeadline?: string;
-    closingBody?: string;
+    heroHeadline: string;
+    heroSubline: string;
+    introEyebrow: string;
+    introTitle: string;
+    introSubtitle: string;
+    introBody1: string;
+    introBody2: string;
+    introBody3: string;
+    filterPeakLabel: string;
+    filterPeakDefault: string;
+    filterYearLabel: string;
+    filterYearDefault: string;
+    filterTypeLabel: string;
+    filterTypeDefault: string;
+    filterSortLabel: string;
+    filterSortDefault: string;
+    filterResetLabel: string;
+    gridRegionLabel: string;
+    gridRegionSuffix: string;
+    gridEditionTypeLabel: string;
+    gridNoteLabel: string;
+    gridLoadMoreLabel: string;
+    gridDisclaimer: string;
+    statusVerifiedLabel: string;
+    statusPermissionLabel: string;
+    statusPrivateLabel: string;
+    featuredEyebrow: string;
+    featuredHeading: string;
+    featuredSubline: string;
+    featuredCardLabel: string;
+    featuredButtonLabel: string;
+    detailEyebrow: string;
+    detailHeading: string;
+    detailSubline: string;
+    detailRecord: SanityArchiveRecord;
+    detailYearLabel: string;
+    detailPeakLabel: string;
+    detailRouteLabel: string;
+    detailTypeLabel: string;
+    detailNotableLabel: string;
+    detailSourceLabel: string;
+    detailPermissionLabel: string;
+    detailRelatedLabel: string;
+    detailFooter: string;
+    verificationEyebrow: string;
+    verificationHeading: string;
+    verificationBlocks: ArchiveVerificationBlock[];
+    verificationFooter: string;
+    closingEyebrow: string;
+    closingHeadline: string;
+    closingBody: string;
+    closingPrimaryButtonLabel: string;
+    closingPrimaryButtonHref: string;
+    closingSecondaryButtonLabel: string;
+    closingSecondaryButtonHref: string;
   } | null;
   records: SanityArchiveRecord[];
 };
@@ -725,10 +784,27 @@ export type ArchivePageData = {
 export async function getArchivePageData(): Promise<ArchivePageData> {
   return serverClient.fetch(`{
     "archivePage": *[_type == "archivePage"][0] {
-      heroHeadline, heroSubline, introTitle, introBody, closingHeadline, closingBody
+      heroHeadline, heroSubline,
+      introEyebrow, introTitle, introSubtitle, introBody1, introBody2, introBody3,
+      filterPeakLabel, filterPeakDefault, filterYearLabel, filterYearDefault,
+      filterTypeLabel, filterTypeDefault, filterSortLabel, filterSortDefault, filterResetLabel,
+      gridRegionLabel, gridRegionSuffix, gridEditionTypeLabel, gridNoteLabel,
+      gridLoadMoreLabel, gridDisclaimer,
+      statusVerifiedLabel, statusPermissionLabel, statusPrivateLabel,
+      featuredEyebrow, featuredHeading, featuredSubline, featuredCardLabel, featuredButtonLabel,
+      detailEyebrow, detailHeading, detailSubline,
+      detailRecord->{ _id, code, year, peak, altitude, route, region, editionType, status, description, notableDetail, source, relatedRecord->{ _id, code, peak, year } },
+      detailYearLabel, detailPeakLabel, detailRouteLabel, detailTypeLabel,
+      detailNotableLabel, detailSourceLabel, detailPermissionLabel, detailRelatedLabel, detailFooter,
+      verificationEyebrow, verificationHeading,
+      verificationBlocks[] { _key, title, subtitle, body },
+      verificationFooter,
+      closingEyebrow, closingHeadline, closingBody,
+      closingPrimaryButtonLabel, closingPrimaryButtonHref,
+      closingSecondaryButtonLabel, closingSecondaryButtonHref
     },
     "records": *[_type == "archiveRecord"] | order(year desc) {
-      _id, code, year, peak, route, region, editionType, status, description, image, notableDetail, isFeatured
+      _id, code, year, peak, altitude, route, region, editionType, status, description, image, notableDetail, source, relatedRecord->{ _id, code, peak, year }, isFeatured
     }
   }`);
 }
