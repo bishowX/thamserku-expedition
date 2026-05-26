@@ -3,19 +3,7 @@ import { Link } from 'react-router';
 export const ArchiveRecordDetail = () => {
   return (
  <section className="relative w-full bg-[#1A1A1A] py-24 px-8">
-      {/* Faint cartographic grid overlay */}
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #C8CDD2 1px, transparent 1px),
-            linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)
-          `,
-          backgroundSize: '64px 64px'
-        }}
-      />
-      
-      <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col items-center">
+      <div className="max-w-[1440px] mx-auto flex flex-col items-center">
         
         {/* Section Header */}
         <div className="flex flex-col items-center mb-24 md:mb-32">

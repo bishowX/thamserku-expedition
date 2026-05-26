@@ -8,6 +8,7 @@ const singletons = ['atlasPage', 'homePage', 'editionsPage', 'legacyPage', 'yeti
 export default defineConfig({
   name: 'thamserku-expedition',
   title: 'Thamserku Expedition',
+  basePath: '/studio',
 
   projectId: 'ugjhuor8',
   dataset: 'production',

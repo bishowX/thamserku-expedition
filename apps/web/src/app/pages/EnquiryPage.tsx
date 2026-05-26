@@ -2,9 +2,7 @@ import { useLoaderData, useActionData } from 'react-router';
 import { EnquiryHero } from '../components/enquiry/EnquiryHero';
 import { EnquiryInvitation } from '../components/enquiry/EnquiryInvitation';
 import { TrustStatement } from '../components/enquiry/TrustStatement';
-import { ScheduleCalendar } from '../components/enquiry/ScheduleCalendar';
 import { EnquiryForm } from '../components/enquiry/EnquiryForm';
-import { WhatTheCallCovers } from '../components/enquiry/WhatTheCallCovers';
 import { EnquiryProcess } from '../components/enquiry/EnquiryProcess';
 import { EnquiryAlternative } from '../components/enquiry/EnquiryAlternative';
 import { EnquiryClosing } from '../components/enquiry/EnquiryClosing';
@@ -37,17 +35,6 @@ export async function action({ request }: { request: Request }): Promise<
     return { success: false, errors };
   }
 
-  // The CV is pre-uploaded client-side; we receive only the asset ID.
-  const cvAssetId = (formData.get('climbingCvAssetId') as string | null)?.trim() || undefined;
-  const climbingCv = cvAssetId
-    ? { _type: 'file' as const, asset: { _type: 'reference' as const, _ref: cvAssetId } }
-    : undefined;
-
-  const expeditionInterest = (formData.getAll('expeditionInterest') as string[]).filter(Boolean);
-  const altitudeExperience = (formData.getAll('altitudeExperience') as string[]).filter(Boolean);
-  const guestsRaw = formData.get('numberOfGuests') as string | null;
-  const numberOfGuests = guestsRaw ? Number(guestsRaw) || undefined : undefined;
-
   const submittedAt = new Date().toISOString();
 
   await writeClient.create({
@@ -58,22 +45,8 @@ export async function action({ request }: { request: Request }): Promise<
     phone: (formData.get('phone') as string)?.trim() || undefined,
     countryOfResidence: (formData.get('countryOfResidence') as string) || undefined,
     preferredContact: (formData.get('preferredContact') as string) || undefined,
-    expeditionInterest: expeditionInterest.length ? expeditionInterest : undefined,
-    otherExpeditionNote: (formData.get('otherExpeditionNote') as string)?.trim() || undefined,
-    preferredEdition: (formData.get('preferredEdition') as string) || undefined,
-    trekkingExperience: (formData.get('trekkingExperience') as string) || undefined,
-    altitudeExperience: altitudeExperience.length ? altitudeExperience : undefined,
-    fitnessBackground: (formData.get('fitnessBackground') as string)?.trim() || undefined,
-    climbingCv,
-    preferredSeason: (formData.get('preferredSeason') as string) || undefined,
-    numberOfGuests,
-    groupPreference: (formData.get('groupPreference') as string) || undefined,
-    privacyLevel: (formData.get('privacyLevel') as string) || undefined,
-    medicalConsiderations: (formData.get('medicalConsiderations') as string)?.trim() || undefined,
-    messageToDesk: (formData.get('messageToDesk') as string)?.trim() || undefined,
   });
 
-  // Fire notification email (best-effort)
   try {
     const settings = await serverClient.fetch<{ enquiryEmail?: string }>(
       `*[_type == "siteSettings"][0]{ enquiryEmail }`
@@ -85,19 +58,6 @@ export async function action({ request }: { request: Request }): Promise<
         phone: (formData.get('phone') as string)?.trim() || undefined,
         countryOfResidence: (formData.get('countryOfResidence') as string) || undefined,
         preferredContact: (formData.get('preferredContact') as string) || undefined,
-        expeditionInterest: expeditionInterest.length ? expeditionInterest : undefined,
-        otherExpeditionNote: (formData.get('otherExpeditionNote') as string)?.trim() || undefined,
-        preferredEdition: (formData.get('preferredEdition') as string) || undefined,
-        trekkingExperience: (formData.get('trekkingExperience') as string) || undefined,
-        altitudeExperience: altitudeExperience.length ? altitudeExperience : undefined,
-        fitnessBackground: (formData.get('fitnessBackground') as string)?.trim() || undefined,
-        hasClimbingCv: !!climbingCv,
-        preferredSeason: (formData.get('preferredSeason') as string) || undefined,
-        numberOfGuests,
-        groupPreference: (formData.get('groupPreference') as string) || undefined,
-        privacyLevel: (formData.get('privacyLevel') as string) || undefined,
-        medicalConsiderations: (formData.get('medicalConsiderations') as string)?.trim() || undefined,
-        messageToDesk: (formData.get('messageToDesk') as string)?.trim() || undefined,
         submittedAt,
       });
     }
@@ -120,9 +80,7 @@ export default function EnquiryPage() {
       <EnquiryHero data={page} />
       <EnquiryInvitation data={page} />
       <TrustStatement data={page} />
-      <ScheduleCalendar />
-      <EnquiryForm data={page} expeditions={data.expeditions} submitted={submitted} errors={errors} />
-      <WhatTheCallCovers data={page} />
+      <EnquiryForm data={page} submitted={submitted} errors={errors} />
       <EnquiryProcess data={page} />
       <EnquiryAlternative data={page} />
       <EnquiryClosing data={page} />

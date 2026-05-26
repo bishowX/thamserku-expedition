@@ -6,18 +6,10 @@ export const EnquiryProcess = ({ data }: { data?: ConsultationPage }) => {
   const footnote = data?.processFootnote;
 
   return (
- <section className="relative bg-[#1A1A1A] py-24 overflow-hidden">
-      <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(to right, #C8CDD2 1px, transparent 1px), linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)`,
-          backgroundSize: '64px 64px',
-        }}
-      />
-
+    <section className="relative py-24 overflow-hidden" style={{ background: 'linear-gradient(90deg, #2E353C 0%, #2E353C 100%)' }}>
       <div className="relative z-10 max-w-[1440px] mx-auto px-8">
         <div className="mb-24">
-          <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
+          <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
             04 — WHAT HAPPENS NEXT
           </p>
           <h2 className="font-['Cormorant_Garamond'] font-light text-4xl md:text-[44px] lg:text-[56px] leading-[1.1] text-white max-w-[22ch]">

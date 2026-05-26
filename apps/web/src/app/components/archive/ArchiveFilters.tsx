@@ -1,8 +1,6 @@
-import { ChevronDown } from 'lucide-react';
-
 export const ArchiveFilters = () => {
   return (
- <section className="bg-[#1A1A1A] py-24 px-8 border-b border-white/10">
+ <section className="bg-[#1A1A1A] py-5 px-8">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
         
         {/* Full-width filter bar */}
@@ -12,11 +10,11 @@ export const ArchiveFilters = () => {
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               FILTER BY PEAK
             </span>
-            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#5A6673] pb-1 w-fit">
+            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#E5E7EB] pb-1 w-fit">
               <span className="font-['Radley'] text-[16px] text-white group-hover:text-[#C8CDD2] transition-colors">
                 ALL PEAKS
               </span>
-              <span className="text-[#5A6673] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
+              <span className="text-[#E5E7EB] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
             </div>
           </div>
 
@@ -24,11 +22,11 @@ export const ArchiveFilters = () => {
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               FILTER BY YEAR
             </span>
-            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#5A6673] pb-1 w-fit">
+            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#E5E7EB] pb-1 w-fit">
               <span className="font-['Radley'] text-[16px] text-white group-hover:text-[#C8CDD2] transition-colors">
                 ALL YEARS
               </span>
-              <span className="text-[#5A6673] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
+              <span className="text-[#E5E7EB] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
             </div>
           </div>
 
@@ -36,11 +34,11 @@ export const ArchiveFilters = () => {
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               FILTER BY TYPE
             </span>
-            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#5A6673] pb-1 w-fit">
+            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#E5E7EB] pb-1 w-fit">
               <span className="font-['Radley'] text-[16px] text-white group-hover:text-[#C8CDD2] transition-colors">
                 ALL TYPES
               </span>
-              <span className="text-[#5A6673] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
+              <span className="text-[#E5E7EB] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
             </div>
           </div>
 
@@ -48,11 +46,11 @@ export const ArchiveFilters = () => {
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               SORT BY
             </span>
-            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#5A6673] pb-1 w-fit">
+            <div className="relative group cursor-pointer inline-flex items-center gap-2 border-b border-[#E5E7EB] pb-1 w-fit">
               <span className="font-['Radley'] text-[16px] text-white group-hover:text-[#C8CDD2] transition-colors">
                 MOST RECENT
               </span>
-              <span className="text-[#5A6673] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
+              <span className="text-[#E5E7EB] text-[12px] group-hover:text-[#C8CDD2] transition-colors">▾</span>
             </div>
           </div>
 
@@ -70,11 +68,6 @@ export const ArchiveFilters = () => {
             RESET FILTERS →
           </button>
         </div>
-
-        {/* Showing Count */}
-        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] text-center">
-          SHOWING [CLIENT TO CONFIRM] RECORDS OF [CLIENT TO CONFIRM] TOTAL — VERIFIED RECORDS ONLY.
-        </span>
 
       </div>
     </section>

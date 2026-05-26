@@ -6,19 +6,6 @@ export interface EnquiryEmailData {
   phone?: string
   countryOfResidence?: string
   preferredContact?: string
-  expeditionInterest?: string[]
-  otherExpeditionNote?: string
-  preferredEdition?: string
-  trekkingExperience?: string
-  altitudeExperience?: string[]
-  fitnessBackground?: string
-  hasClimbingCv?: boolean
-  preferredSeason?: string
-  numberOfGuests?: number
-  groupPreference?: string
-  privacyLevel?: string
-  medicalConsiderations?: string
-  messageToDesk?: string
   submittedAt: string
 }
 
@@ -39,7 +26,7 @@ function section(title: string, rows: string): string {
   if (!rows.trim()) return ''
   return `
     <div style="margin-bottom:36px;">
-      <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#0A3A77;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #0A3A77;">${title}</p>
+      <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#2E353C;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #2E353C;">${title}</p>
       <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
     </div>`
 }
@@ -56,35 +43,6 @@ function buildHtml(data: EnquiryEmailData): string {
     row('Preferred Contact', data.preferredContact),
   ].join('')
 
-  const expeditionRows = [
-    row('Mountains', data.expeditionInterest?.join(', ')),
-    row('Note', data.otherExpeditionNote),
-  ].join('')
-
-  const timingRows = row('Preferred Edition', data.preferredEdition)
-
-  const experienceRows = [
-    row('Trekking Experience', data.trekkingExperience),
-    row('Altitude Experience', data.altitudeExperience?.join(', ')),
-    row('Fitness & Training', data.fitnessBackground),
-    row('Climbing CV', data.hasClimbingCv ? 'Attached — view in Sanity Studio' : undefined),
-  ].join('')
-
-  const logisticsRows = [
-    row('Season', data.preferredSeason),
-    row('Number of Guests', data.numberOfGuests?.toString()),
-    row('Group Preference', data.groupPreference),
-    row('Privacy Level', data.privacyLevel),
-    row('Medical Considerations', data.medicalConsiderations),
-  ].join('')
-
-  const messageBlock = data.messageToDesk?.trim()
-    ? `<div style="margin-bottom:36px;">
-        <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#0A3A77;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #0A3A77;">F — Message to the Desk</p>
-        <p style="font-family:Georgia,serif;font-size:16px;font-style:italic;color:#1A1A1A;line-height:1.7;margin:0;white-space:pre-wrap;">${data.messageToDesk}</p>
-      </div>`
-    : ''
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>New Enquiry — ${data.fullName}</title></head>
@@ -93,7 +51,7 @@ function buildHtml(data: EnquiryEmailData): string {
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:white;max-width:600px;width:100%;">
         <tr>
-          <td style="background:#0A3A77;padding:32px 48px;">
+          <td style="background:#2E353C;padding:32px 48px;">
             <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#C8CDD2;margin:0 0 8px;">THAMSERKU EXPEDITIONS · NEW ENQUIRY</p>
             <p style="font-family:Georgia,serif;font-size:28px;font-weight:300;color:white;margin:0;">${data.fullName}</p>
           </td>
@@ -104,11 +62,6 @@ function buildHtml(data: EnquiryEmailData): string {
             <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.08em;color:#C8CDD2;margin:0 0 40px;">${submittedDate} UTC</p>
             <hr style="border:none;border-top:1px solid #E5E7EB;margin:0 0 40px;">
             ${section('A — Contact', contactRows)}
-            ${section('B — Expedition Interest', expeditionRows)}
-            ${section('C — Timing & Edition', timingRows)}
-            ${section('D — Experience', experienceRows)}
-            ${section('E — Logistics', logisticsRows)}
-            ${messageBlock}
           </td>
         </tr>
         <tr>

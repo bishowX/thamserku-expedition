@@ -3,27 +3,15 @@ import type { SanityArchiveRecord } from '../../../lib/queries';
 export const ArchiveGrid = ({ records }: { records?: SanityArchiveRecord[] }) => {
 
   return (
- <section className="relative w-full bg-[#1A1A1A] py-24 px-4 md:px-8">
-      {/* Faint cartographic grid overlay */}
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #C8CDD2 1px, transparent 1px),
-            linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)
-          `,
-          backgroundSize: '64px 64px'
-        }}
-      />
-      
-      <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col">
+ <section className="relative w-full bg-[#1A1A1A] pt-8 pb-24 px-4 md:px-8">
+      <div className="max-w-[1440px] mx-auto flex flex-col">
         {/* Record List */}
         <div className="flex flex-col border-t border-white/20">
           {records?.map((record) => {
             const peakCode = record.peak.substring(0, 3).toUpperCase();
             const statusLabel = record.status === 'verified' ? 'VERIFIED' : record.status === 'permissionRequired' ? '[PERMISSION REQUIRED]' : '[PRIVATE]';
             return (
-              <div key={record._id} className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 py-10 md:py-[80px] lg:py-[100px] border-b border-white/20 items-start">
+              <div key={record._id} className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 py-6 border-b border-white/20 items-start">
 
                 {/* Col 1: Image Placeholder (2 cols) */}
                 <div className="md:col-span-2 w-full aspect-[4/3] border border-[#5A6673] flex flex-col items-center justify-center p-4">

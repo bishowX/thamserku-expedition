@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/studio/:path*",
+      "destination": "https://studio-kappa-eight-41.vercel.app/studio/:path*"
+    },
+    {
+      "source": "/static/:path*",
+      "destination": "https://studio-kappa-eight-41.vercel.app/static/:path*"
+    }
+  ]
+}

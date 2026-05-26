@@ -351,13 +351,6 @@ export async function getEditionsPageData(): Promise<EditionsPageData> {
   }`);
 }
 
-export type ConsultationMoment = {
-  _key: string;
-  marker?: string;
-  title?: string;
-  description?: string;
-};
-
 export type ConsultationStep = {
   _key: string;
   stepNumber?: string;
@@ -385,29 +378,11 @@ export type ConsultationPage = {
   invitationBody?: string;
   trustQuote?: string;
   trustBody?: string;
-  callCoversHeading?: string;
-  callCoversSubheading?: string;
-  callCoversMoments?: ConsultationMoment[];
-  callCoversFootnote?: string;
   formSectionLabel?: string;
-  formHeading?: string;
-  formSubheading?: string;
   formAlternativeLabel?: string;
   formAlternativeSubheading?: string;
   formChapterATitle?: string;
-  formChapterBTitle?: string;
-  formChapterCTitle?: string;
-  formChapterDTitle?: string;
-  formChapterDSubheading?: string;
-  formChapterETitle?: string;
-  formChapterFTitle?: string;
-  formEditionOptions?: string[];
-  formSeasonOptions?: string[];
-  formGroupOptions?: string[];
-  formPrivacyOptions?: string[];
   formContactOptions?: string[];
-  formTrekkingOptions?: string[];
-  formAltitudeOptions?: string[];
   processHeading?: string;
   processSteps?: ConsultationStep[];
   processFootnote?: string;
@@ -420,7 +395,6 @@ export type ConsultationPage = {
 
 export type ConsultationPageData = {
   consultationPage: ConsultationPage | null;
-  expeditions: Array<{ _id: string; name: string; code: string }>;
 };
 
 export type SanityAudienceTile = { label: string; subline: string; description: string };
@@ -602,24 +576,14 @@ export async function getConsultationPageData(): Promise<ConsultationPageData> {
       heroMetaResponse, heroMetaHandledBy, heroMetaLanguages, heroMetaConfidentiality,
       invitationHeading, invitationBody,
       trustQuote, trustBody,
-      callCoversHeading, callCoversSubheading,
-      callCoversMoments[] { _key, marker, title, description },
-      callCoversFootnote,
-      formSectionLabel, formHeading, formSubheading,
-      formAlternativeLabel, formAlternativeSubheading,
-      formChapterATitle, formChapterBTitle, formChapterCTitle,
-      formChapterDTitle, formChapterDSubheading, formChapterETitle, formChapterFTitle,
-      formEditionOptions, formSeasonOptions, formGroupOptions,
-      formPrivacyOptions, formContactOptions, formTrekkingOptions, formAltitudeOptions,
+      formSectionLabel, formAlternativeLabel, formAlternativeSubheading,
+      formChapterATitle, formContactOptions,
       processHeading,
       processSteps[] { _key, stepNumber, marker, title, description },
       processFootnote,
       alternativeHeading,
       alternativeOptions[] { _key, label, title, value },
       closingLabel, closingHeading, closingBody
-    },
-    "expeditions": *[_type == "expedition"] | order(number asc) {
-      _id, name, code
     }
   }`);
 }
