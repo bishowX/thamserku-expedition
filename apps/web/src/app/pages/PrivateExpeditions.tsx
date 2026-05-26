@@ -27,10 +27,10 @@ export default function PrivateExpeditions() {
       <Nav />
       <PrivateHero page={data.privateExpeditionsPage ?? undefined} />
       <PrivatePhilosophy page={data.privateExpeditionsPage ?? undefined} />
-      <PrivateWhoItIsFor audiences={data.privateExpeditionsPage?.audiences ?? []} />
-      <PrivateAvailableEditions />
-      <PrivateSupportModules />
-      <PrivateConsultationPathway consultationSteps={data.privateExpeditionsPage?.consultationSteps ?? []} />
+      <PrivateWhoItIsFor page={data.privateExpeditionsPage ?? undefined} audiences={data.privateExpeditionsPage?.audiences ?? []} />
+      <PrivateAvailableEditions page={data.privateExpeditionsPage ?? undefined} />
+      <PrivateSupportModules page={data.privateExpeditionsPage ?? undefined} />
+      <PrivateConsultationPathway page={data.privateExpeditionsPage ?? undefined} consultationSteps={data.privateExpeditionsPage?.consultationSteps ?? []} />
       <PrivateClosing page={data.privateExpeditionsPage ?? undefined} />
       <Footer />
     </main>

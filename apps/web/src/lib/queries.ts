@@ -836,28 +836,79 @@ export type PrivateConsultationStep = {
   body: string;
 };
 
+export type AvailableEditionSpec = {
+  _key?: string;
+  label: string;
+  value: string;
+};
+
+export type AvailableEdition = {
+  _key?: string;
+  letter: string;
+  pullQuote: string;
+  headline: string;
+  body: string;
+  whoItIsFor: string;
+  bestReadOn: string;
+  specs?: AvailableEditionSpec[];
+};
+
+export type SupportModule = {
+  _key?: string;
+  numeral: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  practice: string;
+};
+
 export type PrivateExpeditionsPageData = {
   privateExpeditionsPage: {
     heroHeadline?: string;
     heroSubline?: string;
+    philosophyEyebrow?: string;
     philosophyHeadline?: string;
     philosophyTagline?: string;
     philosophyBody?: string;
+    philosophyFootnote?: string;
+    audiencesEyebrow?: string;
+    audiencesHeadline?: string;
+    audiencesTagline?: string;
     audiences?: PrivateAudience[];
+    availableEditionsEyebrow?: string;
+    availableEditionsHeadline?: string;
+    availableEditionsTagline?: string;
+    availableEditions?: AvailableEdition[];
+    supportModulesEyebrow?: string;
+    supportModulesHeadline?: string;
+    supportModulesTagline?: string;
+    supportModules?: SupportModule[];
+    consultationEyebrow?: string;
+    consultationHeadline?: string;
+    consultationTagline?: string;
+    consultationNote?: string;
     consultationSteps?: PrivateConsultationStep[];
+    closingEyebrow?: string;
     closingHeadline?: string;
     closingBody?: string;
+    closingNote?: string;
   } | null;
 };
 
 export async function getPrivateExpeditionsPageData(): Promise<PrivateExpeditionsPageData> {
   return serverClient.fetch(`{
-    "privateExpeditionsPage": *[_type == "privateExpeditionsPage"][0] {
+    "privateExpeditionsPage": *[_type == "privateExpeditionsPage" && _id == "privateExpeditionsPage"][0] {
       heroHeadline, heroSubline,
-      philosophyHeadline, philosophyTagline, philosophyBody,
+      philosophyEyebrow, philosophyHeadline, philosophyTagline, philosophyBody, philosophyFootnote,
+      audiencesEyebrow, audiencesHeadline, audiencesTagline,
       audiences[] { _key, title, subtitle, body },
+      availableEditionsEyebrow, availableEditionsHeadline, availableEditionsTagline,
+      availableEditions[] { _key, letter, pullQuote, headline, body, whoItIsFor, bestReadOn, specs[] { _key, label, value } },
+      supportModulesEyebrow, supportModulesHeadline, supportModulesTagline,
+      supportModules[] { _key, numeral, eyebrow, title, body, practice },
+      consultationEyebrow, consultationHeadline, consultationTagline, consultationNote,
       consultationSteps[] { _key, step, title, body },
-      closingHeadline, closingBody
+      closingEyebrow, closingHeadline, closingBody, closingNote
     }
   }`);
 }
