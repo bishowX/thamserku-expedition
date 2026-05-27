@@ -49,46 +49,40 @@ export function AtlasSeasonalGuide({ expeditions, data }: Props) {
         </div>
 
         {/* Calendar Strip */}
-        <div className="relative w-full border-t border-[#1A1A1A]/10 pt-4">
-          <div className="grid grid-cols-12 mb-8 md:mb-16 gap-x-2">
-            {MONTHS.map((month, i) => (
-              <div
-                key={i}
-                className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] border-l border-[#1A1A1A]/10 pl-2 h-[480px] md:h-[240px]"
-              >
-                {month}
-              </div>
-            ))}
-          </div>
-
-          {/* Bands overlay */}
-          <div className="absolute top-16 md:top-24 left-0 w-full h-full pointer-events-none">
-            {/* Spring Band — Apr–May (25% → 41.666%) */}
-            <div className="absolute top-0 left-[25%] w-[16.666%] pr-4 pl-2 hidden md:block">
-              <div className="h-[4px] bg-[#2E353C] w-full mb-3" />
-              <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#0A3A77] leading-[1.8]">
-                {springMountains.map((name, i) => (
-                  <span key={i}>{name}{i < springMountains.length - 1 && <br />}</span>
-                ))}
-              </div>
+        <div className="w-full border-t border-[#1A1A1A]/10 pt-4 overflow-x-auto overflow-y-hidden">
+          <div className="relative min-w-[560px]">
+            <div className="grid grid-cols-12 gap-x-2">
+              {MONTHS.map((month, i) => (
+                <div
+                  key={i}
+                  className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] border-l border-[#1A1A1A]/10 pl-2 h-[200px]"
+                >
+                  {month}
+                </div>
+              ))}
             </div>
 
-            {/* Autumn Band — Sep–Nov (66.666% → 91.666%) */}
-            <div className="absolute top-0 left-[66.666%] w-[25%] pr-4 pl-2 hidden md:block">
-              <div className="h-[4px] bg-[#5A6673] w-full mb-3" />
-              <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] leading-[1.8]">
-                {autumnMountains.map((name, i) => (
-                  <span key={i}>{name}{i < autumnMountains.length - 1 && <br />}</span>
-                ))}
+            {/* Bands overlay */}
+            <div className="absolute top-10 left-0 w-full h-full pointer-events-none">
+              {/* Spring Band — Apr–May (25% → 41.666%) */}
+              <div className="absolute top-0 left-[25%] w-[16.666%] pr-4 pl-2">
+                <div className="h-[4px] bg-[#2E353C] w-full mb-3" />
+                <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#0A3A77] leading-[1.8]">
+                  {springMountains.map((name, i) => (
+                    <span key={i}>{name}{i < springMountains.length - 1 && <br />}</span>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Mobile fallback bars */}
-            <div className="md:hidden absolute top-0 left-[25%] pl-1">
-              <div className="h-[120px] bg-[#2E353C] w-[4px]" />
-            </div>
-            <div className="md:hidden absolute top-0 left-[66.666%] pl-1">
-              <div className="h-[120px] bg-[#5A6673] w-[4px]" />
+              {/* Autumn Band — Sep–Nov (66.666% → 91.666%) */}
+              <div className="absolute top-0 left-[66.666%] w-[25%] pr-4 pl-2">
+                <div className="h-[4px] bg-[#5A6673] w-full mb-3" />
+                <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] leading-[1.8]">
+                  {autumnMountains.map((name, i) => (
+                    <span key={i}>{name}{i < autumnMountains.length - 1 && <br />}</span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -83,7 +83,7 @@ export default function ExpeditionDossier() {
           availableSeasons={expedition.availableSeasons}
           slug={expedition.slug.current}
         />
-        <Inclusions expeditionName={expedition.name} inclusionCategories={expedition.inclusionCategories} />
+        <Inclusions expeditionName={expedition.name} inclusionCategories={expedition.inclusionCategories} exclusions={expedition.exclusions} />
         <ExpeditionFAQ faqs={expedition.faqs} expeditionName={expedition.name} />
         <ExpeditionClosing
           name={expedition.name}

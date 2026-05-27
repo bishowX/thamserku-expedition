@@ -440,6 +440,7 @@ export type SanityExpeditionDossier = {
   preparationColumns?: SanityPreparationColumn[] | null;
   availableSeasons?: SanityAvailableSeason[];
   inclusionCategories?: SanityInclusionCategory[] | null;
+  exclusions?: string[] | null;
   faqs?: SanityFaqItem[];
   closingImage?: { asset: { _ref: string } } | null;
   closingStatement?: string;
@@ -466,6 +467,7 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       editions[]->{ letter, name, subtitle, positioning, targetAudience },
       availableSeasons[]{ name, dates, statusAlpine, statusBespoke, statusCrafted, statusDefinitive },
       inclusionCategories[]{ category, prefix, items },
+      exclusions,
       faqs[]{ question, answer },
       closingImage, closingStatement
     }`,

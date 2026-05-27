@@ -7,11 +7,17 @@ export default defineType({
   groups: [
     { name: 'identity',        title: 'Identity' },
     { name: 'hero',            title: 'Hero' },
-    { name: 'content',         title: 'Content' },
+    { name: 'overview',        title: 'Overview' },
+    { name: 'whoItIsFor',      title: 'Who It Is For' },
+    { name: 'journey',         title: 'Journey Stages' },
+    { name: 'route',           title: 'Route' },
     { name: 'safety',          title: 'Safety & Support' },
     { name: 'infrastructure',  title: 'Infrastructure' },
     { name: 'preparation',     title: 'Preparation' },
-    { name: 'commercial',      title: 'Commercial' },
+    { name: 'availability',    title: 'Availability' },
+    { name: 'inclusions',      title: 'Inclusions' },
+    { name: 'exclusions',      title: 'Exclusions' },
+    { name: 'faqs',            title: 'FAQs' },
     { name: 'closing',         title: 'Closing' },
   ],
   fields: [
@@ -57,37 +63,43 @@ export default defineType({
     defineField({ group: 'hero', name: 'expeditionStyleFact', title: 'Expedition Style (Quick Facts)', type: 'string', description: 'e.g. Sherpa-led, oxygen-supported.' }),
     defineField({ group: 'hero', name: 'pricing', title: 'Pricing', type: 'string', description: 'e.g. By private consultation' }),
 
-    // ── Content ───────────────────────────────────────────────────────────────
-    defineField({ group: 'content', name: 'overviewHeadline', title: 'Overview Headline', type: 'text', rows: 3 }),
-    defineField({ group: 'content', name: 'overviewBody', title: 'Overview Body', type: 'text', rows: 5 }),
-    defineField({ group: 'content', name: 'overviewSideImage', title: 'Overview Side Image', type: 'image', options: { hotspot: true }, description: 'Small marginal photograph.' }),
-    defineField({ group: 'content', name: 'whoItIsForHeadline', title: 'Who It Is For — Headline', type: 'string' }),
+    // ── Overview ──────────────────────────────────────────────────────────────
+    defineField({ group: 'overview', name: 'overviewHeadline', title: 'Overview Headline', type: 'text', rows: 3 }),
+    defineField({ group: 'overview', name: 'overviewBody', title: 'Overview Body', type: 'text', rows: 5 }),
+    defineField({ group: 'overview', name: 'overviewSideImage', title: 'Overview Side Image', type: 'image', options: { hotspot: true }, description: 'Small marginal photograph.' }),
+
+    // ── Who It Is For ─────────────────────────────────────────────────────────
+    defineField({ group: 'whoItIsFor', name: 'whoItIsForHeadline', title: 'Who It Is For — Headline', type: 'string' }),
     defineField({
-      group: 'content',
+      group: 'whoItIsFor',
       name: 'audienceTiles',
       title: 'Audience Tiles',
       type: 'array',
       of: [{ type: 'audienceTile' }],
       validation: (Rule) => Rule.max(4),
     }),
+
+    // ── Journey Stages ────────────────────────────────────────────────────────
     defineField({
-      group: 'content',
+      group: 'journey',
       name: 'journeyStages',
       title: 'Journey Stages',
       type: 'array',
       of: [{ type: 'journeyStage' }],
     }),
+
+    // ── Route ─────────────────────────────────────────────────────────────────
     defineField({
-      group: 'content',
+      group: 'route',
       name: 'routeWaypoints',
       title: 'Route Waypoints',
       type: 'array',
       of: [{ type: 'routeWaypoint' }],
       description: 'Ordered list of waypoints for the elevation diagram.',
     }),
-    defineField({ group: 'content', name: 'routePhilosophy', title: 'Route Philosophy', type: 'text', rows: 3 }),
-    defineField({ group: 'content', name: 'acclimatisationNote', title: 'Acclimatisation Cycle Note', type: 'text', rows: 3 }),
-    defineField({ group: 'content', name: 'summitWindowNote', title: 'Summit Window Note', type: 'text', rows: 3 }),
+    defineField({ group: 'route', name: 'routePhilosophy', title: 'Route Philosophy', type: 'text', rows: 3 }),
+    defineField({ group: 'route', name: 'acclimatisationNote', title: 'Acclimatisation Cycle Note', type: 'text', rows: 3 }),
+    defineField({ group: 'route', name: 'summitWindowNote', title: 'Summit Window Note', type: 'text', rows: 3 }),
 
     // ── Safety & Support ─────────────────────────────────────────────────────
     defineField({ group: 'safety', name: 'safetySupportHeadline', title: 'Safety & Support — Headline', type: 'string' }),
@@ -116,24 +128,38 @@ export default defineType({
       of: [{ type: 'preparationColumn' }],
       description: 'Typically 3 columns: Body, Time, Mind.',
     }),
-    // ── Commercial ────────────────────────────────────────────────────────────
+    // ── Availability ──────────────────────────────────────────────────────────
     defineField({
-      group: 'commercial',
+      group: 'availability',
       name: 'availableSeasons',
       title: 'Available Seasons',
       type: 'array',
       of: [{ type: 'availableSeason' }],
     }),
+
+    // ── Inclusions ────────────────────────────────────────────────────────────
     defineField({
-      group: 'commercial',
+      group: 'inclusions',
       name: 'inclusionCategories',
       title: 'Inclusion Categories',
       type: 'array',
       of: [{ type: 'inclusionCategory' }],
       description: 'Typically 3 categories: Expedition Leadership, Logistics & Support, Hospitality & Care.',
     }),
+
+    // ── Exclusions ────────────────────────────────────────────────────────────
     defineField({
-      group: 'commercial',
+      group: 'exclusions',
+      name: 'exclusions',
+      title: 'Exclusions',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Items not covered by the expedition fee, e.g. International Airfare & Nepal Visa.',
+    }),
+
+    // ── FAQs ──────────────────────────────────────────────────────────────────
+    defineField({
+      group: 'faqs',
       name: 'faqs',
       title: 'FAQs',
       type: 'array',

@@ -60,23 +60,23 @@ export function AtlasComparison({ expeditions, data }: Props) {
                   key={exp._id}
                   className="hover:bg-white/5 transition-colors duration-300 group"
                 >
-                  <td className="py-8 pr-3 font-['Radley'] text-2xl text-white">
+                  <td className="py-4 md:py-8 pr-3 font-['Radley'] text-base md:text-2xl text-white">
                     {exp.name}
                   </td>
-                  <td className="py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
+                  <td className="py-1 md:py-8 min-w-25 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
                     {exp.altitude ?? "TBC"}
                   </td>
-                  <td className="py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
+                  <td className="py-1 md:py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
                     {exp.region ?? "—"}
                   </td>
-                  <td className="py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
+                  <td className="py-1 md:py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
                     {exp.season ?? "—"}
                   </td>
-                  <td className="py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
+                  <td className="py-1 md:py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
                     {exp.style ?? "—"}
                   </td>
 
-                  <td className="py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
+                  <td className="py-1 md:py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
                     {exp.bestFor ?? "—"}
                   </td>
                 </tr>

@@ -3,6 +3,7 @@ type InclusionCategory = { category: string; prefix: string; items: string[] };
 type Props = {
   expeditionName?: string;
   inclusionCategories?: InclusionCategory[] | null;
+  exclusions?: string[] | null;
 };
 
 const FALLBACK_CATEGORIES: InclusionCategory[] = [
@@ -39,7 +40,7 @@ const FALLBACK_CATEGORIES: InclusionCategory[] = [
   }
 ];
 
-export function Inclusions({ expeditionName, inclusionCategories }: Props) {
+export function Inclusions({ expeditionName, inclusionCategories, exclusions }: Props) {
   const name = expeditionName || 'Expedition';
   const categories = inclusionCategories ?? FALLBACK_CATEGORIES;
 
@@ -94,6 +95,12 @@ export function Inclusions({ expeditionName, inclusionCategories }: Props) {
         <p className="font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] max-w-[60ch] mb-10 md:mb-24">
           Editions vary. Definitive expeditions add private camp configuration, concierge planning, and maximum discretion. Your tailored proposal will specify exact inclusions.
         </p>
+
+        {exclusions && exclusions.length > 0 && (
+          <p className="font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] pb-10 md:pb-24">
+            <span>Exclusion: </span>{exclusions.join(', ')}
+          </p>
+        )}
 
       </div>
     </section>

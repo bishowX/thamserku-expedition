@@ -152,10 +152,10 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
       className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden text-white"
     >
       <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(to right, #202121 1px, transparent 1px), linear-gradient(to bottom, #202121 1px, transparent 1px)`,
-          backgroundSize: "64px 64px",
+          backgroundSize: "96px 96px",
         }}
       />
 
@@ -196,7 +196,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
           {pillars.map((pillar, idx) => (
             <div
               key={idx}
-              className="flex flex-col bg-[#24282c59] border-t border-r last:border-r-0 border-b lg:border-b-0 border-[#c8cdd24d] p-8"
+              className="flex flex-col bg-[#24282c59] border-t md:border-r last:border-r-0 border-b lg:border-b-0 border-[#c8cdd24d] p-8"
               style={{ clipPath: "inset(0% 0% 0% 0%)" }}
             >
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">

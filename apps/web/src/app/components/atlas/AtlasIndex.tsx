@@ -107,14 +107,6 @@ export function AtlasIndex({ expeditions }: Props) {
                   </div>
                 </div>
 
-                {/* Editions */}
-                <div
-                  className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-16 pb-6 border-b ${isDark ? "border-white/10 text-[#C8CDD2]" : "border-[#1A1A1A]/10 text-[#5A6673]"}`}
-                >
-                  EDITIONS AVAILABLE <span className="mx-4 font-light">·</span>{" "}
-                  {editionLetters}
-                </div>
-
                 {/* CTAs */}
                 <div className="flex flex-col sm:flex-row gap-6">
                   {slug ? (
