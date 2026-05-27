@@ -32,12 +32,75 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEB_PROJECT_ID }}
 
+      - name: Inject env vars into pulled env file
+        working-directory: apps/web
+        env:
+          VITE_SANITY_PROJECT_ID: ${{ secrets.VITE_SANITY_PROJECT_ID }}
+          VITE_SANITY_DATASET: ${{ secrets.VITE_SANITY_DATASET }}
+          VITE_GOOGLE_CALENDAR_URL: ${{ secrets.VITE_GOOGLE_CALENDAR_URL }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
+        run: |
+          python3 - <<'EOF'
+          import os, re
+          path = '.vercel/.env.production.local'
+          with open(path) as f:
+              content = f.read()
+          keys = ['VITE_SANITY_PROJECT_ID','VITE_SANITY_DATASET','VITE_GOOGLE_CALENDAR_URL',
+                  'SANITY_WRITE_TOKEN','RESEND_API_KEY','RESEND_FROM_EMAIL']
+          for key in keys:
+              val = os.environ.get(key, '')
+              if val:
+                  content = re.sub(rf'^{key}=.*$', f'{key}="{val}"', content, flags=re.MULTILINE)
+          with open(path, 'w') as f:
+              f.write(content)
+          print('Env vars injected')
+          EOF
+
       - name: Build
         run: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         working-directory: apps/web
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEB_PROJECT_ID }}
+
+      - name: Bundle server function
+        working-directory: apps/web
+        run: |
+          npm install -g esbuild
+          python3 - <<'EOF'
+          import json, os, shutil
+
+          func_dir = '.vercel/output/functions/index.func'
+          bundle_dir = f'{func_dir}/build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0'
+          os.makedirs(bundle_dir, exist_ok=True)
+
+          # Bundle server-index.mjs with all deps inlined
+          import subprocess
+          result = subprocess.run([
+              'esbuild',
+              'build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/server-index.mjs',
+              '--bundle', '--platform=node', '--target=node20', '--format=esm',
+              "--banner:js=import{createRequire}from'module';const require=createRequire(import.meta.url);",
+              f'--outfile={bundle_dir}/server-index.mjs',
+          ], capture_output=True, text=True)
+          print(result.stdout or result.stderr)
+          if result.returncode != 0:
+              raise SystemExit(result.returncode)
+
+          # Copy package.json
+          shutil.copy2('package.json', f'{func_dir}/package.json')
+
+          # Remove filePathMap (not needed, all deps bundled)
+          cfg_path = f'{func_dir}/.vc-config.json'
+          with open(cfg_path) as f:
+              cfg = json.load(f)
+          cfg.pop('filePathMap', None)
+          with open(cfg_path, 'w') as f:
+              json.dump(cfg, f, indent=2)
+          print('Function bundled successfully')
+          EOF
 
       - name: Deploy
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
