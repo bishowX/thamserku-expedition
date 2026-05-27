@@ -1,6 +1,12 @@
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { urlFor } from "../../lib/sanity";
 import type { SanityFieldNote } from "../../lib/queries";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const FALLBACK_NOTES = [
   {
@@ -71,13 +77,93 @@ export function FieldNotesPreview({
       ? fieldNotes.slice(0, 4).map((n) => toDisplayNote(n))
       : FALLBACK_NOTES;
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const newsletterRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      if (headerRef.current) {
+        gsap.from(Array.from(headerRef.current.children), {
+          opacity: 0,
+          y: 25,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
+        });
+      }
+
+      if (gridRef.current) {
+        const cards = Array.from(gridRef.current.children);
+        cards.forEach((card, i) => {
+          gsap.from(card, {
+            opacity: 0,
+            scale: 0.94,
+            y: 30,
+            duration: 0.8,
+            delay: i * 0.1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: gridRef.current, start: "top 85%" },
+          });
+
+          // Image entrance + scroll parallax
+          const imgWrap = card.querySelector(".overflow-hidden");
+          const img = imgWrap?.querySelector("img");
+          if (img) {
+            gsap.from(img, {
+              scale: 1.2,
+              duration: 1.2,
+              delay: i * 0.1 + 0.2,
+              ease: "power2.out",
+              scrollTrigger: { trigger: gridRef.current, start: "top 85%" },
+            });
+
+            gsap.fromTo(
+              img,
+              { yPercent: -6 },
+              {
+                yPercent: 6,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                },
+              },
+            );
+          }
+        });
+      }
+
+      if (newsletterRef.current) {
+        gsap.from(newsletterRef.current, {
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: newsletterRef.current, start: "top 88%" },
+        });
+      }
+    },
+    { scope: sectionRef },
+  );
+
   return (
     <section
+      ref={sectionRef}
       id="field-notes"
       className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8"
     >
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
-        <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
+        <div
+          ref={headerRef}
+          className="flex flex-col md:flex-row gap-12 md:gap-24 items-start"
+        >
           <div className="md:w-1/4">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
               {data?.fieldNotesEyebrow ?? "06 — FIELD NOTES"}
@@ -91,7 +177,10 @@ export function FieldNotesPreview({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-start"
+        >
           {notes.map((note, idx) => (
             <article
               key={idx}
@@ -102,7 +191,7 @@ export function FieldNotesPreview({
                   <ImageWithFallback
                     src={note.image}
                     alt={note.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
                   />
                 )}
               </div>
@@ -129,6 +218,7 @@ export function FieldNotesPreview({
         </div>
 
         <div
+          ref={newsletterRef}
           id="newsletter"
           className="w-full mt-6 pt-12 pb-6 border-t border-[#E5E7EB]"
         >
@@ -138,11 +228,13 @@ export function FieldNotesPreview({
             </span>
 
             <h3 className="font-['Radley'] font-light text-fluid-xl leading-[1.1] text-[#1A1A1A] max-w-[22ch] mb-6">
-              {data?.newsletterHeading ?? "Receive Field Notes from the expedition desk."}
+              {data?.newsletterHeading ??
+                "Receive Field Notes from the expedition desk."}
             </h3>
 
             <p className="font-['Lexend'] font-light text-fluid-body text-[#5A6673] leading-[1.65] max-w-[56ch] mb-12">
-              {data?.newsletterBody ?? "A quiet quarterly letter of field reports, route judgement and Himalayan readings."}
+              {data?.newsletterBody ??
+                "A quiet quarterly letter of field reports, route judgement and Himalayan readings."}
             </p>
 
             <form
@@ -157,14 +249,15 @@ export function FieldNotesPreview({
               />
               <button
                 type="submit"
-                className="w-full md:w-auto border border-[#0A3A77]/30 px-8 py-3.5 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] hover:border-[#0A3A77] transition-colors"
+                className="btn-cta w-full md:w-auto border border-[#0A3A77]/30 px-8 py-3.5 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] hover:border-[#0A3A77] transition-colors"
               >
-                {data?.newsletterCta ?? "Subscribe →"}
+                <span>{data?.newsletterCta ?? "Subscribe →"}</span>
               </button>
             </form>
 
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673]">
-              {data?.newsletterPrivacyNote ?? "BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS."}
+              {data?.newsletterPrivacyNote ??
+                "BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS."}
             </span>
           </div>
         </div>

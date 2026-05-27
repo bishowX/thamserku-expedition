@@ -1,6 +1,13 @@
+import { useRef } from "react";
 import { MoveRight } from "lucide-react";
 import { Link } from "react-router";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { urlFor } from "../../lib/sanity";
+import { TextReveal } from "./TextReveal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type HeroData = {
   heroHeadline?: string;
@@ -15,43 +22,188 @@ const DEFAULT_SUBHEADING =
 export function Hero({ data }: { data?: HeroData }) {
   const headline = data?.heroHeadline ?? DEFAULT_HEADLINE;
   const subheading = data?.heroSubheading ?? DEFAULT_SUBHEADING;
-  const bgImage = data?.heroImage ? urlFor(data.heroImage).width(1920).url() : undefined;
+  const bgImage = data?.heroImage
+    ? urlFor(data.heroImage).width(1920).url()
+    : undefined;
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLImageElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (headlineRef.current) gsap.set(headlineRef.current, { opacity: 1 });
+        if (subRef.current) gsap.set(subRef.current, { opacity: 1 });
+        if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 1 });
+        return;
+      }
+
+      // Reveal containers (FOUC prevention — they start with opacity-0 via CSS)
+      if (headlineRef.current) gsap.set(headlineRef.current, { opacity: 1 });
+      if (subRef.current) gsap.set(subRef.current, { opacity: 1 });
+      if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 1 });
+
+      const tl = gsap.timeline();
+
+      // Background entrance
+      if (bgRef.current) {
+        tl.from(bgRef.current, {
+          scale: 1.15,
+          duration: 2.2,
+          ease: "power2.out",
+        }, 0);
+      }
+
+      if (overlayRef.current) {
+        tl.from(overlayRef.current, {
+          opacity: 0,
+          duration: 1.2,
+          ease: "power2.out",
+        }, 0);
+      }
+
+      // Word-by-word masked reveal
+      if (headlineRef.current) {
+        const words = headlineRef.current.querySelectorAll("[data-word]");
+        gsap.set(words, { yPercent: 110 });
+        tl.to(words, {
+          yPercent: 0,
+          duration: 0.8,
+          stagger: 0.04,
+          ease: "power4.out",
+        }, 0.5);
+      }
+
+      // Subheading with blur clear
+      if (subRef.current) {
+        gsap.set(subRef.current, { opacity: 0, y: 20, filter: "blur(6px)" });
+        tl.to(subRef.current, {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.7,
+          ease: "power3.out",
+        }, 1.0);
+      }
+
+      // CTA buttons stagger
+      if (ctaRef.current) {
+        const buttons = Array.from(ctaRef.current.children);
+        gsap.set(buttons, { opacity: 0, y: 15 });
+        tl.to(buttons, {
+          opacity: 1,
+          y: 0,
+          stagger: 0.08,
+          duration: 0.5,
+          ease: "power3.out",
+        }, 1.2);
+      }
+
+      // Ambient ken-burns drift after entrance
+      if (bgRef.current) {
+        tl.call(() => {
+          if (!bgRef.current) return;
+          gsap.to(bgRef.current, {
+            scale: 1.04,
+            xPercent: 1.5,
+            duration: 25,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        });
+      }
+
+      // Scroll parallax — background drifts down, content fades and drifts up
+      if (bgRef.current && sectionRef.current) {
+        gsap.to(bgRef.current, {
+          yPercent: 35,
+          scale: 1.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
+
+      if (contentRef.current && sectionRef.current) {
+        gsap.to(contentRef.current, {
+          yPercent: -15,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
+    },
+    { scope: sectionRef },
+  );
 
   return (
- <section className="relative w-full min-h-screen flex flex-col justify-center text-white py-24 px-8 overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative w-full min-h-screen flex flex-col justify-center text-white py-24 px-8 overflow-hidden"
+    >
       <div className="absolute inset-0 z-0">
         {bgImage && (
           <img
+            ref={bgRef}
             src={bgImage}
             alt="Hero background"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover will-change-transform"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/60 via-transparent to-[#1A1A1A]/90 mix-blend-multiply" />
+        <div
+          ref={overlayRef}
+          className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/60 via-transparent to-[#1A1A1A]/90 mix-blend-multiply"
+        />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-8">
+      <div
+        ref={contentRef}
+        className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-8 will-change-transform"
+      >
         <div className="max-w-4xl">
-          <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6">
-            {headline}
+          <h1
+            ref={headlineRef}
+            className="font-['Radley'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6 opacity-0"
+          >
+            <TextReveal text={headline} />
           </h1>
-          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body max-w-[56ch] leading-relaxed">
+          <p
+            ref={subRef}
+            className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body max-w-[56ch] leading-relaxed opacity-0"
+          >
             {subheading}
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 mt-4">
+        <div ref={ctaRef} className="flex flex-wrap gap-4 mt-4 opacity-0">
           <Link
             to="/atlas"
-            className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:bg-transparent hover:text-white transition-colors"
+            className="btn-cta btn-cta-primary border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
-            Explore the Atlas <MoveRight className="w-3 h-3" />
+            <span>Explore the Atlas</span>
+            <MoveRight className="w-3 h-3 arrow-shift" />
           </Link>
           <Link
             to="/consultation"
-            className="border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:border-white transition-colors"
+            className="btn-cta btn-cta-secondary border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
-            Schedule a Consultation <MoveRight className="w-3 h-3" />
+            <span>Schedule a Consultation</span>
+            <MoveRight className="w-3 h-3 arrow-shift" />
           </Link>
         </div>
       </div>

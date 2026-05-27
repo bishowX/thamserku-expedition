@@ -11,6 +11,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const lastScrollY = useRef(0);
   const location = useLocation();
 
@@ -46,13 +47,15 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
         }
         lastScrollY.current = currentScrollY;
       }
+
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? (currentScrollY / docHeight) * 100 : 0);
     };
-    
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hideOnScrollDown]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -74,38 +77,44 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
             <ThamserkuLogo />
           </Link>
         </div>
-        
+
         <div className="hidden lg:flex items-center gap-8 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px]">
-          <Link to="/atlas" className="hover:text-[#C8CDD2] transition-colors">Expedition Atlas</Link>
-          <Link to="/editions" className="hover:text-[#C8CDD2] transition-colors">Editions</Link>
-          <Link to="/yeti-infrastructure" className="hover:text-[#C8CDD2] transition-colors">Yeti Infrastructure</Link>
-          <Link to="/legacy" className="hover:text-[#C8CDD2] transition-colors">Legacy</Link>
+          <Link to="/atlas" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Expedition Atlas</Link>
+          <Link to="/editions" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Editions</Link>
+          <Link to="/yeti-infrastructure" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Yeti Infrastructure</Link>
+          <Link to="/legacy" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Legacy</Link>
         </div>
 
         <div className="hidden lg:flex w-auto lg:w-[220px] xl:w-[280px] justify-end">
-          <Link to={ctaLink} className={`border ${scrolled || mobileMenuOpen ? "border-white/50" : "border-white/30"} px-6 xl:px-8 py-3.5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] xl:text-[11px] hover:border-white transition-colors whitespace-nowrap`}>
-            {ctaLabel}
+          <Link to={ctaLink} className={`btn-cta btn-cta-secondary border ${scrolled || mobileMenuOpen ? "border-white/50" : "border-white/30"} px-6 xl:px-8 py-3.5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] xl:text-[11px] whitespace-nowrap`}>
+            <span>{ctaLabel}</span>
           </Link>
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button 
+        <button
           className="lg:hidden z-50 p-2 -mr-2 text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle mobile menu"
         >
           {mobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
         </button>
+
+        {/* Scroll Progress */}
+        <div
+          className="absolute bottom-0 left-0 h-[2px] bg-white/40 transition-none"
+          style={{ width: `${scrollProgress}%` }}
+        />
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div 
+      <div
         className={`fixed inset-0 bg-[#1A1A1A] z-40 flex flex-col pt-[100px] px-6 pb-8 transition-transform duration-500 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } lg:hidden overflow-y-auto`}
       >
         <div className="flex flex-col mt-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[12px] text-white">
-          
+
           {/* EXPEDITIONS GROUP */}
           <div className="text-[10px] text-[#C8CDD2] mb-6">EXPEDITIONS</div>
           <Link to="/atlas" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Expedition Atlas</Link>
@@ -130,12 +139,12 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
         </div>
 
         <div className="mt-2 pb-8">
-          <Link 
-            to={ctaLink} 
-            className="w-full border border-white/30 py-4 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors text-white"
+          <Link
+            to={ctaLink}
+            className="btn-cta btn-cta-secondary w-full border border-white/30 py-4 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white"
             onClick={() => setMobileMenuOpen(false)}
           >
-            {ctaLabel}
+            <span>{ctaLabel}</span>
           </Link>
         </div>
       </div>

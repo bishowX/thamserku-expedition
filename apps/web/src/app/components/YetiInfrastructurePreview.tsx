@@ -1,6 +1,13 @@
+import { useRef } from "react";
 import { Link } from "react-router";
 import { MoveRight } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { SanityYetiPillar } from "../../lib/queries";
+import { TextReveal } from "./TextReveal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type YetiData = {
   infrastructureEyebrow?: string;
@@ -49,8 +56,101 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
       }))
     : FALLBACK_PILLARS;
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLSpanElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const introRef = useRef<HTMLParagraphElement>(null);
+  const pillarsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      if (lineRef.current) {
+        gsap.from(lineRef.current, {
+          scaleX: 0,
+          transformOrigin: "left",
+          duration: 0.8,
+          ease: "power3.inOut",
+          scrollTrigger: { trigger: eyebrowRef.current, start: "top 85%" },
+        });
+      }
+
+      if (eyebrowRef.current) {
+        gsap.from(eyebrowRef.current, {
+          opacity: 0,
+          x: -10,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: { trigger: eyebrowRef.current, start: "top 85%" },
+        });
+      }
+
+      if (headingRef.current) {
+        const words = headingRef.current.querySelectorAll("[data-word]");
+        gsap.from(words, {
+          yPercent: 100,
+          duration: 0.7,
+          stagger: 0.03,
+          ease: "power4.out",
+          scrollTrigger: { trigger: headingRef.current, start: "top 82%" },
+        });
+      }
+
+      if (introRef.current) {
+        gsap.from(introRef.current, {
+          opacity: 0,
+          y: 20,
+          filter: "blur(4px)",
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: { trigger: introRef.current, start: "top 85%" },
+        });
+      }
+
+      if (pillarsRef.current) {
+        const cards = Array.from(pillarsRef.current.children);
+        cards.forEach((card, i) => {
+          gsap.from(card, {
+            clipPath: "inset(100% 0% 0% 0%)",
+            duration: 0.8,
+            delay: i * 0.12,
+            ease: "power3.out",
+            scrollTrigger: { trigger: pillarsRef.current, start: "top 85%" },
+          });
+
+          gsap.from(card.children, {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.06,
+            delay: i * 0.12 + 0.3,
+            ease: "power3.out",
+            scrollTrigger: { trigger: pillarsRef.current, start: "top 85%" },
+          });
+        });
+      }
+
+      if (ctaRef.current) {
+        gsap.from(ctaRef.current, {
+          opacity: 0,
+          y: 15,
+          duration: 0.5,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ctaRef.current, start: "top 90%" },
+        });
+      }
+    },
+    { scope: sectionRef },
+  );
+
   return (
- <section className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden text-white">
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-[#1A1A1A] py-24 overflow-hidden text-white"
+    >
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
@@ -62,26 +162,42 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-8 flex flex-col">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-24 md:mb-32">
           <div className="md:col-span-5 flex flex-col">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
-              {eyebrow}
-            </span>
-            <h2 className="font-['Radley'] font-light text-fluid-section leading-[1.05] text-white max-w-[18ch]">
-              {heading}
+            <div ref={eyebrowRef} className="flex items-center gap-4 mb-8">
+              <span
+                ref={lineRef}
+                className="hidden md:block h-px w-8 bg-[#C8CDD2]"
+              />
+              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+                {eyebrow}
+              </span>
+            </div>
+            <h2
+              ref={headingRef}
+              className="font-['Radley'] font-light text-fluid-section leading-[1.05] text-white max-w-[18ch]"
+            >
+              <TextReveal text={heading} />
             </h2>
           </div>
 
           <div className="md:col-span-7 flex flex-col md:pt-12">
-            <p className="font-['Lexend'] font-light text-fluid-body text-[#C8CDD2] leading-[1.65] max-w-[56ch]">
+            <p
+              ref={introRef}
+              className="font-['Lexend'] font-light text-fluid-body text-[#C8CDD2] leading-[1.65] max-w-[56ch]"
+            >
               {intro}
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mb-16">
+        <div
+          ref={pillarsRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mb-16"
+        >
           {pillars.map((pillar, idx) => (
             <div
               key={idx}
               className="flex flex-col bg-[#24282c59] border-t border-r last:border-r-0 border-b lg:border-b-0 border-[#c8cdd24d] p-8"
+              style={{ clipPath: "inset(0% 0% 0% 0%)" }}
             >
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">
                 {pillar.eyebrow}
@@ -96,7 +212,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
           ))}
         </div>
 
-        <div className="w-full mx-auto flex justify-end">
+        <div ref={ctaRef} className="w-full mx-auto flex justify-end">
           <Link
             to="/yeti-infrastructure"
             className="group flex items-center gap-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors"
@@ -104,7 +220,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
             <span className="border-b border-white/30 group-hover:border-[#C8CDD2] pb-1 transition-colors">
               READ THE FULL YETI INFRASTRUCTURE PAGE
             </span>
-            <MoveRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <MoveRight className="w-4 h-4 arrow-shift" />
           </Link>
         </div>
       </div>

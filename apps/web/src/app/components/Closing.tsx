@@ -1,7 +1,14 @@
+import { useRef } from "react";
 import { MoveRight } from "lucide-react";
 import { Link } from "react-router";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { urlFor } from "../../lib/sanity";
+import { TextReveal } from "./TextReveal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type ClosingData = {
   closingEyebrow?: string;
@@ -21,44 +28,135 @@ export function Closing({ data }: { data?: ClosingData }) {
     ? urlFor(data.closingImage).width(1920).url()
     : null;
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const eyebrowRef = useRef<HTMLSpanElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const bodyRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      // Background parallax
+      if (bgRef.current) {
+        const img = bgRef.current.querySelector("img");
+        if (img) {
+          gsap.to(img, {
+            yPercent: 12,
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
+      }
+
+      if (eyebrowRef.current) {
+        gsap.from(eyebrowRef.current, {
+          opacity: 0,
+          y: 15,
+          duration: 0.5,
+          ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
+        });
+      }
+
+      // Masked word reveal
+      if (headingRef.current) {
+        const words = headingRef.current.querySelectorAll("[data-word]");
+        gsap.from(words, {
+          yPercent: 100,
+          duration: 0.7,
+          stagger: 0.03,
+          ease: "power4.out",
+          scrollTrigger: { trigger: headingRef.current, start: "top 75%" },
+        });
+      }
+
+      // Body blur clear
+      if (bodyRef.current) {
+        gsap.from(bodyRef.current, {
+          opacity: 0,
+          y: 15,
+          filter: "blur(4px)",
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: { trigger: bodyRef.current, start: "top 80%" },
+        });
+      }
+
+      // CTAs stagger
+      if (ctaRef.current) {
+        gsap.from(Array.from(ctaRef.current.children), {
+          opacity: 0,
+          y: 15,
+          stagger: 0.08,
+          duration: 0.5,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ctaRef.current, start: "top 85%" },
+        });
+      }
+    },
+    { scope: sectionRef },
+  );
+
   return (
- <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden flex flex-col items-center justify-center text-center">
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden flex flex-col items-center justify-center text-center"
+    >
       {bgSrc && (
-        <div className="absolute inset-0 z-0">
+        <div ref={bgRef} className="absolute inset-0 z-0">
           <ImageWithFallback
             src={bgSrc}
             alt="Closing background"
-            className="w-full h-full object-cover opacity-20 mix-blend-luminosity"
+            className="w-full h-full object-cover opacity-20 mix-blend-luminosity will-change-transform"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A] opacity-80" />
         </div>
       )}
 
       <div className="relative z-10 w-full max-w-[880px] mx-auto flex flex-col items-center gap-8">
-        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+        <span
+          ref={eyebrowRef}
+          className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]"
+        >
           {eyebrow}
         </span>
 
-        <h2 className="font-['Radley'] font-light text-fluid-display leading-[1.1] mb-2">
-          {heading}
+        <h2
+          ref={headingRef}
+          className="font-['Radley'] font-light text-fluid-display leading-[1.1] mb-2"
+        >
+          <TextReveal text={heading} />
         </h2>
 
-        <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-[1.8] max-w-[48ch] mb-4">
+        <p
+          ref={bodyRef}
+          className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-[1.8] max-w-[48ch] mb-4"
+        >
           {body}
         </p>
 
-        <div className="flex flex-wrap justify-center gap-4 mt-8">
+        <div ref={ctaRef} className="flex flex-wrap justify-center gap-4 mt-8">
           <Link
             to="/consultation"
-            className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:bg-transparent hover:text-white transition-colors"
+            className="btn-cta btn-cta-primary border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
-            Schedule a Consultation <MoveRight className="w-3 h-3" />
+            <span>Schedule a Consultation</span>
+            <MoveRight className="w-3 h-3 arrow-shift" />
           </Link>
           <Link
             to="/atlas"
-            className="border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3 hover:border-white transition-colors"
+            className="btn-cta btn-cta-secondary border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
-            Explore the Atlas <MoveRight className="w-3 h-3" />
+            <span>Explore the Atlas</span>
+            <MoveRight className="w-3 h-3 arrow-shift" />
           </Link>
         </div>
       </div>

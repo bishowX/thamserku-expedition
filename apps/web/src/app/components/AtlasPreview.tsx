@@ -1,8 +1,14 @@
+import { useRef } from "react";
 import { MoveRight } from "lucide-react";
 import { Link, useNavigate } from "react-router";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { urlFor } from "../../lib/sanity";
 import type { SanityExpedition } from "../../lib/queries";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const COL_PATTERN = [6, 3, 3, 6, 6, 3, 3, 6];
 function getColClass(idx: number) {
@@ -45,6 +51,61 @@ export function AtlasPreview({
   data?: AtlasData;
 }) {
   const navigate = useNavigate();
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      if (headerRef.current) {
+        const children = Array.from(headerRef.current.children);
+        gsap.from(children, {
+          opacity: 0,
+          y: 25,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
+        });
+      }
+
+      if (gridRef.current) {
+        const cards = Array.from(gridRef.current.children);
+
+        cards.forEach((card, i) => {
+          gsap.from(card, {
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            delay: i * 0.1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: card, start: "top 92%" },
+          });
+
+          const img = card.querySelector("img");
+          if (img) {
+            gsap.fromTo(
+              img,
+              { yPercent: -5 },
+              {
+                yPercent: 5,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                },
+              },
+            );
+          }
+        });
+      }
+    },
+    { scope: sectionRef },
+  );
 
   if (!expeditions?.length) return null;
 
@@ -52,11 +113,15 @@ export function AtlasPreview({
 
   return (
     <section
+      ref={sectionRef}
       id="atlas"
       className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden"
     >
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16">
-        <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
+        <div
+          ref={headerRef}
+          className="flex flex-col md:flex-row gap-12 md:gap-24 items-start"
+        >
           <div className="md:w-1/4">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
               {data?.atlasEyebrow ?? "03 — EXPEDITION ATLAS"}
@@ -78,7 +143,10 @@ export function AtlasPreview({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 md:grid-cols-12 gap-6"
+        >
           {items.map((exp, idx) => {
             const href = exp.slug ? `/expeditions/${exp.slug}` : null;
             return (
@@ -91,7 +159,7 @@ export function AtlasPreview({
                   <ImageWithFallback
                     src={exp.image}
                     alt={exp.name}
-                    className="w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-40 transition-opacity duration-700"
+                    className="w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-40 transition-opacity duration-700 will-change-transform"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent opacity-80" />
                 </div>
@@ -117,9 +185,10 @@ export function AtlasPreview({
                   </div>
                   <div className="pt-4 border-t border-white/10 text-[#C8CDD2] flex justify-between items-center">
                     <div className="flex flex-wrap hover:text-white transition-colors">
-                      Editions: {exp.editions.map((ed) => ed.name).join(" · ")}
+                      Editions:{" "}
+                      {exp.editions.map((ed) => ed.name).join(" · ")}
                     </div>
-                    <MoveRight className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0 ml-4" />
+                    <MoveRight className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0 ml-4 arrow-shift" />
                   </div>
                 </div>
               </div>
