@@ -6,7 +6,7 @@ export const PrivateConsultationPathway = ({ page, consultationSteps }: { page?:
   const displaySteps = (consultationSteps ?? []).map((s) => ({ marker: s.step, title: s.title, desc: s.body, _key: s._key }));
 
   return (
-    <section className="bg-[#F4F2EC] py-24 px-8">
+    <section className="bg-[#F4F2EC] section-padding">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
 
         {/* Section Header */}

@@ -52,7 +52,7 @@ export function Availability({ expeditionName, availableSeasons, slug }: Props) 
         </div>
 
         {seasons.length > 0 && (
-          <div className="w-full max-w-[1180px] mb-24">
+          <div className="w-full max-w-[1180px] mb-10 md:mb-24">
             <div className="hidden md:grid grid-cols-12 border-b border-[#C8CDD2]/30 pb-4">
               <div className="col-span-4" />
               {EDITIONS.map((ed, idx) => (

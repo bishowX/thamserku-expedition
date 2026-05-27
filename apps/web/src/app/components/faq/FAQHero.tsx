@@ -2,7 +2,7 @@ type PageData = { heroHeadline?: string; heroSubline?: string };
 
 export const FAQHero = ({ page }: { page?: PageData }) => {
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-24 px-8 overflow-hidden">
+    <section className="relative w-full bg-[#1A1A1A] section-padding overflow-hidden">
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-center pt-24 md:pt-0">
         {/* Headline */}
         <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight text-white leading-[1.1] text-center max-w-[22ch] mb-6">

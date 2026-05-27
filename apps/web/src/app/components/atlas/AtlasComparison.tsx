@@ -13,14 +13,15 @@ type Props = {
 
 export function AtlasComparison({ expeditions, data }: Props) {
   const eyebrow = data?.comparisonEyebrow ?? "04 — AT A GLANCE";
-  const headline = data?.comparisonHeadline ?? "Five mountains, read side by side.";
+  const headline =
+    data?.comparisonHeadline ?? "Five mountains, read side by side.";
   const note =
     data?.comparisonNote ??
     "Note · Altitude is one variable among many. Speak with the expedition desk to understand which mountain is right for your background and intent.";
 
   return (
- <section className="w-full bg-[#2E353C] text-white py-24 px-8">
-      <div className="max-w-[1440px] mx-auto flex flex-col gap-16">
+    <section className="w-full bg-[#2E353C] text-white section-padding">
+      <div className="max-w-[1440px] mx-auto flex flex-col gap-8 md:gap-16">
         <div className="flex flex-col md:flex-row gap-12 justify-between items-start mb-12">
           <div>
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-6">
@@ -36,7 +37,14 @@ export function AtlasComparison({ expeditions, data }: Props) {
           <table className="w-full min-w-[1000px] text-left border-collapse">
             <thead>
               <tr className="border-b border-white/20">
-                {["MOUNTAIN", "ALTITUDE", "REGION", "SEASON", "STYLE", "EDITIONS", "BEST FOR"].map((col) => (
+                {[
+                  "MOUNTAIN",
+                  "ALTITUDE",
+                  "REGION",
+                  "SEASON",
+                  "STYLE",
+                  "BEST FOR",
+                ].map((col) => (
                   <th
                     key={col}
                     className="py-6 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2] font-normal"
@@ -67,9 +75,7 @@ export function AtlasComparison({ expeditions, data }: Props) {
                   <td className="py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
                     {exp.style ?? "—"}
                   </td>
-                  <td className="py-8 pr-3 font-['JetBrains_Mono'] tracking-[0.22em] text-[12px] text-[#C8CDD2] group-hover:text-white transition-colors">
-                    {exp.editions?.map((e) => e.letter).join(" · ") || "—"}
-                  </td>
+
                   <td className="py-8 pr-3 font-['Lexend'] font-light text-base text-[#C8CDD2] group-hover:text-white transition-colors">
                     {exp.bestFor ?? "—"}
                   </td>

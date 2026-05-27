@@ -27,7 +27,7 @@ export function LegacyChairman({ letter }: { letter?: ChairmanLetterData }) {
   );
 
   return (
- <section className="w-full bg-[#1A1A1A] text-white py-24 px-8">
+ <section className="w-full bg-[#1A1A1A] text-white section-padding">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-start">
 
         <div className="w-full md:w-5/12">

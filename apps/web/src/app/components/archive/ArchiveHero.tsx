@@ -4,7 +4,7 @@ type Props = { page: ArchivePageData['archivePage'] };
 
 export const ArchiveHero = ({ page }: Props) => {
   return (
- <section className="relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-center py-24 px-8 overflow-hidden">
+ <section className="relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-center section-padding overflow-hidden">
       {/* Faint cartographic grid overlay */}
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"

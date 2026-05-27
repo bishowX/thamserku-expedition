@@ -6,7 +6,7 @@ export const PrivateWhoItIsFor = ({ page, audiences }: { page?: PageData; audien
   const displayAudiences = (audiences ?? []).map((a) => ({ eyebrow: a.title, title: a.subtitle, desc: a.body, _key: a._key }));
 
   return (
-    <section className="bg-[#1A1A1A] py-24 px-8">
+    <section className="bg-[#1A1A1A] section-padding">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center">
 
         {/* Section Header */}

@@ -10,7 +10,7 @@ type PageData = {
 
 export const FAQNewsletterBanner = ({ page }: { page?: PageData }) => {
   return (
- <section className="bg-[#1A1A1A] py-24 px-8">
+ <section className="bg-[#1A1A1A] section-padding">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
 
         {/* Eyebrow */}

@@ -2,7 +2,7 @@ import type { FieldNotesPageFields } from '../../../lib/queries';
 
 export const FieldNotesNewsletterSignUp = ({ page }: { page: FieldNotesPageFields }) => {
   return (
- <section id="newsletter" className="bg-[#2E353C] py-24 px-8 scroll-mt-20">
+ <section id="newsletter" className="bg-[#2E353C] section-padding scroll-mt-20">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
 
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-10">

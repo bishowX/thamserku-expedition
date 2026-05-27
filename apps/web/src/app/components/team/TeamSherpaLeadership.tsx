@@ -133,12 +133,12 @@ export function TeamSherpaLeadership({ sherpas }: { sherpas?: SanitySherpaSupert
                       {sherpa.name}
                     </h3>
 
-                    <p className="font-['Cormorant_Garamond'] italic text-[22px] mb-16 text-[#b2b2b2]">
+                    <p className="font-['Cormorant_Garamond'] italic text-[22px] mb-8 md:mb-16 text-[#b2b2b2]">
                       {sherpa.role ?? '—'}
                     </p>
 
                     {/* 2x2 Field Note Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white mb-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white mb-8 md:mb-16">
 
                       {/* Top Left */}
                       <div className="flex flex-col gap-2 py-6 md:pr-8 border-t md:border-b-0 border-b border-white/20 md:border-r">
@@ -208,12 +208,12 @@ export function TeamSherpaLeadership({ sherpas }: { sherpas?: SanitySherpaSupert
                       {profile.name} <span className="text-[14px] text-[#5A6673] tracking-widest uppercase font-['JetBrains_Mono'] ml-4 inline-block align-middle border border-[#5A6673] px-2 py-1">PLACEHOLDER NAME</span>
                     </h3>
 
-                    <p className="font-['Cormorant_Garamond'] italic text-[22px] mb-16 text-[#b2b2b2]">
+                    <p className="font-['Cormorant_Garamond'] italic text-[22px] mb-8 md:mb-16 text-[#b2b2b2]">
                       {profile.role}
                     </p>
 
                     {/* 2x2 Field Note Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white mb-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white mb-8 md:mb-16">
 
                       {/* Top Left */}
                       <div className="flex flex-col gap-2 py-6 md:pr-8 border-t md:border-b-0 border-b border-white/20 md:border-r">

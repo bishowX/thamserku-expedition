@@ -6,7 +6,7 @@ export const PathwayHero = ({ page }: { page?: PageData }) => {
   if (!page?.heroHeadline || !page?.heroSubline) return null;
 
   return (
-    <section className="relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-end py-24 px-8 overflow-hidden">
+    <section className="relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-end section-padding overflow-hidden">
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
         style={{

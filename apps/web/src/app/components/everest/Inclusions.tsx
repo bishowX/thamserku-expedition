@@ -48,7 +48,7 @@ export function Inclusions({ expeditionName, inclusionCategories }: Props) {
       <div className="w-full max-w-[1440px] mx-auto px-8">
 
         {/* Section header */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-10 md:mb-24">
           <div className="md:col-span-5 flex flex-col">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
               WHAT IS INCLUDED — {name.toUpperCase()}
@@ -91,7 +91,7 @@ export function Inclusions({ expeditionName, inclusionCategories }: Props) {
         </div>
 
         {/* Below grid note */}
-        <p className="font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] max-w-[60ch] mb-24">
+        <p className="font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] max-w-[60ch] mb-10 md:mb-24">
           Editions vary. Definitive expeditions add private camp configuration, concierge planning, and maximum discretion. Your tailored proposal will specify exact inclusions.
         </p>
 

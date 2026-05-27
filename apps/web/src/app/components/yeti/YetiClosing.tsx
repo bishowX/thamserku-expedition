@@ -5,7 +5,7 @@ type PageData = YetiPageData['yetiPage'];
 
 export const YetiClosing = ({ page }: { page?: PageData }) => {
   return (
- <section className="bg-[#1A1A1A] py-24 px-8 border-t border-white/10">
+ <section className="bg-[#1A1A1A] section-padding border-t border-white/10">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
 
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-10">
@@ -19,7 +19,7 @@ export const YetiClosing = ({ page }: { page?: PageData }) => {
         )}
 
         {page?.closingBody && (
-          <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-16">
+          <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-8 md:mb-16">
             {page.closingBody}
           </p>
         )}

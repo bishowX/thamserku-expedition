@@ -37,8 +37,8 @@ export function AtlasSeasonalGuide({ expeditions, data }: Props) {
     .map((e) => e.name);
 
   return (
- <section className="w-full bg-white text-[#1A1A1A] py-24 px-8">
-      <div className="max-w-[1440px] mx-auto flex flex-col gap-24">
+ <section className="w-full bg-white text-[#1A1A1A] section-padding">
+      <div className="max-w-[1440px] mx-auto flex flex-col gap-12 md:gap-24">
         <div>
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] block mb-6">
             {eyebrow}

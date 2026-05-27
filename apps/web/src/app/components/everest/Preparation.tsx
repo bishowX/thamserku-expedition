@@ -41,7 +41,7 @@ export function Preparation({ preparationHeadline, preparationColumns, expeditio
 
   return (
  <section className="bg-[#1A1A1A] w-full text-white py-24">
-      <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-24">
+      <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-12 md:gap-24">
         <div className="flex flex-col gap-8">
           <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
             09 — PREPARATION
@@ -51,7 +51,7 @@ export function Preparation({ preparationHeadline, preparationColumns, expeditio
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 border-t border-white/10 pt-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 border-t border-white/10 pt-16">
           {columns.map((col, idx) => (
             <PrepColumnBlock key={idx} title={col.title} items={col.items} />
           ))}

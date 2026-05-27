@@ -98,7 +98,7 @@ export function RouteMap({
         />
       </div>
 
-      <div className="relative max-w-[1440px] mx-auto px-8 flex flex-col gap-16">
+      <div className="relative max-w-[1440px] mx-auto px-8 flex flex-col gap-8 md:gap-16">
         <div className="flex flex-col gap-8">
           <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
             06 — ROUTE

@@ -14,7 +14,7 @@ export function ExpeditionEditions({ editions }: Props) {
   const items = editions ?? [];
   return (
  <section className="bg-[#2E353C] w-full text-white py-24">
-      <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-24">
+      <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-12 md:gap-24">
         <div className="flex flex-col gap-8">
           <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
             08 — EDITIONS

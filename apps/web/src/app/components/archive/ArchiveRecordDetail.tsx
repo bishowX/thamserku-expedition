@@ -20,7 +20,7 @@ export const ArchiveRecordDetail = ({ page }: Props) => {
   const relatedCode = related ? related.peak.substring(0, 3).toUpperCase() : '';
 
   return (
- <section className="relative w-full bg-[#1A1A1A] py-24 px-8">
+ <section className="relative w-full bg-[#1A1A1A] section-padding">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center">
 
         {/* Section Header */}

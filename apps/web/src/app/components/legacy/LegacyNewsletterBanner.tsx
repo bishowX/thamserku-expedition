@@ -4,7 +4,7 @@ type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyNewsletterBanner({ page }: { page?: PageData }) {
   return (
- <section className="w-full bg-[#F4F2EC] py-24 px-8 flex justify-center">
+ <section className="w-full bg-[#F4F2EC] section-padding flex justify-center">
       <div className="w-full max-w-[880px] flex flex-col items-center text-center">
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
           {page?.newsletterEyebrow ?? 'FIELD NOTES — NEWSLETTER FROM THE EXPEDITION DESK'}

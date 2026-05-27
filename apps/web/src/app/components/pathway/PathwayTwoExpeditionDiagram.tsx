@@ -20,10 +20,10 @@ export const PathwayTwoExpeditionDiagram = ({ page }: { page?: PageData }) => {
   const midIdx = Math.floor(steps.length / 2);
 
   return (
-    <section className="bg-[#2E353C] py-24 px-8">
+    <section className="bg-[#2E353C] section-padding">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
 
-        <div className="flex flex-col items-center mb-24 md:mb-32">
+        <div className="flex flex-col items-center mb-10 md:mb-32">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-8">
             {eyebrow}
           </span>
@@ -63,7 +63,7 @@ export const PathwayTwoExpeditionDiagram = ({ page }: { page?: PageData }) => {
         </div>
 
         {/* Mobile */}
-        <div className="lg:hidden flex flex-col gap-16 mb-24 w-full px-4 relative">
+        <div className="lg:hidden flex flex-col gap-10 mb-10 md:mb-24 w-full px-4 relative">
           <div className="absolute top-0 bottom-0 left-[23px] w-[1px] bg-white z-0" />
           {steps.map((step, idx) => {
             const isMiddle = idx === midIdx;

@@ -7,7 +7,7 @@ export const YetiRegionalAccess = ({ page }: { page?: PageData }) => {
   const imageUrl = page?.accessImage ? urlFor(page.accessImage).width(1200).url() : null;
 
   return (
- <section className="bg-[#2E353C] py-24 px-8 border-t border-white/10">
+ <section className="bg-[#2E353C] section-padding border-t border-white/10">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-0 items-center">
 
         <div className="md:col-span-6 w-full aspect-[16/10] relative overflow-hidden">

@@ -2,7 +2,7 @@ import type { FieldNotesPageFields } from '../../../lib/queries';
 
 export const FieldNotesCategories = ({ page }: { page: FieldNotesPageFields }) => {
   return (
- <section className="bg-[#F4F2EC] py-24 px-8">
+ <section className="bg-[#F4F2EC] section-padding">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
 
         <div className="flex flex-col items-center mb-16 md:mb-20 w-full">

@@ -29,6 +29,12 @@
   --text-fluid-body-sm:  clamp(0.8125rem, 0.768rem + 0.19vw, 0.9375rem); /* 13px → 15px */
 }
 
+@layer utilities {
+  .section-padding {
+    @apply py-12 px-5 md:py-24 md:px-8;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

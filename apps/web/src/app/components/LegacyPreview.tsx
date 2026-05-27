@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { urlFor } from "../../lib/sanity";
 import type { ChairmanLetterData } from "../../lib/queries";
+import { ChairmanSignature } from "./legacy/ChairmanSignature";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,23 +85,6 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
           tl.to(img, { scale: 1, duration: 1.2, ease: "power2.out" }, "-=0.6");
         }
 
-        // Parallax within the image container
-        if (img) {
-          gsap.fromTo(
-            img,
-            { yPercent: -4 },
-            {
-              yPercent: 4,
-              ease: "none",
-              scrollTrigger: {
-                trigger: imageWrapRef.current,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
-        }
       }
 
       if (textRef.current) {
@@ -124,10 +108,10 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
     <section
       ref={sectionRef}
       id="legacy"
-      className="w-full bg-[#C8CDD2] text-[#1A1A1A] py-24 px-8"
+      className="w-full bg-[#C8CDD2] text-[#1A1A1A] section-padding"
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-start">
-        <div className="w-full md:w-5/12">
+        <div className="w-full md:w-5/12 md:sticky md:top-8 self-start">
           <div
             ref={imageWrapRef}
             className="relative aspect-[4/5] bg-[#E5E7EB] overflow-hidden"
@@ -166,7 +150,10 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
           )}
 
           {(quote || attribution) && (
-            <div className="mt-4 border-l-2 border-[#C8CDD2] pl-6 py-2">
+            <div className="mt-4 border-l-2 border-[#1A1A1A]/20 pl-6 py-2">
+              <div className="mb-3">
+                <ChairmanSignature fill="#1A1A1A" />
+              </div>
               {quote && (
                 <div className="font-['Radley'] italic text-fluid-lg text-[#1A1A1A] leading-none mb-2">
                   {quote}

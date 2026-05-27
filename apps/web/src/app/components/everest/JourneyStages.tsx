@@ -12,7 +12,7 @@ export function JourneyStages({ stages }: Props) {
 
   return (
  <section className="bg-[#1A1A1A] w-full text-white py-24 relative overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-24">
+      <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-12 md:gap-24">
 
         <div className="flex flex-col gap-8">
           <p className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">

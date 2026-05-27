@@ -157,7 +157,7 @@ export function FieldNotesPreview({
     <section
       ref={sectionRef}
       id="field-notes"
-      className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8"
+      className="w-full bg-[#F4F2EC] text-[#1A1A1A] section-padding"
     >
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
         <div

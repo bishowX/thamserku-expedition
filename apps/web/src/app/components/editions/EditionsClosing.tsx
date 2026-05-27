@@ -14,7 +14,7 @@ export function EditionsClosing({ page }: { page?: PageData }) {
     "RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF";
 
   return (
- <section className="w-full bg-[#2E353C] text-white py-24 px-8 flex flex-col items-center justify-center text-center">
+ <section className="w-full bg-[#2E353C] text-white section-padding flex flex-col items-center justify-center text-center">
       <div className="w-full max-w-[800px] flex flex-col items-center">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">
           {eyebrow}
@@ -27,12 +27,12 @@ export function EditionsClosing({ page }: { page?: PageData }) {
         )}
 
         {page?.closingBody && (
-          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mb-16">
+          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mb-8 md:mb-16">
             {page.closingBody}
           </p>
         )}
 
-        <div className="flex flex-col sm:flex-row items-center gap-6 mb-16 w-full justify-center">
+        <div className="flex flex-col sm:flex-row items-center gap-6  mb-8 md:mb-16 w-full justify-center">
           <Link
             to="/consultation"
             className="w-full sm:w-auto px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-white text-white hover:bg-white hover:text-[#0A3A77]"

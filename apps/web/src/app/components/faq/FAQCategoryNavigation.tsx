@@ -15,7 +15,7 @@ export const FAQCategoryNavigation = ({ page, categories: sanityCategories }: { 
 
   if (items.length === 0) return null;
   return (
- <section className="bg-[#F4F2EC] py-24 px-8 border-b border-[#5A6673]/30">
+ <section className="bg-[#F4F2EC] section-padding border-b border-[#5A6673]/30">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
 
         {/* Section Header */}

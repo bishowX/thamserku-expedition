@@ -8,7 +8,7 @@ export const EnquiryProcess = ({ data }: { data?: ConsultationPage }) => {
   return (
     <section className="relative py-24 overflow-hidden" style={{ background: 'linear-gradient(90deg, #2E353C 0%, #2E353C 100%)' }}>
       <div className="relative z-10 max-w-[1440px] mx-auto px-8">
-        <div className="mb-24">
+        <div className="mb-10 md:mb-24">
           <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
             04 — WHAT HAPPENS NEXT
           </p>
@@ -17,7 +17,7 @@ export const EnquiryProcess = ({ data }: { data?: ConsultationPage }) => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8 mb-10 md:mb-24">
           {steps.map((step) => (
             <div key={step._key} className="flex flex-col">
               <div className="w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-8">

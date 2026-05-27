@@ -12,7 +12,7 @@ export const PathwayPlanningContext = ({ page }: { page?: PageData }) => {
   const paragraphs = page.planningContextBody.split(/\n\n+/).filter(Boolean);
 
   return (
-    <section className="bg-[#F4F2EC] py-24 px-8">
+    <section className="bg-[#F4F2EC] section-padding">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8">
 
         <div className="md:col-span-5 flex flex-col items-start">

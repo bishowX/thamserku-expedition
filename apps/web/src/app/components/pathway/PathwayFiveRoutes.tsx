@@ -13,7 +13,7 @@ export const PathwayFiveRoutes = ({ page }: { page?: PageData }) => {
   if (!page?.routesSectionHeadline || routes.length === 0) return null;
 
   return (
-    <section className="bg-[#F4F2EC] py-24 px-8">
+    <section className="bg-[#F4F2EC] section-padding">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center">
 
         <div className="flex flex-col items-center mb-24 md:mb-32">

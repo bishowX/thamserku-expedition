@@ -5,7 +5,7 @@ export const FieldNotesFeaturedStories = ({ page, fieldNotes }: { page: FieldNot
   const featured = fieldNotes.slice(0, 3);
 
   return (
- <section className="bg-[#1A1A1A] py-24 px-8">
+ <section className="bg-[#1A1A1A] section-padding">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
 
         <div className="flex flex-col items-center mb-24 md:mb-32">

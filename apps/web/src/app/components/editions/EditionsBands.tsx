@@ -44,7 +44,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
         return (
           <div
             key={ed._id}
-            className={`w-full relative overflow-hidden ${bgClass} py-24 px-8`}
+            className={`w-full relative overflow-hidden ${bgClass} section-padding`}
           >
             {imageUrl && (
               <div
@@ -61,7 +61,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
               />
             )}
 
-            <div className="relative z-10 w-full max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
+            <div className="relative z-10 w-full max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
               <div className="col-span-1 md:col-span-5 relative flex flex-col pt-8">
                 <p
                   className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-8 ${isDark ? "text-[#C8CDD2]" : "text-[#0A3A77]"}`}

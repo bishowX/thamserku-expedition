@@ -20,7 +20,7 @@ export function TeamField({ sherpas: _sherpas }: { sherpas?: SanitySherpaSuperty
   ];
 
   return (
- <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8">
+ <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] section-padding">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-16 md:gap-24">
         
         {/* Header */}

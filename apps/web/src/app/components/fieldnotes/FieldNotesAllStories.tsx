@@ -3,7 +3,7 @@ import type { SanityFieldNote, FieldNotesPageFields } from '../../../lib/queries
 export const FieldNotesAllStories = ({ page, fieldNotes }: { page: FieldNotesPageFields; fieldNotes: SanityFieldNote[] }) => {
 
   return (
- <section className="bg-[#F4F2EC] py-24 px-8">
+ <section className="bg-[#F4F2EC] section-padding">
       <div className="max-w-[1320px] mx-auto flex flex-col">
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-0 mb-16 md:mb-24">

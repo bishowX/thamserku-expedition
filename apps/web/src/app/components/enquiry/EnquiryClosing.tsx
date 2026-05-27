@@ -17,7 +17,7 @@ export const EnquiryClosing = ({ data }: { data?: ConsultationPage }) => {
           {heading}
         </h2>
 
-        <p className="text-[#C8CDD2] font-light text-base md:text-[17px] leading-relaxed max-w-[56ch] mb-16">
+        <p className="text-[#C8CDD2] font-light text-base md:text-[17px] leading-relaxed max-w-[56ch] mb-8 md:mb-16">
           {body}
         </p>
 

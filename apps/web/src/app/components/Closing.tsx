@@ -108,7 +108,7 @@ export function Closing({ data }: { data?: ClosingData }) {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden flex flex-col items-center justify-center text-center"
+      className="relative w-full bg-[#1A1A1A] text-white section-padding overflow-hidden flex flex-col items-center justify-center text-center"
     >
       {bgSrc && (
         <div ref={bgRef} className="absolute inset-0 z-0">

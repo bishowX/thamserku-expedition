@@ -44,7 +44,7 @@ export function AtlasFAQ({ data }: Props) {
 
       <div className="relative z-10 w-full max-w-[880px] mx-auto px-8 flex flex-col items-center">
         {/* Section header */}
-        <div className="flex flex-col items-center text-center mb-24 md:mb-32">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-32">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
             {eyebrow}
           </span>
@@ -57,7 +57,7 @@ export function AtlasFAQ({ data }: Props) {
         </div>
 
         {/* FAQ list */}
-        <div className="w-full flex flex-col mb-24 border-b border-[#C8CDD2]/30">
+        <div className="w-full flex flex-col mb-10 md:mb-24 border-b border-[#C8CDD2]/30">
           {faqs.map((faq, idx) => {
             const isOpen = !!openStates[idx];
             const qPrefix = `Q.${String(idx + 1).padStart(2, "0")}`;

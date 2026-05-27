@@ -17,11 +17,17 @@ export default function EditionsPage() {
 
   return (
     <div className="w-full min-h-screen bg-[#1A1A1A] text-white">
-      <EditionsHero editions={data.editions} page={data.editionsPage ?? undefined} />
+      <EditionsHero
+        editions={data.editions}
+        page={data.editionsPage ?? undefined}
+      />
       <EditionsManifesto page={data.editionsPage ?? undefined} />
       <EditionsBands editions={data.editions} />
-      <EditionsComparison editions={data.editions} expeditions={data.expeditions} page={data.editionsPage ?? undefined} />
-      <EditionsAvailability expeditions={data.expeditions} editions={data.editions} page={data.editionsPage ?? undefined} />
+      <EditionsComparison
+        editions={data.editions}
+        expeditions={data.expeditions}
+        page={data.editionsPage ?? undefined}
+      />
       <EditionsClosing page={data.editionsPage ?? undefined} />
       <Footer />
     </div>

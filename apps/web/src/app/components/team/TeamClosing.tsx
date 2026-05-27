@@ -4,7 +4,7 @@ type PageData = { closingHeadline?: string; closingBody?: string };
 
 export function TeamClosing({ page }: { page?: PageData }) {
   return (
- <section className="w-full bg-[#2E353C] text-white py-24 px-8">
+ <section className="w-full bg-[#2E353C] text-white section-padding">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center text-center gap-12 md:gap-16">
         
         {/* Eyebrow */}

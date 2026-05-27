@@ -18,11 +18,20 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
   const getCtaInfo = () => {
     switch (location.pathname) {
       case "/expeditions/everest":
-        return { label: "Schedule an Everest Consultation", link: "/consultation?peak=everest" };
+        return {
+          label: "Schedule an Everest Consultation",
+          link: "/consultation?peak=everest",
+        };
       case "/7000m":
-        return { label: "Plan Your Qualifying Ascent", link: "/consultation?intent=7000m" };
+        return {
+          label: "Plan Your Qualifying Ascent",
+          link: "/consultation?intent=7000m",
+        };
       case "/private":
-        return { label: "Schedule a Private Consultation", link: "/consultation?intent=private" };
+        return {
+          label: "Schedule a Private Consultation",
+          link: "/consultation?intent=private",
+        };
       case "/field-notes":
         return { label: "Receive Field Notes", link: "#newsletter" };
       case "/consultation":
@@ -48,7 +57,8 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
         lastScrollY.current = currentScrollY;
       }
 
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(docHeight > 0 ? (currentScrollY / docHeight) * 100 : 0);
     };
 
@@ -69,24 +79,55 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 flex items-center justify-between px-6 md:px-8 py-5 md:py-6 text-white ${
-        scrolled || mobileMenuOpen ? "bg-[#1A1A1A]/90 backdrop-blur-md border-b border-white/5" : "bg-transparent"
-      } ${hidden && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"}`}>
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 flex items-center justify-between px-6 md:px-8 py-5 md:py-6 text-white ${
+          scrolled || mobileMenuOpen
+            ? "bg-[#1A1A1A]/90 backdrop-blur-md border-b border-white/5"
+            : "bg-transparent"
+        } ${hidden && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"}`}
+      >
         <div className="w-auto lg:w-[220px] xl:w-[280px] z-50">
-          <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block h-7 md:h-8 aspect-[1115.63/208]">
+          <Link
+            to="/"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block h-7 md:h-8 aspect-[1115.63/208]"
+          >
             <ThamserkuLogo />
           </Link>
         </div>
 
         <div className="hidden lg:flex items-center gap-8 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px]">
-          <Link to="/atlas" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Expedition Atlas</Link>
-          <Link to="/editions" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Editions</Link>
-          <Link to="/yeti-infrastructure" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Yeti Infrastructure</Link>
-          <Link to="/legacy" className="nav-link-underline hover:text-[#C8CDD2] transition-colors">Legacy</Link>
+          <Link
+            to="/atlas"
+            className="nav-link-underline hover:text-[#C8CDD2] transition-colors"
+          >
+            Expedition Atlas
+          </Link>
+          <Link
+            to="/editions"
+            className="nav-link-underline hover:text-[#C8CDD2] transition-colors"
+          >
+            Editions
+          </Link>
+          <Link
+            to="/yeti-infrastructure"
+            className="nav-link-underline hover:text-[#C8CDD2] transition-colors"
+          >
+            Yeti Infrastructure
+          </Link>
+          <Link
+            to="/legacy"
+            className="nav-link-underline hover:text-[#C8CDD2] transition-colors"
+          >
+            Legacy
+          </Link>
         </div>
 
-        <div className="hidden lg:flex w-auto lg:w-[220px] xl:w-[280px] justify-end">
-          <Link to={ctaLink} className={`btn-cta btn-cta-secondary border ${scrolled || mobileMenuOpen ? "border-white/50" : "border-white/30"} px-6 xl:px-8 py-3.5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] xl:text-[11px] whitespace-nowrap`}>
+        <div className="hidden lg:flex justify-end">
+          <Link
+            to={ctaLink}
+            className={`btn-cta btn-cta-secondary border ${scrolled || mobileMenuOpen ? "border-white/50" : "border-white/30"} px-6 xl:px-8 py-3.5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] xl:text-[11px] whitespace-nowrap`}
+          >
             <span>{ctaLabel}</span>
           </Link>
         </div>
@@ -97,7 +138,11 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle mobile menu"
         >
-          {mobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
+          {mobileMenuOpen ? (
+            <X size={24} strokeWidth={1.5} />
+          ) : (
+            <Menu size={24} strokeWidth={1.5} />
+          )}
         </button>
 
         {/* Scroll Progress */}
@@ -114,25 +159,86 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
         } lg:hidden overflow-y-auto`}
       >
         <div className="flex flex-col mt-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[12px] text-white">
-
           {/* EXPEDITIONS GROUP */}
           <div className="text-[10px] text-[#C8CDD2] mb-6">EXPEDITIONS</div>
-          <Link to="/atlas" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Expedition Atlas</Link>
-          <Link to="/expeditions/everest" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Everest</Link>
-          <Link to="/editions" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Editions</Link>
-          <Link to="/7000m" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>7,000m Qualifying Pathway</Link>
-          <Link to="/private" className="hover:text-[#C8CDD2] transition-colors pb-8 mb-8 border-b border-white/10" onClick={() => setMobileMenuOpen(false)}>Private Expeditions</Link>
+          <Link
+            to="/atlas"
+            className="hover:text-[#C8CDD2] transition-colors pb-4"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Expedition Atlas
+          </Link>
+          <Link
+            to="/expeditions/everest"
+            className="hover:text-[#C8CDD2] transition-colors pb-4"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Everest
+          </Link>
+          <Link
+            to="/editions"
+            className="hover:text-[#C8CDD2] transition-colors pb-4"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Editions
+          </Link>
+          <Link
+            to="/7000m"
+            className="hover:text-[#C8CDD2] transition-colors pb-4"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            7,000m Qualifying Pathway
+          </Link>
+          <Link
+            to="/private"
+            className="hover:text-[#C8CDD2] transition-colors pb-8 mb-8 border-b border-white/10"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Private Expeditions
+          </Link>
 
           {/* THE HOUSE GROUP */}
           <div className="text-[10px] text-[#C8CDD2] mb-6">THE HOUSE</div>
-          <Link to="/legacy" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Legacy</Link>
-          <Link to="/yeti-infrastructure" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Yeti Infrastructure</Link>
-          <Link to="/archive" className="hover:text-[#C8CDD2] transition-colors pb-8 mb-8 border-b border-white/10" onClick={() => setMobileMenuOpen(false)}>Expedition Archive</Link>
+          <Link
+            to="/legacy"
+            className="hover:text-[#C8CDD2] transition-colors pb-4"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Legacy
+          </Link>
+          <Link
+            to="/yeti-infrastructure"
+            className="hover:text-[#C8CDD2] transition-colors pb-4"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Yeti Infrastructure
+          </Link>
+          <Link
+            to="/archive"
+            className="hover:text-[#C8CDD2] transition-colors pb-8 mb-8 border-b border-white/10"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Expedition Archive
+          </Link>
 
           {/* EDITORIAL & HELP GROUP */}
-          <div className="text-[10px] text-[#C8CDD2] mb-6">EDITORIAL & HELP</div>
-          <Link to="/field-notes" className="hover:text-[#C8CDD2] transition-colors pb-4" onClick={() => setMobileMenuOpen(false)}>Field Notes</Link>
-          <Link to="/faq" className="hover:text-[#C8CDD2] transition-colors pb-8 mb-8 border-b border-white/10" onClick={() => setMobileMenuOpen(false)}>Main FAQ</Link>
+          <div className="text-[10px] text-[#C8CDD2] mb-6">
+            EDITORIAL & HELP
+          </div>
+          <Link
+            to="/field-notes"
+            className="hover:text-[#C8CDD2] transition-colors pb-4"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Field Notes
+          </Link>
+          <Link
+            to="/faq"
+            className="hover:text-[#C8CDD2] transition-colors pb-8 mb-8 border-b border-white/10"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Main FAQ
+          </Link>
 
           {/* DIRECT GROUP */}
           <div className="text-[10px] text-[#C8CDD2] mb-6">DIRECT</div>

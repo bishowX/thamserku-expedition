@@ -4,7 +4,14 @@ type PageData = { heroHeadline?: string; heroSubline?: string };
 
 export const PrivateHero = ({ page }: { page?: PageData }) => {
   return (
-    <section className="relative w-full min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-end py-24 px-8 overflow-hidden">
+    <section className="relative w-full min-h-[100vh] bg-[#1A1A1A] flex flex-col justify-end section-padding overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #242424 1px, transparent 1px), linear-gradient(to bottom, #242424 1px, transparent 1px)`,
+          backgroundSize: "64px 64px",
+        }}
+      />
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-center pt-32 md:pt-0">
         {/* Headline */}
         <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight text-white leading-[1.1] text-center max-w-[32ch] mb-6">

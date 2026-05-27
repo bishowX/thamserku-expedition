@@ -9,7 +9,7 @@ export const EnquiryAlternative = ({ data }: { data?: ConsultationPage }) => {
  <section className="bg-[#F4F2EC] py-24">
       <div className="max-w-[1440px] mx-auto px-8">
 
-        <div className="mb-24">
+        <div className="mb-10 md:mb-24">
           <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
             05 — IF A FORM IS NOT YOUR WAY
           </p>
@@ -18,7 +18,7 @@ export const EnquiryAlternative = ({ data }: { data?: ConsultationPage }) => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-12 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-10 md:mb-24">
           {options.map((option) => (
             <div key={option._key} className="flex flex-col group cursor-pointer">
               <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">

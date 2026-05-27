@@ -10,7 +10,7 @@ export const PathwayWhyItMatters = ({ page }: { page?: PageData }) => {
   if (!page?.pillarsEyebrow || !page?.pillarsHeading || !page?.pillars?.length) return null;
 
   return (
-    <section className="relative bg-[#353E46] py-24 px-8 border-t border-[#C8CDD2]/10 overflow-hidden">
+    <section className="relative bg-[#353E46] section-padding border-t border-[#C8CDD2]/10 overflow-hidden">
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -23,7 +23,7 @@ export const PathwayWhyItMatters = ({ page }: { page?: PageData }) => {
       />
 
       <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col items-center">
-        <div className="flex flex-col items-center mb-16">
+        <div className="flex flex-col items-center mb-8 md:mb-16">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-8">
             {page.pillarsEyebrow}
           </span>

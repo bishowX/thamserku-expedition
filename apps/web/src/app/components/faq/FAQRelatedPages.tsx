@@ -6,7 +6,7 @@ type PageData = { relatedPagesEyebrow?: string; relatedPagesHeadline?: string; r
 export const FAQRelatedPages = ({ page }: { page?: PageData }) => {
   const pages = page?.relatedPages ?? [];
   return (
- <section className="bg-[#F4F2EC] py-24 px-8">
+ <section className="bg-[#F4F2EC] section-padding">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center">
 
         {/* Section Header */}

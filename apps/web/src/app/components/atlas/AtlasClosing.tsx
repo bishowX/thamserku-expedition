@@ -22,7 +22,7 @@ export function AtlasClosing({ data }: Props) {
   const bgSrc = data?.closingImage ? urlFor(data.closingImage).width(1920).url() : null;
 
   return (
- <section className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden min-h-[800px] flex flex-col justify-center items-center text-center">
+ <section className="relative w-full bg-[#1A1A1A] text-white section-padding overflow-hidden min-h-[800px] flex flex-col justify-center items-center text-center">
       {bgSrc && (
         <div className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity">
           <ImageWithFallback
@@ -43,7 +43,7 @@ export function AtlasClosing({ data }: Props) {
           {headline}
         </h2>
 
-        <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mb-16">
+        <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mb-8 md:mb-16">
           {body}
         </p>
 

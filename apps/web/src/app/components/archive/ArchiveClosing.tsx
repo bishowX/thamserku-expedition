@@ -5,7 +5,7 @@ type Props = { page: ArchivePageData['archivePage'] };
 
 export const ArchiveClosing = ({ page }: Props) => {
   return (
- <section className="bg-[#1A1A1A] py-24 px-8 border-t border-white/10">
+ <section className="bg-[#1A1A1A] section-padding border-t border-white/10">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
 
         {/* Eyebrow */}
@@ -19,7 +19,7 @@ export const ArchiveClosing = ({ page }: Props) => {
         </h2>
 
         {/* Sub-paragraph */}
-        <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[56ch] mb-16">
+        <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[56ch] mb-8 md:mb-16">
           {page?.closingBody}
         </p>
 

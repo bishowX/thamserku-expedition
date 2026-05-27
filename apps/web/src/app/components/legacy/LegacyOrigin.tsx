@@ -5,7 +5,7 @@ type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyOrigin({ page }: { page?: PageData }) {
   return (
- <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 px-8">
+ <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] section-padding">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
 
         {/* Left Column (Narrow) */}

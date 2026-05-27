@@ -160,7 +160,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
       />
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-8 flex flex-col">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-24 md:mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-10 md:mb-32">
           <div className="md:col-span-5 flex flex-col">
             <div ref={eyebrowRef} className="flex items-center gap-4 mb-8">
               <span
@@ -191,7 +191,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
 
         <div
           ref={pillarsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 mb-8 md:mb-16"
         >
           {pillars.map((pillar, idx) => (
             <div

@@ -74,14 +74,15 @@ export function AtlasPreview({
       if (gridRef.current) {
         const cards = Array.from(gridRef.current.children);
 
-        cards.forEach((card, i) => {
-          gsap.from(card, {
-            opacity: 0,
-            y: 50,
-            duration: 0.8,
-            delay: i * 0.1,
+        gsap.set(cards, { opacity: 0, y: 40 });
+
+        cards.forEach((card) => {
+          gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
             ease: "power3.out",
-            scrollTrigger: { trigger: card, start: "top 92%" },
+            scrollTrigger: { trigger: card, start: "top 90%" },
           });
 
           const img = card.querySelector("img");
@@ -115,9 +116,9 @@ export function AtlasPreview({
     <section
       ref={sectionRef}
       id="atlas"
-      className="relative w-full bg-[#1A1A1A] text-white py-24 px-8 overflow-hidden"
+      className="relative w-full bg-[#1A1A1A] text-white section-padding overflow-hidden"
     >
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-8 md:gap-16">
         <div
           ref={headerRef}
           className="flex flex-col md:flex-row gap-12 md:gap-24 items-start"
@@ -143,10 +144,7 @@ export function AtlasPreview({
           </div>
         </div>
 
-        <div
-          ref={gridRef}
-          className="grid grid-cols-1 md:grid-cols-12 gap-6"
-        >
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {items.map((exp, idx) => {
             const href = exp.slug ? `/expeditions/${exp.slug}` : null;
             return (
@@ -156,11 +154,13 @@ export function AtlasPreview({
                 className={`group relative flex flex-col justify-between border border-white/10 bg-[#2E353C]/30 p-8 min-h-[480px] overflow-hidden transition-all duration-500 hover:-translate-y-1 ${href ? "cursor-pointer" : ""} ${getColClass(idx)}`}
               >
                 <div className="absolute inset-0 z-0">
-                  <ImageWithFallback
-                    src={exp.image}
-                    alt={exp.name}
-                    className="w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-40 transition-opacity duration-700 will-change-transform"
-                  />
+                  <div className="absolute inset-0 group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <ImageWithFallback
+                      src={exp.image}
+                      alt={exp.name}
+                      className="w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-40 transition-opacity duration-700 will-change-transform"
+                    />
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent opacity-80" />
                 </div>
 
@@ -177,18 +177,11 @@ export function AtlasPreview({
                 </div>
 
                 <div className="relative z-10 mt-12 flex flex-col gap-4 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.1em] text-[#5A6673]">
-                  <div className="grid grid-cols-2 gap-y-2 gap-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="grid grid-cols-2 gap-y-2 gap-x-4  transition-opacity duration-300">
                     <div>ALT: {exp.altitude}</div>
                     <div>REG: {exp.region}</div>
                     <div>SEA: {exp.season}</div>
                     <div>STY: {exp.style}</div>
-                  </div>
-                  <div className="pt-4 border-t border-white/10 text-[#C8CDD2] flex justify-between items-center">
-                    <div className="flex flex-wrap hover:text-white transition-colors">
-                      Editions:{" "}
-                      {exp.editions.map((ed) => ed.name).join(" · ")}
-                    </div>
-                    <MoveRight className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0 ml-4 arrow-shift" />
                   </div>
                 </div>
               </div>

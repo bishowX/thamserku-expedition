@@ -36,7 +36,7 @@ export function YetiInfrastructureSupport({
       />
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-10 md:mb-24">
           <div className="md:col-span-5 flex flex-col">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
               YETI INFRASTRUCTURE SUPPORT
@@ -57,7 +57,7 @@ export function YetiInfrastructureSupport({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 md:mb-24">
           {PILLAR_LABELS.map(({ label }, idx) => (
             <div
               key={idx}
@@ -76,7 +76,7 @@ export function YetiInfrastructureSupport({
           ))}
         </div>
 
-        <div className="flex justify-end mb-16">
+        <div className="flex justify-end mb-8 md:mb-16">
           <Link
             to="/yeti-infrastructure"
             className="group flex items-center gap-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors"

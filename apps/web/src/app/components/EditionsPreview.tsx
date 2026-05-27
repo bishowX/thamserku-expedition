@@ -87,9 +87,9 @@ export function EditionsPreview({
     <section
       ref={sectionRef}
       id="editions"
-      className="w-full bg-[#2E353C] text-white py-24 px-8"
+      className="w-full bg-[#2E353C] text-white section-padding"
     >
-      <div className="max-w-7xl mx-auto flex flex-col gap-16">
+      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-16">
         <div
           ref={headerRef}
           className="flex flex-col md:flex-row gap-12 md:gap-24 items-start mb-12"

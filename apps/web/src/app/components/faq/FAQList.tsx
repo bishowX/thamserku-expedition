@@ -37,7 +37,7 @@ export const FAQList = ({
   };
 
   return (
-    <section className="relative w-full bg-[#1A1A1A] py-24 px-8 overflow-hidden">
+    <section className="relative w-full bg-[#1A1A1A] section-padding overflow-hidden">
       <div className="relative z-10 w-full max-w-[880px] mx-auto flex flex-col items-center">
         <div className="w-full flex justify-center mb-16 md:mb-24">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
