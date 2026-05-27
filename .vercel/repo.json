@@ -1,0 +1,15 @@
+{
+  "orgId": "team_y0esyvPUJo2shzqePeyWuRbz",
+  "projects": [
+    {
+      "id": "prj_oUC0ais6xRAhTbl5tA72b3Rkq7IT",
+      "name": "thamserku-expedition",
+      "directory": "apps/web"
+    },
+    {
+      "id": "prj_GGQT8rcKANhEAiohI7UqFyDi3YUm",
+      "name": "studio",
+      "directory": "apps/studio"
+    }
+  ]
+}
