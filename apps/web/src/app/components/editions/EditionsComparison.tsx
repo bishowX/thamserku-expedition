@@ -76,13 +76,13 @@ export function EditionsComparison({
                   key={row.label}
                   className="border-b border-[#1A1A1A]/10 transition-colors hover:bg-[#F4F2EC]/50"
                 >
-                  <td className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] py-8">
+                  <td className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] py-1 md:py-8">
                     {row.label}
                   </td>
                   {editions.map((ed) => (
                     <td
                       key={ed._id}
-                      className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-8 pr-4"
+                      className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-1 md:py-8 pr-4"
                     >
                       {row.getValue(ed, expeditions)}
                     </td>
