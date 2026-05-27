@@ -142,7 +142,7 @@ export function EditionsPreview({
               </div>
 
               <div className="md:w-3/12">
-                <p className="font-['JetBrains_Mono'] capitalize tracking-[0.1em] text-[15px] text-[#C8CDD2] leading-relaxed max-w-[40ch]">
+                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-relaxed">
                   {ed.who.toLocaleLowerCase()}
                 </p>
               </div>
