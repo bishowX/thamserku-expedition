@@ -10,7 +10,6 @@ import { RouteMap } from "../components/everest/RouteMap";
 import { SafetySupport } from "../components/everest/SafetySupport";
 import { YetiInfrastructureSupport } from "../components/everest/YetiInfrastructureSupport";
 import { Preparation } from "../components/everest/Preparation";
-import { LeadSherpa } from "../components/everest/LeadSherpa";
 import { Availability } from "../components/everest/Availability";
 import { Inclusions } from "../components/everest/Inclusions";
 import { ExpeditionFAQ } from "../components/everest/ExpeditionFAQ";
@@ -79,7 +78,6 @@ export default function ExpeditionDossier() {
           preparationColumns={expedition.preparationColumns}
           expeditionName={expedition.name}
         />
-        <LeadSherpa sherpa={expedition.leadSherpa} expeditionName={expedition.name} />
         <Availability
           expeditionName={expedition.name}
           availableSeasons={expedition.availableSeasons}

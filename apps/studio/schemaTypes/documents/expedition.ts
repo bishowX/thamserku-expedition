@@ -8,9 +8,10 @@ export default defineType({
     { name: 'identity',        title: 'Identity' },
     { name: 'hero',            title: 'Hero' },
     { name: 'content',         title: 'Content' },
-    { name: 'safety',          title: 'Safety & Preparation' },
-    { name: 'commercial',      title: 'Commercial' },
+    { name: 'safety',          title: 'Safety & Support' },
     { name: 'infrastructure',  title: 'Infrastructure' },
+    { name: 'preparation',     title: 'Preparation' },
+    { name: 'commercial',      title: 'Commercial' },
     { name: 'closing',         title: 'Closing' },
   ],
   fields: [
@@ -88,7 +89,7 @@ export default defineType({
     defineField({ group: 'content', name: 'acclimatisationNote', title: 'Acclimatisation Cycle Note', type: 'text', rows: 3 }),
     defineField({ group: 'content', name: 'summitWindowNote', title: 'Summit Window Note', type: 'text', rows: 3 }),
 
-    // ── Safety & Preparation ──────────────────────────────────────────────────
+    // ── Safety & Support ─────────────────────────────────────────────────────
     defineField({ group: 'safety', name: 'safetySupportHeadline', title: 'Safety & Support — Headline', type: 'string' }),
     defineField({
       group: 'safety',
@@ -98,16 +99,23 @@ export default defineType({
       of: [{ type: 'safetyModule' }],
       description: '6 safety modules shown in the Safety & Support section.',
     }),
-    defineField({ group: 'safety', name: 'preparationHeadline', title: 'Preparation — Headline', type: 'string' }),
+
+    // ── Infrastructure ────────────────────────────────────────────────────────
+    defineField({ group: 'infrastructure', name: 'yetiAirNote', title: 'Yeti — Air Support Note', type: 'text', rows: 2 }),
+    defineField({ group: 'infrastructure', name: 'yetiLodgesNote', title: 'Yeti — Mountain Lodges Note', type: 'text', rows: 2 }),
+    defineField({ group: 'infrastructure', name: 'yetiAccessNote', title: 'Yeti — Regional Access Note', type: 'text', rows: 2 }),
+    defineField({ group: 'infrastructure', name: 'yetiContinuityNote', title: 'Yeti — Field Continuity Note', type: 'text', rows: 2 }),
+
+    // ── Preparation ───────────────────────────────────────────────────────────
+    defineField({ group: 'preparation', name: 'preparationHeadline', title: 'Preparation — Headline', type: 'string' }),
     defineField({
-      group: 'safety',
+      group: 'preparation',
       name: 'preparationColumns',
       title: 'Preparation Columns',
       type: 'array',
       of: [{ type: 'preparationColumn' }],
       description: 'Typically 3 columns: Body, Time, Mind.',
     }),
-
     // ── Commercial ────────────────────────────────────────────────────────────
     defineField({
       group: 'commercial',
@@ -130,19 +138,6 @@ export default defineType({
       title: 'FAQs',
       type: 'array',
       of: [{ type: 'faqItem' }],
-    }),
-
-    // ── Infrastructure ────────────────────────────────────────────────────────
-    defineField({ group: 'infrastructure', name: 'yetiAirNote', title: 'Yeti — Air Support Note', type: 'text', rows: 2 }),
-    defineField({ group: 'infrastructure', name: 'yetiLodgesNote', title: 'Yeti — Mountain Lodges Note', type: 'text', rows: 2 }),
-    defineField({ group: 'infrastructure', name: 'yetiAccessNote', title: 'Yeti — Regional Access Note', type: 'text', rows: 2 }),
-    defineField({ group: 'infrastructure', name: 'yetiContinuityNote', title: 'Yeti — Field Continuity Note', type: 'text', rows: 2 }),
-    defineField({
-      group: 'infrastructure',
-      name: 'leadSherpa',
-      title: 'Lead Sherpa',
-      type: 'reference',
-      to: [{ type: 'sherpa' }],
     }),
 
     // ── Closing ───────────────────────────────────────────────────────────────

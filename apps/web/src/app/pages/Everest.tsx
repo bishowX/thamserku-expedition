@@ -10,7 +10,6 @@ import { RouteMap } from "../components/everest/RouteMap";
 import { SafetySupport } from "../components/everest/SafetySupport";
 import { YetiInfrastructureSupport } from "../components/everest/YetiInfrastructureSupport";
 import { Preparation } from "../components/everest/Preparation";
-import { LeadSherpaPlaceholder } from "../components/everest/LeadSherpaPlaceholder";
 import { Availability } from "../components/everest/Availability";
 import { Inclusions } from "../components/everest/Inclusions";
 import { ExpeditionFAQ } from "../components/everest/ExpeditionFAQ";
@@ -38,7 +37,6 @@ export default function Everest() {
         <SafetySupport />
         <YetiInfrastructureSupport />
         <Preparation />
-        <LeadSherpaPlaceholder />
         <Availability />
         <Inclusions />
         <ExpeditionFAQ />

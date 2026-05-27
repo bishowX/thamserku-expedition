@@ -438,7 +438,6 @@ export type SanityExpeditionDossier = {
   safetyModules?: SanitySafetyModule[] | null;
   preparationHeadline?: string;
   preparationColumns?: SanityPreparationColumn[] | null;
-  leadSherpa?: SanitySherpa | null;
   availableSeasons?: SanityAvailableSeason[];
   inclusionCategories?: SanityInclusionCategory[] | null;
   faqs?: SanityFaqItem[];
@@ -465,7 +464,6 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       preparationHeadline,
       preparationColumns[]{ title, items },
       editions[]->{ letter, name, subtitle, positioning, targetAudience },
-      leadSherpa->{ name, portrait, region, yearsActive, mountainsSupported, philosophyLine },
       availableSeasons[]{ name, dates, statusAlpine, statusBespoke, statusCrafted, statusDefinitive },
       inclusionCategories[]{ category, prefix, items },
       faqs[]{ question, answer },
