@@ -1,5 +1,7 @@
 import type { SchemaTypeDefinition } from 'sanity'
 import enquiry from './documents/enquiry'
+import booking from './documents/booking'
+import designSettings from './documents/designSettings'
 import edition from './documents/edition'
 import editionsPage from './documents/editionsPage'
 import expedition from './documents/expedition'
@@ -33,9 +35,11 @@ import safetyModule from './objects/safetyModule'
 import preparationColumn from './objects/preparationColumn'
 import inclusionCategory from './objects/inclusionCategory'
 import archiveVerificationBlock from './objects/archiveVerificationBlock'
+import designOption from './objects/designOption'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
+  designSettings,
   atlasPage,
   homePage,
   editionsPage,
@@ -57,6 +61,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   archiveRecord,
   chairmanLetter,
   enquiry,
+  booking,
   // Objects
   yetiPillar,
   timelineEra,
@@ -72,4 +77,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   preparationColumn,
   inclusionCategory,
   archiveVerificationBlock,
+  designOption,
 ]

@@ -115,6 +115,20 @@ export default defineType({
       type: "string",
       description: "e.g. Experienced climbers",
     }),
+    defineField({
+      name: "designDefaults",
+      title: "Design Defaults",
+      type: "object",
+      description: "Default selections pre-populated when this edition is chosen in the Design Your Expedition configurator",
+      fields: [
+        defineField({ name: "ktmHotel", title: "KTM Hotel", type: "string", description: "Must match a value key in Design Settings" }),
+        defineField({ name: "trekLodge", title: "Trek Lodge", type: "string" }),
+        defineField({ name: "trekGuide", title: "Trek Guide", type: "string" }),
+        defineField({ name: "climbGuide", title: "Climb Guide", type: "string" }),
+        defineField({ name: "sherpaRatio", title: "Sherpa Ratio", type: "string" }),
+        defineField({ name: "oxygenBottles", title: "Oxygen Bottles", type: "number" }),
+      ],
+    }),
   ],
   orderings: [
     {

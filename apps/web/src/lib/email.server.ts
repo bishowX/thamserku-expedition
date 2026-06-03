@@ -76,6 +76,105 @@ function buildHtml(data: EnquiryEmailData): string {
 </html>`
 }
 
+export interface BookingEmailData {
+  fullName: string
+  email?: string
+  phone?: string
+  expeditionName?: string
+  editionLetter?: string
+  editionName?: string
+  ktmHotel?: string
+  trekLodge?: string
+  trekGuide?: string
+  climbGuide?: string
+  sherpaRatio?: string
+  oxygenBottles?: number
+  oxygenUnit?: string
+  oxygenUnlimitedThreshold?: number
+  helicopterInclusions?: string[]
+  message?: string
+  submittedAt: string
+}
+
+function buildBookingHtml(data: BookingEmailData): string {
+  const submittedDate = new Date(data.submittedAt).toLocaleString('en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC',
+  })
+
+  const oxygenLabel = data.oxygenBottles != null
+    ? data.oxygenBottles >= (data.oxygenUnlimitedThreshold ?? 20)
+      ? `Unlimited ${data.oxygenUnit ?? '× 4L bottles'}`
+      : `${data.oxygenBottles} ${data.oxygenUnit ?? '× 4L bottles'}`
+    : undefined
+
+  const contactRows = [
+    row('Email', data.email),
+    row('Phone / WhatsApp', data.phone),
+  ].join('')
+
+  const configRows = [
+    row('Peak', data.expeditionName),
+    row('Edition', data.editionLetter && data.editionName ? `${data.editionLetter} · ${data.editionName}` : undefined),
+    row('KTM Hotel', data.ktmHotel),
+    row('Trek Lodge', data.trekLodge),
+    row('Trek Guide', data.trekGuide),
+    row('Climb Guide', data.climbGuide),
+    row('Sherpa Ratio', data.sherpaRatio),
+    row('Oxygen', oxygenLabel),
+    row('Helicopter', data.helicopterInclusions?.join(', ')),
+  ].join('')
+
+  const messageRows = row('Message', data.message)
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>New Booking — ${data.fullName}</title></head>
+<body style="margin:0;padding:0;background:#F4F2EC;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F4F2EC;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:white;max-width:600px;width:100%;">
+        <tr>
+          <td style="background:#1A1A1A;padding:32px 48px;">
+            <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#C8CDD2;margin:0 0 8px;">THAMSERKU EXPEDITIONS · NEW BOOKING CONFIGURATION</p>
+            <p style="font-family:Georgia,serif;font-size:28px;font-weight:300;color:white;margin:0;">${data.fullName}</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:48px;">
+            <p style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.1em;color:#5A6673;margin:0 0 4px;">${data.email ?? data.phone ?? ''}</p>
+            <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.08em;color:#C8CDD2;margin:0 0 40px;">${submittedDate} UTC</p>
+            <hr style="border:none;border-top:1px solid #E5E7EB;margin:0 0 40px;">
+            ${section('Contact', contactRows)}
+            ${section('Configuration', configRows)}
+            ${messageRows ? section('Message', messageRows) : ''}
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#F4F2EC;padding:24px 48px;border-top:1px solid #E5E7EB;">
+            <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#5A6673;margin:0;">THAMSERKU EXPEDITIONS · YETI GROUP · KATHMANDU · NEPAL HIMALAYA</p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+export async function sendBookingEmail(to: string, data: BookingEmailData): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY
+  const from = process.env.RESEND_FROM_EMAIL ?? 'noreply@thamserku.com'
+  if (!apiKey) return
+
+  const resend = new Resend(apiKey)
+  await resend.emails.send({
+    from,
+    to,
+    subject: `New Booking Configuration — ${data.fullName}`,
+    html: buildBookingHtml(data),
+  })
+}
+
 export async function sendEnquiryEmail(to: string, data: EnquiryEmailData): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
   const from = process.env.RESEND_FROM_EMAIL ?? 'noreply@thamserku.com'

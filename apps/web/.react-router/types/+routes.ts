@@ -55,6 +55,9 @@ type Pages = {
   "/faq": {
     params: {};
   };
+  "/design-your-expedition": {
+    params: {};
+  };
   "/api/upload-cv": {
     params: {};
   };
@@ -69,7 +72,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/everest" | "/expeditions/:slug" | "/atlas" | "/editions" | "/legacy" | "/team" | "/consultation" | "/archive" | "/yeti-infrastructure" | "/7000m" | "/private" | "/field-notes" | "/faq" | "/api/upload-cv" | "/safety" | "/heritage-and-achievements";
+    page: "/" | "/everest" | "/expeditions/:slug" | "/atlas" | "/editions" | "/legacy" | "/team" | "/consultation" | "/archive" | "/yeti-infrastructure" | "/7000m" | "/private" | "/field-notes" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/safety" | "/heritage-and-achievements";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
@@ -127,6 +130,10 @@ type RouteFiles = {
     id: "app/pages/MainFAQ";
     page: "/faq";
   };
+  "./app/pages/DesignPage.tsx": {
+    id: "app/pages/DesignPage";
+    page: "/design-your-expedition";
+  };
   "./app/api/upload-cv.ts": {
     id: "app/api/upload-cv";
     page: "/api/upload-cv";
@@ -157,6 +164,7 @@ type RouteModules = {
   "app/pages/PrivateExpeditions": typeof import("./src/./app/pages/PrivateExpeditions.tsx");
   "app/pages/FieldNotes": typeof import("./src/./app/pages/FieldNotes.tsx");
   "app/pages/MainFAQ": typeof import("./src/./app/pages/MainFAQ.tsx");
+  "app/pages/DesignPage": typeof import("./src/./app/pages/DesignPage.tsx");
   "app/api/upload-cv": typeof import("./src/./app/api/upload-cv.ts");
   "app/pages/SafetyPage": typeof import("./src/./app/pages/SafetyPage.tsx");
   "app/pages/HeritageAndAchievementsPage": typeof import("./src/./app/pages/HeritageAndAchievementsPage.tsx");

@@ -1023,6 +1023,83 @@ export type PrivateExpeditionsPageData = {
   } | null;
 };
 
+// ── Design Your Expedition ─────────────────────────────────────────────────
+
+export type DesignOption = {
+  value: string;
+  label: string;
+  description?: string;
+};
+
+export type DesignSettings = {
+  ktmHotelOptions: DesignOption[];
+  trekGuideOptions: DesignOption[];
+  climbGuideOptions: DesignOption[];
+  sherpaRatioOptions: DesignOption[];
+  oxygenMin: number;
+  oxygenMax: number;
+  oxygenStep: number;
+  oxygenUnlimitedThreshold: number;
+  oxygenUnit: string;
+} | null;
+
+export type SanityExpeditionForDesign = {
+  _id: string;
+  name: string;
+  code: string;
+  altitude: string;
+  slug: string;
+  trekLodgeOptions: DesignOption[];
+  helicopterInclusions: DesignOption[];
+};
+
+export type SanityEditionForDesign = {
+  _id: string;
+  letter: string;
+  name: string;
+  positioning?: string;
+  designDefaults?: {
+    ktmHotel?: string;
+    trekLodge?: string;
+    trekGuide?: string;
+    climbGuide?: string;
+    sherpaRatio?: string;
+    oxygenBottles?: number;
+  };
+};
+
+export type DesignPageData = {
+  expeditions: SanityExpeditionForDesign[];
+  editions: SanityEditionForDesign[];
+  designSettings: DesignSettings;
+};
+
+export async function getDesignPageData(): Promise<DesignPageData> {
+  return serverClient.fetch(`{
+    "expeditions": *[_type == "expedition"] | order(name asc) {
+      _id, name, code, altitude,
+      "slug": slug.current,
+      "trekLodgeOptions": coalesce(trekLodgeOptions[]{value, label, description}, []),
+      "helicopterInclusions": coalesce(helicopterInclusions[]{value, label, description}, [])
+    },
+    "editions": *[_type == "edition"] | order(letter asc) {
+      _id, letter, name, positioning,
+      designDefaults
+    },
+    "designSettings": *[_type == "designSettings"][0]{
+      "ktmHotelOptions": coalesce(ktmHotelOptions[]{value, label, description}, []),
+      "trekGuideOptions": coalesce(trekGuideOptions[]{value, label, description}, []),
+      "climbGuideOptions": coalesce(climbGuideOptions[]{value, label, description}, []),
+      "sherpaRatioOptions": coalesce(sherpaRatioOptions[]{value, label, description}, []),
+      "oxygenMin": coalesce(oxygenMin, 6),
+      "oxygenMax": coalesce(oxygenMax, 20),
+      "oxygenStep": coalesce(oxygenStep, 1),
+      "oxygenUnlimitedThreshold": coalesce(oxygenUnlimitedThreshold, 20),
+      "oxygenUnit": coalesce(oxygenUnit, "× 4L bottles")
+    }
+  }`);
+}
+
 export async function getPrivateExpeditionsPageData(): Promise<PrivateExpeditionsPageData> {
   return serverClient.fetch(`{
     "privateExpeditionsPage": *[_type == "privateExpeditionsPage" && _id == "privateExpeditionsPage"][0] {

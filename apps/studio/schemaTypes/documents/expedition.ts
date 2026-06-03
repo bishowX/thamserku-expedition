@@ -19,6 +19,7 @@ export default defineType({
     { name: 'exclusions',      title: 'Exclusions' },
     { name: 'faqs',            title: 'FAQs' },
     { name: 'closing',         title: 'Closing' },
+    { name: 'designConfig',    title: 'Design Config' },
   ],
   fields: [
     // ── Identity ─────────────────────────────────────────────────────────────
@@ -169,6 +170,24 @@ export default defineType({
     // ── Closing ───────────────────────────────────────────────────────────────
     defineField({ group: 'closing', name: 'closingImage', title: 'Closing Image', type: 'image', options: { hotspot: true }, description: 'Silhouette/twilight background.' }),
     defineField({ group: 'closing', name: 'closingStatement', title: 'Closing Statement', type: 'text', rows: 3 }),
+
+    // ── Design Config ─────────────────────────────────────────────────────────
+    defineField({
+      group: 'designConfig',
+      name: 'trekLodgeOptions',
+      title: 'Trek Lodge Options',
+      type: 'array',
+      of: [{ type: 'designOption' }],
+      description: 'Accommodation options during trekking for this specific expedition',
+    }),
+    defineField({
+      group: 'designConfig',
+      name: 'helicopterInclusions',
+      title: 'Helicopter Inclusion Options',
+      type: 'array',
+      of: [{ type: 'designOption' }],
+      description: 'Available helicopter transfer options for this expedition',
+    }),
   ],
   orderings: [
     { title: 'Number', name: 'numberAsc', by: [{ field: 'number', direction: 'asc' }] },
