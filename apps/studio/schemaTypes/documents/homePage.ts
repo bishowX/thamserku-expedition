@@ -31,6 +31,14 @@ export default defineType({
       description: 'The last sentence will render in italic blue.',
     }),
     defineField({ name: 'manifestoBody', title: 'Body', type: 'text', rows: 4, group: 'manifesto' }),
+    defineField({
+      name: 'manifestoStats',
+      title: 'Stats',
+      type: 'array',
+      group: 'manifesto',
+      of: [{ type: 'statItem' }],
+      description: 'Stats shown in the dark bar below the manifesto (e.g. 37+ Years, 800+ Expeditions).',
+    }),
 
     // Yeti Infrastructure
     defineField({ name: 'infrastructureEyebrow', title: 'Eyebrow', type: 'string', group: 'infrastructure', description: 'e.g. SECTION III — YETI INFRASTRUCTURE' }),

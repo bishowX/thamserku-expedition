@@ -36,6 +36,7 @@ import preparationColumn from './objects/preparationColumn'
 import inclusionCategory from './objects/inclusionCategory'
 import archiveVerificationBlock from './objects/archiveVerificationBlock'
 import designOption from './objects/designOption'
+import statItem from './objects/statItem'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
@@ -78,4 +79,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   inclusionCategory,
   archiveVerificationBlock,
   designOption,
+  statItem,
 ]

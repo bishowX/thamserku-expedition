@@ -137,6 +137,7 @@ export type HomePageData = {
     manifestoEyebrow: string;
     manifestoHeading: string;
     manifestoBody: string;
+    manifestoStats: { value: string; label: string }[];
     fieldNotesEyebrow: string;
     fieldNotesHeading: string;
     newsletterEyebrow: string;
@@ -187,7 +188,7 @@ export type EditionsPageData = {
 export async function getHomePageData(): Promise<HomePageData> {
   return serverClient.fetch(`{
     "homePage": *[_type == "homePage"][0] {
-      heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody,
+      heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoStats,
       fieldNotesEyebrow, fieldNotesHeading,
       newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
       closingEyebrow, closingHeading, closingBody, closingImage,
