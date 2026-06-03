@@ -5,7 +5,7 @@ import { Manifesto } from '../components/Manifesto'
 import { ManifestoStats } from '../components/ManifestoStats'
 import { YetiInfrastructurePreview } from '../components/YetiInfrastructurePreview'
 import { AtlasPreview } from '../components/AtlasPreview'
-import { FieldNotesPreview } from '../components/FieldNotesPreview'
+import { NewsletterSection } from '../components/NewsletterSection'
 import { EditionsPreview } from '../components/EditionsPreview'
 import { LegacyPreview } from '../components/LegacyPreview'
 import { Closing } from '../components/Closing'
@@ -30,7 +30,7 @@ export default function Home() {
         <AtlasPreview expeditions={data.expeditions.length > 0 ? data.expeditions : undefined} data={data.homePage ?? undefined} />
         <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} data={data.homePage ?? undefined} />
         <LegacyPreview data={data.homePage ?? undefined} />
-        <FieldNotesPreview fieldNotes={data.homePage?.featuredFieldNotes ?? []} data={data.homePage ?? undefined} />
+        <NewsletterSection data={data.homePage ?? undefined} />
         <Closing data={data.homePage ?? undefined} />
       </main>
       <Footer />

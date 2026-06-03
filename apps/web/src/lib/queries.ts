@@ -30,6 +30,7 @@ export type SanityEdition = {
   subtitle: string;
   positioning: string;
   targetAudience: string;
+  character?: string;
   slug: { current: string };
 };
 
@@ -138,8 +139,6 @@ export type HomePageData = {
     manifestoHeading: string;
     manifestoBody: string;
     manifestoStats: { value: string; label: string }[];
-    fieldNotesEyebrow: string;
-    fieldNotesHeading: string;
     newsletterEyebrow: string;
     newsletterHeading: string;
     newsletterBody: string;
@@ -149,7 +148,6 @@ export type HomePageData = {
     closingHeading: string;
     closingBody: string;
     closingImage?: { asset: { _ref: string } } | null;
-    featuredFieldNotes: SanityFieldNote[];
     legacyEyebrow: string;
     legacyHeading: string;
     legacyIntro?: string;
@@ -190,10 +188,8 @@ export async function getHomePageData(): Promise<HomePageData> {
   return serverClient.fetch(`{
     "homePage": *[_type == "homePage"][0] {
       heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoStats,
-      fieldNotesEyebrow, fieldNotesHeading,
       newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
       closingEyebrow, closingHeading, closingBody, closingImage,
-      featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug, coverImage },
       legacyEyebrow, legacyHeading, legacyIntro,
       legacyTimelineItems[]{ year, title, description },
       infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars
@@ -203,7 +199,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       editions[]->{ _id, letter, name, slug }
     },
     "editions": *[_type == "edition"] | order(letter asc) {
-      _id, letter, name, subtitle, positioning, targetAudience, slug
+      _id, letter, name, subtitle, positioning, targetAudience, character, slug
     }
   }`);
 }
