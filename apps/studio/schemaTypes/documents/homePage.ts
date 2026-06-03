@@ -58,21 +58,15 @@ export default defineType({
 
     // Legacy
     defineField({ name: 'legacyEyebrow', title: 'Eyebrow', type: 'string', group: 'legacy', description: 'e.g. 05 — LEGACY' }),
+    defineField({ name: 'legacyHeading', title: 'Heading', type: 'text', rows: 2, group: 'legacy' }),
+    defineField({ name: 'legacyIntro', title: 'Intro', type: 'text', rows: 3, group: 'legacy', description: 'Intro paragraph shown below the heading.' }),
     defineField({
-      name: 'chairmanLetter',
-      title: "Chairman's Letter",
-      type: 'reference',
-      to: [{ type: 'chairmanLetter' }],
+      name: 'legacyTimelineItems',
+      title: 'Timeline Items',
+      type: 'array',
       group: 'legacy',
-      description: 'Provides the image, quote, and attribution for the Legacy section.',
-    }),
-    defineField({
-      name: 'legacyHeading',
-      title: 'Heading',
-      type: 'text',
-      rows: 2,
-      group: 'legacy',
-      description: 'The last sentence will render in italic blue.',
+      of: [{ type: 'legacyTimelineItem' }],
+      description: 'Historical milestone events shown on the timeline (year, title, description).',
     }),
 
     // Field Notes

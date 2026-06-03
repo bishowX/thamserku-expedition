@@ -150,9 +150,10 @@ export type HomePageData = {
     closingBody: string;
     closingImage?: { asset: { _ref: string } } | null;
     featuredFieldNotes: SanityFieldNote[];
-    chairmanLetter?: ChairmanLetterData | null;
     legacyEyebrow: string;
     legacyHeading: string;
+    legacyIntro?: string;
+    legacyTimelineItems?: Array<{ year: string; title: string; description: string }>;
     infrastructureEyebrow: string;
     infrastructureHeading: string;
     infrastructureIntro: string;
@@ -193,8 +194,8 @@ export async function getHomePageData(): Promise<HomePageData> {
       newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
       closingEyebrow, closingHeading, closingBody, closingImage,
       featuredFieldNotes[]->{ _id, code, title, excerpt, byline, readTime, slug, coverImage },
-      chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
-      legacyEyebrow, legacyHeading,
+      legacyEyebrow, legacyHeading, legacyIntro,
+      legacyTimelineItems[]{ year, title, description },
       infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars
     },
     "expeditions": *[_type == "expedition"] | order(number asc) {

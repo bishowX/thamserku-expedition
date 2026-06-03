@@ -37,6 +37,7 @@ import inclusionCategory from './objects/inclusionCategory'
 import archiveVerificationBlock from './objects/archiveVerificationBlock'
 import designOption from './objects/designOption'
 import statItem from './objects/statItem'
+import legacyTimelineItem from './objects/legacyTimelineItem'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
@@ -80,4 +81,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   archiveVerificationBlock,
   designOption,
   statItem,
+  legacyTimelineItem,
 ]

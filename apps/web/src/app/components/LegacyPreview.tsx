@@ -1,173 +1,66 @@
-import { useRef } from "react";
-import { PortableText } from "@portabletext/react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { urlFor } from "../../lib/sanity";
-import type { ChairmanLetterData } from "../../lib/queries";
-import { ChairmanSignature } from "./legacy/ChairmanSignature";
-
-gsap.registerPlugin(ScrollTrigger);
+type TimelineItem = { year: string; title: string; description: string };
 
 type LegacyData = {
   legacyEyebrow?: string;
-  chairmanLetter?: ChairmanLetterData | null;
   legacyHeading?: string;
-};
-
-function splitAtLastSentence(text: string): [string, string] {
-  const idx = text.lastIndexOf(". ");
-  if (idx === -1) return [text, ""];
-  return [text.slice(0, idx + 1), text.slice(idx + 2)];
-}
-
-const bodyComponents = {
-  block: {
-    normal: ({ children }: { children?: React.ReactNode }) => (
-      <p className="font-['Lexend'] font-light text-fluid-body text-[#5A6673] leading-[1.8]">
-        {children}
-      </p>
-    ),
-  },
+  legacyIntro?: string;
+  legacyTimelineItems?: TimelineItem[];
 };
 
 export function LegacyPreview({ data }: { data?: LegacyData }) {
-  const [headingPart1, headingPart2] = splitAtLastSentence(
-    data?.legacyHeading ?? "",
-  );
-  const letter = data?.chairmanLetter;
-  const imgSrc = letter?.image ? urlFor(letter.image).width(800).url() : null;
-  const quote = letter?.signature;
-  const attribution = letter?.organization;
-
-  const sectionRef = useRef<HTMLElement>(null);
-  const imageWrapRef = useRef<HTMLDivElement>(null);
-  const curtainRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      if (imageWrapRef.current && curtainRef.current) {
-        const img = imageWrapRef.current.querySelector("img");
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: imageWrapRef.current,
-            start: "top 78%",
-          },
-        });
-
-        if (img) gsap.set(img, { opacity: 0, scale: 1.08 });
-
-        // Curtain slides in from left
-        tl.from(curtainRef.current, {
-          scaleX: 0,
-          transformOrigin: "left",
-          duration: 0.6,
-          ease: "power3.inOut",
-        });
-
-        // Image appears and curtain slides out to right
-        if (img) {
-          tl.set(img, { opacity: 1 });
-        }
-        tl.to(curtainRef.current, {
-          scaleX: 0,
-          transformOrigin: "right",
-          duration: 0.6,
-          ease: "power3.inOut",
-        });
-
-        // Image zoom settles
-        if (img) {
-          tl.to(img, { scale: 1, duration: 1.2, ease: "power2.out" }, "-=0.6");
-        }
-
-      }
-
-      if (textRef.current) {
-        const children = Array.from(textRef.current.children);
-        children.forEach((child, i) => {
-          gsap.from(child, {
-            opacity: 0,
-            y: 30,
-            duration: 0.7,
-            delay: i * 0.12,
-            ease: "power3.out",
-            scrollTrigger: { trigger: child, start: "top 88%" },
-          });
-        });
-      }
-    },
-    { scope: sectionRef },
-  );
+  const items = data?.legacyTimelineItems;
 
   return (
-    <section
-      ref={sectionRef}
-      id="legacy"
-      className="w-full bg-[#C8CDD2] text-[#1A1A1A] section-padding"
-    >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-start">
-        <div className="w-full md:w-5/12 md:sticky md:top-8 self-start">
-          <div
-            ref={imageWrapRef}
-            className="relative aspect-[4/5] bg-[#E5E7EB] overflow-hidden"
-          >
-            {imgSrc && (
-              <ImageWithFallback
-                src={imgSrc}
-                alt="Legacy"
-                className="w-full h-full object-cover saturate-[0.6] contrast-110 sepia-[0.2] will-change-transform"
-              />
-            )}
-            <div
-              ref={curtainRef}
-              className="absolute inset-0 bg-[#1A1A1A] z-10"
-            />
-          </div>
-        </div>
-
-        <div ref={textRef} className="w-full md:w-7/12 flex flex-col gap-12">
-          <div className="flex flex-col gap-6">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-              {data?.legacyEyebrow ?? "05 — LEGACY"}
-            </span>
-            <h2 className="font-['Radley'] font-light text-fluid-xl leading-[1.1] text-[#1A1A1A]">
-              {headingPart1}{" "}
-              <em className="text-[#0A3A77] not-italic italic">
-                {headingPart2}
-              </em>
-            </h2>
-          </div>
-
-          {letter?.body && (
-            <div className="flex flex-col gap-6 max-w-[56ch]">
-              <PortableText value={letter.body} components={bodyComponents} />
-            </div>
-          )}
-
-          {(quote || attribution) && (
-            <div className="mt-4 border-l-2 border-[#1A1A1A]/20 pl-6 py-2">
-              <div className="mb-3">
-                <ChairmanSignature fill="#1A1A1A" />
-              </div>
-              {quote && (
-                <div className="font-['Radley'] italic text-fluid-lg text-[#1A1A1A] leading-none mb-2">
-                  {quote}
-                </div>
-              )}
-              {attribution && (
-                <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673]">
-                  {attribution}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+    <section id="legacy" className="w-full bg-[#C8CDD2] section-padding">
+      <div className="max-w-7xl mx-auto text-center mb-16">
+        {data?.legacyEyebrow && (
+          <p className="font-['JetBrains_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#1A1A1A] mb-6">
+            {data.legacyEyebrow}
+          </p>
+        )}
+        {data?.legacyHeading && (
+          <h2 className="font-['Radley'] text-fluid-xl leading-[1.1] text-[#1A1A1A] mb-6">
+            {data.legacyHeading}
+          </h2>
+        )}
+        {data?.legacyIntro && (
+          <p className="font-['Lexend'] font-light text-[15px] leading-[1.6] text-[#202121] max-w-[540px] mx-auto">
+            {data.legacyIntro}
+          </p>
+        )}
       </div>
+
+      {items && items.length > 0 && (
+        <div className="max-w-7xl mx-auto relative">
+          {/* Horizontal connector line — desktop only, sits at dot centre */}
+          <div className="hidden md:block absolute left-0 right-0 h-px bg-white top-[47px]" />
+
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-0">
+            {items.map((item, i) => {
+              const dotAlign =
+                i === 0 ? 'md:items-start' : i === items.length - 1 ? 'md:items-end' : 'md:items-center';
+              return (
+                <div key={item.year} className={`flex flex-col items-center ${dotAlign}`}>
+                  <div className="bg-[#2E353C] px-2 h-[15px] flex items-center mt-2 mb-4">
+                    <span className="font-['JetBrains_Mono'] text-[10px] text-white tracking-[2.2px] uppercase whitespace-nowrap">
+                      {item.year}
+                    </span>
+                  </div>
+                  <div className="w-4 h-4 rounded-full bg-[#2E353C] border border-white relative z-10 mb-6 md:mb-16" />
+                  <div className="flex flex-col gap-4 items-center text-center px-8">
+                    <h3 className="font-['Radley'] text-[24px] leading-[1.4] text-[#1A1A1A]">
+                      {item.title}
+                    </h3>
+                    <p className="font-['Lexend'] font-light text-[15px] leading-[1.75] text-[#5A6673]">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
