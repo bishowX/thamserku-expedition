@@ -26,10 +26,10 @@ export const YetiClosing = ({ page }: { page?: PageData }) => {
 
         <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto items-center justify-center">
           <Link
-            to="/consultation"
+            to="/design-your-expedition"
             className="w-full sm:w-auto border border-white text-white px-10 py-5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:bg-white hover:text-[#1A1A1A] transition-colors whitespace-nowrap"
           >
-            SCHEDULE A CONSULTATION →
+            DESIGN YOUR EXPEDITION →
           </Link>
 
           <Link

@@ -191,7 +191,7 @@ export function Hero({ data }: { data?: HeroData }) {
 
         <div ref={ctaRef} className="flex mt-4 opacity-0">
           <Link
-            to="/design"
+            to="/design-your-expedition"
             className="bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px]"
           >
             DESIGN YOUR EXPEDITION

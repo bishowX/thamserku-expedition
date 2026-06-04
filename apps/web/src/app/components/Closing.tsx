@@ -145,17 +145,17 @@ export function Closing({ data }: { data?: ClosingData }) {
 
         <div ref={ctaRef} className="flex flex-wrap justify-center gap-4 mt-8">
           <Link
-            to="/consultation"
+            to="/design-your-expedition"
             className="btn-cta btn-cta-primary border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
-            <span>Schedule a Consultation</span>
+            <span>Design Your Expedition</span>
             <MoveRight className="w-3 h-3 arrow-shift" />
           </Link>
           <Link
-            to="/atlas"
+            to="/consultation"
             className="btn-cta btn-cta-secondary border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
-            <span>Explore the Atlas</span>
+            <span>Enquire</span>
             <MoveRight className="w-3 h-3 arrow-shift" />
           </Link>
         </div>
