@@ -114,6 +114,9 @@ export type HomePageData = {
     legacyHeading: string;
     legacyIntro?: string;
     legacyTimelineItems?: Array<{ year: string; title: string; description: string }>;
+    unclaimedPeaksEyebrow?: string;
+    unclaimedPeaksHeading?: string;
+    unclaimedPeaksBody?: string;
     infrastructureEyebrow: string;
     infrastructureHeading: string;
     infrastructureIntro: string;
@@ -154,6 +157,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       closingEyebrow, closingHeading, closingBody, closingImage,
       legacyEyebrow, legacyHeading, legacyIntro,
       legacyTimelineItems[]{ year, title, description },
+      unclaimedPeaksEyebrow, unclaimedPeaksHeading, unclaimedPeaksBody,
       infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars,
       "featuredExpeditions": featuredExpeditions[]->{ _id, number, code, name, slug, altitude, region, season, style, positioning, image, editions[]->{ _id, letter, name, slug } }
     },

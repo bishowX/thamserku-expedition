@@ -7,10 +7,12 @@ export default defineType({
   groups: [
     { name: 'hero', title: 'Hero' },
     { name: 'manifesto', title: 'Manifesto' },
+    { name: 'stats', title: 'Stats' },
     { name: 'infrastructure', title: 'Yeti Infrastructure' },
     { name: 'atlas', title: 'Atlas' },
     { name: 'editions', title: 'Editions' },
     { name: 'legacy', title: 'Legacy' },
+    { name: 'unclaimedPeaks', title: 'Unclaimed Peaks' },
     { name: 'fieldNotes', title: 'Field Notes' },
     { name: 'closing', title: 'Closing' },
   ],
@@ -35,7 +37,7 @@ export default defineType({
       name: 'manifestoStats',
       title: 'Stats',
       type: 'array',
-      group: 'manifesto',
+      group: 'stats',
       of: [{ type: 'statItem' }],
       description: 'Stats shown in the dark bar below the manifesto (e.g. 37+ Years, 800+ Expeditions).',
     }),
@@ -77,6 +79,11 @@ export default defineType({
       of: [{ type: 'legacyTimelineItem' }],
       description: 'Historical milestone events shown on the timeline (year, title, description).',
     }),
+
+    // Unclaimed Peaks
+    defineField({ name: 'unclaimedPeaksEyebrow', title: 'Eyebrow', type: 'string', group: 'unclaimedPeaks', description: 'e.g. 06 — EXPLORE UNCLAIMED PEAKS' }),
+    defineField({ name: 'unclaimedPeaksHeading', title: 'Heading', type: 'text', rows: 2, group: 'unclaimedPeaks', description: 'e.g. Five lenses through which to read the same mountain.' }),
+    defineField({ name: 'unclaimedPeaksBody', title: 'Body', type: 'text', rows: 3, group: 'unclaimedPeaks' }),
 
     // Field Notes
     defineField({ name: 'fieldNotesEyebrow', title: 'Eyebrow', type: 'string', group: 'fieldNotes', description: 'e.g. 06 — FIELD NOTES' }),
