@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { urlFor } from "../../../lib/sanity";
 import type { SanityEditionFull } from "../../../lib/queries";
 
@@ -39,8 +38,6 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
         const copyColor = COPY_COLOR[variant] ?? "text-[#C8CDD2]";
         const sigColor = SIGNATURE_COLOR[variant] ?? "text-[#C8CDD2]";
         const imageUrl = ed.image ? urlFor(ed.image).width(1800).url() : null;
-        const mountains = ed.mountainNames?.join(" · ").toUpperCase() ?? "";
-
         return (
           <div
             key={ed._id}
@@ -122,48 +119,8 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
                     </div>
                   )}
 
-                  {mountains && (
-                    <div>
-                      <p
-                        className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-4 ${isDark ? "text-white" : "text-[#1A1A1A]"}`}
-                      >
-                        BEST READ ON
-                      </p>
-                      <p
-                        className={`font-['JetBrains_Mono'] uppercase tracking-[0.1em] text-[13px] ${isDark ? "text-[#C8CDD2]" : "text-[#5A6673]"}`}
-                      >
-                        {mountains}
-                      </p>
-                    </div>
-                  )}
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-8 mt-20">
-                  <Link
-                    to={
-                      ed.slug?.current
-                        ? `/editions/${ed.slug.current}`
-                        : "/editions"
-                    }
-                    className={`inline-flex items-center justify-center px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border ${
-                      isDark
-                        ? "border-white text-white hover:bg-white hover:text-[#0A3A77]"
-                        : "border-[#0A3A77] text-[#0A3A77] hover:bg-[#2E353C] hover:text-white"
-                    }`}
-                  >
-                    READ THE COLLECTION →
-                  </Link>
-                  <Link
-                    to="/consultation"
-                    className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors ${
-                      isDark
-                        ? "text-[#C8CDD2] hover:text-white"
-                        : "text-[#5A6673] hover:text-[#1A1A1A]"
-                    }`}
-                  >
-                    SCHEDULE A CONSULTATION →
-                  </Link>
-                </div>
               </div>
             </div>
           </div>

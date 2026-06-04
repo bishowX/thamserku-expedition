@@ -32,18 +32,12 @@ export function EditionsClosing({ page }: { page?: PageData }) {
           </p>
         )}
 
-        <div className="flex flex-col sm:flex-row items-center gap-6  mb-8 md:mb-16 w-full justify-center">
+        <div className="mb-8 md:mb-16">
           <Link
-            to="/consultation"
-            className="w-full sm:w-auto px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-white text-white hover:bg-white hover:text-[#0A3A77]"
+            to="/enquiry"
+            className="inline-flex items-center justify-center px-16 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-white text-white hover:bg-white hover:text-[#2E353C]"
           >
-            SCHEDULE A CONSULTATION →
-          </Link>
-          <Link
-            to="/consultation"
-            className="w-full sm:w-auto px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-transparent text-[#C8CDD2] hover:text-white hover:border-white/30"
-          >
-            SPEAK WITH THE EXPEDITION DESK →
+            ENQUIRE
           </Link>
         </div>
 
