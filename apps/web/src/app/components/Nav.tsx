@@ -228,11 +228,11 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
               </Link>
 
               <Link
-                to="/legacy"
+                to="/safety"
                 className="text-[11px] nav-link-underline hover:text-[#C8CDD2] transition-colors"
                 onMouseEnter={handleMenuClose}
               >
-                Legacy
+                Safety
               </Link>
             </div>
 
@@ -484,11 +484,11 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
           </Link>
 
           <Link
-            to="/legacy"
+            to="/safety"
             className="hover:text-[#C8CDD2] transition-colors py-5"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Legacy
+            Safety
           </Link>
         </div>
 
