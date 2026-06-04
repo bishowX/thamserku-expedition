@@ -13,7 +13,7 @@ export const YetiClosing = ({ page }: { page?: PageData }) => {
         </span>
 
         {page?.closingHeading && (
-          <h2 className="font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.05] text-center max-w-[24ch] mb-8">
+          <h2 className="font-['Radley'] font-light text-fluid-heading text-white leading-[1.05] text-center max-w-[24ch] mb-8">
             {page.closingHeading}
           </h2>
         )}

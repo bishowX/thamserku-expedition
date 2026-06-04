@@ -1,0 +1,4383 @@
+[
+  {
+    "fields": [
+      {
+        "description": "Accommodation options for Kathmandu — shown on Step 2",
+        "of": [
+          {
+            "type": "designOption"
+          }
+        ],
+        "name": "ktmHotelOptions",
+        "type": "array",
+        "title": "KTM Hotel Options"
+      },
+      {
+        "description": "Guiding options during trek — shown on Step 3",
+        "of": [
+          {
+            "type": "designOption"
+          }
+        ],
+        "name": "trekGuideOptions",
+        "type": "array"
+      },
+      {
+        "description": "Guiding options during climb — shown on Step 3",
+        "of": [
+          {
+            "type": "designOption"
+          }
+        ],
+        "name": "climbGuideOptions",
+        "type": "array"
+      },
+      {
+        "description": "Member:Sherpa ratio options — shown on Step 3",
+        "of": [
+          {
+            "type": "designOption"
+          }
+        ],
+        "name": "sherpaRatioOptions",
+        "type": "array"
+      },
+      {
+        "initialValue": 6,
+        "name": "oxygenMin",
+        "type": "number",
+        "title": "Oxygen — Min Bottles"
+      },
+      {
+        "initialValue": 20,
+        "name": "oxygenMax",
+        "type": "number",
+        "title": "Oxygen — Max Bottles"
+      },
+      {
+        "initialValue": 1,
+        "name": "oxygenStep",
+        "type": "number",
+        "title": "Oxygen — Step"
+      },
+      {
+        "initialValue": 20,
+        "description": "At this value, show \"Unlimited\" instead of a number",
+        "name": "oxygenUnlimitedThreshold",
+        "type": "number",
+        "title": "Oxygen — Unlimited Threshold"
+      },
+      {
+        "initialValue": "× 4L bottles",
+        "name": "oxygenUnit",
+        "type": "string",
+        "title": "Oxygen — Unit Label"
+      }
+    ],
+    "name": "designSettings",
+    "type": "document",
+    "title": "Design Your Expedition — Settings"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "heroSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "heroImage",
+        "type": "image",
+        "title": "Background Image"
+      },
+      {
+        "description": "e.g. 02 — ATLAS CONTROLS",
+        "name": "controlsEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "description": "e.g. INDEXED BY THE THAMSERKU DESK (the expedition count is prepended automatically)",
+        "name": "controlsSubline",
+        "type": "string",
+        "title": "Subline"
+      },
+      {
+        "description": "e.g. 04 — AT A GLANCE",
+        "name": "comparisonEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "description": "e.g. Five mountains, read side by side.",
+        "name": "comparisonHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "description": "Italic note shown below the comparison table",
+        "name": "comparisonNote",
+        "type": "text",
+        "title": "Footer Note"
+      },
+      {
+        "description": "e.g. BEFORE THE 8,000M PEAKS — A QUALIFYING PATHWAY",
+        "name": "pathwayEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "pathwayHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "description": "Italic blue line beneath heading",
+        "name": "pathwaySubheading",
+        "type": "string",
+        "title": "Subheading"
+      },
+      {
+        "rows": 3,
+        "name": "pathwayBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "name": "pathwayCta1Label",
+        "type": "string",
+        "title": "CTA 1 Label"
+      },
+      {
+        "description": "e.g. /consultation?intent=7000m",
+        "name": "pathwayCta1Href",
+        "type": "string",
+        "title": "CTA 1 Link"
+      },
+      {
+        "name": "pathwayCta2Label",
+        "type": "string",
+        "title": "CTA 2 Label"
+      },
+      {
+        "description": "e.g. /7000m",
+        "name": "pathwayCta2Href",
+        "type": "string",
+        "title": "CTA 2 Link"
+      },
+      {
+        "name": "pathwayFootnote",
+        "type": "string",
+        "title": "Footnote"
+      },
+      {
+        "description": "e.g. 05 — SEASONAL GUIDE",
+        "name": "seasonalGuideEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "seasonalGuideHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "springWindowLabel",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "springWindowDescription",
+        "type": "text"
+      },
+      {
+        "name": "autumnWindowLabel",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "autumnWindowDescription",
+        "type": "text"
+      },
+      {
+        "name": "offSeasonLabel",
+        "type": "string",
+        "title": "Off-Season Label"
+      },
+      {
+        "rows": 3,
+        "name": "offSeasonDescription",
+        "type": "text",
+        "title": "Off-Season Description"
+      },
+      {
+        "description": "e.g. FREQUENTLY ASKED — ATLAS",
+        "name": "faqEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "faqHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "faqSubheading",
+        "type": "string",
+        "title": "Subheading"
+      },
+      {
+        "name": "faqCtaLabel",
+        "type": "string",
+        "title": "CTA Label"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "question",
+                "type": "string"
+              },
+              {
+                "rows": 4,
+                "name": "answer",
+                "type": "text"
+              }
+            ],
+            "type": "object",
+            "name": "faqItem",
+            "title": "FAQ Item"
+          }
+        ],
+        "name": "faqs",
+        "type": "array",
+        "title": "FAQ Items"
+      },
+      {
+        "description": "e.g. 07 — BEGIN PRIVATELY",
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "rows": 3,
+        "name": "closingHeadline",
+        "type": "text",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "name": "closingFootnote",
+        "type": "string",
+        "title": "Footnote"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "closingImage",
+        "type": "image",
+        "title": "Background Image"
+      }
+    ],
+    "name": "atlasPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "heroImage",
+        "type": "image",
+        "title": "Background Image"
+      },
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "heroSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "description": "e.g. 02 — MANIFESTO",
+        "name": "manifestoEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "rows": 2,
+        "description": "The last sentence will render in italic blue.",
+        "name": "manifestoHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "rows": 4,
+        "name": "manifestoBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "description": "Stats shown in the dark bar below the manifesto (e.g. 37+ Years, 800+ Expeditions).",
+        "of": [
+          {
+            "type": "statItem"
+          }
+        ],
+        "name": "manifestoStats",
+        "type": "array",
+        "title": "Stats"
+      },
+      {
+        "description": "e.g. SECTION III — YETI INFRASTRUCTURE",
+        "name": "infrastructureEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "infrastructureHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 3,
+        "name": "infrastructureIntro",
+        "type": "text",
+        "title": "Intro"
+      },
+      {
+        "of": [
+          {
+            "type": "yetiPillar"
+          }
+        ],
+        "name": "infrastructurePillars",
+        "type": "array",
+        "title": "Pillars"
+      },
+      {
+        "description": "e.g. 03 — EXPEDITION ATLAS",
+        "name": "atlasEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "description": "e.g. Five mountains. Five different kinds of preparation.",
+        "name": "atlasHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 2,
+        "name": "atlasIntro",
+        "type": "text",
+        "title": "Intro"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 5
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Up to 5 expeditions shown in the homepage Atlas preview.",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "expedition"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to expedition"
+          }
+        ],
+        "name": "featuredExpeditions",
+        "type": "array"
+      },
+      {
+        "description": "e.g. 04 — EDITIONS",
+        "name": "editionsEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "editionsHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 2,
+        "name": "editionsIntro",
+        "type": "text",
+        "title": "Intro"
+      },
+      {
+        "description": "e.g. 05 — LEGACY",
+        "name": "legacyEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "rows": 2,
+        "name": "legacyHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "rows": 3,
+        "description": "Intro paragraph shown below the heading.",
+        "name": "legacyIntro",
+        "type": "text",
+        "title": "Intro"
+      },
+      {
+        "description": "Historical milestone events shown on the timeline (year, title, description).",
+        "of": [
+          {
+            "type": "legacyTimelineItem"
+          }
+        ],
+        "name": "legacyTimelineItems",
+        "type": "array",
+        "title": "Timeline Items"
+      },
+      {
+        "description": "e.g. 06 — FIELD NOTES",
+        "name": "fieldNotesEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "fieldNotesHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "description": "e.g. FIELD NOTES — NEWSLETTER",
+        "name": "newsletterEyebrow",
+        "type": "string"
+      },
+      {
+        "name": "newsletterHeading",
+        "type": "string"
+      },
+      {
+        "rows": 2,
+        "name": "newsletterBody",
+        "type": "text"
+      },
+      {
+        "description": "e.g. Subscribe →",
+        "name": "newsletterCta",
+        "type": "string",
+        "title": "Newsletter CTA"
+      },
+      {
+        "rows": 2,
+        "name": "newsletterPrivacyNote",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 4
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Up to 4 field notes shown on the homepage preview.",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "fieldNote"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to field note"
+          }
+        ],
+        "name": "featuredFieldNotes",
+        "type": "array"
+      },
+      {
+        "description": "e.g. 07 — BEGIN PRIVATELY",
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "closingHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 2,
+        "name": "closingBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "closingImage",
+        "type": "image",
+        "title": "Background Image"
+      }
+    ],
+    "name": "homePage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "heroSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "heroImage",
+        "type": "image",
+        "title": "Background Image"
+      },
+      {
+        "description": "e.g. 02 — THE READING",
+        "name": "manifestoEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "rows": 2,
+        "description": "The last sentence will render in italic blue.",
+        "name": "manifestoHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "rows": 4,
+        "name": "manifestoBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "description": "e.g. 04 — AT A GLANCE",
+        "name": "comparisonEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "comparisonHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "description": "Italic note shown below the comparison table",
+        "name": "comparisonNote",
+        "type": "text",
+        "title": "Note"
+      },
+      {
+        "description": "e.g. 05 — AVAILABILITY ATLAS",
+        "name": "availabilityEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "availabilityHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "description": "Italic note shown below the availability table",
+        "name": "availabilityNote",
+        "type": "text",
+        "title": "Note"
+      },
+      {
+        "description": "e.g. 06 — BEGIN PRIVATELY",
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "rows": 2,
+        "name": "closingHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "rows": 2,
+        "name": "closingBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "description": "e.g. RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF",
+        "name": "closingFootnote",
+        "type": "string",
+        "title": "Footnote"
+      }
+    ],
+    "name": "editionsPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. 01 — THE LEGACY",
+        "name": "heroEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "rows": 3,
+        "name": "heroHeadline",
+        "type": "text",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "heroImage",
+        "type": "image",
+        "title": "Background Image"
+      },
+      {
+        "description": "e.g. FEATURE · LEGACY",
+        "name": "heroMetaFeature",
+        "type": "string",
+        "title": "Meta Strip — Feature"
+      },
+      {
+        "description": "e.g. THE HIMALAYAN ATLAS",
+        "name": "heroMetaAtlas",
+        "type": "string",
+        "title": "Meta Strip — Atlas"
+      },
+      {
+        "description": "e.g. READ TIME · 12 MIN",
+        "name": "heroMetaReadTime",
+        "type": "string",
+        "title": "Meta Strip — Read Time"
+      },
+      {
+        "description": "e.g. NEPAL · 1987 — TODAY",
+        "name": "heroMetaEra",
+        "type": "string",
+        "title": "Meta Strip — Era"
+      },
+      {
+        "description": "e.g. 02 — ORIGIN",
+        "name": "originEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "description": "e.g. 1987 — 1995",
+        "name": "originYears",
+        "type": "string",
+        "title": "Year Range"
+      },
+      {
+        "name": "originSideNote",
+        "type": "string",
+        "title": "Sidebar Note"
+      },
+      {
+        "rows": 5,
+        "name": "originBody1",
+        "type": "text",
+        "title": "Body Paragraph 1 (Drop Cap)"
+      },
+      {
+        "rows": 3,
+        "name": "originBody2",
+        "type": "text",
+        "title": "Body Paragraph 2"
+      },
+      {
+        "rows": 2,
+        "name": "originPullQuote",
+        "type": "text",
+        "title": "Pull Quote"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "originImage",
+        "type": "image",
+        "title": "Side Image"
+      },
+      {
+        "description": "e.g. KHUMBU APPROACH · ARCHIVAL",
+        "name": "originImageCaption",
+        "type": "string",
+        "title": "Image Caption"
+      },
+      {
+        "to": [
+          {
+            "type": "chairmanLetter"
+          }
+        ],
+        "name": "chairmanLetter",
+        "type": "reference",
+        "title": "Chairman's Letter"
+      },
+      {
+        "description": "e.g. 04 — TIMELINE",
+        "name": "timelineEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "timelineHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 2,
+        "name": "timelineFooterNote",
+        "type": "text",
+        "title": "Footer Note"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. I, II, III",
+                "name": "roman",
+                "type": "string",
+                "title": "Roman Numeral"
+              },
+              {
+                "description": "e.g. 1987 — 1995",
+                "name": "years",
+                "type": "string",
+                "title": "Year Range"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Chapter Title"
+              },
+              {
+                "rows": 4,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "timelineChapters",
+        "type": "array",
+        "title": "Chapters"
+      },
+      {
+        "description": "e.g. 05 — LINEAGE",
+        "name": "lineageEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "lineageHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 4,
+        "name": "lineageBody1",
+        "type": "text",
+        "title": "Body Paragraph 1"
+      },
+      {
+        "rows": 4,
+        "name": "lineageBody2",
+        "type": "text",
+        "title": "Body Paragraph 2"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. HOUSE",
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "description": "e.g. THAMSERKU EXPEDITIONS",
+                "name": "value",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "lineageDataTiles",
+        "type": "array",
+        "title": "Data Tiles"
+      },
+      {
+        "name": "newsletterEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "description": "Rendered wrapped in quotes",
+        "name": "newsletterHeading",
+        "type": "string",
+        "title": "Heading / Quote"
+      },
+      {
+        "rows": 3,
+        "name": "newsletterBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "name": "newsletterPrivacyNote",
+        "type": "string",
+        "title": "Privacy Note"
+      },
+      {
+        "description": "e.g. 08 — CONTINUE READING",
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "closingHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "closingImage",
+        "type": "image",
+        "title": "Background Image"
+      }
+    ],
+    "name": "legacyPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "heroSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "name": "definitionHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "name": "definitionTagline",
+        "type": "string",
+        "title": "Italic Tagline"
+      },
+      {
+        "rows": 6,
+        "name": "definitionBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "rows": 2,
+        "name": "closingHeading",
+        "type": "text"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text"
+      }
+    ],
+    "name": "yetiInfrastructurePage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "heroImage",
+        "type": "image",
+        "title": "Background Image"
+      },
+      {
+        "description": "e.g. WITHIN 48 HOURS",
+        "name": "heroMetaResponse",
+        "type": "string",
+        "title": "Meta · Response Time"
+      },
+      {
+        "description": "e.g. SENIOR EXPEDITION STAFF",
+        "name": "heroMetaHandledBy",
+        "type": "string",
+        "title": "Meta · Handled By"
+      },
+      {
+        "description": "e.g. ENGLISH · NEPALI",
+        "name": "heroMetaLanguages",
+        "type": "string",
+        "title": "Meta · Languages"
+      },
+      {
+        "description": "e.g. ASSURED",
+        "name": "heroMetaConfidentiality",
+        "type": "string",
+        "title": "Meta · Confidentiality"
+      },
+      {
+        "rows": 3,
+        "description": "The last sentence renders in italic blue.",
+        "name": "invitationHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "rows": 4,
+        "name": "invitationBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "rows": 3,
+        "name": "trustQuote",
+        "type": "text",
+        "title": "Quote"
+      },
+      {
+        "rows": 3,
+        "name": "trustBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "description": "Rendered wrapped in quotes, e.g. \"Forty-five minutes, read carefully.\"",
+        "name": "callCoversHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 2,
+        "name": "callCoversSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 4
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "consultationMoment"
+          }
+        ],
+        "name": "callCoversMoments",
+        "type": "array",
+        "title": "Moments"
+      },
+      {
+        "rows": 2,
+        "name": "callCoversFootnote",
+        "type": "text",
+        "title": "Footnote"
+      },
+      {
+        "description": "e.g. 03 — THE REQUEST",
+        "name": "formSectionLabel",
+        "type": "string",
+        "title": "Section Label"
+      },
+      {
+        "rows": 2,
+        "name": "formHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "rows": 2,
+        "description": "e.g. Six chapters. Fewer questions, asked carefully.",
+        "name": "formSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "description": "e.g. OR WRITE TO US — PATH II",
+        "name": "formAlternativeLabel",
+        "type": "string",
+        "title": "Alternative Path Label"
+      },
+      {
+        "rows": 2,
+        "name": "formAlternativeSubheading",
+        "type": "text",
+        "title": "Alternative Path Subheading"
+      },
+      {
+        "description": "e.g. Who you are.",
+        "name": "formChapterATitle",
+        "type": "string",
+        "title": "Chapter A — Title"
+      },
+      {
+        "description": "e.g. The mountain you have in mind.",
+        "name": "formChapterBTitle",
+        "type": "string",
+        "title": "Chapter B — Title"
+      },
+      {
+        "description": "e.g. The edition you have in mind.",
+        "name": "formChapterCTitle",
+        "type": "string",
+        "title": "Chapter C — Title"
+      },
+      {
+        "description": "e.g. Your background in altitude.",
+        "name": "formChapterDTitle",
+        "type": "string",
+        "title": "Chapter D — Title"
+      },
+      {
+        "rows": 2,
+        "description": "Context note shown beneath the chapter title.",
+        "name": "formChapterDSubheading",
+        "type": "text",
+        "title": "Chapter D — Subheading"
+      },
+      {
+        "description": "e.g. Travel preferences.",
+        "name": "formChapterETitle",
+        "type": "string",
+        "title": "Chapter E — Title"
+      },
+      {
+        "description": "e.g. Anything you would like us to know.",
+        "name": "formChapterFTitle",
+        "type": "string",
+        "title": "Chapter F — Title"
+      },
+      {
+        "description": "Toggle button options for edition selection, e.g. \"A — ALPINE\". Mountains are pulled from expedition documents.",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "formEditionOptions",
+        "type": "array",
+        "title": "Edition Options"
+      },
+      {
+        "description": "e.g. SPRING, AUTUMN, OPEN",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "formSeasonOptions",
+        "type": "array",
+        "title": "Season Options"
+      },
+      {
+        "description": "e.g. PRIVATE, SMALL GROUP, OPEN",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "formGroupOptions",
+        "type": "array",
+        "title": "Group Preference Options"
+      },
+      {
+        "description": "e.g. STANDARD, HIGH, MAXIMUM",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "formPrivacyOptions",
+        "type": "array",
+        "title": "Privacy Level Options"
+      },
+      {
+        "description": "e.g. EMAIL, PHONE, WHATSAPP",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "formContactOptions",
+        "type": "array",
+        "title": "Contact Method Options"
+      },
+      {
+        "description": "e.g. LIMITED, INTERMEDIATE, EXTENSIVE",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "formTrekkingOptions",
+        "type": "array",
+        "title": "Trekking Experience Options"
+      },
+      {
+        "description": "e.g. BELOW 4,000 M, 4,000 — 6,000 M, 6,000 — 7,000 M",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "formAltitudeOptions",
+        "type": "array",
+        "title": "Altitude Experience Options"
+      },
+      {
+        "rows": 2,
+        "name": "processHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 4
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "consultationStep"
+          }
+        ],
+        "name": "processSteps",
+        "type": "array",
+        "title": "Steps"
+      },
+      {
+        "rows": 2,
+        "name": "processFootnote",
+        "type": "text",
+        "title": "Footnote"
+      },
+      {
+        "rows": 2,
+        "name": "alternativeHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "of": [
+          {
+            "type": "consultationContactOption",
+            "title": "Contact Option"
+          }
+        ],
+        "name": "alternativeOptions",
+        "type": "array",
+        "title": "Contact Options"
+      },
+      {
+        "description": "e.g. 06 — A QUIET CLOSING",
+        "name": "closingLabel",
+        "type": "string",
+        "title": "Label"
+      },
+      {
+        "rows": 3,
+        "description": "The last sentence renders in italic.",
+        "name": "closingHeading",
+        "type": "text",
+        "title": "Heading"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text",
+        "title": "Body"
+      }
+    ],
+    "name": "consultationPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "tagline",
+        "type": "string"
+      },
+      {
+        "name": "foundingYear",
+        "type": "number"
+      },
+      {
+        "name": "copyrightLine",
+        "type": "string"
+      },
+      {
+        "description": "Submission notifications are sent to this address.",
+        "name": "enquiryEmail",
+        "type": "string",
+        "title": "Enquiry Notification Email"
+      },
+      {
+        "name": "newsletterHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "rows": 3,
+        "name": "newsletterBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "description": "e.g. quarterly",
+        "name": "newsletterCadence",
+        "type": "string",
+        "title": "Cadence"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubline",
+        "type": "text",
+        "title": "Subline"
+      },
+      {
+        "name": "categoriesEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "categoriesHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"12 PIECES\"",
+                "name": "articleCount",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "categories",
+        "type": "array"
+      },
+      {
+        "name": "featuredEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "featuredHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "featuredSubline",
+        "type": "string",
+        "title": "Subline"
+      },
+      {
+        "name": "archiveEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "archiveHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "archiveSubline",
+        "type": "string",
+        "title": "Subline"
+      },
+      {
+        "name": "newsletterEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "newsletterHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "description": "Second line in muted color",
+        "name": "newsletterHeadlineAccent",
+        "type": "string",
+        "title": "Headline Accent"
+      },
+      {
+        "rows": 3,
+        "name": "newsletterBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "name": "newsletterBodySecondary",
+        "type": "string",
+        "title": "Body Secondary"
+      },
+      {
+        "name": "newsletterInputPlaceholder",
+        "type": "string",
+        "title": "Input Placeholder"
+      },
+      {
+        "name": "newsletterPrivacyLine",
+        "type": "string",
+        "title": "Privacy Line"
+      },
+      {
+        "name": "newsletterBottomNote",
+        "type": "string",
+        "title": "Bottom Note"
+      },
+      {
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "closingHeadline",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text"
+      }
+    ],
+    "name": "fieldNotesPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubline",
+        "type": "text",
+        "title": "Subline"
+      },
+      {
+        "description": "e.g. \"JUMP TO A CATEGORY — § I\"",
+        "name": "categoryNavEyebrow",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"Seven categories of question.\"",
+        "name": "categoryNavHeadline",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"FIFTEEN QUIET ANSWERS\"",
+        "name": "listEyebrow",
+        "type": "string",
+        "title": "FAQ List Eyebrow"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. \"ABOUT\"",
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"About Thamserku.\"",
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "subtitle",
+                "type": "string"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "question",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 4,
+                        "name": "answer",
+                        "type": "text"
+                      },
+                      {
+                        "name": "linkText",
+                        "type": "string"
+                      },
+                      {
+                        "description": "e.g. \"/legacy\"",
+                        "name": "linkTo",
+                        "type": "string"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "items",
+                "type": "array",
+                "title": "FAQ Items"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "categories",
+        "type": "array",
+        "title": "FAQ Categories"
+      },
+      {
+        "description": "e.g. \"FREQUENTLY ASKED — THAMSERKU\"",
+        "name": "quickFaqEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "quickFaqHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "quickFaqSubheading",
+        "type": "string",
+        "title": "Subheading"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "question",
+                "type": "string"
+              },
+              {
+                "rows": 4,
+                "name": "answer",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "quickFaqs",
+        "type": "array",
+        "title": "Quick FAQ Items"
+      },
+      {
+        "description": "e.g. \"READ THE PAGES — § II\"",
+        "name": "relatedPagesEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "description": "e.g. \"Each question links to a page.\"",
+        "name": "relatedPagesHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. \"RELATED PAGE — ABOUT\"",
+                "name": "eyebrow",
+                "type": "string"
+              },
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "desc",
+                "type": "string",
+                "title": "Description"
+              },
+              {
+                "name": "linkText",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"/legacy\"",
+                "name": "linkTo",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "relatedPages",
+        "type": "array"
+      },
+      {
+        "description": "e.g. \"FIELD NOTES — NEWSLETTER\"",
+        "name": "newsletterEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "newsletterHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "newsletterBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "name": "newsletterPrivacyLine",
+        "type": "string",
+        "title": "Privacy Line"
+      },
+      {
+        "description": "Text before the Field Notes link",
+        "name": "newsletterBottomNote",
+        "type": "string",
+        "title": "Bottom Note"
+      },
+      {
+        "name": "closingHeadline",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text"
+      },
+      {
+        "description": "e.g. \"ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF.\"",
+        "name": "closingDisclaimerLine",
+        "type": "string",
+        "title": "Disclaimer Line"
+      }
+    ],
+    "name": "faqPage",
+    "type": "document",
+    "title": "FAQ Page"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubline",
+        "type": "text",
+        "title": "Subline"
+      },
+      {
+        "name": "introEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "introTitle",
+        "type": "string",
+        "title": "Title"
+      },
+      {
+        "name": "introSubtitle",
+        "type": "string",
+        "title": "Subtitle (italic)"
+      },
+      {
+        "rows": 4,
+        "name": "introBody1",
+        "type": "text",
+        "title": "Body Paragraph 1"
+      },
+      {
+        "rows": 4,
+        "name": "introBody2",
+        "type": "text",
+        "title": "Body Paragraph 2"
+      },
+      {
+        "rows": 4,
+        "name": "introBody3",
+        "type": "text",
+        "title": "Body Paragraph 3"
+      },
+      {
+        "name": "filterPeakLabel",
+        "type": "string",
+        "title": "Peak Filter Label"
+      },
+      {
+        "name": "filterPeakDefault",
+        "type": "string",
+        "title": "Peak Filter Default"
+      },
+      {
+        "name": "filterYearLabel",
+        "type": "string",
+        "title": "Year Filter Label"
+      },
+      {
+        "name": "filterYearDefault",
+        "type": "string",
+        "title": "Year Filter Default"
+      },
+      {
+        "name": "filterTypeLabel",
+        "type": "string",
+        "title": "Type Filter Label"
+      },
+      {
+        "name": "filterTypeDefault",
+        "type": "string",
+        "title": "Type Filter Default"
+      },
+      {
+        "name": "filterSortLabel",
+        "type": "string",
+        "title": "Sort Label"
+      },
+      {
+        "name": "filterSortDefault",
+        "type": "string",
+        "title": "Sort Default"
+      },
+      {
+        "name": "filterResetLabel",
+        "type": "string",
+        "title": "Reset Filters Label"
+      },
+      {
+        "name": "gridRegionLabel",
+        "type": "string",
+        "title": "Region Field Label"
+      },
+      {
+        "name": "gridRegionSuffix",
+        "type": "string",
+        "title": "Region Suffix (e.g. \", NEPAL\")"
+      },
+      {
+        "name": "gridEditionTypeLabel",
+        "type": "string",
+        "title": "Edition Type Label"
+      },
+      {
+        "name": "gridNoteLabel",
+        "type": "string",
+        "title": "Note Label"
+      },
+      {
+        "name": "gridLoadMoreLabel",
+        "type": "string",
+        "title": "Load More Button Label"
+      },
+      {
+        "rows": 2,
+        "name": "gridDisclaimer",
+        "type": "text"
+      },
+      {
+        "name": "statusVerifiedLabel",
+        "type": "string",
+        "title": "Status: Verified Label"
+      },
+      {
+        "name": "statusPermissionLabel",
+        "type": "string",
+        "title": "Status: Permission Required Label"
+      },
+      {
+        "name": "statusPrivateLabel",
+        "type": "string",
+        "title": "Status: Private Label"
+      },
+      {
+        "name": "featuredEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "featuredHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "name": "featuredSubline",
+        "type": "string",
+        "title": "Subline"
+      },
+      {
+        "name": "featuredCardLabel",
+        "type": "string",
+        "title": "Card Label (e.g. \"FEATURED\")"
+      },
+      {
+        "name": "featuredButtonLabel",
+        "type": "string",
+        "title": "Button Label"
+      },
+      {
+        "name": "detailEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "detailHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "name": "detailSubline",
+        "type": "string",
+        "title": "Subline"
+      },
+      {
+        "to": [
+          {
+            "type": "archiveRecord"
+          }
+        ],
+        "name": "detailRecord",
+        "type": "reference",
+        "title": "Featured Record"
+      },
+      {
+        "name": "detailYearLabel",
+        "type": "string",
+        "title": "Year Label"
+      },
+      {
+        "name": "detailPeakLabel",
+        "type": "string",
+        "title": "Peak Label"
+      },
+      {
+        "name": "detailRouteLabel",
+        "type": "string",
+        "title": "Route / Region Label"
+      },
+      {
+        "name": "detailTypeLabel",
+        "type": "string",
+        "title": "Expedition Type Label"
+      },
+      {
+        "name": "detailNotableLabel",
+        "type": "string",
+        "title": "Notable Detail Label"
+      },
+      {
+        "name": "detailSourceLabel",
+        "type": "string",
+        "title": "Source Label"
+      },
+      {
+        "name": "detailPermissionLabel",
+        "type": "string",
+        "title": "Permission Status Label"
+      },
+      {
+        "name": "detailRelatedLabel",
+        "type": "string",
+        "title": "Related Expedition Label"
+      },
+      {
+        "rows": 3,
+        "name": "detailFooter",
+        "type": "text",
+        "title": "Footer Text"
+      },
+      {
+        "name": "verificationEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "verificationHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "of": [
+          {
+            "type": "archiveVerificationBlock",
+            "title": "Verification Block"
+          }
+        ],
+        "name": "verificationBlocks",
+        "type": "array"
+      },
+      {
+        "rows": 2,
+        "name": "verificationFooter",
+        "type": "text",
+        "title": "Footer Text"
+      },
+      {
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "closingHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "name": "closingPrimaryButtonLabel",
+        "type": "string",
+        "title": "Primary Button Label"
+      },
+      {
+        "name": "closingPrimaryButtonHref",
+        "type": "string",
+        "title": "Primary Button Link"
+      },
+      {
+        "name": "closingSecondaryButtonLabel",
+        "type": "string",
+        "title": "Secondary Button Label"
+      },
+      {
+        "name": "closingSecondaryButtonHref",
+        "type": "string",
+        "title": "Secondary Button Link"
+      }
+    ],
+    "name": "archivePage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "heroImage",
+        "type": "image",
+        "title": "Background Image"
+      },
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubline",
+        "type": "text",
+        "title": "Subline"
+      },
+      {
+        "rows": 3,
+        "name": "manifestoPullQuote",
+        "type": "text",
+        "title": "Pull Quote"
+      },
+      {
+        "rows": 5,
+        "name": "manifestoBody1",
+        "type": "text",
+        "title": "Body Paragraph 1"
+      },
+      {
+        "rows": 5,
+        "name": "manifestoBody2",
+        "type": "text",
+        "title": "Body Paragraph 2"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"Chairman\"",
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "portrait",
+                "type": "image"
+              },
+              {
+                "description": "e.g. \"Kathmandu\"",
+                "name": "basedIn",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"35+\"",
+                "name": "yearsWithHouse",
+                "type": "string"
+              },
+              {
+                "name": "expertise",
+                "type": "string"
+              },
+              {
+                "name": "languages",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "leadership",
+        "type": "array",
+        "title": "Leadership Members"
+      },
+      {
+        "name": "closingHeadline",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text"
+      }
+    ],
+    "name": "teamPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubline",
+        "type": "text",
+        "title": "Subline"
+      },
+      {
+        "description": "e.g. \"THE PLANNING CONTEXT — § I\"",
+        "name": "planningContextEyebrow",
+        "type": "string",
+        "title": "Section Eyebrow"
+      },
+      {
+        "name": "planningContextHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "description": "Italic line below the headline in the left column",
+        "name": "planningContextSubtitle",
+        "type": "string",
+        "title": "Italic Subtitle"
+      },
+      {
+        "rows": 8,
+        "description": "Main body paragraphs (right column). Separate paragraphs with a blank line.",
+        "name": "planningContextBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "rows": 3,
+        "description": "Italic note at the bottom of the right column",
+        "name": "planningContextNote",
+        "type": "text",
+        "title": "Italic Note"
+      },
+      {
+        "description": "e.g. \"WHY IT MATTERS — § II\"",
+        "name": "pillarsEyebrow",
+        "type": "string",
+        "title": "Section Eyebrow"
+      },
+      {
+        "name": "pillarsHeading",
+        "type": "string",
+        "title": "Section Heading"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. \"REASON I — ALTITUDE\"",
+                "name": "eyebrow",
+                "type": "string"
+              },
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "body",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "pillars",
+        "type": "array"
+      },
+      {
+        "description": "e.g. \"THE FIVE ROUTES — § III\"",
+        "name": "routesSectionEyebrow",
+        "type": "string",
+        "title": "Section Eyebrow"
+      },
+      {
+        "name": "routesSectionHeadline",
+        "type": "string",
+        "title": "Section Headline"
+      },
+      {
+        "description": "Italic line below the headline",
+        "name": "routesSectionSubtitle",
+        "type": "string",
+        "title": "Section Subtitle"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "peakName",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"7,134m\"",
+                "name": "altitude",
+                "type": "string"
+              },
+              {
+                "name": "region",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"Technical\"",
+                "name": "character",
+                "type": "string"
+              },
+              {
+                "rows": 4,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "routes",
+        "type": "array"
+      },
+      {
+        "name": "explorerRoutesHeadline",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "name": "explorerRoutesBody",
+        "type": "text"
+      },
+      {
+        "description": "e.g. \"THE TWO-EXPEDITION PATHWAY — § V\"",
+        "name": "diagramEyebrow",
+        "type": "string",
+        "title": "Section Eyebrow"
+      },
+      {
+        "name": "diagramHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "diagramSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. \"7,000 M\" or \"RECOVERY · KATHMANDU\"",
+                "name": "altitudeLabel",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"STEP I — QUALIFYING ASCENT\"",
+                "name": "stepLabel",
+                "type": "string"
+              },
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "diagramSteps",
+        "type": "array",
+        "title": "Pathway Steps"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. \"TIMING I · 6 — 12 months apart\"",
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "body",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "diagramTimingNotes",
+        "type": "array",
+        "title": "Timing Notes"
+      },
+      {
+        "description": "e.g. \"A NOTE ON REGULATION — § VI\"",
+        "name": "cautionEyebrow",
+        "type": "string",
+        "title": "Section Eyebrow"
+      },
+      {
+        "name": "cautionHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 4,
+        "name": "cautionBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "rows": 3,
+        "name": "cautionNote",
+        "type": "text",
+        "title": "Italic Note"
+      },
+      {
+        "description": "Small caps line at the bottom",
+        "name": "cautionFootnote",
+        "type": "string",
+        "title": "Footnote"
+      },
+      {
+        "description": "e.g. \"FREQUENTLY ASKED — 7,000M PATHWAY\"",
+        "name": "faqEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "faqHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "faqSubheading",
+        "type": "string",
+        "title": "Subheading"
+      },
+      {
+        "description": "e.g. \"READ ALL FAQS ON THE MAIN FAQ PAGE\"",
+        "name": "faqCtaLabel",
+        "type": "string",
+        "title": "CTA Label"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "question",
+                "type": "string"
+              },
+              {
+                "rows": 4,
+                "name": "answer",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "faqs",
+        "type": "array",
+        "title": "FAQ Items"
+      },
+      {
+        "description": "e.g. \"BEGIN THE PATHWAY — § VII\"",
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Section Eyebrow"
+      },
+      {
+        "name": "closingHeadline",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text"
+      }
+    ],
+    "name": "sevenThousandMeterPage",
+    "type": "document",
+    "title": "7,000m Pathway Page"
+  },
+  {
+    "fields": [
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 2,
+        "name": "heroSubline",
+        "type": "text",
+        "title": "Subline"
+      },
+      {
+        "description": "e.g. \"THE PHILOSOPHY — § I\"",
+        "name": "philosophyEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "philosophyHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "philosophyTagline",
+        "type": "string",
+        "title": "Tagline"
+      },
+      {
+        "rows": 6,
+        "description": "Separate paragraphs with a blank line.",
+        "name": "philosophyBody",
+        "type": "text",
+        "title": "Body"
+      },
+      {
+        "name": "philosophyFootnote",
+        "type": "string",
+        "title": "Footnote"
+      },
+      {
+        "name": "audiencesEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "audiencesHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "audiencesTagline",
+        "type": "string",
+        "title": "Tagline"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Title (Eyebrow)"
+              },
+              {
+                "name": "subtitle",
+                "type": "string",
+                "title": "Subtitle (Heading)"
+              },
+              {
+                "rows": 4,
+                "name": "body",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "audiences",
+        "type": "array",
+        "title": "Audience Cards"
+      },
+      {
+        "name": "availableEditionsEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "availableEditionsHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "availableEditionsTagline",
+        "type": "string",
+        "title": "Tagline"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "Single capital letter: C, D, or E",
+                "name": "letter",
+                "type": "string"
+              },
+              {
+                "name": "pullQuote",
+                "type": "string"
+              },
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "rows": 5,
+                "description": "Separate paragraphs with a blank line.",
+                "name": "body",
+                "type": "text"
+              },
+              {
+                "rows": 2,
+                "name": "whoItIsFor",
+                "type": "text"
+              },
+              {
+                "description": "e.g. EVEREST · MANASLU · DHAULAGIRI",
+                "name": "bestReadOn",
+                "type": "string"
+              },
+              {
+                "description": "Optional 4-cell grid — used for the Definitive edition.",
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "label",
+                        "type": "string"
+                      },
+                      {
+                        "name": "value",
+                        "type": "string"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "specs",
+                "type": "array",
+                "title": "Specs Grid (optional)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "availableEditions",
+        "type": "array",
+        "title": "Editions"
+      },
+      {
+        "name": "consultationEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "consultationHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "consultationTagline",
+        "type": "string",
+        "title": "Tagline"
+      },
+      {
+        "description": "Small italic note below the steps.",
+        "name": "consultationNote",
+        "type": "string",
+        "title": "Bottom Note"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. \"STEP I\"",
+                "name": "step",
+                "type": "string",
+                "title": "Step Label"
+              },
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 4,
+                "name": "body",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "consultationSteps",
+        "type": "array",
+        "title": "Steps"
+      },
+      {
+        "description": "e.g. FREQUENTLY ASKED — PRIVATE EXPEDITIONS",
+        "name": "faqEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "faqHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "name": "faqSubheading",
+        "type": "string",
+        "title": "Subheading"
+      },
+      {
+        "name": "faqCtaLabel",
+        "type": "string",
+        "title": "CTA Label"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "question",
+                "type": "string"
+              },
+              {
+                "rows": 4,
+                "name": "answer",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "faqs",
+        "type": "array",
+        "title": "FAQ Items"
+      },
+      {
+        "name": "closingEyebrow",
+        "type": "string"
+      },
+      {
+        "name": "closingHeadline",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text"
+      },
+      {
+        "description": "Small text at the very bottom.",
+        "name": "closingNote",
+        "type": "string"
+      }
+    ],
+    "name": "privateExpeditionsPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. 01, 02",
+        "name": "number",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. EVR, MAN, DHA",
+        "name": "code",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "description": "e.g. 8,848.86 m",
+        "name": "altitude",
+        "type": "string"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Spring · Autumn",
+        "name": "season",
+        "type": "string"
+      },
+      {
+        "description": "Atlas card label e.g. Disciplined passage",
+        "name": "style",
+        "type": "string"
+      },
+      {
+        "description": "Short phrase for the comparison table e.g. Disciplined 8,000m aspirants",
+        "name": "bestFor",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "positioning",
+        "type": "text",
+        "title": "Positioning Tagline"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Image shown on the expedition atlas card.",
+        "name": "image",
+        "type": "image",
+        "title": "Card Image"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "edition"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to edition"
+          }
+        ],
+        "name": "editions",
+        "type": "array"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Full-width hero background image.",
+        "name": "heroImage",
+        "type": "image"
+      },
+      {
+        "description": "Large h1 text.",
+        "name": "heroTagline",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "description": "Paragraph below the h1.",
+        "name": "heroSubtext",
+        "type": "text"
+      },
+      {
+        "description": "e.g. 60–65 days",
+        "name": "duration",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Sherpa-led, oxygen-supported.",
+        "name": "expeditionStyleFact",
+        "type": "string",
+        "title": "Expedition Style (Quick Facts)"
+      },
+      {
+        "description": "e.g. By private consultation",
+        "name": "pricing",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "overviewHeadline",
+        "type": "text"
+      },
+      {
+        "rows": 5,
+        "name": "overviewBody",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Small marginal photograph.",
+        "name": "overviewSideImage",
+        "type": "image"
+      },
+      {
+        "name": "whoItIsForHeadline",
+        "type": "string",
+        "title": "Who It Is For — Headline"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 4
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "audienceTile"
+          }
+        ],
+        "name": "audienceTiles",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "journeyStage"
+          }
+        ],
+        "name": "journeyStages",
+        "type": "array"
+      },
+      {
+        "description": "Ordered list of waypoints for the elevation diagram.",
+        "of": [
+          {
+            "type": "routeWaypoint"
+          }
+        ],
+        "name": "routeWaypoints",
+        "type": "array"
+      },
+      {
+        "rows": 3,
+        "name": "routePhilosophy",
+        "type": "text"
+      },
+      {
+        "rows": 3,
+        "name": "acclimatisationNote",
+        "type": "text",
+        "title": "Acclimatisation Cycle Note"
+      },
+      {
+        "rows": 3,
+        "name": "summitWindowNote",
+        "type": "text"
+      },
+      {
+        "name": "safetySupportHeadline",
+        "type": "string",
+        "title": "Safety & Support — Headline"
+      },
+      {
+        "description": "6 safety modules shown in the Safety & Support section.",
+        "of": [
+          {
+            "type": "safetyModule"
+          }
+        ],
+        "name": "safetyModules",
+        "type": "array"
+      },
+      {
+        "rows": 2,
+        "name": "yetiAirNote",
+        "type": "text",
+        "title": "Yeti — Air Support Note"
+      },
+      {
+        "rows": 2,
+        "name": "yetiLodgesNote",
+        "type": "text",
+        "title": "Yeti — Mountain Lodges Note"
+      },
+      {
+        "rows": 2,
+        "name": "yetiAccessNote",
+        "type": "text",
+        "title": "Yeti — Regional Access Note"
+      },
+      {
+        "rows": 2,
+        "name": "yetiContinuityNote",
+        "type": "text",
+        "title": "Yeti — Field Continuity Note"
+      },
+      {
+        "name": "preparationHeadline",
+        "type": "string",
+        "title": "Preparation — Headline"
+      },
+      {
+        "description": "Typically 3 columns: Body, Time, Mind.",
+        "of": [
+          {
+            "type": "preparationColumn"
+          }
+        ],
+        "name": "preparationColumns",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "availableSeason"
+          }
+        ],
+        "name": "availableSeasons",
+        "type": "array"
+      },
+      {
+        "description": "Typically 3 categories: Expedition Leadership, Logistics & Support, Hospitality & Care.",
+        "of": [
+          {
+            "type": "inclusionCategory"
+          }
+        ],
+        "name": "inclusionCategories",
+        "type": "array"
+      },
+      {
+        "description": "Items not covered by the expedition fee, e.g. International Airfare & Nepal Visa.",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "exclusions",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "faqItem",
+            "title": "FAQ Item"
+          }
+        ],
+        "name": "faqs",
+        "type": "array",
+        "title": "FAQs"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Silhouette/twilight background.",
+        "name": "closingImage",
+        "type": "image"
+      },
+      {
+        "rows": 3,
+        "name": "closingStatement",
+        "type": "text"
+      },
+      {
+        "description": "Accommodation options during trekking for this specific expedition",
+        "of": [
+          {
+            "type": "designOption"
+          }
+        ],
+        "name": "trekLodgeOptions",
+        "type": "array"
+      },
+      {
+        "description": "Available helicopter transfer options for this expedition",
+        "of": [
+          {
+            "type": "designOption"
+          }
+        ],
+        "name": "helicopterInclusions",
+        "type": "array",
+        "title": "Helicopter Inclusion Options"
+      }
+    ],
+    "name": "expedition",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "A, B, C, D, or E",
+        "name": "letter",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "description": "e.g. The essential expedition.",
+        "name": "subtitle",
+        "type": "string",
+        "title": "Subtitle / Signature"
+      },
+      {
+        "rows": 3,
+        "description": "Short description used on the homepage atlas card chips.",
+        "name": "positioning",
+        "type": "text"
+      },
+      {
+        "rows": 2,
+        "description": "Displayed in the WHO IT IS FOR row on the homepage.",
+        "name": "targetAudience",
+        "type": "text"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "description": "e.g. THE DISCIPLINED CLIMB — shown above the large letter.",
+        "name": "tag",
+        "type": "string",
+        "title": "Band Tag"
+      },
+      {
+        "rows": 4,
+        "name": "body1",
+        "type": "text",
+        "title": "Body — Paragraph 1"
+      },
+      {
+        "rows": 4,
+        "name": "body2",
+        "type": "text",
+        "title": "Body — Paragraph 2"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Background image used in the edition band.",
+        "name": "image",
+        "type": "image",
+        "title": "Band Image"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Dark (#1A1A1A)",
+              "value": "dark"
+            },
+            {
+              "title": "Light (#F4F2EC)",
+              "value": "light"
+            },
+            {
+              "title": "Blue (#2E353C)",
+              "value": "blue"
+            }
+          ],
+          "layout": "radio"
+        },
+        "name": "colorVariant",
+        "type": "string",
+        "title": "Colour Variant"
+      },
+      {
+        "description": "e.g. Disciplined",
+        "name": "character",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Standard",
+        "name": "privacyLevel",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Essential",
+        "name": "comfortLevel",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Disciplined climb",
+        "name": "comparisonStyle",
+        "type": "string",
+        "title": "Style (comparison table)"
+      },
+      {
+        "description": "e.g. Experienced climbers",
+        "name": "bestFor",
+        "type": "string"
+      },
+      {
+        "description": "Default selections pre-populated when this edition is chosen in the Design Your Expedition configurator",
+        "fields": [
+          {
+            "description": "Must match a value key in Design Settings",
+            "name": "ktmHotel",
+            "type": "string",
+            "title": "KTM Hotel"
+          },
+          {
+            "name": "trekLodge",
+            "type": "string"
+          },
+          {
+            "name": "trekGuide",
+            "type": "string"
+          },
+          {
+            "name": "climbGuide",
+            "type": "string"
+          },
+          {
+            "name": "sherpaRatio",
+            "type": "string"
+          },
+          {
+            "name": "oxygenBottles",
+            "type": "number"
+          }
+        ],
+        "name": "designDefaults",
+        "type": "object"
+      }
+    ],
+    "name": "edition",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "No AI-generated images. Client to provide authentic portrait.",
+        "name": "portrait",
+        "type": "image"
+      },
+      {
+        "description": "e.g. Khumbu, Solukhumbu",
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"Senior Sirdar · Khumbu Region\"",
+        "name": "role",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"Route preparation · Summit decisioning\"",
+        "name": "expertise",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"Sherpa · Nepali · English\"",
+        "name": "languages",
+        "type": "string"
+      },
+      {
+        "description": "e.g. 22 seasons",
+        "name": "yearsActive",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Everest · Manaslu · Lhotse",
+        "name": "mountainsSupported",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "description": "Short quote from the Sherpa",
+        "name": "philosophyLine",
+        "type": "text"
+      }
+    ],
+    "name": "sherpa",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. FN / 01 — APPROACH",
+        "name": "code",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "coverImage",
+        "type": "image"
+      },
+      {
+        "rows": 3,
+        "name": "excerpt",
+        "type": "text"
+      },
+      {
+        "description": "e.g. EXPEDITION DESK",
+        "name": "byline",
+        "type": "string"
+      },
+      {
+        "name": "readTime",
+        "type": "number",
+        "title": "Read Time (minutes)"
+      },
+      {
+        "name": "publishedAt",
+        "type": "datetime"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "fields": [
+              {
+                "name": "caption",
+                "type": "string"
+              },
+              {
+                "name": "alt",
+                "type": "string",
+                "title": "Alt text"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "body",
+        "type": "array"
+      }
+    ],
+    "name": "fieldNote",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. \"AR.01\"",
+        "name": "code",
+        "type": "string"
+      },
+      {
+        "name": "year",
+        "type": "number"
+      },
+      {
+        "name": "peak",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"8,167 m\"",
+        "name": "altitude",
+        "type": "string"
+      },
+      {
+        "name": "route",
+        "type": "string"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"HISTORIC\", \"RECONNAISSANCE\", \"ALPINE\"",
+        "name": "editionType",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Verified",
+              "value": "verified"
+            },
+            {
+              "title": "Permission Required",
+              "value": "permissionRequired"
+            },
+            {
+              "title": "Private",
+              "value": "private"
+            }
+          ]
+        },
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "notableDetail",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"Internal expedition log — verified\"",
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "to": [
+          {
+            "type": "archiveRecord"
+          }
+        ],
+        "name": "relatedRecord",
+        "type": "reference"
+      },
+      {
+        "name": "isFeatured",
+        "type": "boolean"
+      }
+    ],
+    "name": "archiveRecord",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. THE CHAIRMAN'S LETTER",
+        "name": "eyebrow",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Letter Body"
+      },
+      {
+        "description": "e.g. — The Chairman",
+        "name": "signature",
+        "type": "string"
+      },
+      {
+        "description": "e.g. THAMSERKU EXPEDITIONS · YETI GROUP",
+        "name": "organization",
+        "type": "string",
+        "title": "Organization Label"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "description": "e.g. MT. EVEREST · 8848M · MAHALANGUR HIMAL",
+        "name": "imageCaption",
+        "type": "string"
+      }
+    ],
+    "name": "chairmanLetter",
+    "type": "document",
+    "title": "Chairman's Letter"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "submittedAt",
+        "type": "datetime"
+      },
+      {
+        "name": "fullName",
+        "type": "string"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "name": "phone",
+        "type": "string",
+        "title": "Phone / WhatsApp"
+      },
+      {
+        "name": "countryOfResidence",
+        "type": "string",
+        "title": "Country of Residence"
+      },
+      {
+        "name": "preferredContact",
+        "type": "string",
+        "title": "Preferred Contact Method"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "expeditionInterest",
+        "type": "array"
+      },
+      {
+        "name": "otherExpeditionNote",
+        "type": "string",
+        "title": "Other / Not Sure — Note"
+      },
+      {
+        "name": "preferredEdition",
+        "type": "string"
+      },
+      {
+        "name": "trekkingExperience",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "altitudeExperience",
+        "type": "array"
+      },
+      {
+        "name": "fitnessBackground",
+        "type": "text",
+        "title": "Fitness & Training Background"
+      },
+      {
+        "name": "climbingCv",
+        "type": "file",
+        "title": "Climbing CV"
+      },
+      {
+        "name": "preferredSeason",
+        "type": "string"
+      },
+      {
+        "name": "numberOfGuests",
+        "type": "number",
+        "title": "Number of Guests"
+      },
+      {
+        "name": "groupPreference",
+        "type": "string"
+      },
+      {
+        "name": "privacyLevel",
+        "type": "string"
+      },
+      {
+        "name": "medicalConsiderations",
+        "type": "text"
+      },
+      {
+        "name": "messageToDesk",
+        "type": "text",
+        "title": "Message to the Desk"
+      }
+    ],
+    "name": "enquiry",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "submittedAt",
+        "type": "datetime"
+      },
+      {
+        "name": "fullName",
+        "type": "string"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "name": "phone",
+        "type": "string",
+        "title": "Phone / WhatsApp"
+      },
+      {
+        "to": [
+          {
+            "type": "expedition"
+          }
+        ],
+        "name": "expedition",
+        "type": "reference",
+        "title": "Peak"
+      },
+      {
+        "to": [
+          {
+            "type": "edition"
+          }
+        ],
+        "name": "edition",
+        "type": "reference"
+      },
+      {
+        "name": "ktmHotel",
+        "type": "string",
+        "title": "KTM Hotel"
+      },
+      {
+        "name": "trekLodge",
+        "type": "string"
+      },
+      {
+        "name": "trekGuide",
+        "type": "string"
+      },
+      {
+        "name": "climbGuide",
+        "type": "string"
+      },
+      {
+        "name": "sherpaRatio",
+        "type": "string"
+      },
+      {
+        "name": "oxygenBottles",
+        "type": "number"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "helicopterInclusions",
+        "type": "array"
+      },
+      {
+        "name": "message",
+        "type": "text"
+      }
+    ],
+    "name": "booking",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. I, II, III, IV",
+        "name": "number",
+        "type": "string",
+        "title": "Pillar Number"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "body",
+        "type": "text"
+      }
+    ],
+    "name": "yetiPillar",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. 1980s, Today",
+        "name": "decade",
+        "type": "string",
+        "title": "Decade / Label"
+      },
+      {
+        "name": "era",
+        "type": "string",
+        "title": "Era Name"
+      }
+    ],
+    "name": "timelineEra",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. MOMENT I — UNDERSTANDING",
+        "name": "marker",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      }
+    ],
+    "name": "consultationMoment",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. 01",
+        "name": "stepNumber",
+        "type": "string"
+      },
+      {
+        "description": "e.g. STEP 01 · REVIEW",
+        "name": "marker",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      }
+    ],
+    "name": "consultationStep",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. EXPEDITION DESK",
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Write directly to our desk.",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "description": "Email address, phone number, or link",
+        "name": "value",
+        "type": "string",
+        "title": "Contact Value"
+      }
+    ],
+    "name": "consultationContactOption",
+    "type": "object",
+    "title": "Contact Option"
+  },
+  {
+    "fields": [
+      {
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "name": "subline",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "audienceTile",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "journeyStage",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. Base Camp",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "description": "e.g. 5,364 m",
+        "name": "altitude",
+        "type": "string"
+      }
+    ],
+    "name": "routeWaypoint",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. SPRING 2026",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "description": "e.g. (Apr–May)",
+        "name": "dates",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Open",
+              "value": "OPEN"
+            },
+            {
+              "title": "Limited",
+              "value": "LIMITED"
+            },
+            {
+              "title": "Consultation Only",
+              "value": "CONSULTATION_ONLY"
+            },
+            {
+              "title": "Closed",
+              "value": "CLOSED"
+            }
+          ]
+        },
+        "name": "statusAlpine",
+        "type": "string",
+        "title": "Status — A: Alpine"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Open",
+              "value": "OPEN"
+            },
+            {
+              "title": "Limited",
+              "value": "LIMITED"
+            },
+            {
+              "title": "Consultation Only",
+              "value": "CONSULTATION_ONLY"
+            },
+            {
+              "title": "Closed",
+              "value": "CLOSED"
+            }
+          ]
+        },
+        "name": "statusBespoke",
+        "type": "string",
+        "title": "Status — B: Bespoke"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Open",
+              "value": "OPEN"
+            },
+            {
+              "title": "Limited",
+              "value": "LIMITED"
+            },
+            {
+              "title": "Consultation Only",
+              "value": "CONSULTATION_ONLY"
+            },
+            {
+              "title": "Closed",
+              "value": "CLOSED"
+            }
+          ]
+        },
+        "name": "statusCrafted",
+        "type": "string",
+        "title": "Status — C: Crafted"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Open",
+              "value": "OPEN"
+            },
+            {
+              "title": "Limited",
+              "value": "LIMITED"
+            },
+            {
+              "title": "Consultation Only",
+              "value": "CONSULTATION_ONLY"
+            },
+            {
+              "title": "Closed",
+              "value": "CLOSED"
+            }
+          ]
+        },
+        "name": "statusDefinitive",
+        "type": "string",
+        "title": "Status — D: Definitive"
+      }
+    ],
+    "name": "availableSeason",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "name": "answer",
+        "type": "text"
+      }
+    ],
+    "name": "faqItem",
+    "type": "object",
+    "title": "FAQ Item"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. SHERPA LEADERSHIP",
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Sherpa Leadership",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      }
+    ],
+    "name": "safetyModule",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. Body, Time, Mind",
+        "name": "title",
+        "type": "string",
+        "title": "Column Title"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "items",
+        "type": "array"
+      }
+    ],
+    "name": "preparationColumn",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. EXPEDITION LEADERSHIP",
+        "name": "category",
+        "type": "string",
+        "title": "Category Label"
+      },
+      {
+        "description": "Single letter used for numbering, e.g. L → L.01, L.02",
+        "name": "prefix",
+        "type": "string",
+        "title": "Item Prefix Letter"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "items",
+        "type": "array"
+      }
+    ],
+    "name": "inclusionCategory",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "name": "body",
+        "type": "text"
+      }
+    ],
+    "name": "archiveVerificationBlock",
+    "type": "object",
+    "title": "Verification Block"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Unique key stored in booking record and URL params",
+        "name": "value",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "description": "Short subtitle shown below the label on the option card",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "designOption",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. 37+, 800+, 87%",
+        "name": "value",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Years, Expeditions, Success Rate",
+        "name": "label",
+        "type": "string"
+      }
+    ],
+    "name": "statItem",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "e.g. 1988, 1993, 1996",
+        "name": "year",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text"
+      }
+    ],
+    "name": "legacyTimelineItem",
+    "type": "object"
+  }
+]
