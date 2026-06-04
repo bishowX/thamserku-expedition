@@ -131,7 +131,7 @@ export function Closing({ data }: { data?: ClosingData }) {
 
         <h2
           ref={headingRef}
-          className="font-['Radley'] font-light text-fluid-display leading-[1.1] mb-2"
+          className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-2"
         >
           <TextReveal text={heading} />
         </h2>

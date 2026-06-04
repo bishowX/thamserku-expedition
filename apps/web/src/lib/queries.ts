@@ -156,8 +156,8 @@ export type HomePageData = {
     infrastructureHeading: string;
     infrastructureIntro: string;
     infrastructurePillars: SanityYetiPillar[];
+    featuredExpeditions: SanityExpedition[];
   } | null;
-  expeditions: SanityExpedition[];
   editions: SanityEdition[];
 };
 
@@ -192,11 +192,8 @@ export async function getHomePageData(): Promise<HomePageData> {
       closingEyebrow, closingHeading, closingBody, closingImage,
       legacyEyebrow, legacyHeading, legacyIntro,
       legacyTimelineItems[]{ year, title, description },
-      infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars
-    },
-    "expeditions": *[_type == "expedition"] | order(number asc) {
-      _id, number, code, name, slug, altitude, region, season, style, positioning, image,
-      editions[]->{ _id, letter, name, slug }
+      infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars,
+      "featuredExpeditions": featuredExpeditions[]->{ _id, number, code, name, slug, altitude, region, season, style, positioning, image, editions[]->{ _id, letter, name, slug } }
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, character, slug

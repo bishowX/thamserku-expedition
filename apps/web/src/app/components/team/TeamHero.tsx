@@ -25,7 +25,7 @@ export function TeamHero({ page }: { page?: PageData }) {
       <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end mt-48 h-full">
         {/* Eyebrow */}
         
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6 max-w-[22ch] text-white">
+        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[22ch] text-white">
           {page?.heroHeadline ?? 'The people who know the mountain.'}
         </h1>
 

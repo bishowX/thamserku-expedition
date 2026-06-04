@@ -48,7 +48,7 @@ export function LegacyChairman({ letter }: { letter?: ChairmanLetterData }) {
               {letter?.eyebrow ?? "03 — THE CHAIRMAN'S LETTER"}
             </span>
             {letter?.heading && (
-              <h2 className="font-['Radley'] font-light text-fluid-xl leading-[1.1] text-white">
+              <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] text-white">
                 {headingPart1}{" "}
                 <em className="text-[#0A3A77] not-italic italic">
                   {headingPart2}

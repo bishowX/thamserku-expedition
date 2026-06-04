@@ -22,7 +22,7 @@ export function LegacyHero({ page }: { page?: PageData }) {
       <Nav />
 
       <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end h-full mt-32 md:mt-48 flex-grow pb-24 md:pb-32">
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-display leading-[1.05] mb-8 max-w-[24ch] text-white tracking-tight">
+        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading leading-[1.05] mb-8 max-w-[24ch] text-white tracking-tight">
           {page?.heroHeadline ?? (
             <>
               Thamserku was not created to <span className="italic text-[#C8CDD2]">follow</span> the Himalayan expedition industry. It helped <span className="italic text-[#C8CDD2]">shape</span> it.

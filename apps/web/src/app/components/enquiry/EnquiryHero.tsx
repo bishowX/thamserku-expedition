@@ -27,7 +27,7 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-6">
           THE EXPEDITION DESK — SCHEDULE A CONSULTATION
         </span>
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6 max-w-[22ch] text-white">
+        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[22ch] text-white">
           {headline}
         </h1>
         <p className="text-[#C8CDD2] font-light text-fluid-body leading-relaxed max-w-[60ch]">

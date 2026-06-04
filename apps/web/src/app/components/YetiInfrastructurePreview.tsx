@@ -173,7 +173,7 @@ export function YetiInfrastructurePreview({ data }: { data?: YetiData }) {
             </div>
             <h2
               ref={headingRef}
-              className="font-['Radley'] font-light text-fluid-section leading-[1.05] text-white max-w-[18ch]"
+              className="font-['Radley'] font-light text-fluid-heading leading-[1.05] text-white max-w-[18ch]"
             >
               <TextReveal text={heading} />
             </h2>

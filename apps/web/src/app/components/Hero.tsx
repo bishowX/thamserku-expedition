@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { MoveRight } from "lucide-react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -178,7 +177,7 @@ export function Hero({ data }: { data?: HeroData }) {
         <div className="max-w-4xl">
           <h1
             ref={headlineRef}
-            className="font-['Radley'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6 opacity-0"
+            className="font-['Radley'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 opacity-0"
           >
             <TextReveal text={headline} />
           </h1>
@@ -190,20 +189,12 @@ export function Hero({ data }: { data?: HeroData }) {
           </p>
         </div>
 
-        <div ref={ctaRef} className="flex flex-wrap gap-4 mt-4 opacity-0">
+        <div ref={ctaRef} className="flex mt-4 opacity-0">
           <Link
-            to="/atlas"
-            className="btn-cta btn-cta-primary border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
+            to="/design"
+            className="bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px]"
           >
-            <span>Explore the Atlas</span>
-            <MoveRight className="w-3 h-3 arrow-shift" />
-          </Link>
-          <Link
-            to="/consultation"
-            className="btn-cta btn-cta-secondary border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
-          >
-            <span>Schedule a Consultation</span>
-            <MoveRight className="w-3 h-3 arrow-shift" />
+            DESIGN YOUR EXPEDITION
           </Link>
         </div>
       </div>

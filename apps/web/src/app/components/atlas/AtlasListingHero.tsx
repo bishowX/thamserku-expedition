@@ -28,7 +28,7 @@ export function AtlasListingHero({ data }: { data?: AtlasHeroData }) {
       </div>
 
       <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end h-full mt-32 md:mt-48">
-        <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6 max-w-[18ch] text-white">
+        <h1 className="font-['Radley'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch] text-white">
           {headline}
         </h1>
         <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body max-w-[60ch] leading-relaxed mb-20">

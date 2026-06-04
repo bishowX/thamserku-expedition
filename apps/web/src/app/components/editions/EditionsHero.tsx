@@ -33,7 +33,7 @@ export function EditionsHero({
 
       <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end mt-48">
         {page?.heroHeadline && (
-          <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight leading-[1.1] mb-6 max-w-[18ch] text-white">
+          <h1 className="font-['Radley'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch] text-white">
             {page.heroHeadline}
           </h1>
         )}

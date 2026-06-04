@@ -5,7 +5,7 @@ export const FAQHero = ({ page }: { page?: PageData }) => {
     <section className="relative w-full bg-[#1A1A1A] section-padding overflow-hidden">
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-center pt-24 md:pt-0">
         {/* Headline */}
-        <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight text-white leading-[1.1] text-center max-w-[22ch] mb-6">
+        <h1 className="font-['Radley'] font-light text-fluid-heading tracking-tight text-white leading-[1.1] text-center max-w-[22ch] mb-6">
           {page?.heroHeadline ?? "Fifteen quiet answers."}
         </h1>
 

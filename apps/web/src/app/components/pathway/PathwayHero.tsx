@@ -19,7 +19,7 @@ export const PathwayHero = ({ page }: { page?: PageData }) => {
       />
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-center pt-32 md:pt-0">
-        <h1 className="font-['Radley'] font-light text-fluid-display tracking-tight text-white leading-[1.1] text-center max-w-[22ch] mb-6">
+        <h1 className="font-['Radley'] font-light text-fluid-heading tracking-tight text-white leading-[1.1] text-center max-w-[22ch] mb-6">
           {page.heroHeadline}
         </h1>
 

@@ -19,7 +19,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
           </p>
         )}
         {data?.legacyHeading && (
-          <h2 className="font-['Radley'] text-fluid-xl leading-[1.1] text-[#1A1A1A] mb-6">
+          <h2 className="font-['Radley'] text-fluid-heading leading-[1.1] text-[#1A1A1A] mb-6">
             {data.legacyHeading}
           </h2>
         )}
