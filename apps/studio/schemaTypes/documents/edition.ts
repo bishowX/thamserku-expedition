@@ -44,6 +44,13 @@ export default defineType({
       type: "slug",
       options: { source: "name" },
     }),
+    defineField({
+      name: "isStandard",
+      title: "Standard Edition",
+      type: "boolean",
+      initialValue: false,
+      description: "Marks this as the standard edition. Shows a 'STANDARD EDITION' badge on the edition band.",
+    }),
 
     // Band display
     defineField({

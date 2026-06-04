@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "createdAt": "2026-06-04T09:26:58.995Z",
+  "createdAt": "2026-06-04T09:33:02.180Z",
   "workspaces": [
     {
       "name": "thamserku-expedition",
@@ -12,7 +12,7 @@
       "mediaLibrary": {
         "enabled": false
       },
-      "schema": "efce28f0.create-schema.json",
+      "schema": "f6a916d9.create-schema.json",
       "tools": "bc196c7c.create-tools.json"
     }
   ]

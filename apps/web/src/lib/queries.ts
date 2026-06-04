@@ -46,6 +46,7 @@ export type SanityEditionFull = SanityEdition & {
   comparisonStyle?: string;
   bestFor?: string;
   mountainNames?: string[];
+  isStandard?: boolean;
 };
 
 export type SanityExpeditionForMatrix = {
@@ -274,7 +275,7 @@ export async function getEditionsPageData(): Promise<EditionsPageData> {
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug,
-      tag, body1, body2, image, colorVariant,
+      tag, body1, body2, image, colorVariant, isStandard,
       character, privacyLevel, comfortLevel, comparisonStyle, bestFor,
       "mountainNames": *[_type == "expedition" && references(^._id)] | order(number asc).name
     },
