@@ -17,6 +17,7 @@ import sherpa from './documents/sherpa'
 import fieldNotesPage from './documents/fieldNotesPage'
 import faqPage from './documents/faqPage'
 import archivePage from './documents/archivePage'
+import safetyPage from './documents/safetyPage'
 import archiveRecord from './documents/archiveRecord'
 import teamPage from './documents/teamPage'
 import sevenThousandMeterPage from './documents/sevenThousandMeterPage'
@@ -52,6 +53,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   fieldNotesPage,
   faqPage,
   archivePage,
+  safetyPage,
   teamPage,
   sevenThousandMeterPage,
   privateExpeditionsPage,

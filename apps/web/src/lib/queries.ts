@@ -769,6 +769,60 @@ export async function getArchivePageData(): Promise<ArchivePageData> {
   }`);
 }
 
+// ─── Safety Page ─────────────────────────────────────────────────────────────
+
+export type SafetyStat = { value: string; label: string };
+export type SafetyNumberCard = { title: string; body: string };
+export type SafetyProtocol = { label: string; description: string };
+export type SafetySpec = { label: string; value: string };
+export type SafetyCommunicationItem = { title: string; body: string };
+export type SafetyEvacuationCard = { title: string; body: string };
+
+export type SafetyPageData = {
+  safetyPage: {
+    heroHeadline?: string;
+    heroSubline?: string;
+    statsLabel?: string;
+    stats?: SafetyStat[];
+    numbersHeading?: string;
+    numbersCards?: SafetyNumberCard[];
+    architectureEyebrow?: string;
+    architectureHeading?: string;
+    protocols?: SafetyProtocol[];
+    foundationEyebrow?: string;
+    foundationHeading?: string;
+    foundationBody?: string[];
+    foundationSpecs?: SafetySpec[];
+    communicationEyebrow?: string;
+    communicationHeading?: string;
+    communicationItems?: SafetyCommunicationItem[];
+    evacuationEyebrow?: string;
+    evacuationHeading?: string;
+    evacuationCards?: SafetyEvacuationCard[];
+    evacuationQuote?: string;
+    evacuationBody?: string[];
+    closingEyebrow?: string;
+    closingHeadline?: string;
+    closingBody?: string;
+  } | null;
+};
+
+export async function getSafetyPageData(): Promise<SafetyPageData> {
+  return serverClient.fetch(`{
+    "safetyPage": *[_type == "safetyPage"][0] {
+      heroHeadline, heroSubline,
+      statsLabel, stats[] { value, label },
+      numbersHeading, numbersCards[] { title, body },
+      architectureEyebrow, architectureHeading, protocols[] { label, description },
+      foundationEyebrow, foundationHeading, foundationBody, foundationSpecs[] { label, value },
+      communicationEyebrow, communicationHeading, communicationItems[] { title, body },
+      evacuationEyebrow, evacuationHeading, evacuationCards[] { title, body },
+      evacuationQuote, evacuationBody,
+      closingEyebrow, closingHeadline, closingBody
+    }
+  }`);
+}
+
 // ─── Team Page ───────────────────────────────────────────────────────────────
 
 export type TeamLeadershipMember = {
