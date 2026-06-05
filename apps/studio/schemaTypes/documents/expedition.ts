@@ -8,15 +8,12 @@ export default defineType({
     { name: 'identity',        title: 'Identity' },
     { name: 'hero',            title: 'Hero' },
     { name: 'overview',        title: 'Overview' },
-    { name: 'whoItIsFor',      title: 'Who It Is For' },
-    { name: 'journey',         title: 'Journey Stages' },
+    { name: 'whoItIsFor',      title: 'Expedition Highlights' },
+    { name: 'itinerary',       title: 'Itinerary' },
     { name: 'route',           title: 'Route' },
-    { name: 'safety',          title: 'Safety & Support' },
-    { name: 'infrastructure',  title: 'Infrastructure' },
-    { name: 'preparation',     title: 'Preparation' },
-    { name: 'availability',    title: 'Availability' },
     { name: 'inclusions',      title: 'Inclusions' },
     { name: 'exclusions',      title: 'Exclusions' },
+    { name: 'prerequisite',    title: 'Mandatory Prerequisite' },
     { name: 'faqs',            title: 'FAQs' },
     { name: 'closing',         title: 'Closing' },
     { name: 'designConfig',    title: 'Design Config' },
@@ -65,28 +62,60 @@ export default defineType({
     defineField({ group: 'hero', name: 'pricing', title: 'Pricing', type: 'string', description: 'e.g. By private consultation' }),
 
     // ── Overview ──────────────────────────────────────────────────────────────
-    defineField({ group: 'overview', name: 'overviewHeadline', title: 'Overview Headline', type: 'text', rows: 3 }),
+    defineField({ group: 'overview', name: 'overviewHeadline', title: 'Overview Headline', type: 'text', rows: 3, description: 'Leading part of the headline (rendered upright).' }),
+    defineField({ group: 'overview', name: 'overviewHeadlineEmphasis', title: 'Overview Headline — Emphasis', type: 'text', rows: 2, description: 'Trailing part of the headline, rendered italic in accent blue.' }),
     defineField({ group: 'overview', name: 'overviewBody', title: 'Overview Body', type: 'text', rows: 5 }),
-    defineField({ group: 'overview', name: 'overviewSideImage', title: 'Overview Side Image', type: 'image', options: { hotspot: true }, description: 'Small marginal photograph.' }),
+    defineField({ group: 'overview', name: 'overviewSpecsHeading', title: 'Overview Specs — Heading', type: 'string', description: 'Heading above the spec table, e.g. "2027 Departure".' }),
+    defineField({
+      group: 'overview',
+      name: 'overviewSpecs',
+      title: 'Overview Specs',
+      type: 'array',
+      description: 'Label / value rows shown in the right-hand spec table.',
+      of: [
+        {
+          type: 'object',
+          name: 'overviewSpec',
+          fields: [
+            defineField({ name: 'label', title: 'Label', type: 'string' }),
+            defineField({ name: 'value', title: 'Value', type: 'string' }),
+          ],
+          preview: { select: { title: 'label', subtitle: 'value' } },
+        },
+      ],
+    }),
 
-    // ── Who It Is For ─────────────────────────────────────────────────────────
-    defineField({ group: 'whoItIsFor', name: 'whoItIsForHeadline', title: 'Who It Is For — Headline', type: 'string' }),
+    // ── Expedition Highlights (Who It Is For) ─────────────────────────────────
+    defineField({ group: 'whoItIsFor', name: 'whoItIsForHeadline', title: 'Highlights — Heading', type: 'string', description: 'e.g. "Expedition Highlights"' }),
     defineField({
       group: 'whoItIsFor',
       name: 'audienceTiles',
-      title: 'Audience Tiles',
+      title: 'Highlights',
       type: 'array',
+      description: 'Each highlight: a label and an italic body line.',
       of: [{ type: 'audienceTile' }],
-      validation: (Rule) => Rule.max(4),
     }),
 
-    // ── Journey Stages ────────────────────────────────────────────────────────
+    // ── Itinerary ─────────────────────────────────────────────────────────────
+    defineField({ group: 'itinerary', name: 'itineraryHeading', title: 'Itinerary — Heading', type: 'string', description: 'e.g. "Standard Itinerary"' }),
     defineField({
-      group: 'journey',
-      name: 'journeyStages',
-      title: 'Journey Stages',
+      group: 'itinerary',
+      name: 'itinerary',
+      title: 'Itinerary Days',
       type: 'array',
-      of: [{ type: 'journeyStage' }],
+      of: [
+        {
+          type: 'object',
+          name: 'itineraryDay',
+          fields: [
+            defineField({ name: 'days', title: 'Day(s)', type: 'string', description: 'e.g. "01" or "10-11"' }),
+            defineField({ name: 'activity', title: 'Activity', type: 'string' }),
+            defineField({ name: 'accommodation', title: 'Accommodation', type: 'string', description: 'e.g. "5-star Hotel", "MLN"' }),
+            defineField({ name: 'meals', title: 'Meals', type: 'string', description: 'e.g. "B", "B/L/D"' }),
+          ],
+          preview: { select: { title: 'activity', subtitle: 'days' } },
+        },
+      ],
     }),
 
     // ── Route ─────────────────────────────────────────────────────────────────
@@ -102,42 +131,6 @@ export default defineType({
     defineField({ group: 'route', name: 'acclimatisationNote', title: 'Acclimatisation Cycle Note', type: 'text', rows: 3 }),
     defineField({ group: 'route', name: 'summitWindowNote', title: 'Summit Window Note', type: 'text', rows: 3 }),
 
-    // ── Safety & Support ─────────────────────────────────────────────────────
-    defineField({ group: 'safety', name: 'safetySupportHeadline', title: 'Safety & Support — Headline', type: 'string' }),
-    defineField({
-      group: 'safety',
-      name: 'safetyModules',
-      title: 'Safety Modules',
-      type: 'array',
-      of: [{ type: 'safetyModule' }],
-      description: '6 safety modules shown in the Safety & Support section.',
-    }),
-
-    // ── Infrastructure ────────────────────────────────────────────────────────
-    defineField({ group: 'infrastructure', name: 'yetiAirNote', title: 'Yeti — Air Support Note', type: 'text', rows: 2 }),
-    defineField({ group: 'infrastructure', name: 'yetiLodgesNote', title: 'Yeti — Mountain Lodges Note', type: 'text', rows: 2 }),
-    defineField({ group: 'infrastructure', name: 'yetiAccessNote', title: 'Yeti — Regional Access Note', type: 'text', rows: 2 }),
-    defineField({ group: 'infrastructure', name: 'yetiContinuityNote', title: 'Yeti — Field Continuity Note', type: 'text', rows: 2 }),
-
-    // ── Preparation ───────────────────────────────────────────────────────────
-    defineField({ group: 'preparation', name: 'preparationHeadline', title: 'Preparation — Headline', type: 'string' }),
-    defineField({
-      group: 'preparation',
-      name: 'preparationColumns',
-      title: 'Preparation Columns',
-      type: 'array',
-      of: [{ type: 'preparationColumn' }],
-      description: 'Typically 3 columns: Body, Time, Mind.',
-    }),
-    // ── Availability ──────────────────────────────────────────────────────────
-    defineField({
-      group: 'availability',
-      name: 'availableSeasons',
-      title: 'Available Seasons',
-      type: 'array',
-      of: [{ type: 'availableSeason' }],
-    }),
-
     // ── Inclusions ────────────────────────────────────────────────────────────
     defineField({
       group: 'inclusions',
@@ -145,7 +138,7 @@ export default defineType({
       title: 'Inclusion Categories',
       type: 'array',
       of: [{ type: 'inclusionCategory' }],
-      description: 'Typically 3 categories: Expedition Leadership, Logistics & Support, Hospitality & Care.',
+      description: 'Each category has a heading and a body paragraph, e.g. Government Services, Kathmandu, Trekking, Base Camp, Higher Camps (C1-C4), Included Bonuses.',
     }),
 
     // ── Exclusions ────────────────────────────────────────────────────────────
@@ -156,6 +149,15 @@ export default defineType({
       type: 'array',
       of: [{ type: 'string' }],
       description: 'Items not covered by the expedition fee, e.g. International Airfare & Nepal Visa.',
+    }),
+    // ── Mandatory Prerequisite ────────────────────────────────────────────────
+    defineField({
+      group: 'prerequisite',
+      name: 'mandatoryPrerequisite',
+      title: 'Mandatory Prerequisite',
+      type: 'text',
+      rows: 6,
+      description: 'Shown beside the exclusions list. Line breaks are preserved.',
     }),
 
     // ── FAQs ──────────────────────────────────────────────────────────────────

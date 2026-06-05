@@ -5,11 +5,14 @@ export default defineType({
   title: 'Inclusion Category',
   type: 'object',
   fields: [
-    defineField({ name: 'category', title: 'Category Label', type: 'string', description: 'e.g. EXPEDITION LEADERSHIP' }),
-    defineField({ name: 'prefix', title: 'Item Prefix Letter', type: 'string', description: 'Single letter used for numbering, e.g. L → L.01, L.02' }),
-    defineField({ name: 'items', title: 'Items', type: 'array', of: [{ type: 'string' }] }),
+    defineField({ name: 'category', title: 'Category', type: 'string', description: 'e.g. Government & Related Services, Services in Kathmandu' }),
+    defineField({ name: 'items', title: 'Items', type: 'array', of: [{ type: 'string' }], description: 'One inclusion per line, e.g. "Airport Transfers: Private vehicle for all arrivals/departures".' }),
   ],
   preview: {
-    select: { title: 'category', subtitle: 'prefix' },
+    select: { title: 'category', items: 'items' },
+    prepare: ({ title, items }: { title: string; items?: string[] }) => ({
+      title,
+      subtitle: items?.length ? `${items.length} item${items.length === 1 ? '' : 's'}` : 'No items',
+    }),
   },
 })

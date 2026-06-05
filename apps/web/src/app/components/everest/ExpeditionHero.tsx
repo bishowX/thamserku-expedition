@@ -51,14 +51,17 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
 
         <div className="flex flex-col sm:flex-row gap-6">
           <Link
-            to={`/consultation?peak=${slug}`}
+            to={`/design-your-expedition?expedition=${slug}`}
             className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:bg-transparent hover:text-white transition-colors flex items-center justify-center gap-3"
           >
-            Request a Private {name} Consultation <ArrowRight className="w-4 h-4" strokeWidth={1} />
+            Design Your Expedition <ArrowRight className="w-4 h-4" strokeWidth={1} />
           </Link>
-          <button className="border border-white/30 text-white px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3">
-            Read the Dossier <ArrowDown className="w-4 h-4" strokeWidth={1} />
-          </button>
+          <a
+            href="#dossier-facts"
+            className="border border-white/30 text-white px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3"
+          >
+            Expedition Details <ArrowDown className="w-4 h-4" strokeWidth={1} />
+          </a>
         </div>
       </div>
     </section>

@@ -1,107 +1,131 @@
-type InclusionCategory = { category: string; prefix: string; items: string[] };
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
-type Props = {
-  expeditionName?: string;
-  inclusionCategories?: InclusionCategory[] | null;
-  exclusions?: string[] | null;
-};
+type InclusionCategory = { category: string; items: string[] };
 
-const FALLBACK_CATEGORIES: InclusionCategory[] = [
-  {
-    category: "EXPEDITION LEADERSHIP",
-    prefix: "L",
-    items: [
-      "Senior Sirdar and lead climbing Sherpas",
-      "Expedition director (Kathmandu coordination)",
-      "Senior medical advisor on call",
-      "Client experience lead, single point of contact"
-    ]
-  },
-  {
-    category: "LOGISTICS & SUPPORT",
-    prefix: "S",
-    items: [
-      "Permits, transport, and supply chain",
-      "Base Camp setup and operational support",
-      "Oxygen strategy and high-camp staging",
-      "Communications (satellite, daily check-ins)",
-      "Helicopter coordination via Yeti aviation network"
-    ]
-  },
-  {
-    category: "HOSPITALITY & CARE",
-    prefix: "H",
-    items: [
-      "Kathmandu arrival and briefing",
-      "Khumbu approach hospitality (lodges via Yeti)",
-      "Base Camp catering and rest facilities",
-      "Post-expedition debrief and continuity"
-    ]
-  }
-];
-
-export function Inclusions({ expeditionName, inclusionCategories, exclusions }: Props) {
-  const name = expeditionName || 'Expedition';
-  const categories = inclusionCategories ?? FALLBACK_CATEGORIES;
+function InclusionCategoryRow({ category, items }: InclusionCategory) {
+  const [open, setOpen] = useState(true);
 
   return (
- <section className="w-full bg-[#F4F2EC] py-24 text-[#1A1A1A]">
-      <div className="w-full max-w-[1440px] mx-auto px-8">
+    <div className="flex flex-col">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex items-center justify-between gap-4 text-left cursor-pointer"
+      >
+        <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A]">
+          {category}
+        </h3>
+        <ChevronDown
+          className={`w-5 h-5 shrink-0 text-[#5A6673] transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+          strokeWidth={1.5}
+        />
+      </button>
 
-        {/* Section header */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-10 md:mb-24">
-          <div className="md:col-span-5 flex flex-col">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
-              WHAT IS INCLUDED — {name.toUpperCase()}
-            </span>
-            <h2 className="font-['Radley'] font-light text-[48px] md:text-[64px] leading-[1.05] text-[#1A1A1A] max-w-[14ch]">
-              "Everything considered, in one expedition."
-            </h2>
-          </div>
-          <div className="md:col-span-7 flex flex-col justify-end md:pb-4">
-            <p className="font-['Lexend'] font-light text-[16px] text-[#5A6673] leading-[1.75] max-w-[60ch]">
-              Every Thamserku {name} expedition is supported from the first private conversation through descent. Exact inclusions vary by edition and are confirmed in a tailored proposal.
-            </p>
-          </div>
-        </div>
-
-        {/* Inclusions grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 mb-20">
-          {categories.map((col, cIdx) => (
-            <div key={cIdx} className="flex flex-col">
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-8">
-                {col.category}
-              </span>
-              <div className="flex flex-col border-t border-[#5A6673]/30">
-                {col.items.map((item, iIdx) => (
-                  <div
-                    key={iIdx}
-                    className="flex items-start gap-6 py-6 border-b border-[#5A6673]/30"
-                  >
-                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] pt-1 min-w-[32px]">
-                      {col.prefix}.0{iIdx + 1}
-                    </span>
-                    <span className="font-['Lexend'] font-light text-[15px] text-[#5A6673] leading-[1.6]">
-                      {item}
-                    </span>
-                  </div>
-                ))}
-              </div>
+      {items?.length > 0 && (
+        <div
+          className={`grid transition-all duration-300 ease-out ${
+            open ? "grid-rows-[1fr] mt-3" : "grid-rows-[0fr]"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="flex flex-col border-t border-[rgba(90,102,115,0.3)]">
+              {items.map((item, j) => (
+                <p
+                  key={j}
+                  className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
+                >
+                  {item}
+                </p>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
+      )}
+    </div>
+  );
+}
 
-        {/* Below grid note */}
-        <p className="font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] max-w-[60ch] mb-10 md:mb-24">
-          Editions vary. Definitive expeditions add private camp configuration, concierge planning, and maximum discretion. Your tailored proposal will specify exact inclusions.
-        </p>
+type Props = {
+  inclusionCategories?: InclusionCategory[] | null;
+  exclusions?: string[] | null;
+  mandatoryPrerequisite?: string;
+};
 
-        {exclusions && exclusions.length > 0 && (
-          <p className="font-['Cormorant_Garamond'] italic text-[16px] text-[#5A6673] pb-10 md:pb-24">
-            <span>Exclusion: </span>{exclusions.join(', ')}
-          </p>
+export function Inclusions({ inclusionCategories, exclusions, mandatoryPrerequisite }: Props) {
+  const categories = inclusionCategories ?? [];
+  const notIncluded = exclusions ?? [];
+
+  if (categories.length === 0 && notIncluded.length === 0 && !mandatoryPrerequisite) {
+    return null;
+  }
+
+  return (
+    <section className="w-full bg-white text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8">
+      <div className="max-w-[1440px] mx-auto flex flex-col gap-10 md:gap-14">
+        {/* What's Included */}
+        {categories.length > 0 && (
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
+              <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+                06 — Crafted Edition Standard
+              </span>
+              <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.28] text-[#1A1A1A]">
+                What's Included
+              </h2>
+            </div>
+
+            <div className="flex flex-col lg:flex-row gap-9 lg:gap-x-[50px]">
+              {[0, 1].map((col) => (
+                <div key={col} className="flex-1 min-w-0 flex flex-col gap-9">
+                  {categories
+                    .filter((_, i) => i % 2 === col)
+                    .map((cat, i) => (
+                      <InclusionCategoryRow key={i} category={cat.category} items={cat.items} />
+                    ))}
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
+        {/* Not Included */}
+        {(notIncluded.length > 0 || mandatoryPrerequisite) && (
+          <div className="flex flex-col gap-6">
+            <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.28] text-[#1A1A1A]">
+              Not Included
+            </h2>
+
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-x-[50px] items-start">
+              {notIncluded.length > 0 && (
+                <div className="w-full lg:flex-1 min-w-0 flex flex-col border-t border-[rgba(90,102,115,0.3)]">
+                  {notIncluded.map((item, i) => (
+                    <p
+                      key={i}
+                      className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
+                    >
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {mandatoryPrerequisite && (
+                <div className="w-full lg:flex-1 min-w-0 flex flex-col gap-3">
+                  <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A]">
+                    Mandatory Prerequisite
+                  </h3>
+                  <p className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] whitespace-pre-line">
+                    {mandatoryPrerequisite}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

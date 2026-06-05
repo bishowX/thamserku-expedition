@@ -28,12 +28,8 @@ import consultationMoment from './objects/consultationMoment'
 import consultationStep from './objects/consultationStep'
 import consultationContactOption from './objects/consultationContactOption'
 import audienceTile from './objects/audienceTile'
-import journeyStage from './objects/journeyStage'
 import routeWaypoint from './objects/routeWaypoint'
-import availableSeason from './objects/availableSeason'
 import faqItem from './objects/faqItem'
-import safetyModule from './objects/safetyModule'
-import preparationColumn from './objects/preparationColumn'
 import inclusionCategory from './objects/inclusionCategory'
 import archiveVerificationBlock from './objects/archiveVerificationBlock'
 import designOption from './objects/designOption'
@@ -73,12 +69,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   consultationStep,
   consultationContactOption,
   audienceTile,
-  journeyStage,
   routeWaypoint,
-  availableSeason,
   faqItem,
-  safetyModule,
-  preparationColumn,
   inclusionCategory,
   archiveVerificationBlock,
   designOption,

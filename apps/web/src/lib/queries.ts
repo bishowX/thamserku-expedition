@@ -333,20 +333,9 @@ export type ConsultationPageData = {
 };
 
 export type SanityAudienceTile = { label: string; subline: string; description: string };
-export type SanityJourneyStage = { title: string; description: string; image?: { asset: { _ref: string } } | null };
 export type SanityRouteWaypoint = { name: string; altitude: string };
-export type SanityAvailableSeason = {
-  name: string;
-  dates: string;
-  statusAlpine?: string;
-  statusBespoke?: string;
-  statusCrafted?: string;
-  statusDefinitive?: string;
-};
 export type SanityFaqItem = { question: string; answer: string };
-export type SanityInclusionCategory = { category: string; prefix: string; items: string[] };
-export type SanitySafetyModule = { label: string; title: string; description: string };
-export type SanityPreparationColumn = { title: string; items: string[] };
+export type SanityInclusionCategory = { category: string; items: string[] };
 export type SanitySherpa = {
   name: string;
   portrait?: { asset: { _ref: string } } | null;
@@ -375,27 +364,22 @@ export type SanityExpeditionDossier = {
   expeditionStyleFact?: string;
   pricing?: string;
   overviewHeadline?: string;
+  overviewHeadlineEmphasis?: string;
   overviewBody?: string;
-  overviewSideImage?: { asset: { _ref: string } } | null;
+  overviewSpecsHeading?: string;
+  overviewSpecs?: Array<{ label: string; value: string }>;
   whoItIsForHeadline?: string;
   audienceTiles?: SanityAudienceTile[];
-  journeyStages?: SanityJourneyStage[];
+  itineraryHeading?: string;
+  itinerary?: Array<{ days: string; activity: string; accommodation: string; meals: string }>;
   routeWaypoints?: SanityRouteWaypoint[];
   routePhilosophy?: string;
   acclimatisationNote?: string;
   summitWindowNote?: string;
-  yetiAirNote?: string;
-  yetiLodgesNote?: string;
-  yetiAccessNote?: string;
-  yetiContinuityNote?: string;
-  editions?: Array<{ letter: string; name: string; subtitle: string; positioning: string; targetAudience: string }>;
-  safetySupportHeadline?: string;
-  safetyModules?: SanitySafetyModule[] | null;
-  preparationHeadline?: string;
-  preparationColumns?: SanityPreparationColumn[] | null;
-  availableSeasons?: SanityAvailableSeason[];
+  editions?: Array<{ letter: string; name: string; subtitle: string; positioning: string; targetAudience: string; character?: string; isStandard?: boolean }>;
   inclusionCategories?: SanityInclusionCategory[] | null;
   exclusions?: string[] | null;
+  mandatoryPrerequisite?: string;
   faqs?: SanityFaqItem[];
   closingImage?: { asset: { _ref: string } } | null;
   closingStatement?: string;
@@ -408,21 +392,17 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       altitude, region, season, style, positioning, image,
       heroImage, heroTagline, heroSubtext,
       duration, expeditionStyleFact, pricing,
-      overviewHeadline, overviewBody, overviewSideImage,
+      overviewHeadline, overviewHeadlineEmphasis, overviewBody,
+      overviewSpecsHeading, overviewSpecs[]{ label, value },
       whoItIsForHeadline,
       audienceTiles[]{ label, subline, description },
-      journeyStages[]{ title, description, image },
+      itineraryHeading, itinerary[]{ days, activity, accommodation, meals },
       routeWaypoints[]{ name, altitude },
       routePhilosophy, acclimatisationNote, summitWindowNote,
-      yetiAirNote, yetiLodgesNote, yetiAccessNote, yetiContinuityNote,
-      safetySupportHeadline,
-      safetyModules[]{ label, title, description },
-      preparationHeadline,
-      preparationColumns[]{ title, items },
-      editions[]->{ letter, name, subtitle, positioning, targetAudience },
-      availableSeasons[]{ name, dates, statusAlpine, statusBespoke, statusCrafted, statusDefinitive },
-      inclusionCategories[]{ category, prefix, items },
+      editions[]->{ letter, name, subtitle, positioning, targetAudience, character, isStandard },
+      inclusionCategories[]{ category, items },
       exclusions,
+      mandatoryPrerequisite,
       faqs[]{ question, answer },
       closingImage, closingStatement
     }`,

@@ -89,12 +89,12 @@ export function RouteMap({
   );
 
   return (
-    <section ref={sectionRef} className="bg-[#2E353C] w-full text-white py-24 overflow-hidden relative">
+    <section ref={sectionRef} className="bg-[#191919] w-full text-white py-24 overflow-hidden relative">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img
           src={terrainBg}
           alt=""
-          className="absolute left-1/2 top-[-5%] -translate-x-1/2 w-[175%] max-w-none opacity-25 select-none"
+          className="absolute inset-0 w-full h-full object-cover select-none"
         />
       </div>
 

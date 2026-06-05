@@ -16,8 +16,8 @@ export function QuickFacts({
   pricing,
 }: Props) {
   return (
-    <section className="bg-[#1A1A1A] w-full text-white py-24 border-b border-white/10">
-      <div className="max-w-[1440px] mx-auto px-8 mb-8">
+    <section id="dossier-facts" className="bg-[#1A1A1A] w-full text-white pt-6 border-b border-white/10 scroll-mt-24">
+      <div className="max-w-[1440px] mx-auto px-8 mb-6">
         <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           02 — DOSSIER FACTS
         </h2>
@@ -38,7 +38,7 @@ export function QuickFacts({
 
 function Fact({ title, value }: { title: string; value: string }) {
   return (
-    <div className="px-6 py-8 md:px-8 md:py-10 flex flex-col justify-between h-full gap-4">
+    <div className="px-6 py-[17px] md:px-8 flex flex-col gap-2.5 h-full">
       <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
         {title}
       </span>
