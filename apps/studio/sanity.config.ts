@@ -3,7 +3,7 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
 
-const singletons = ['atlasPage', 'homePage', 'editionsPage', 'legacyPage', 'yetiInfrastructurePage', 'consultationPage', 'siteSettings', 'fieldNotesPage', 'faqPage', 'archivePage', 'safetyPage', 'teamPage', 'sevenThousandMeterPage', 'privateExpeditionsPage']
+const singletons = ['atlasPage', 'homePage', 'editionsPage', 'legacyPage', 'yetiInfrastructurePage', 'consultationPage', 'siteSettings', 'fieldNotesPage', 'faqPage', 'archivePage', 'safetyPage', 'teamPage', 'sevenThousandMeterPage', 'privateExpeditionsPage', 'achievementsPage']
 
 export default defineConfig({
   name: 'thamserku-expedition',
@@ -75,6 +75,10 @@ export default defineConfig({
               .title('Private Expeditions Page')
               .id('privateExpeditionsPage')
               .child(S.document().schemaType('privateExpeditionsPage').documentId('privateExpeditionsPage')),
+            S.listItem()
+              .title('Achievements Page')
+              .id('achievementsPage')
+              .child(S.document().schemaType('achievementsPage').documentId('achievementsPage')),
             S.divider(),
             S.documentTypeListItem('expedition').title('Expeditions'),
             S.documentTypeListItem('edition').title('Editions'),

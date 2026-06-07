@@ -750,6 +750,37 @@ export async function getSafetyPageData(): Promise<SafetyPageData> {
   }`);
 }
 
+// ─── Achievements Page ───────────────────────────────────────────────────────
+
+export type AchievementStat = { _key: string; value: string; label: string };
+
+export type AchievementDecade = {
+  _key: string;
+  years: string;
+  title: string;
+  body?: string;
+  meta?: string;
+};
+
+export type AchievementsPageData = {
+  achievementsPage: {
+    heroHeadline?: string;
+    heroSubheading?: string;
+    stats?: AchievementStat[];
+    decades?: AchievementDecade[];
+  } | null;
+};
+
+export async function getAchievementsPageData(): Promise<AchievementsPageData> {
+  return serverClient.fetch(`{
+    "achievementsPage": *[_type == "achievementsPage"][0] {
+      heroHeadline, heroSubheading,
+      stats[] { _key, value, label },
+      decades[] { _key, years, title, body, meta }
+    }
+  }`);
+}
+
 // ─── Team Page ───────────────────────────────────────────────────────────────
 
 export type TeamLeadershipMember = {

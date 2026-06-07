@@ -17,7 +17,7 @@ type NavExpedition = {
 
 const ABOUT_LINKS = [
   { label: "Legacy", href: "/legacy" },
-  { label: "Heritage & Achievements", href: "/heritage-and-achievements" },
+  { label: "Achievements", href: "/heritage-and-achievements" },
   { label: "YETI INFRASTRUCTURE", href: "/yeti-infrastructure" },
   { label: "News & Blogs", href: "/news-and-blogs" },
 ];

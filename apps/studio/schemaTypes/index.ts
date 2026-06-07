@@ -21,6 +21,7 @@ import archiveRecord from './documents/archiveRecord'
 import teamPage from './documents/teamPage'
 import sevenThousandMeterPage from './documents/sevenThousandMeterPage'
 import privateExpeditionsPage from './documents/privateExpeditionsPage'
+import achievementsPage from './documents/achievementsPage'
 import yetiPillar from './objects/yetiPillar'
 import timelineEra from './objects/timelineEra'
 import consultationMoment from './objects/consultationMoment'
@@ -52,6 +53,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   teamPage,
   sevenThousandMeterPage,
   privateExpeditionsPage,
+  achievementsPage,
   // Collections
   expedition,
   edition,
