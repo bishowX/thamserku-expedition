@@ -1,4 +1,5 @@
 import { serverClient } from "./sanity.server";
+import type { ConfigMatrix, BasePrices } from "./configMatrix";
 
 export type SanityEditionRef = {
   _id: string;
@@ -383,6 +384,8 @@ export type SanityExpeditionDossier = {
   faqs?: SanityFaqItem[];
   closingImage?: { asset: { _ref: string } } | null;
   closingStatement?: string;
+  configMatrix?: ConfigMatrix;
+  basePrices?: BasePrices;
 };
 
 export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditionDossier | null> {
@@ -404,7 +407,8 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       exclusions,
       mandatoryPrerequisite,
       faqs[]{ question, answer },
-      closingImage, closingStatement
+      closingImage, closingStatement,
+      ${CONFIG_MATRIX_PROJECTION}
     }`,
     { slug }
   );
@@ -1013,24 +1017,20 @@ export type PrivateExpeditionsPageData = {
 };
 
 // ── Design Your Expedition ─────────────────────────────────────────────────
+// Driven by the per-peak configuration matrix. See lib/configMatrix.ts.
 
-export type DesignOption = {
-  value: string;
-  label: string;
-  description?: string;
-};
-
-export type DesignSettings = {
-  ktmHotelOptions: DesignOption[];
-  trekGuideOptions: DesignOption[];
-  climbGuideOptions: DesignOption[];
-  sherpaRatioOptions: DesignOption[];
-  oxygenMin: number;
-  oxygenMax: number;
-  oxygenStep: number;
-  oxygenUnlimitedThreshold: number;
-  oxygenUnit: string;
-} | null;
+// Projection of the configMatrix array, shared by GROQ fragments below.
+const CONFIG_MATRIX_PROJECTION = `
+  "configMatrix": coalesce(configMatrix[]{
+    key, label, category, group, control, helpText,
+    editions[]{
+      edition, summary, state, defaultValue, priceDelta,
+      options[]{ value, label, priceDelta },
+      range
+    }
+  }, []),
+  basePrices
+`;
 
 export type SanityExpeditionForDesign = {
   _id: string;
@@ -1038,8 +1038,8 @@ export type SanityExpeditionForDesign = {
   code: string;
   altitude: string;
   slug: string;
-  trekLodgeOptions: DesignOption[];
-  helicopterInclusions: DesignOption[];
+  configMatrix: ConfigMatrix;
+  basePrices?: BasePrices;
 };
 
 export type SanityEditionForDesign = {
@@ -1047,20 +1047,11 @@ export type SanityEditionForDesign = {
   letter: string;
   name: string;
   positioning?: string;
-  designDefaults?: {
-    ktmHotel?: string;
-    trekLodge?: string;
-    trekGuide?: string;
-    climbGuide?: string;
-    sherpaRatio?: string;
-    oxygenBottles?: number;
-  };
 };
 
 export type DesignPageData = {
   expeditions: SanityExpeditionForDesign[];
   editions: SanityEditionForDesign[];
-  designSettings: DesignSettings;
 };
 
 export async function getDesignPageData(): Promise<DesignPageData> {
@@ -1068,25 +1059,24 @@ export async function getDesignPageData(): Promise<DesignPageData> {
     "expeditions": *[_type == "expedition"] | order(name asc) {
       _id, name, code, altitude,
       "slug": slug.current,
-      "trekLodgeOptions": coalesce(trekLodgeOptions[]{value, label, description}, []),
-      "helicopterInclusions": coalesce(helicopterInclusions[]{value, label, description}, [])
+      ${CONFIG_MATRIX_PROJECTION}
     },
     "editions": *[_type == "edition"] | order(letter asc) {
-      _id, letter, name, positioning,
-      designDefaults
-    },
-    "designSettings": *[_type == "designSettings"][0]{
-      "ktmHotelOptions": coalesce(ktmHotelOptions[]{value, label, description}, []),
-      "trekGuideOptions": coalesce(trekGuideOptions[]{value, label, description}, []),
-      "climbGuideOptions": coalesce(climbGuideOptions[]{value, label, description}, []),
-      "sherpaRatioOptions": coalesce(sherpaRatioOptions[]{value, label, description}, []),
-      "oxygenMin": coalesce(oxygenMin, 6),
-      "oxygenMax": coalesce(oxygenMax, 20),
-      "oxygenStep": coalesce(oxygenStep, 1),
-      "oxygenUnlimitedThreshold": coalesce(oxygenUnlimitedThreshold, 20),
-      "oxygenUnit": coalesce(oxygenUnit, "× 4L bottles")
+      _id, letter, name, positioning
     }
   }`);
+}
+
+// Matrix for a single peak (used by the server action to price/snapshot a booking).
+export async function getExpeditionConfig(id: string): Promise<{
+  name?: string;
+  configMatrix: ConfigMatrix;
+  basePrices?: BasePrices;
+} | null> {
+  return serverClient.fetch(
+    `*[_type == "expedition" && _id == $id][0]{ name, ${CONFIG_MATRIX_PROJECTION} }`,
+    { id },
+  );
 }
 
 export async function getPrivateExpeditionsPageData(): Promise<PrivateExpeditionsPageData> {

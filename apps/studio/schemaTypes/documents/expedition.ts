@@ -174,21 +174,31 @@ export default defineType({
     defineField({ group: 'closing', name: 'closingStatement', title: 'Closing Statement', type: 'text', rows: 3 }),
 
     // ── Design Config ─────────────────────────────────────────────────────────
+    // The per-peak configuration matrix. Single source of truth for BOTH the
+    // trek-details comparison tables (all 5 editions, display) and the Design
+    // configurator (B/C/D interactive). See configFeature / configCell.
     defineField({
       group: 'designConfig',
-      name: 'trekLodgeOptions',
-      title: 'Trek Lodge Options',
-      type: 'array',
-      of: [{ type: 'designOption' }],
-      description: 'Accommodation options during trekking for this specific expedition',
+      name: 'basePrices',
+      title: 'Base Prices (USD)',
+      type: 'object',
+      description: 'Starting price per edition for this peak. Base + selected option deltas = the email estimate. Leave blank for "Price on request" (A/E typically).',
+      options: { columns: 5 },
+      fields: [
+        defineField({ name: 'A', title: 'Alpine (A)', type: 'number' }),
+        defineField({ name: 'B', title: 'Bespoke (B)', type: 'number' }),
+        defineField({ name: 'C', title: 'Crafted (C)', type: 'number' }),
+        defineField({ name: 'D', title: 'Definitive (D)', type: 'number' }),
+        defineField({ name: 'E', title: 'Explorer (E)', type: 'number' }),
+      ],
     }),
     defineField({
       group: 'designConfig',
-      name: 'helicopterInclusions',
-      title: 'Helicopter Inclusion Options',
+      name: 'configMatrix',
+      title: 'Configuration Matrix',
       type: 'array',
-      of: [{ type: 'designOption' }],
-      description: 'Available helicopter transfer options for this expedition',
+      of: [{ type: 'configFeature' }],
+      description: 'Feature rows (core features + add-on services) with a cell per edition. Drives the comparison tables and the configurator.',
     }),
   ],
   orderings: [

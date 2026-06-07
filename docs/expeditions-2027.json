@@ -1,0 +1,3526 @@
+{
+  "peaks": [
+    {
+      "name": "Everest",
+      "slug": "everest",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional MLN upgrade",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "Full MLN circuit,",
+            "Enhanced Lodges",
+            "(Kongde Resort / MLN Debuche / Kathmandu 2 nights for Rest and Recovery during Exp.)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "80 kg",
+            "100 kg",
+            "Up to 200 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Acclimatisation Plan",
+          "values": [
+            "Standard Trek Acc. as per Itinerary, Add-on: Lobuche Peak or Island Peak",
+            "(Exclude Summit Bonus)",
+            "Lobuche Peak or Island Peak",
+            "Lobuche Peak or Island Peak"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Oxygen Support",
+          "values": [
+            "6x 4L Included4x 4L (Sherpa)",
+            "8x 4L Included",
+            "4x 4L (Sherpa)",
+            "Unlimited 4L + reserves",
+            "4x 4L (+ Each Sherpa)"
+          ],
+          "cells": {
+            "A": "6x 4L Included4x 4L (Sherpa)",
+            "B": "8x 4L Included",
+            "C": "4x 4L (Sherpa)",
+            "D": "Unlimited 4L + reserves",
+            "E": "4x 4L (+ Each Sherpa)"
+          }
+        },
+        {
+          "feature": "Oxygen Mask and Regulator",
+          "values": [
+            "1 Set for Member",
+            "1 Set for Sherpa",
+            "1 Set for Member",
+            "1 Set for Sherpa",
+            "1 Set for Member",
+            "+ 1 Back up Set",
+            "1 Set for each Sherpa"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1, C2",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 2500 for lead guide, USD $ 1800 for each Sherpa",
+            "Tips: Essential",
+            "USD $600 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Luxury lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "+"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Lhotse Climb",
+          "values": [
+            "N/A — self support",
+            "Add-on:",
+            "1Sherpa $13000",
+            "Lhotse Climb $24000",
+            "Excl. Summit Bonus",
+            "Add-on:",
+            "1Sherpa $13000",
+            "Lhotse Climb $24000",
+            "Excl. Summit Bonus",
+            "Add-on:",
+            "1Sherpa $13000",
+            "Lhotse Climb $24000",
+            "Excl. Summit Bonus",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Supplemental Oxygen",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": {
+            "A": "N/A — self support",
+            "B": "Add-on",
+            "C": "Add-on",
+            "D": "AVAILABLE (extra reserves)",
+            "E": "Add-on"
+          }
+        },
+        {
+          "service": "Ski Descent",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on"
+          ],
+          "cells": {
+            "A": "Add-on",
+            "B": "Add-on",
+            "C": "Add-on",
+            "D": "Add-on",
+            "E": "Add-on"
+          }
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Lukla",
+            "BC-KTM / BC-Debuche /",
+            "BC-Kongde / BC-Namche",
+            "(1 Round Trip for Recovery)",
+            "BC - KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Pre-Expedition Private High-Altitude Training",
+          "values": [
+            "Other than regular training during exp.",
+            "N/A. If needed,",
+            "Add-on Logistics",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Lhotse",
+      "slug": "lhotse",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional MLN upgrade",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "Full MLN circuit,",
+            "Enhanced Lodges",
+            "(Kongde Resort / MLN Debuche / Kathmandu 2 nights for Rest and Recovery during Exp.)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "70 kg",
+            "80 kg",
+            "Up to 150 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Acclimatisation Plan",
+          "values": [
+            "Standard Trek Acc. as per Itinerary, Add-on: Lobuche Peak or Island Peak",
+            "Lobuche Peak or Island Peak",
+            "Lobuche Peak or Island Peak"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Oxygen Support",
+          "values": [
+            "3x 4L Included2x 4L (Sherpa)",
+            "4x 4L Included",
+            "2x 4L (Sherpa)",
+            "Unlimited 4L + reserves",
+            "4x 4L (+ Each Sherpa)"
+          ],
+          "cells": {
+            "A": "3x 4L Included2x 4L (Sherpa)",
+            "B": "4x 4L Included",
+            "C": "2x 4L (Sherpa)",
+            "D": "Unlimited 4L + reserves",
+            "E": "4x 4L (+ Each Sherpa)"
+          }
+        },
+        {
+          "feature": "Oxygen Mask and Regulator",
+          "values": [
+            "1 Set for Member",
+            "1 Set for Sherpa",
+            "1 Set for Member",
+            "1 Set for Sherpa",
+            "1 Set for Member",
+            "+ 1 Additional Back up Set",
+            "1 Set for Sherpa"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1, C2",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 2200 for lead guide, USD $ 1600 for each Sherpa",
+            "Tips: Essential",
+            "USD $500 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Luxury lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $13000",
+            "Add-on:",
+            "1Sherpa $13000",
+            "Add-on:",
+            "1Sherpa $13000",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Supplemental Oxygen",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": {
+            "A": "N/A — self support",
+            "B": "Add-on",
+            "C": "Add-on",
+            "D": "AVAILABLE (extra reserves)",
+            "E": "Add-on"
+          }
+        },
+        {
+          "service": "Ski Descent",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on"
+          ],
+          "cells": {
+            "A": "Add-on",
+            "B": "Add-on",
+            "C": "Add-on",
+            "D": "Add-on",
+            "E": "Add-on"
+          }
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Lukla",
+            "BC-KTM / BC-Debuche /",
+            "BC-Kongde / BC-Namche",
+            "(1 Round Trip for Recovery)",
+            "BC - KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Pre-Expedition Private High-Altitude Training",
+          "values": [
+            "Other than regular training during exp.",
+            "N/A. If needed,",
+            "Add-on Logistics",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Manaslu",
+      "slug": "manaslu",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional upgrade",
+            "Enhanced Lodges",
+            "Full Circuit",
+            "Enhanced Lodges"
+          ],
+          "cells": {
+            "A": "Standard teahouse",
+            "B": "Optional upgrade",
+            "C": "Enhanced Lodges",
+            "D": "Full Circuit",
+            "E": "Enhanced Lodges"
+          }
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "60 kg",
+            "70 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Oxygen Support",
+          "values": [
+            "3x 4L Included2x 4L (Sherpa)",
+            "4x 4L Included",
+            "2x 4L (Sherpa)",
+            "Unlimited 4L + reserves",
+            "4x 4L (+ Each Sherpa)"
+          ],
+          "cells": {
+            "A": "3x 4L Included2x 4L (Sherpa)",
+            "B": "4x 4L Included",
+            "C": "2x 4L (Sherpa)",
+            "D": "Unlimited 4L + reserves",
+            "E": "4x 4L (+ Each Sherpa)"
+          }
+        },
+        {
+          "feature": "Oxygen Mask and Regulator",
+          "values": [
+            "1 Set for Member",
+            "1 Set for Sherpa",
+            "1 Set for Member",
+            "1 Set for Sherpa",
+            "1 Set for Member",
+            "+ 1 Additional Back up Set",
+            "1 Set for Sherpa"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1, C2",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 2000 for lead guide, USD $ 1500 for each Sherpa",
+            "Tips: Essential",
+            "USD $450 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Comfort lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Supplemental Oxygen",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": {
+            "A": "N/A — self support",
+            "B": "Add-on",
+            "C": "Add-on",
+            "D": "AVAILABLE (extra reserves)",
+            "E": "Add-on"
+          }
+        },
+        {
+          "service": "Ski Descent",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on"
+          ],
+          "cells": {
+            "A": "Add-on",
+            "B": "Add-on",
+            "C": "Add-on",
+            "D": "Add-on",
+            "E": "Add-on"
+          }
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM-Samagaun",
+            "BC-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Pre-Expedition Private High-Altitude Training",
+          "values": [
+            "Other than regular training during exp.",
+            "N/A. If needed,",
+            "Add-on Logistics",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Putha Hiunchuli",
+      "slug": "putha-hiunchuli",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Enhanced Lodges",
+            "Full Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "50 kg",
+            "60 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Ski Descent",
+          "values": [
+            "Add on",
+            "Included",
+            "As required"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1500 for lead guide, USD $ 1000 for each Sherpa",
+            "Tips: Essential",
+            "USD $400 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $5000",
+            "Add-on:",
+            "1Sherpa $5000",
+            "Add-on:",
+            "1Sherpa $5000",
+            "Add-on",
+            "Reserve Oxygen",
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Manang",
+            "BC-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Api Himal",
+      "slug": "api-himal",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent",
+            "Delhi Services",
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Enhanced Lodges",
+            "Full Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "50 kg",
+            "60 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 200 for lead guide, USD $ 1500 for each Sherpa",
+            "Tips: Essential",
+            "USD $500 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Comfort lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Ski Descent",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Reserve Oxygen",
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Baruntse",
+      "slug": "baruntse",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional MLN upgrade",
+            "Enhanced Lodges",
+            "Full Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": {
+            "A": "Standard teahouse",
+            "B": "Optional MLN upgrade",
+            "C": "Enhanced Lodges",
+            "D": "Full Circuit,",
+            "E": "Enhanced Lodges"
+          }
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "50 kg",
+            "60 kg",
+            "Up to 100 kg",
+            "Additional Climb",
+            "Standard Trek Acc. as per Itinerary,",
+            "Add-on: Mera Peak",
+            "(Exclude Summit Bonus)",
+            "Mera Peak Climbing",
+            "Mera Peak Climbing"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1500 for lead guide, USD $ 1000 for each Sherpa",
+            "Tips: Essential",
+            "USD $350 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Comfort lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on",
+            "Reserve  Oxygen",
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "BC - Lukla (As per Itinerary)",
+            "Add-on: Customizable",
+            "INCLUDED by default",
+            "KTM - Lukla",
+            "BC-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Himlung Himal",
+      "slug": "himlung-himal",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Enhanced Lodges",
+            "Full Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "50 kg",
+            "60 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1500 for lead guide, USD $ 1000 for each Sherpa",
+            "Tips: Essential",
+            "USD $400 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Comfort lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $5000",
+            "Add-on:",
+            "1Sherpa $5000",
+            "Add-on:",
+            "1Sherpa $5000",
+            "Add-on",
+            "Reserve Oxygen",
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Manang",
+            "BC-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Ama Dablam",
+      "slug": "ama-dablam",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional MLN upgrade",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "Full MLN Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "50 kg",
+            "60 kg",
+            "Up to 100 kg",
+            "Additional Climb",
+            "Standard Trek Acc. as per Itinerary,",
+            "Add-on: Lobuche Peak",
+            "(Exclude Summit Bonus)",
+            "Lobuche Peak Climbing",
+            "Lobuche Peak Climbing"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1500 for lead guide, USD $ 1000 for each Sherpa",
+            "Tips: Essential",
+            "USD $400 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Luxury lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on:",
+            "1Sherpa $7000",
+            "Add-on",
+            "Reserve  Oxygen",
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Lukla",
+            "BC-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Mera Peak",
+      "slug": "mera-peak",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional MLN upgrade",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "Full MLN Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "25 kg",
+            "30 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Ski Descent",
+          "values": [
+            "Add on",
+            "Included",
+            "As required"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1000 for lead guide, USD $ 500 for each Sherpa",
+            "Tips: Essential",
+            "USD $50 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Thagnak – Lukla",
+            "(As per Itinerary)",
+            "Add-on: Customizable",
+            "INCLUDED by default",
+            "KTM - Pangom",
+            "Khare-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Saribung",
+      "slug": "saribung",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional upgrade",
+            "Enhanced Lodges",
+            "Full Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": {
+            "A": "Standard teahouse",
+            "B": "Optional upgrade",
+            "C": "Enhanced Lodges",
+            "D": "Full Circuit,",
+            "E": "Enhanced Lodges"
+          }
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "30 kg",
+            "40 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Ski Descent",
+          "values": [
+            "Add on",
+            "Included",
+            "As required"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1200 for lead guide, USD $ 800 for each Sherpa",
+            "Tips: Essential",
+            "USD $400 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $4000",
+            "Add-on:",
+            "1Sherpa $4000",
+            "Add-on:",
+            "1Sherpa $4000",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Jomsom",
+            "Phu Gaon - KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Imja Tse",
+      "slug": "imja-tse",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional MLN upgrade",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "Full MLN Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "25 kg",
+            "30 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1000 for lead guide, USD $ 500 for each Sherpa",
+            "Tips: Essential",
+            "USD $150 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Luxury lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Lukla",
+            "BC-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Lobuche Peak",
+      "slug": "lobuche-peak",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional MLN upgrade",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "Full MLN Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "25 kg",
+            "30 kg",
+            "Up to 100 kg",
+            "Acclimatisation Ascent",
+            "Standard Trek Acc.",
+            "Add-on: EBC Trek",
+            "+ EBC Trek",
+            "+ EBC Trek"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1000 for lead guide, USD $ 500 for each Sherpa",
+            "Tips: Essential",
+            "USD $150 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Luxury lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "MLN nights,",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on",
+            "Reserve  Oxygen",
+            "N/A — self support",
+            "Add-on",
+            "Add-on",
+            "AVAILABLE (extra reserves)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Lukla",
+            "Lobuche-KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    },
+    {
+      "name": "Chulu Far East",
+      "slug": "chulu-far-east",
+      "basePrices": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null
+      },
+      "editionHeaders": [
+        "FEATURE",
+        "A: Alpine (PURE)",
+        "B: Bespoke (PERSONAL)",
+        "C: Crafted (CURATED) ★",
+        "D: Definitive (PREMIUM)",
+        "E: Explorer (VISION)"
+      ],
+      "coreFeatures": [
+        {
+          "feature": "Expedition Consultation",
+          "values": [
+            "Project Dependent",
+            "As required",
+            "As required",
+            "Upon expedition signup",
+            "Project Dependent"
+          ],
+          "cells": {
+            "A": "Project Dependent",
+            "B": "As required",
+            "C": "As required",
+            "D": "Upon expedition signup",
+            "E": "Project Dependent"
+          }
+        },
+        {
+          "feature": "Kathmandu Services",
+          "values": [
+            "5-star, Twin, BB (Customizable)",
+            "5-star, Single, BB",
+            "(Upgradable)",
+            "5-star Premium, FB"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trekking / Lodges",
+          "values": [
+            "Standard teahouse",
+            "Optional upgrade",
+            "1 night MLN, Chame",
+            "Enhanced Lodges",
+            "Full Circuit,",
+            "Enhanced Lodges"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Trek Guide Ratio",
+          "values": [
+            "1:4 Guide",
+            "1:3 Guide",
+            "1:1 Private Guide"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Luggage Allowance",
+          "values": [
+            "25 kg",
+            "30 kg",
+            "Up to 100 kg"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "BC Service Level",
+          "values": [
+            "Full-board, Customizable",
+            "Full-board, Curated",
+            "One Dome Tent, Premium full-board with all necessary Services"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Camp Comfort",
+          "values": [
+            "Selective Single Tent",
+            "Upgraded Single Tent",
+            "Single Box Tent (Lounge/Bakery/Bar)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Communication",
+          "values": [
+            "Walkie-Talkie + Sat phone (Emergency), Internet Access (Subject to Charge)",
+            "Comms suite + Sat phone (when required), Internet access to all available spots.",
+            "Full Comms Suite with Unlimited Internet at all available spots.",
+            "Real-time tracking (GPS)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Lead Guide",
+          "values": [
+            "Member: Guide",
+            "4:1 Nationally Accredited (Upgradable)",
+            "4:1 IFMGA/UIAGM",
+            "(Upgradable)",
+            "1:1 IFMGA/UIAGM"
+          ],
+          "cells": {
+            "A": "Member: Guide",
+            "B": "4:1 Nationally Accredited (Upgradable)",
+            "C": "4:1 IFMGA/UIAGM",
+            "D": "(Upgradable)",
+            "E": "1:1 IFMGA/UIAGM"
+          }
+        },
+        {
+          "feature": "Sherpa Ratio",
+          "values": [
+            "Member: Sherpa",
+            "2:1 Shared",
+            "1:1 Personal",
+            "1:2 Dedicated Sherpas"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "High Camps",
+          "values": [
+            "Necessary cooking equipment, High food",
+            "2:1 HA Tents",
+            "Kitchen, Dining Tents with a Cook at C1",
+            "2:1 HA Tents",
+            "Full Board",
+            "Premium HA Tent (2:1)"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on service",
+            "Add-on service",
+            "1 Personal Expedition Camera Person with a Sherpa Support"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Standby Rescue",
+          "values": [
+            "On-call from BC",
+            "Standby at BC",
+            "Dedicated Rescue Team"
+          ],
+          "cells": null
+        },
+        {
+          "feature": "Summit Bonus and Tips",
+          "values": [
+            "Mandatory and Essential",
+            "Submit Bonus: Mandatory",
+            "USD $ 1000 for lead guide, USD $ 500 for each Sherpa",
+            "Tips: Essential",
+            "USD $200 Per Member for the Exp. Crews and porters",
+            "(All In Cash) Pay to the Crews at BC, not to the Co.",
+            "Included",
+            "Included"
+          ],
+          "cells": null
+        }
+      ],
+      "addons": [
+        {
+          "service": "Mountain Lodges of Nepal (MLN)",
+          "values": [
+            "Comfort lodge upgrades along full trek route",
+            "Add-on",
+            "Add-on",
+            "Enhanced Lodges",
+            "INCLUDED — Full circuit",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Additional Climbing Sherpa",
+          "values": [
+            "N/A — self support",
+            "Add-on",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on:",
+            "1Sherpa $1500",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Personal Expedition Camera Person",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "1 Personal Expedition",
+            "Camera Person",
+            "(Upgradeable)",
+            "Add-on"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Helicopter-Inclusive Service",
+          "values": [
+            "Add-on",
+            "Add-on",
+            "Add-on",
+            "INCLUDED by default",
+            "KTM - Jomsom",
+            "Phu Gaon - KTM"
+          ],
+          "cells": null
+        },
+        {
+          "service": "Custom Logistics",
+          "values": [],
+          "cells": null
+        },
+        {
+          "service": "Post-Climb Wellness & Retreat Programme",
+          "values": [
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive Add-on",
+            "Exclusive",
+            "Add-on"
+          ],
+          "cells": null
+        }
+      ]
+    }
+  ],
+  "notes": "SOURCE STRUCTURE: The .docx contains NO real Word tables (zero w:tbl elements). The per-peak 'EDITION COMPARISION MATRIX' and 'ADD-ON SERVICE' grids were laid out visually and exported as a FLAT paragraph stream, so the original row/column grid cannot be losslessly reconstructed. Empty cells and vertically-merged cells produced NO paragraph, so most rows have FEWER than 5 cell values. Therefore each row is captured TWO ways: 'values' = the verbatim ordered paragraphs that fall between this row's feature/service label and the next one (lossless, but column position is NOT guaranteed to align to A-E), and 'cells' = a best-effort A/B/C/D/E mapping that is ONLY populated when a row retained exactly 5 values; otherwise 'cells' is null and you must read 'values' (which may also include wrapped sub-lines of a single cell, e.g. an address split across paragraphs). Column header order is identical in every matrix: A=Alpine(PURE), B=Bespoke(PERSONAL), C=Crafted(CURATED)★, D=Definitive(PREMIUM), E=Explorer(VISION); the C/Crafted column is marked with ★ as the 'curated standard'. ALL 13 peaks are present, each with one matrix + one add-on table. BASE PRICES: none exist. Every peak ends with 'Investment: From: $...........' placeholders only; no per-edition numeric base price is given. basePrices is therefore null for all editions/peaks. DOLLAR FIGURES that DO appear are inside cell text verbatim: add-on Sherpa prices like '1Sherpa $7000' / '1Sherpa $13000', Lhotse add-on climb '$24000' / 'Lhotse Climb $24000' (Everest & Lhotse only, 'Excl. Summit Bonus'), and Summit-Bonus/Tips amounts inside the 'Summit Bonus and Tips' feature row (e.g. Everest 'USD $ 2500 for lead guide, USD $1800 for each Sherpa', 'USD $600 Per Member'; Putha 'USD $1500/$1000', 'USD $400'). Prices appear as plain '$7000'/'$13000'/'$24000' style, NOT the '$13K/$24K' shorthand mentioned in the brief. SKI PEAKS: Putha Hiunchuli and Mera Peak include a 'Ski Descent' row in the matrix (values like 'Add on'/'Included'/'As required'); 'Ski Descent' also appears as an add-on row on several peaks. MLN ADD-ON ROW: on 5 peaks (manaslu, api-himal, baruntse, himlung-himal, chulu-far-east) the bold 'Mountain Lodges of Nepal (MLN)' add-on label was dropped in export; its row data (caption 'Comfort lodge upgrades along full trek route' + cells) was recovered from the block preamble and re-attached under that service label. 'editionHeaders' echoes the 5 edition column labels as they literally appear at the top of each matrix."
+}

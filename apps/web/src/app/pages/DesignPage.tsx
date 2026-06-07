@@ -3,17 +3,21 @@ import { useLoaderData, useSearchParams, useActionData, Form } from 'react-route
 import type { ShouldRevalidateFunction } from 'react-router'
 import { writeClient } from '../../lib/sanity.write'
 import { serverClient } from '../../lib/sanity.server'
-import { getDesignPageData } from '../../lib/queries'
+import { getDesignPageData, getExpeditionConfig } from '../../lib/queries'
 import type { DesignPageData, SanityExpeditionForDesign, SanityEditionForDesign } from '../../lib/queries'
 import { sendBookingEmail } from '../../lib/email.server'
-import { StepIndicator } from '../components/design/StepIndicator'
-import { ConfigSidebar } from '../components/design/ConfigSidebar'
-import { MobileConfigBar } from '../components/design/MobileConfigBar'
+import {
+  computeEstimate,
+  configuratorGroups,
+  defaultSelections,
+  chosenLabelFor,
+  type EditionLetter,
+  type SelectionValue,
+} from '../../lib/configMatrix'
 import { Step1PeakEdition } from '../components/design/steps/Step1PeakEdition'
-import { Step2Accommodation } from '../components/design/steps/Step2Accommodation'
-import { Step3Guiding } from '../components/design/steps/Step3Guiding'
-import { Step4OxygenHelicopter } from '../components/design/steps/Step4OxygenHelicopter'
 import { Step5Contact } from '../components/design/steps/Step5Contact'
+import { ConfiguratorStep } from '../components/design/ConfiguratorStep'
+import { ConfigSummary, MobileConfigBar, type SummaryItem } from '../components/design/ConfigSummary'
 
 export async function loader() {
   return getDesignPageData()
@@ -32,19 +36,31 @@ export async function action({ request }: { request: Request }): Promise<
   const fullName = (formData.get('fullName') as string | null)?.trim() ?? ''
   const email = (formData.get('email') as string | null)?.trim() ?? ''
   const phone = (formData.get('phone') as string | null)?.trim() ?? ''
+  const message = (formData.get('message') as string | null)?.trim() || undefined
 
   const errors: ActionErrors = {}
   if (!fullName) errors.fullName = 'Please enter your name.'
   if (!email && !phone) errors.contact = 'Please enter an email address or phone number.'
-
   if (Object.keys(errors).length > 0) return { success: false, errors }
 
   const expeditionId = (formData.get('expeditionId') as string)?.trim() || undefined
   const editionId = (formData.get('editionId') as string)?.trim() || undefined
-  const helicopterRaw = (formData.get('helicopterInclusions') as string | null) ?? ''
-  const helicopterInclusions = helicopterRaw.split(',').filter(Boolean)
-  const oxygenRaw = formData.get('oxygenBottles')
-  const oxygenBottles = oxygenRaw ? Number(oxygenRaw) : undefined
+  const editionLetter = ((formData.get('editionLetter') as string)?.trim() || '') as EditionLetter
+  const editionName = (formData.get('editionName') as string)?.trim() || undefined
+
+  // Parse the raw selection map, then price it server-side from the live matrix
+  // (never trust client-supplied prices).
+  let rawSelections: Record<string, SelectionValue> = {}
+  try {
+    rawSelections = JSON.parse((formData.get('selectionsJson') as string) || '{}')
+  } catch {
+    rawSelections = {}
+  }
+
+  const config = expeditionId ? await getExpeditionConfig(expeditionId) : null
+  const estimate = config
+    ? computeEstimate(config.configMatrix, editionLetter, config.basePrices, rawSelections)
+    : { basePrice: null, total: null, currency: 'USD', lineItems: [] }
 
   const submittedAt = new Date().toISOString()
 
@@ -54,51 +70,40 @@ export async function action({ request }: { request: Request }): Promise<
     fullName,
     email: email || undefined,
     phone: phone || undefined,
-    message: (formData.get('message') as string | null)?.trim() || undefined,
+    message,
     expedition: expeditionId ? { _type: 'reference', _ref: expeditionId } : undefined,
     edition: editionId ? { _type: 'reference', _ref: editionId } : undefined,
-    ktmHotel: (formData.get('ktmHotel') as string) || undefined,
-    trekLodge: (formData.get('trekLodge') as string) || undefined,
-    trekGuide: (formData.get('trekGuide') as string) || undefined,
-    climbGuide: (formData.get('climbGuide') as string) || undefined,
-    sherpaRatio: (formData.get('sherpaRatio') as string) || undefined,
-    oxygenBottles,
-    helicopterInclusions: helicopterInclusions.length > 0 ? helicopterInclusions : undefined,
+    selections: estimate.lineItems.map((li) => ({
+      _key: li.key,
+      _type: 'bookingSelection',
+      key: li.key,
+      label: li.label,
+      group: li.group,
+      chosenLabel: li.chosenLabel,
+      priceDelta: li.priceDelta,
+    })),
+    basePrice: estimate.basePrice ?? undefined,
+    estimatedTotal: estimate.total ?? undefined,
+    currency: estimate.currency,
   })
 
   try {
-    const settings = await serverClient.fetch<{
-      enquiryEmail?: string
-      expeditionName?: string
-      editionName?: string
-      editionLetter?: string
-      oxygenUnit?: string
-    }>(`{
-      "enquiryEmail": *[_type == "siteSettings"][0].enquiryEmail,
-      "expeditionName": *[_type == "expedition" && _id == $expId][0].name,
-      "editionName": *[_type == "edition" && _id == $edId][0].name,
-      "editionLetter": *[_type == "edition" && _id == $edId][0].letter,
-      "oxygenUnit": *[_type == "designSettings"][0].oxygenUnit,
-      "oxygenUnlimitedThreshold": *[_type == "designSettings"][0].oxygenUnlimitedThreshold
-    }`, { expId: expeditionId ?? '', edId: editionId ?? '' })
-
-    if (settings?.enquiryEmail) {
-      await sendBookingEmail(settings.enquiryEmail, {
+    const enquiryEmail = await serverClient.fetch<string | undefined>(
+      `*[_type == "siteSettings"][0].enquiryEmail`,
+    )
+    if (enquiryEmail) {
+      await sendBookingEmail(enquiryEmail, {
         fullName,
         email: email || undefined,
         phone: phone || undefined,
-        message: (formData.get('message') as string | null)?.trim() || undefined,
-        expeditionName: settings.expeditionName,
-        editionLetter: settings.editionLetter,
-        editionName: settings.editionName,
-        ktmHotel: (formData.get('ktmHotel') as string) || undefined,
-        trekLodge: (formData.get('trekLodge') as string) || undefined,
-        trekGuide: (formData.get('trekGuide') as string) || undefined,
-        climbGuide: (formData.get('climbGuide') as string) || undefined,
-        sherpaRatio: (formData.get('sherpaRatio') as string) || undefined,
-        oxygenBottles,
-        oxygenUnit: settings.oxygenUnit,
-        helicopterInclusions,
+        message,
+        expeditionName: config?.name,
+        editionLetter: editionLetter || undefined,
+        editionName,
+        lineItems: estimate.lineItems,
+        basePrice: estimate.basePrice ?? undefined,
+        estimatedTotal: estimate.total ?? undefined,
+        currency: estimate.currency,
         submittedAt,
       })
     }
@@ -109,127 +114,85 @@ export async function action({ request }: { request: Request }): Promise<
   return { success: true }
 }
 
-// Validates a value against available options; returns null if invalid
-function resolveOption(options: { value: string }[], value: string | null): string | null {
-  if (!value) return null
-  return options.some((o) => o.value === value) ? value : null
-}
-
 export default function DesignPage() {
   const data = useLoaderData<DesignPageData>()
   const actionData = useActionData<typeof action>()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const { expeditions, editions, designSettings } = data
-  const settings = designSettings ?? {
-    ktmHotelOptions: [], trekGuideOptions: [], climbGuideOptions: [],
-    sherpaRatioOptions: [], oxygenMin: 6, oxygenMax: 20, oxygenStep: 1,
-    oxygenUnlimitedThreshold: 20, oxygenUnit: '× 4L bottles',
-  }
+  const { expeditions, editions } = data
 
-  const step = Math.min(Math.max(Number(searchParams.get('step') ?? '1'), 1), 5)
-
-  // Local state initialized from URL params — updates are instant, URL syncs on step transitions
   const [expedition, setExpedition] = useState<SanityExpeditionForDesign | null>(
-    () => expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
+    () => expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null,
   )
   const [edition, setEdition] = useState<SanityEditionForDesign | null>(
-    () => editions.find((e) => e.letter === searchParams.get('edition')) ?? null
+    () => editions.find((e) => e.letter === searchParams.get('edition')) ?? null,
   )
-  const [ktmHotel, setKtmHotel] = useState<string | null>(
-    () => resolveOption(settings.ktmHotelOptions, searchParams.get('ktmHotel'))
-  )
-  const [trekLodge, setTrekLodge] = useState<string | null>(() => {
-    const initExp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
-    return resolveOption(initExp?.trekLodgeOptions ?? [], searchParams.get('trekLodge'))
+  const [selections, setSelections] = useState<Record<string, SelectionValue>>(() => {
+    const exp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
+    const ed = editions.find((e) => e.letter === searchParams.get('edition')) ?? null
+    return exp && ed ? defaultSelections(exp.configMatrix, ed.letter as EditionLetter) : {}
   })
-  const [trekGuide, setTrekGuide] = useState<string | null>(
-    () => resolveOption(settings.trekGuideOptions, searchParams.get('trekGuide'))
-  )
-  const [climbGuide, setClimbGuide] = useState<string | null>(
-    () => resolveOption(settings.climbGuideOptions, searchParams.get('climbGuide'))
-  )
-  const [sherpaRatio, setSherpaRatio] = useState<string | null>(
-    () => resolveOption(settings.sherpaRatioOptions, searchParams.get('sherpaRatio'))
-  )
-  const [oxygenBottles, setOxygenBottles] = useState<number>(() => {
-    const raw = searchParams.get('oxygen')
-    return raw
-      ? Math.min(Math.max(Number(raw), settings.oxygenMin), settings.oxygenMax)
-      : settings.oxygenMin
-  })
-  const [helicopterInclusions, setHelicopterInclusions] = useState<string[]>(() => {
-    const raw = searchParams.get('helicopter') ?? ''
-    const initExp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
-    return raw
-      ? raw.split(',').filter((v) => (initExp?.helicopterInclusions ?? []).some((o) => o.value === v))
-      : []
-  })
+
+  // Dynamic steps: peak/edition → one per interactive group → contact.
+  const groups = expedition && edition ? configuratorGroups(expedition.configMatrix, edition.letter as EditionLetter) : []
+  const stepKeys = ['peakEdition', ...groups.map((g) => g.group), 'contact']
+  const isProject = Boolean(expedition && edition) && groups.length === 0
+
+  const rawStep = Number(searchParams.get('step') ?? '0')
+  const step = expedition && edition ? Math.min(Math.max(rawStep, 0), stepKeys.length - 1) : 0
 
   function syncToUrl(n: number) {
-    setSearchParams((prev) => {
-      prev.set('step', String(n))
-      if (expedition) prev.set('expedition', expedition.slug); else prev.delete('expedition')
-      if (edition) prev.set('edition', edition.letter); else prev.delete('edition')
-      if (ktmHotel) prev.set('ktmHotel', ktmHotel); else prev.delete('ktmHotel')
-      if (trekLodge) prev.set('trekLodge', trekLodge); else prev.delete('trekLodge')
-      if (trekGuide) prev.set('trekGuide', trekGuide); else prev.delete('trekGuide')
-      if (climbGuide) prev.set('climbGuide', climbGuide); else prev.delete('climbGuide')
-      if (sherpaRatio) prev.set('sherpaRatio', sherpaRatio); else prev.delete('sherpaRatio')
-      prev.set('oxygen', String(oxygenBottles))
-      if (helicopterInclusions.length > 0) prev.set('helicopter', helicopterInclusions.join(','))
-      else prev.delete('helicopter')
-      return prev
-    }, { replace: true })
-  }
-
-  function goToStep(n: number) {
-    syncToUrl(n)
+    setSearchParams(
+      (prev) => {
+        prev.set('step', String(n))
+        if (expedition) prev.set('expedition', expedition.slug)
+        else prev.delete('expedition')
+        if (edition) prev.set('edition', edition.letter)
+        else prev.delete('edition')
+        return prev
+      },
+      { replace: true },
+    )
   }
 
   function handleExpeditionChange(slug: string) {
     const exp = expeditions.find((e) => e.slug === slug) ?? null
     setExpedition(exp)
-    setTrekLodge(null)
-    setHelicopterInclusions([])
+    setSelections(exp && edition ? defaultSelections(exp.configMatrix, edition.letter as EditionLetter) : {})
   }
 
   function handleEditionChange(letter: string) {
     const ed = editions.find((e) => e.letter === letter) ?? null
     setEdition(ed)
-    if (ed?.designDefaults) {
-      const d = ed.designDefaults
-      if (d.ktmHotel) setKtmHotel(d.ktmHotel)
-      if (d.trekLodge) setTrekLodge(d.trekLodge)
-      if (d.trekGuide) setTrekGuide(d.trekGuide)
-      if (d.climbGuide) setClimbGuide(d.climbGuide)
-      if (d.sherpaRatio) setSherpaRatio(d.sherpaRatio)
-      if (d.oxygenBottles != null) setOxygenBottles(d.oxygenBottles)
-    }
+    setSelections(expedition && ed ? defaultSelections(expedition.configMatrix, ed.letter as EditionLetter) : {})
   }
 
-  function toggleHelicopter(value: string) {
-    setHelicopterInclusions((current) =>
-      current.includes(value) ? current.filter((v) => v !== value) : [...current, value]
-    )
+  function setSelection(key: string, value: SelectionValue) {
+    setSelections((prev) => ({ ...prev, [key]: value }))
   }
 
   const submitted = actionData?.success === true
-  const actionErrors = actionData && !actionData.success
-    ? (actionData as { success: false; errors: ActionErrors }).errors
-    : undefined
+  const actionErrors = actionData && !actionData.success ? actionData.errors : undefined
 
-  const sidebarProps = {
-    expedition, edition, ktmHotel, trekLodge, trekGuide, climbGuide, sherpaRatio,
-    oxygenBottles, oxygenUnit: settings.oxygenUnit,
-    oxygenUnlimitedThreshold: settings.oxygenUnlimitedThreshold,
-    helicopterInclusions,
-    ktmHotelOptions: settings.ktmHotelOptions,
-    trekLodgeOptions: expedition?.trekLodgeOptions ?? [],
-    trekGuideOptions: settings.trekGuideOptions,
-    climbGuideOptions: settings.climbGuideOptions,
-    sherpaRatioOptions: settings.sherpaRatioOptions,
-    helicopterOptions: expedition?.helicopterInclusions ?? [],
+  // ── Summary + submit payload ───────────────────────────────────────────────
+  const summaryItems: SummaryItem[] = groups.flatMap((g) =>
+    g.features.map(({ feature, cell }) => ({
+      label: feature.label,
+      chosenLabel: chosenLabelFor(feature, cell, selections[feature.key]),
+    })),
+  )
+  const editionLabel = edition ? `${edition.letter} · ${edition.name}` : undefined
+  const summaryProps = { expeditionName: expedition?.name, editionLabel, items: summaryItems }
+
+  const interactiveKeys = new Set(groups.flatMap((g) => g.features.map((f) => f.feature.key)))
+  const hiddenFields: Record<string, string> = {
+    expeditionId: expedition?._id ?? '',
+    editionId: edition?._id ?? '',
+    editionLetter: edition?.letter ?? '',
+    editionName: edition?.name ?? '',
+    selectionsJson: JSON.stringify(
+      Object.fromEntries(Object.entries(selections).filter(([k]) => interactiveKeys.has(k))),
+    ),
   }
 
   if (submitted) {
@@ -267,22 +230,22 @@ export default function DesignPage() {
           Design Your Expedition.
         </h1>
         <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg max-w-[60ch] mx-auto">
-          Select your Edition first — it pre-configures the standards. Then personalise every detail. We do not believe in quoting a number before understanding your climb.
+          Select your Edition first — it sets the standards. Then personalise every detail. We do not quote a number
+          before understanding your climb.
         </p>
       </div>
 
       {/* Step indicator */}
       <div className="px-6 md:px-12 py-8 flex justify-start lg:justify-center">
-        <StepIndicator currentStep={step} />
+        <StepDots stepKeys={stepKeys} current={step} />
       </div>
 
       {/* Content */}
       <div className="px-6 md:px-12 pb-12">
         <div className="flex gap-10 max-w-[1100px] mx-auto">
-          {/* Form area */}
           <div className="flex-1 min-w-0">
             <Form method="post">
-              {step === 1 && (
+              {step === 0 && (
                 <Step1PeakEdition
                   expeditions={expeditions}
                   editions={editions}
@@ -290,77 +253,83 @@ export default function DesignPage() {
                   selectedEdition={edition}
                   onExpeditionChange={handleExpeditionChange}
                   onEditionChange={handleEditionChange}
-                  onContinue={() => goToStep(2)}
+                  onContinue={() => syncToUrl(1)}
                 />
               )}
-              {step === 2 && (
-                <Step2Accommodation
-                  ktmHotelOptions={settings.ktmHotelOptions}
-                  selectedExpedition={expedition}
-                  ktmHotel={ktmHotel}
-                  trekLodge={trekLodge}
-                  onKtmHotelChange={(v) => setKtmHotel(v)}
-                  onTrekLodgeChange={(v) => setTrekLodge(v)}
-                  onBack={() => goToStep(1)}
-                  onContinue={() => goToStep(3)}
-                />
+
+              {step >= 1 && step <= groups.length && (
+                <div className="space-y-10">
+                  <ConfiguratorStep group={groups[step - 1]} selections={selections} onChange={setSelection} />
+                  <div className="pt-4 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => syncToUrl(step - 1)}
+                      className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#5A6673] hover:text-white transition-colors"
+                    >
+                      ← Back
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => syncToUrl(step + 1)}
+                      className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] bg-[#E8710A] text-white px-8 py-4 rounded hover:bg-[#D4630A] transition-colors"
+                    >
+                      Continue →
+                    </button>
+                  </div>
+                </div>
               )}
-              {step === 3 && (
-                <Step3Guiding
-                  trekGuideOptions={settings.trekGuideOptions}
-                  climbGuideOptions={settings.climbGuideOptions}
-                  sherpaRatioOptions={settings.sherpaRatioOptions}
-                  trekGuide={trekGuide}
-                  climbGuide={climbGuide}
-                  sherpaRatio={sherpaRatio}
-                  onTrekGuideChange={(v) => setTrekGuide(v)}
-                  onClimbGuideChange={(v) => setClimbGuide(v)}
-                  onSherpaRatioChange={(v) => setSherpaRatio(v)}
-                  onBack={() => goToStep(2)}
-                  onContinue={() => goToStep(4)}
-                />
-              )}
-              {step === 4 && (
-                <Step4OxygenHelicopter
-                  selectedExpedition={expedition}
-                  oxygenBottles={oxygenBottles}
-                  oxygenMin={settings.oxygenMin}
-                  oxygenMax={settings.oxygenMax}
-                  oxygenStep={settings.oxygenStep}
-                  oxygenUnit={settings.oxygenUnit}
-                  oxygenUnlimitedThreshold={settings.oxygenUnlimitedThreshold}
-                  helicopterInclusions={helicopterInclusions}
-                  onOxygenChange={setOxygenBottles}
-                  onHelicopterToggle={toggleHelicopter}
-                  onBack={() => goToStep(3)}
-                  onContinue={() => goToStep(5)}
-                />
-              )}
-              {step === 5 && (
+
+              {step === stepKeys.length - 1 && step !== 0 && (
                 <Step5Contact
                   errors={actionErrors}
-                  onBack={() => goToStep(4)}
-                  expeditionId={expedition?._id ?? ''}
-                  editionId={edition?._id ?? ''}
-                  ktmHotel={ktmHotel ?? ''}
-                  trekLodge={trekLodge ?? ''}
-                  trekGuide={trekGuide ?? ''}
-                  climbGuide={climbGuide ?? ''}
-                  sherpaRatio={sherpaRatio ?? ''}
-                  oxygenBottles={oxygenBottles}
-                  helicopterInclusions={helicopterInclusions}
+                  onBack={() => syncToUrl(step - 1)}
+                  hiddenFields={hiddenFields}
+                  variant={isProject ? 'project' : 'config'}
                 />
               )}
             </Form>
           </div>
 
-          {/* Desktop sidebar */}
-          <ConfigSidebar {...sidebarProps} />
+          <ConfigSummary {...summaryProps} />
         </div>
       </div>
 
-      {/* Mobile sticky bar */}
-      <MobileConfigBar {...sidebarProps} />
+      <MobileConfigBar {...summaryProps} />
     </main>
+  )
+}
+
+function StepDots({ stepKeys, current }: { stepKeys: string[]; current: number }) {
+  return (
+    <div className="flex items-center gap-3 overflow-x-auto">
+      {stepKeys.map((key, i) => {
+        const label = key === 'peakEdition' ? 'Peak & Edition' : key === 'contact' ? 'Contact' : key
+        const active = i === current
+        const done = i < current
+        return (
+          <div key={`${key}-${i}`} className="flex items-center gap-3 shrink-0">
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center font-['JetBrains_Mono'] text-[10px] ${
+                active
+                  ? 'bg-[#E8710A] text-white'
+                  : done
+                    ? 'border border-[#E8710A]/50 text-[#E8710A]'
+                    : 'border border-[#2E2E2E] text-[#5A6673]'
+              }`}
+            >
+              {i + 1}
+            </span>
+            <span
+              className={`font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] ${
+                active ? 'text-white' : 'text-[#5A6673]'
+              }`}
+            >
+              {label}
+            </span>
+            {i < stepKeys.length - 1 && <span className="w-6 h-px bg-[#2A2A2A]" />}
+          </div>
+        )
+      })}
+    </div>
   )
 }

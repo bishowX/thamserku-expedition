@@ -5,55 +5,33 @@ type ContactErrors = { fullName?: string; contact?: string }
 interface Step5Props {
   errors?: ContactErrors
   onBack: () => void
-  // Hidden config values passed as form fields
-  expeditionId: string
-  editionId: string
-  ktmHotel: string
-  trekLodge: string
-  trekGuide: string
-  climbGuide: string
-  sherpaRatio: string
-  oxygenBottles: number
-  helicopterInclusions: string[]
+  /** Hidden fields submitted with the form (ids, edition letter/name, selections JSON). */
+  hiddenFields: Record<string, string>
+  /** 'project' = A/E bespoke editions (no configuration); 'config' = B/C/D. */
+  variant?: 'config' | 'project'
 }
 
-export function Step5Contact({
-  errors,
-  onBack,
-  expeditionId,
-  editionId,
-  ktmHotel,
-  trekLodge,
-  trekGuide,
-  climbGuide,
-  sherpaRatio,
-  oxygenBottles,
-  helicopterInclusions,
-}: Step5Props) {
+export function Step5Contact({ errors, onBack, hiddenFields, variant = 'config' }: Step5Props) {
   const navigation = useNavigation()
   const isSubmitting = navigation.state === 'submitting'
+  const isProject = variant === 'project'
 
   return (
     <div className="space-y-10">
       <div>
         <h2 className="font-['Cormorant_Garamond'] font-light text-3xl text-white mb-2">
-          Almost There
+          {isProject ? 'A Bespoke Project' : 'Almost There'}
         </h2>
         <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg">
-          Tell us who you are and we'll reach out with your proposal.
+          {isProject
+            ? "This edition is shaped entirely around your objective. Tell us about your project and we'll design it with you."
+            : "Tell us who you are and we'll reach out with your proposal."}
         </p>
       </div>
 
-      {/* Hidden config fields */}
-      <input type="hidden" name="expeditionId" value={expeditionId} />
-      <input type="hidden" name="editionId" value={editionId} />
-      <input type="hidden" name="ktmHotel" value={ktmHotel} />
-      <input type="hidden" name="trekLodge" value={trekLodge} />
-      <input type="hidden" name="trekGuide" value={trekGuide} />
-      <input type="hidden" name="climbGuide" value={climbGuide} />
-      <input type="hidden" name="sherpaRatio" value={sherpaRatio} />
-      <input type="hidden" name="oxygenBottles" value={String(oxygenBottles)} />
-      <input type="hidden" name="helicopterInclusions" value={helicopterInclusions.join(',')} />
+      {Object.entries(hiddenFields).map(([name, value]) => (
+        <input key={name} type="hidden" name={name} value={value} />
+      ))}
 
       <div className="space-y-8">
         {/* Full Name */}
@@ -115,16 +93,20 @@ export function Step5Contact({
         {/* Message */}
         <div>
           <label className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#5A6673] mb-3 block">
-            Message
+            {isProject ? 'Your Project' : 'Message'} {isProject && <span className="text-[#E8710A]">·</span>}
           </label>
           <textarea
             name="message"
-            rows={4}
-            placeholder="Anything else you'd like us to know about your climb…"
+            rows={isProject ? 6 : 4}
+            placeholder={
+              isProject
+                ? 'Describe your objective — route, timing, style, and any record, research or media goals…'
+                : "Anything else you'd like us to know about your climb…"
+            }
             className="w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#E8710A] transition-colors placeholder:text-[#3A3A3A] resize-none"
           />
           <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.12em] text-[#3A3A3A] mt-2">
-            Optional
+            {isProject ? 'Tell us as much as you can' : 'Optional'}
           </p>
         </div>
       </div>
@@ -142,7 +124,7 @@ export function Step5Contact({
           disabled={isSubmitting}
           className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] bg-[#E8710A] text-white px-8 py-4 rounded hover:bg-[#D4630A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? 'Submitting…' : 'Submit Configuration →'}
+          {isSubmitting ? 'Submitting…' : isProject ? 'Send Enquiry →' : 'Submit Configuration →'}
         </button>
       </div>
     </div>

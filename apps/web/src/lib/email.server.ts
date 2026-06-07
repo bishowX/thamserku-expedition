@@ -76,6 +76,12 @@ function buildHtml(data: EnquiryEmailData): string {
 </html>`
 }
 
+export interface BookingLineItem {
+  label: string
+  chosenLabel: string
+  priceDelta: number
+}
+
 export interface BookingEmailData {
   fullName: string
   email?: string
@@ -83,29 +89,24 @@ export interface BookingEmailData {
   expeditionName?: string
   editionLetter?: string
   editionName?: string
-  ktmHotel?: string
-  trekLodge?: string
-  trekGuide?: string
-  climbGuide?: string
-  sherpaRatio?: string
-  oxygenBottles?: number
-  oxygenUnit?: string
-  oxygenUnlimitedThreshold?: number
-  helicopterInclusions?: string[]
+  lineItems?: BookingLineItem[]
+  basePrice?: number
+  estimatedTotal?: number
+  currency?: string
   message?: string
   submittedAt: string
+}
+
+function money(n: number, currency = 'USD'): string {
+  const symbol = currency === 'USD' ? '$' : `${currency} `
+  return `${symbol}${n.toLocaleString('en-US')}`
 }
 
 function buildBookingHtml(data: BookingEmailData): string {
   const submittedDate = new Date(data.submittedAt).toLocaleString('en-GB', {
     day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC',
   })
-
-  const oxygenLabel = data.oxygenBottles != null
-    ? data.oxygenBottles >= (data.oxygenUnlimitedThreshold ?? 20)
-      ? `Unlimited ${data.oxygenUnit ?? '× 4L bottles'}`
-      : `${data.oxygenBottles} ${data.oxygenUnit ?? '× 4L bottles'}`
-    : undefined
+  const currency = data.currency ?? 'USD'
 
   const contactRows = [
     row('Email', data.email),
@@ -115,14 +116,19 @@ function buildBookingHtml(data: BookingEmailData): string {
   const configRows = [
     row('Peak', data.expeditionName),
     row('Edition', data.editionLetter && data.editionName ? `${data.editionLetter} · ${data.editionName}` : undefined),
-    row('KTM Hotel', data.ktmHotel),
-    row('Trek Lodge', data.trekLodge),
-    row('Trek Guide', data.trekGuide),
-    row('Climb Guide', data.climbGuide),
-    row('Sherpa Ratio', data.sherpaRatio),
-    row('Oxygen', oxygenLabel),
-    row('Helicopter', data.helicopterInclusions?.join(', ')),
+    ...(data.lineItems ?? []).map((li) =>
+      row(li.label, li.priceDelta ? `${li.chosenLabel}  ·  +${money(li.priceDelta, currency)}` : li.chosenLabel),
+    ),
   ].join('')
+
+  // Indicative estimate — base + deltas. Null total → price on request (A/E).
+  const pricingRows =
+    data.estimatedTotal != null
+      ? [
+          row('Base Price', data.basePrice != null ? money(data.basePrice, currency) : undefined),
+          row('Estimated Total', `${money(data.estimatedTotal, currency)} — indicative, final quote on confirmation`),
+        ].join('')
+      : row('Estimate', 'Price on request — our desk will prepare a custom quote')
 
   const messageRows = row('Message', data.message)
 
@@ -146,6 +152,7 @@ function buildBookingHtml(data: BookingEmailData): string {
             <hr style="border:none;border-top:1px solid #E5E7EB;margin:0 0 40px;">
             ${section('Contact', contactRows)}
             ${section('Configuration', configRows)}
+            ${section('Estimate', pricingRows)}
             ${messageRows ? section('Message', messageRows) : ''}
           </td>
         </tr>

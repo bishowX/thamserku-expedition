@@ -1,7 +1,6 @@
 import type { SchemaTypeDefinition } from 'sanity'
 import enquiry from './documents/enquiry'
 import booking from './documents/booking'
-import designSettings from './documents/designSettings'
 import edition from './documents/edition'
 import editionsPage from './documents/editionsPage'
 import expedition from './documents/expedition'
@@ -32,13 +31,13 @@ import routeWaypoint from './objects/routeWaypoint'
 import faqItem from './objects/faqItem'
 import inclusionCategory from './objects/inclusionCategory'
 import archiveVerificationBlock from './objects/archiveVerificationBlock'
-import designOption from './objects/designOption'
+import configCell from './objects/configCell'
+import configFeature from './objects/configFeature'
 import statItem from './objects/statItem'
 import legacyTimelineItem from './objects/legacyTimelineItem'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
-  designSettings,
   atlasPage,
   homePage,
   editionsPage,
@@ -73,7 +72,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   faqItem,
   inclusionCategory,
   archiveVerificationBlock,
-  designOption,
+  configCell,
+  configFeature,
   statItem,
   legacyTimelineItem,
 ]

@@ -10,6 +10,7 @@ import { RouteMap } from "../components/everest/RouteMap";
 import { Inclusions } from "../components/everest/Inclusions";
 import { ExpeditionFAQ } from "../components/everest/ExpeditionFAQ";
 import { ExpeditionClosing } from "../components/everest/ExpeditionClosing";
+import { ComparisonTables } from "../components/expedition/ComparisonTables";
 import { Footer } from "../components/Footer";
 
 export async function loader({ params }: { params: { slug: string } }) {
@@ -62,6 +63,11 @@ export default function ExpeditionDossier() {
           mandatoryPrerequisite={expedition.mandatoryPrerequisite}
         />
         <ExpeditionEditions name={expedition.name} editions={expedition.editions} />
+        <ComparisonTables
+          name={expedition.name}
+          matrix={expedition.configMatrix}
+          editions={expedition.editions}
+        />
         <RouteMap
           waypoints={expedition.routeWaypoints}
           routePhilosophy={expedition.routePhilosophy}

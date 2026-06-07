@@ -30,19 +30,32 @@ export default defineType({
       to: [{ type: 'edition' }],
       group: 'config',
     }),
-    defineField({ name: 'ktmHotel', title: 'KTM Hotel', type: 'string', group: 'config' }),
-    defineField({ name: 'trekLodge', title: 'Trek Lodge', type: 'string', group: 'config' }),
-    defineField({ name: 'trekGuide', title: 'Trek Guide', type: 'string', group: 'config' }),
-    defineField({ name: 'climbGuide', title: 'Climb Guide', type: 'string', group: 'config' }),
-    defineField({ name: 'sherpaRatio', title: 'Sherpa Ratio', type: 'string', group: 'config' }),
-    defineField({ name: 'oxygenBottles', title: 'Oxygen Bottles', type: 'number', group: 'config' }),
+    // Frozen snapshot of what the customer configured & was quoted. Written at
+    // submission time so the record never shifts if the matrix is edited later.
     defineField({
-      name: 'helicopterInclusions',
-      title: 'Helicopter Inclusions',
+      name: 'selections',
+      title: 'Selections',
       type: 'array',
-      of: [{ type: 'string' }],
       group: 'config',
+      readOnly: true,
+      of: [
+        {
+          type: 'object',
+          name: 'bookingSelection',
+          fields: [
+            defineField({ name: 'key', title: 'Feature Key', type: 'string' }),
+            defineField({ name: 'label', title: 'Feature Label', type: 'string' }),
+            defineField({ name: 'group', title: 'Group', type: 'string' }),
+            defineField({ name: 'chosenLabel', title: 'Chosen', type: 'string', description: 'Human-readable selected value at submission time.' }),
+            defineField({ name: 'priceDelta', title: 'Price Delta (USD)', type: 'number' }),
+          ],
+          preview: { select: { title: 'label', subtitle: 'chosenLabel' } },
+        },
+      ],
     }),
+    defineField({ name: 'basePrice', title: 'Base Price (USD)', type: 'number', group: 'config', readOnly: true }),
+    defineField({ name: 'estimatedTotal', title: 'Estimated Total (USD)', type: 'number', group: 'config', readOnly: true, description: 'Indicative quote = base + deltas. Null when no base price (A/E → price on request).' }),
+    defineField({ name: 'currency', title: 'Currency', type: 'string', group: 'config', readOnly: true, initialValue: 'USD' }),
     // Message
     defineField({ name: 'message', title: 'Message', type: 'text', group: 'message' }),
   ],
