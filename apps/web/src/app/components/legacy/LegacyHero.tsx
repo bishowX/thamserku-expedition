@@ -1,40 +1,36 @@
 import { Nav } from "../Nav";
-import { urlFor } from "../../../lib/sanity";
 import type { LegacyPageData } from "../../../lib/queries";
 
 type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyHero({ page }: { page?: PageData }) {
-  const bgImage = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : null;
-
   return (
-    <section className="relative w-full h-screen min-h-[800px] bg-[#1A1A1A] text-white flex flex-col overflow-hidden">
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        {bgImage && (
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 mix-blend-luminosity sepia-[.2]"
-            style={{ backgroundImage: `url('${bgImage}')` }}
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-transparent to-[#1A1A1A]/90" />
-      </div>
+    <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col overflow-hidden">
+      {/* Faint cartographic grid overlay */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #C8CDD2 1px, transparent 1px),
+            linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)
+          `,
+          backgroundSize: '96px 96px',
+        }}
+      />
 
       <Nav />
 
-      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end h-full mt-32 md:mt-48 flex-grow pb-24 md:pb-32">
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading leading-[1.05] mb-8 max-w-[24ch] text-white tracking-tight">
-          {page?.heroHeadline ?? (
-            <>
-              Thamserku was not created to <span className="italic text-[#C8CDD2]">follow</span> the Himalayan expedition industry. It helped <span className="italic text-[#C8CDD2]">shape</span> it.
-            </>
-          )}
-        </h1>
-
-        <p className="font-['Inter'] font-light text-[#C8CDD2] text-fluid-body leading-relaxed max-w-[60ch]">
-          {page?.heroSubheading ?? 'A long-form reading of the house, its origins, its Sherpa leadership, its place in the Yeti Group, and its revival for a global audience.'}
-        </p>
+      <div className="relative z-10 flex flex-grow flex-col items-center justify-center section-padding">
+        <div className="flex w-full max-w-[1138px] flex-col items-center gap-[30px]">
+          <h1 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] tracking-tight text-center text-white">
+            {page?.heroHeadline ?? 'Born in the high Himalaya. Built for the hard way up.'}
+          </h1>
+          <p className="font-['Lexend'] font-light text-[18px] leading-[1.55] text-center text-[#C8CDD2] max-w-[705px]">
+            {page?.heroSubheading ??
+              "From its first years in Kathmandu to landmark ascents across Nepal, Thamserku's story is written in altitude, speed, risk, judgement, and the teams who kept moving when the route got serious."}
+          </p>
+        </div>
       </div>
-
     </section>
   );
 }

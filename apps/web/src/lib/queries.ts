@@ -188,80 +188,23 @@ export type LegacyTimelineChapter = {
   image?: { asset: { _ref: string } } | null;
 };
 
-export type LegacyLineageDataTile = {
-  _key: string;
-  label: string;
-  value: string;
-};
-
-export type LegacyChairmanParagraph = {
-  _key: string;
-  text: string;
-};
-
-export type ChairmanLetterData = {
-  eyebrow?: string;
-  heading?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body?: any[];
-  signature?: string;
-  organization?: string;
-  image?: { asset: { _ref: string } } | null;
-  imageCaption?: string;
-};
-
 export type LegacyPageData = {
   legacyPage: {
-    heroEyebrow?: string;
     heroHeadline?: string;
     heroSubheading?: string;
-    heroImage?: { asset: { _ref: string } } | null;
-    heroMetaFeature?: string;
-    heroMetaAtlas?: string;
-    heroMetaReadTime?: string;
-    heroMetaEra?: string;
-    originEyebrow?: string;
-    originYears?: string;
-    originSideNote?: string;
-    originBody1?: string;
-    originBody2?: string;
-    originPullQuote?: string;
-    originImage?: { asset: { _ref: string } } | null;
-    originImageCaption?: string;
-    chairmanLetter?: ChairmanLetterData | null;
     timelineEyebrow?: string;
     timelineHeading?: string;
     timelineFooterNote?: string;
     timelineChapters?: LegacyTimelineChapter[];
-    lineageEyebrow?: string;
-    lineageHeading?: string;
-    lineageBody1?: string;
-    lineageBody2?: string;
-    lineageDataTiles?: LegacyLineageDataTile[];
-    newsletterEyebrow?: string;
-    newsletterHeading?: string;
-    newsletterBody?: string;
-    newsletterPrivacyNote?: string;
-    closingEyebrow?: string;
-    closingHeading?: string;
-    closingImage?: { asset: { _ref: string } } | null;
   } | null;
 };
 
 export async function getLegacyPageData(): Promise<LegacyPageData> {
   return serverClient.fetch(`{
     "legacyPage": *[_type == "legacyPage"][0] {
-      heroEyebrow, heroHeadline, heroSubheading, heroImage,
-      heroMetaFeature, heroMetaAtlas, heroMetaReadTime, heroMetaEra,
-      originEyebrow, originYears, originSideNote, originBody1, originBody2,
-      originPullQuote, originImage, originImageCaption,
-      chairmanLetter->{ eyebrow, heading, body, signature, organization, image, imageCaption },
+      heroHeadline, heroSubheading,
       timelineEyebrow, timelineHeading, timelineFooterNote,
-      timelineChapters[] { _key, roman, years, title, description, image },
-      lineageEyebrow, lineageHeading, lineageBody1, lineageBody2,
-      lineageDataTiles[] { _key, label, value },
-      newsletterEyebrow, newsletterHeading, newsletterBody, newsletterPrivacyNote,
-      closingEyebrow, closingHeading, closingImage
+      timelineChapters[] { _key, roman, years, title, description, image }
     }
   }`);
 }

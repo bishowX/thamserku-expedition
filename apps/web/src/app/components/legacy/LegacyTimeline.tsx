@@ -95,7 +95,7 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
             {page?.timelineEyebrow ?? '04 — TIMELINE'}
           </span>
           <h2 className="font-['Cormorant_Garamond'] font-light text-[56px] leading-[70px] text-[#1A1A1A] max-w-[588px]">
-            {page?.timelineHeading ?? 'Five chapters in the life of a Himalayan house.'}
+            {page?.timelineHeading ?? 'Five chapters in the life of a Himalayan expedition house.'}
           </h2>
         </div>
 
