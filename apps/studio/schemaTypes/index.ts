@@ -32,8 +32,11 @@ import routeWaypoint from './objects/routeWaypoint'
 import faqItem from './objects/faqItem'
 import inclusionCategory from './objects/inclusionCategory'
 import archiveVerificationBlock from './objects/archiveVerificationBlock'
-import configCell from './objects/configCell'
-import configFeature from './objects/configFeature'
+import configOption from './objects/configOption'
+import configItem from './objects/configItem'
+import oxygenEdition from './objects/oxygenEdition'
+import editionConfig from './objects/editionConfig'
+import designConfig from './objects/designConfig'
 import statItem from './objects/statItem'
 import legacyTimelineItem from './objects/legacyTimelineItem'
 
@@ -74,8 +77,11 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   faqItem,
   inclusionCategory,
   archiveVerificationBlock,
-  configCell,
-  configFeature,
+  configOption,
+  configItem,
+  oxygenEdition,
+  editionConfig,
+  designConfig,
   statItem,
   legacyTimelineItem,
 ]

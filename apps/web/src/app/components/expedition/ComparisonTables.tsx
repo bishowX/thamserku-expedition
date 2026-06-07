@@ -1,10 +1,13 @@
 import {
   tableRows,
-  EDITION_LETTERS,
   type ConfigMatrix,
   type EditionLetter,
   type TableRow,
 } from '../../../lib/configMatrix'
+
+// The configurable matrix covers B/C/D only — Alpine (A) & Explorer (E) are
+// "Project Dependent" (contact-only), so they get a blanket note, not columns.
+const TABLE_COLUMNS: EditionLetter[] = ['B', 'C', 'D']
 
 interface ComparisonTablesProps {
   name: string
@@ -23,7 +26,7 @@ export function ComparisonTables({ name, matrix, editions }: ComparisonTablesPro
   if (core.length === 0 && addons.length === 0) return null
 
   const nameByLetter = new Map((editions ?? []).map((e) => [e.letter, e.name.replace(/\s*Edition$/i, '')]))
-  const columns = EDITION_LETTERS
+  const columns = TABLE_COLUMNS
 
   return (
     <section className="px-6 md:px-12 py-20 border-t border-[#1F1F1F]">
@@ -34,6 +37,9 @@ export function ComparisonTables({ name, matrix, editions }: ComparisonTablesPro
         {addons.length > 0 && (
           <Table title={`Add-on Services — ${name}`} columns={columns} nameByLetter={nameByLetter} rows={addons} />
         )}
+        <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px]">
+          Alpine (A) &amp; Explorer (E) are configured on a project-dependent basis — speak with our desk.
+        </p>
       </div>
     </section>
   )

@@ -2,85 +2,6 @@
   {
     "fields": [
       {
-        "description": "Accommodation options for Kathmandu — shown on Step 2",
-        "of": [
-          {
-            "type": "designOption"
-          }
-        ],
-        "name": "ktmHotelOptions",
-        "type": "array",
-        "title": "KTM Hotel Options"
-      },
-      {
-        "description": "Guiding options during trek — shown on Step 3",
-        "of": [
-          {
-            "type": "designOption"
-          }
-        ],
-        "name": "trekGuideOptions",
-        "type": "array"
-      },
-      {
-        "description": "Guiding options during climb — shown on Step 3",
-        "of": [
-          {
-            "type": "designOption"
-          }
-        ],
-        "name": "climbGuideOptions",
-        "type": "array"
-      },
-      {
-        "description": "Member:Sherpa ratio options — shown on Step 3",
-        "of": [
-          {
-            "type": "designOption"
-          }
-        ],
-        "name": "sherpaRatioOptions",
-        "type": "array"
-      },
-      {
-        "initialValue": 6,
-        "name": "oxygenMin",
-        "type": "number",
-        "title": "Oxygen — Min Bottles"
-      },
-      {
-        "initialValue": 20,
-        "name": "oxygenMax",
-        "type": "number",
-        "title": "Oxygen — Max Bottles"
-      },
-      {
-        "initialValue": 1,
-        "name": "oxygenStep",
-        "type": "number",
-        "title": "Oxygen — Step"
-      },
-      {
-        "initialValue": 20,
-        "description": "At this value, show \"Unlimited\" instead of a number",
-        "name": "oxygenUnlimitedThreshold",
-        "type": "number",
-        "title": "Oxygen — Unlimited Threshold"
-      },
-      {
-        "initialValue": "× 4L bottles",
-        "name": "oxygenUnit",
-        "type": "string",
-        "title": "Oxygen — Unit Label"
-      }
-    ],
-    "name": "designSettings",
-    "type": "document",
-    "title": "Design Your Expedition — Settings"
-  },
-  {
-    "fields": [
-      {
         "name": "heroHeadline",
         "type": "string",
         "title": "Headline"
@@ -489,18 +410,6 @@
         "title": "Body"
       },
       {
-        "description": "e.g. Enquire Now",
-        "name": "unclaimedPeaksCtaLabel",
-        "type": "string",
-        "title": "CTA Label"
-      },
-      {
-        "description": "e.g. /consultation",
-        "name": "unclaimedPeaksCtaHref",
-        "type": "string",
-        "title": "CTA Link"
-      },
-      {
         "description": "e.g. 06 — FIELD NOTES",
         "name": "fieldNotesEyebrow",
         "type": "string",
@@ -699,116 +608,19 @@
   {
     "fields": [
       {
-        "description": "e.g. 01 — THE LEGACY",
-        "name": "heroEyebrow",
-        "type": "string",
-        "title": "Eyebrow"
-      },
-      {
         "rows": 3,
         "name": "heroHeadline",
         "type": "text",
         "title": "Headline"
       },
       {
-        "rows": 2,
+        "rows": 3,
         "name": "heroSubheading",
         "type": "text",
         "title": "Subheading"
       },
       {
-        "options": {
-          "hotspot": true
-        },
-        "name": "heroImage",
-        "type": "image",
-        "title": "Background Image"
-      },
-      {
-        "description": "e.g. FEATURE · LEGACY",
-        "name": "heroMetaFeature",
-        "type": "string",
-        "title": "Meta Strip — Feature"
-      },
-      {
-        "description": "e.g. THE HIMALAYAN ATLAS",
-        "name": "heroMetaAtlas",
-        "type": "string",
-        "title": "Meta Strip — Atlas"
-      },
-      {
-        "description": "e.g. READ TIME · 12 MIN",
-        "name": "heroMetaReadTime",
-        "type": "string",
-        "title": "Meta Strip — Read Time"
-      },
-      {
-        "description": "e.g. NEPAL · 1987 — TODAY",
-        "name": "heroMetaEra",
-        "type": "string",
-        "title": "Meta Strip — Era"
-      },
-      {
-        "description": "e.g. 02 — ORIGIN",
-        "name": "originEyebrow",
-        "type": "string",
-        "title": "Eyebrow"
-      },
-      {
-        "description": "e.g. 1987 — 1995",
-        "name": "originYears",
-        "type": "string",
-        "title": "Year Range"
-      },
-      {
-        "name": "originSideNote",
-        "type": "string",
-        "title": "Sidebar Note"
-      },
-      {
-        "rows": 5,
-        "name": "originBody1",
-        "type": "text",
-        "title": "Body Paragraph 1 (Drop Cap)"
-      },
-      {
-        "rows": 3,
-        "name": "originBody2",
-        "type": "text",
-        "title": "Body Paragraph 2"
-      },
-      {
-        "rows": 2,
-        "name": "originPullQuote",
-        "type": "text",
-        "title": "Pull Quote"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "originImage",
-        "type": "image",
-        "title": "Side Image"
-      },
-      {
-        "description": "e.g. KHUMBU APPROACH · ARCHIVAL",
-        "name": "originImageCaption",
-        "type": "string",
-        "title": "Image Caption"
-      },
-      {
-        "to": [
-          {
-            "type": "chairmanLetter"
-          }
-        ],
-        "name": "chairmanLetter",
-        "type": "reference",
-        "title": "Chairman's Letter"
-      },
-      {
-        "description": "e.g. 04 — TIMELINE",
+        "description": "e.g. 01 — TIMELINE",
         "name": "timelineEyebrow",
         "type": "string",
         "title": "Eyebrow"
@@ -835,7 +647,7 @@
                 "title": "Roman Numeral"
               },
               {
-                "description": "e.g. 1987 — 1995",
+                "description": "e.g. 1988, 1987 — 1995",
                 "name": "years",
                 "type": "string",
                 "title": "Year Range"
@@ -864,92 +676,6 @@
         "name": "timelineChapters",
         "type": "array",
         "title": "Chapters"
-      },
-      {
-        "description": "e.g. 05 — LINEAGE",
-        "name": "lineageEyebrow",
-        "type": "string",
-        "title": "Eyebrow"
-      },
-      {
-        "name": "lineageHeading",
-        "type": "string",
-        "title": "Heading"
-      },
-      {
-        "rows": 4,
-        "name": "lineageBody1",
-        "type": "text",
-        "title": "Body Paragraph 1"
-      },
-      {
-        "rows": 4,
-        "name": "lineageBody2",
-        "type": "text",
-        "title": "Body Paragraph 2"
-      },
-      {
-        "of": [
-          {
-            "fields": [
-              {
-                "description": "e.g. HOUSE",
-                "name": "label",
-                "type": "string"
-              },
-              {
-                "description": "e.g. THAMSERKU EXPEDITIONS",
-                "name": "value",
-                "type": "string"
-              }
-            ],
-            "type": "object"
-          }
-        ],
-        "name": "lineageDataTiles",
-        "type": "array",
-        "title": "Data Tiles"
-      },
-      {
-        "name": "newsletterEyebrow",
-        "type": "string",
-        "title": "Eyebrow"
-      },
-      {
-        "description": "Rendered wrapped in quotes",
-        "name": "newsletterHeading",
-        "type": "string",
-        "title": "Heading / Quote"
-      },
-      {
-        "rows": 3,
-        "name": "newsletterBody",
-        "type": "text",
-        "title": "Body"
-      },
-      {
-        "name": "newsletterPrivacyNote",
-        "type": "string",
-        "title": "Privacy Note"
-      },
-      {
-        "description": "e.g. 08 — CONTINUE READING",
-        "name": "closingEyebrow",
-        "type": "string",
-        "title": "Eyebrow"
-      },
-      {
-        "name": "closingHeading",
-        "type": "string",
-        "title": "Heading"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "closingImage",
-        "type": "image",
-        "title": "Background Image"
       }
     ],
     "name": "legacyPage",
@@ -2026,6 +1752,246 @@
   {
     "fields": [
       {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "heroSubline",
+        "type": "text",
+        "title": "Subline"
+      },
+      {
+        "name": "statsLabel",
+        "type": "string",
+        "title": "Label"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "value",
+                "type": "string"
+              },
+              {
+                "name": "label",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "safetyStat"
+          }
+        ],
+        "name": "stats",
+        "type": "array"
+      },
+      {
+        "name": "numbersHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 5,
+                "name": "body",
+                "type": "text"
+              }
+            ],
+            "type": "object",
+            "name": "safetyNumberCard"
+          }
+        ],
+        "name": "numbersCards",
+        "type": "array",
+        "title": "Cards"
+      },
+      {
+        "name": "architectureEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "architectureHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "description",
+                "type": "text"
+              }
+            ],
+            "type": "object",
+            "name": "safetyProtocol"
+          }
+        ],
+        "name": "protocols",
+        "type": "array",
+        "title": "Protocol Rows"
+      },
+      {
+        "name": "foundationEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "foundationHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "of": [
+          {
+            "rows": 3,
+            "type": "text"
+          }
+        ],
+        "name": "foundationBody",
+        "type": "array",
+        "title": "Body Paragraphs"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "safetySpec"
+          }
+        ],
+        "name": "foundationSpecs",
+        "type": "array",
+        "title": "Spec Rows"
+      },
+      {
+        "name": "communicationEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "communicationHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "body",
+                "type": "text"
+              }
+            ],
+            "type": "object",
+            "name": "safetyCommItem"
+          }
+        ],
+        "name": "communicationItems",
+        "type": "array",
+        "title": "Items"
+      },
+      {
+        "name": "evacuationEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "evacuationHeading",
+        "type": "string",
+        "title": "Heading"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 4,
+                "name": "body",
+                "type": "text"
+              }
+            ],
+            "type": "object",
+            "name": "safetyEvacCard"
+          }
+        ],
+        "name": "evacuationCards",
+        "type": "array",
+        "title": "Cards"
+      },
+      {
+        "rows": 2,
+        "name": "evacuationQuote",
+        "type": "text",
+        "title": "Italic Quote"
+      },
+      {
+        "of": [
+          {
+            "rows": 3,
+            "type": "text"
+          }
+        ],
+        "name": "evacuationBody",
+        "type": "array",
+        "title": "Closing Body Paragraphs"
+      },
+      {
+        "name": "closingEyebrow",
+        "type": "string",
+        "title": "Eyebrow"
+      },
+      {
+        "name": "closingHeadline",
+        "type": "string",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "closingBody",
+        "type": "text",
+        "title": "Body"
+      }
+    ],
+    "name": "safetyPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
         "options": {
           "hotspot": true
         },
@@ -2705,6 +2671,70 @@
   {
     "fields": [
       {
+        "rows": 2,
+        "description": "e.g. A history written in altitude.",
+        "name": "heroHeadline",
+        "type": "text",
+        "title": "Headline"
+      },
+      {
+        "rows": 3,
+        "name": "heroSubheading",
+        "type": "text",
+        "title": "Subheading"
+      },
+      {
+        "description": "e.g. 37+ Years, 800+ Expeditions, 66+ Peaks, 42+ Nations",
+        "of": [
+          {
+            "type": "statItem"
+          }
+        ],
+        "name": "stats",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "e.g. 1987 – 1992",
+                "name": "years",
+                "type": "string",
+                "title": "Year Range"
+              },
+              {
+                "description": "e.g. Founding Years",
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "rows": 8,
+                "description": "Separate paragraphs with a blank line.",
+                "name": "body",
+                "type": "text"
+              },
+              {
+                "description": "e.g. 17 expeditions · Dhaulagiri, Pumori, Everest",
+                "name": "meta",
+                "type": "string",
+                "title": "Meta Line"
+              }
+            ],
+            "type": "object",
+            "name": "achievementDecade"
+          }
+        ],
+        "name": "decades",
+        "type": "array"
+      }
+    ],
+    "name": "achievementsPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
         "description": "e.g. 01, 02",
         "name": "number",
         "type": "string"
@@ -2848,8 +2878,16 @@
       },
       {
         "rows": 3,
+        "description": "Leading part of the headline (rendered upright).",
         "name": "overviewHeadline",
         "type": "text"
+      },
+      {
+        "rows": 2,
+        "description": "Trailing part of the headline, rendered italic in accent blue.",
+        "name": "overviewHeadlineEmphasis",
+        "type": "text",
+        "title": "Overview Headline — Emphasis"
       },
       {
         "rows": 5,
@@ -2857,46 +2895,87 @@
         "type": "text"
       },
       {
-        "options": {
-          "hotspot": true
-        },
-        "description": "Small marginal photograph.",
-        "name": "overviewSideImage",
-        "type": "image"
-      },
-      {
-        "name": "whoItIsForHeadline",
+        "description": "Heading above the spec table, e.g. \"2027 Departure\".",
+        "name": "overviewSpecsHeading",
         "type": "string",
-        "title": "Who It Is For — Headline"
+        "title": "Overview Specs — Heading"
       },
       {
-        "validation": [
+        "description": "Label / value rows shown in the right-hand spec table.",
+        "of": [
           {
-            "rules": [
+            "fields": [
               {
-                "flag": "max",
-                "constraint": 4
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "type": "string"
               }
             ],
-            "level": "error"
+            "type": "object",
+            "name": "overviewSpec"
           }
         ],
+        "name": "overviewSpecs",
+        "type": "array"
+      },
+      {
+        "description": "e.g. \"Expedition Highlights\"",
+        "name": "whoItIsForHeadline",
+        "type": "string",
+        "title": "Highlights — Heading"
+      },
+      {
+        "description": "Each highlight: a label and an italic body line.",
         "of": [
           {
             "type": "audienceTile"
           }
         ],
         "name": "audienceTiles",
-        "type": "array"
+        "type": "array",
+        "title": "Highlights"
+      },
+      {
+        "description": "e.g. \"Standard Itinerary\"",
+        "name": "itineraryHeading",
+        "type": "string",
+        "title": "Itinerary — Heading"
       },
       {
         "of": [
           {
-            "type": "journeyStage"
+            "fields": [
+              {
+                "description": "e.g. \"01\" or \"10-11\"",
+                "name": "days",
+                "type": "string",
+                "title": "Day(s)"
+              },
+              {
+                "name": "activity",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"5-star Hotel\", \"MLN\"",
+                "name": "accommodation",
+                "type": "string"
+              },
+              {
+                "description": "e.g. \"B\", \"B/L/D\"",
+                "name": "meals",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "itineraryDay"
           }
         ],
-        "name": "journeyStages",
-        "type": "array"
+        "name": "itinerary",
+        "type": "array",
+        "title": "Itinerary Days"
       },
       {
         "description": "Ordered list of waypoints for the elevation diagram.",
@@ -2925,70 +3004,7 @@
         "type": "text"
       },
       {
-        "name": "safetySupportHeadline",
-        "type": "string",
-        "title": "Safety & Support — Headline"
-      },
-      {
-        "description": "6 safety modules shown in the Safety & Support section.",
-        "of": [
-          {
-            "type": "safetyModule"
-          }
-        ],
-        "name": "safetyModules",
-        "type": "array"
-      },
-      {
-        "rows": 2,
-        "name": "yetiAirNote",
-        "type": "text",
-        "title": "Yeti — Air Support Note"
-      },
-      {
-        "rows": 2,
-        "name": "yetiLodgesNote",
-        "type": "text",
-        "title": "Yeti — Mountain Lodges Note"
-      },
-      {
-        "rows": 2,
-        "name": "yetiAccessNote",
-        "type": "text",
-        "title": "Yeti — Regional Access Note"
-      },
-      {
-        "rows": 2,
-        "name": "yetiContinuityNote",
-        "type": "text",
-        "title": "Yeti — Field Continuity Note"
-      },
-      {
-        "name": "preparationHeadline",
-        "type": "string",
-        "title": "Preparation — Headline"
-      },
-      {
-        "description": "Typically 3 columns: Body, Time, Mind.",
-        "of": [
-          {
-            "type": "preparationColumn"
-          }
-        ],
-        "name": "preparationColumns",
-        "type": "array"
-      },
-      {
-        "of": [
-          {
-            "type": "availableSeason"
-          }
-        ],
-        "name": "availableSeasons",
-        "type": "array"
-      },
-      {
-        "description": "Typically 3 categories: Expedition Leadership, Logistics & Support, Hospitality & Care.",
+        "description": "Each category has a heading and a body paragraph, e.g. Government Services, Kathmandu, Trekking, Base Camp, Higher Camps (C1-C4), Included Bonuses.",
         "of": [
           {
             "type": "inclusionCategory"
@@ -3006,6 +3022,12 @@
         ],
         "name": "exclusions",
         "type": "array"
+      },
+      {
+        "rows": 6,
+        "description": "Shown beside the exclusions list. Line breaks are preserved.",
+        "name": "mandatoryPrerequisite",
+        "type": "text"
       },
       {
         "of": [
@@ -3032,25 +3054,12 @@
         "type": "text"
       },
       {
-        "description": "Accommodation options during trekking for this specific expedition",
-        "of": [
-          {
-            "type": "designOption"
-          }
-        ],
-        "name": "trekLodgeOptions",
-        "type": "array"
-      },
-      {
-        "description": "Available helicopter transfer options for this expedition",
-        "of": [
-          {
-            "type": "designOption"
-          }
-        ],
-        "name": "helicopterInclusions",
-        "type": "array",
-        "title": "Helicopter Inclusion Options"
+        "options": {
+          "collapsible": false
+        },
+        "name": "designConfig",
+        "type": "designConfig",
+        "title": "Design Configuration"
       }
     ],
     "name": "expedition",
@@ -3129,6 +3138,13 @@
         "type": "slug"
       },
       {
+        "initialValue": false,
+        "description": "Marks this as the standard edition. Shows a 'STANDARD EDITION' badge on the edition band.",
+        "name": "isStandard",
+        "type": "boolean",
+        "title": "Standard Edition"
+      },
+      {
         "description": "e.g. THE DISCIPLINED CLIMB — shown above the large letter.",
         "name": "tag",
         "type": "string",
@@ -3202,39 +3218,6 @@
         "description": "e.g. Experienced climbers",
         "name": "bestFor",
         "type": "string"
-      },
-      {
-        "description": "Default selections pre-populated when this edition is chosen in the Design Your Expedition configurator",
-        "fields": [
-          {
-            "description": "Must match a value key in Design Settings",
-            "name": "ktmHotel",
-            "type": "string",
-            "title": "KTM Hotel"
-          },
-          {
-            "name": "trekLodge",
-            "type": "string"
-          },
-          {
-            "name": "trekGuide",
-            "type": "string"
-          },
-          {
-            "name": "climbGuide",
-            "type": "string"
-          },
-          {
-            "name": "sherpaRatio",
-            "type": "string"
-          },
-          {
-            "name": "oxygenBottles",
-            "type": "number"
-          }
-        ],
-        "name": "designDefaults",
-        "type": "object"
       }
     ],
     "name": "edition",
@@ -3886,6 +3869,46 @@
         "title": "Phone / WhatsApp"
       },
       {
+        "description": "Set when the climber asked for a peak not in our catalogue.",
+        "name": "customPeakName",
+        "type": "string",
+        "title": "Custom Peak"
+      },
+      {
+        "readOnly": true,
+        "name": "expeditionType",
+        "type": "string"
+      },
+      {
+        "readOnly": true,
+        "name": "numberOfClimbers",
+        "type": "string",
+        "title": "Number of Climbers"
+      },
+      {
+        "readOnly": true,
+        "name": "season",
+        "type": "string",
+        "title": "Preferred Season"
+      },
+      {
+        "readOnly": true,
+        "name": "startDate",
+        "type": "string",
+        "title": "Preferred Start Date"
+      },
+      {
+        "readOnly": true,
+        "name": "endDate",
+        "type": "string",
+        "title": "Preferred End Date"
+      },
+      {
+        "readOnly": true,
+        "name": "specialObjectives",
+        "type": "text"
+      },
+      {
         "to": [
           {
             "type": "expedition"
@@ -3905,38 +3928,75 @@
         "type": "reference"
       },
       {
-        "name": "ktmHotel",
-        "type": "string",
-        "title": "KTM Hotel"
-      },
-      {
-        "name": "trekLodge",
-        "type": "string"
-      },
-      {
-        "name": "trekGuide",
-        "type": "string"
-      },
-      {
-        "name": "climbGuide",
-        "type": "string"
-      },
-      {
-        "name": "sherpaRatio",
-        "type": "string"
-      },
-      {
-        "name": "oxygenBottles",
-        "type": "number"
-      },
-      {
         "of": [
           {
-            "type": "string"
+            "fields": [
+              {
+                "name": "key",
+                "type": "string",
+                "title": "Feature Key"
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "title": "Feature Label"
+              },
+              {
+                "name": "group",
+                "type": "string"
+              },
+              {
+                "description": "Human-readable selected value at submission time.",
+                "name": "chosenLabel",
+                "type": "string",
+                "title": "Chosen"
+              },
+              {
+                "name": "priceDelta",
+                "type": "number",
+                "title": "Price Delta (USD)"
+              }
+            ],
+            "type": "object",
+            "name": "bookingSelection"
           }
         ],
-        "name": "helicopterInclusions",
+        "readOnly": true,
+        "name": "selections",
         "type": "array"
+      },
+      {
+        "readOnly": true,
+        "name": "basePrice",
+        "type": "number",
+        "title": "Base Price (USD)"
+      },
+      {
+        "description": "Calculated quote = base + deltas. Null when no base price (A/E → price on request).",
+        "readOnly": true,
+        "name": "estimatedTotal",
+        "type": "number",
+        "title": "Estimated Total (USD)"
+      },
+      {
+        "description": "Calculated total −10% (rounded). The low end of the range quoted in the email.",
+        "readOnly": true,
+        "name": "estimatedLow",
+        "type": "number",
+        "title": "Estimated Low (USD)"
+      },
+      {
+        "description": "Calculated total +10% (rounded). The high end of the range quoted in the email.",
+        "readOnly": true,
+        "name": "estimatedHigh",
+        "type": "number",
+        "title": "Estimated High (USD)"
+      },
+      {
+        "initialValue": "USD",
+        "readOnly": true,
+        "name": "currency",
+        "type": "string"
       },
       {
         "name": "message",
@@ -4077,28 +4137,6 @@
   {
     "fields": [
       {
-        "name": "title",
-        "type": "string"
-      },
-      {
-        "rows": 3,
-        "name": "description",
-        "type": "text"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image",
-        "type": "image"
-      }
-    ],
-    "name": "journeyStage",
-    "type": "object"
-  },
-  {
-    "fields": [
-      {
         "description": "e.g. Base Camp",
         "name": "name",
         "type": "string"
@@ -4110,122 +4148,6 @@
       }
     ],
     "name": "routeWaypoint",
-    "type": "object"
-  },
-  {
-    "fields": [
-      {
-        "description": "e.g. SPRING 2026",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "description": "e.g. (Apr–May)",
-        "name": "dates",
-        "type": "string"
-      },
-      {
-        "options": {
-          "list": [
-            {
-              "title": "Open",
-              "value": "OPEN"
-            },
-            {
-              "title": "Limited",
-              "value": "LIMITED"
-            },
-            {
-              "title": "Consultation Only",
-              "value": "CONSULTATION_ONLY"
-            },
-            {
-              "title": "Closed",
-              "value": "CLOSED"
-            }
-          ]
-        },
-        "name": "statusAlpine",
-        "type": "string",
-        "title": "Status — A: Alpine"
-      },
-      {
-        "options": {
-          "list": [
-            {
-              "title": "Open",
-              "value": "OPEN"
-            },
-            {
-              "title": "Limited",
-              "value": "LIMITED"
-            },
-            {
-              "title": "Consultation Only",
-              "value": "CONSULTATION_ONLY"
-            },
-            {
-              "title": "Closed",
-              "value": "CLOSED"
-            }
-          ]
-        },
-        "name": "statusBespoke",
-        "type": "string",
-        "title": "Status — B: Bespoke"
-      },
-      {
-        "options": {
-          "list": [
-            {
-              "title": "Open",
-              "value": "OPEN"
-            },
-            {
-              "title": "Limited",
-              "value": "LIMITED"
-            },
-            {
-              "title": "Consultation Only",
-              "value": "CONSULTATION_ONLY"
-            },
-            {
-              "title": "Closed",
-              "value": "CLOSED"
-            }
-          ]
-        },
-        "name": "statusCrafted",
-        "type": "string",
-        "title": "Status — C: Crafted"
-      },
-      {
-        "options": {
-          "list": [
-            {
-              "title": "Open",
-              "value": "OPEN"
-            },
-            {
-              "title": "Limited",
-              "value": "LIMITED"
-            },
-            {
-              "title": "Consultation Only",
-              "value": "CONSULTATION_ONLY"
-            },
-            {
-              "title": "Closed",
-              "value": "CLOSED"
-            }
-          ]
-        },
-        "name": "statusDefinitive",
-        "type": "string",
-        "title": "Status — D: Definitive"
-      }
-    ],
-    "name": "availableSeason",
     "type": "object"
   },
   {
@@ -4247,60 +4169,12 @@
   {
     "fields": [
       {
-        "description": "e.g. SHERPA LEADERSHIP",
-        "name": "label",
-        "type": "string"
-      },
-      {
-        "description": "e.g. Sherpa Leadership",
-        "name": "title",
-        "type": "string"
-      },
-      {
-        "rows": 3,
-        "name": "description",
-        "type": "text"
-      }
-    ],
-    "name": "safetyModule",
-    "type": "object"
-  },
-  {
-    "fields": [
-      {
-        "description": "e.g. Body, Time, Mind",
-        "name": "title",
-        "type": "string",
-        "title": "Column Title"
-      },
-      {
-        "of": [
-          {
-            "type": "string"
-          }
-        ],
-        "name": "items",
-        "type": "array"
-      }
-    ],
-    "name": "preparationColumn",
-    "type": "object"
-  },
-  {
-    "fields": [
-      {
-        "description": "e.g. EXPEDITION LEADERSHIP",
+        "description": "e.g. Government & Related Services, Services in Kathmandu",
         "name": "category",
-        "type": "string",
-        "title": "Category Label"
+        "type": "string"
       },
       {
-        "description": "Single letter used for numbering, e.g. L → L.01, L.02",
-        "name": "prefix",
-        "type": "string",
-        "title": "Item Prefix Letter"
-      },
-      {
+        "description": "One inclusion per line, e.g. \"Airport Transfers: Private vehicle for all arrivals/departures\".",
         "of": [
           {
             "type": "string"
@@ -4336,9 +4210,35 @@
   {
     "fields": [
       {
+        "initialValue": "included",
+        "options": {
+          "list": [
+            {
+              "title": "Included — bundled at this edition",
+              "value": "included"
+            },
+            {
+              "title": "Add-on — optional, paid opt-in",
+              "value": "addon"
+            },
+            {
+              "title": "N/A — not offered",
+              "value": "na"
+            }
+          ],
+          "layout": "radio"
+        },
         "validation": [
           {
             "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "included",
+                  "addon",
+                  "na"
+                ]
+              },
               {
                 "flag": "presence",
                 "constraint": "required"
@@ -4347,8 +4247,7 @@
             "level": "error"
           }
         ],
-        "description": "Unique key stored in booking record and URL params",
-        "name": "value",
+        "name": "kind",
         "type": "string"
       },
       {
@@ -4356,24 +4255,307 @@
           {
             "rules": [
               {
-                "flag": "presence",
-                "constraint": "required"
+                "flag": "custom"
               }
             ],
             "level": "error"
           }
         ],
-        "name": "label",
+        "description": "For \"Included\": the spec shown in the comparison table (e.g. \"5-star, Single, BB\"). For \"Add-on\": optional label override (defaults to the row name).",
+        "hidden": "conditional",
+        "name": "text",
         "type": "string"
       },
       {
-        "description": "Short subtitle shown below the label on the option card",
-        "name": "description",
-        "type": "string"
+        "initialValue": 0,
+        "description": "Surcharge added to the base price when this add-on is opted in.",
+        "hidden": "conditional",
+        "name": "priceDelta",
+        "type": "number",
+        "title": "Price Delta (USD)"
       }
     ],
-    "name": "designOption",
-    "type": "object"
+    "name": "configEditionCell",
+    "type": "object",
+    "title": "Edition Value"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. \"Kathmandu\", \"Lead Climbing Guide\", \"Lhotse Climb\".",
+        "name": "name",
+        "type": "string",
+        "title": "Row Name"
+      },
+      {
+        "name": "b",
+        "type": "configEditionCell",
+        "title": "Bespoke (B)",
+        "fieldset": "editions"
+      },
+      {
+        "name": "c",
+        "type": "configEditionCell",
+        "title": "Crafted (C)",
+        "fieldset": "editions"
+      },
+      {
+        "name": "d",
+        "type": "configEditionCell",
+        "title": "Definitive (D)",
+        "fieldset": "editions"
+      },
+      {
+        "description": "Swap-in choices offered on top of the included spec (the \"Optional\" column). Leave empty for a fixed, non-choosable row.",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "label",
+                "type": "string"
+              },
+              {
+                "initialValue": 0,
+                "name": "priceDelta",
+                "type": "number",
+                "title": "Price Delta (USD)"
+              }
+            ],
+            "type": "object",
+            "name": "configAlt"
+          }
+        ],
+        "name": "alternatives",
+        "type": "array",
+        "title": "Optional Alternatives"
+      }
+    ],
+    "fieldsets": [
+      {
+        "name": "editions",
+        "title": "Bespoke · Crafted · Definitive",
+        "options": {
+          "columns": 3
+        }
+      }
+    ],
+    "name": "configRow",
+    "type": "object",
+    "title": "Row"
+  },
+  {
+    "fields": [
+      {
+        "name": "bBottles",
+        "type": "number",
+        "title": "Bespoke (B)",
+        "fieldset": "defaults"
+      },
+      {
+        "name": "cBottles",
+        "type": "number",
+        "title": "Crafted (C)",
+        "fieldset": "defaults"
+      },
+      {
+        "name": "dBottles",
+        "type": "number",
+        "title": "Definitive (D)",
+        "fieldset": "defaults"
+      },
+      {
+        "initialValue": 0,
+        "description": "0 allows a \"No O₂\" option.",
+        "name": "min",
+        "type": "number",
+        "title": "Min Bottles"
+      },
+      {
+        "initialValue": 16,
+        "name": "max",
+        "type": "number",
+        "title": "Max Bottles"
+      },
+      {
+        "description": "At/above this count the configurator shows \"Unlimited\" instead of a number (e.g. Definitive's \"13+ unlimited concept\").",
+        "name": "unlimitedThreshold",
+        "type": "number"
+      },
+      {
+        "initialValue": 0,
+        "name": "pricePerBottle",
+        "type": "number",
+        "title": "Price Per Extra Bottle (USD)"
+      }
+    ],
+    "fieldsets": [
+      {
+        "name": "defaults",
+        "title": "Default Bottles (×4L) per Edition",
+        "options": {
+          "columns": 3
+        }
+      }
+    ],
+    "name": "oxygenConfig",
+    "type": "object",
+    "title": "Oxygen"
+  },
+  {
+    "options": {
+      "collapsible": false
+    },
+    "fields": [
+      {
+        "options": {
+          "columns": 3
+        },
+        "description": "Starting price per edition. Base + selected add-on/option deltas = the email estimate. Leave blank for \"Price on request\".",
+        "fields": [
+          {
+            "name": "B",
+            "type": "number",
+            "title": "Bespoke (B)"
+          },
+          {
+            "name": "C",
+            "type": "number",
+            "title": "Crafted (C)"
+          },
+          {
+            "name": "D",
+            "type": "number",
+            "title": "Definitive (D)"
+          }
+        ],
+        "name": "basePrices",
+        "type": "object",
+        "title": "Base Prices (USD)"
+      },
+      {
+        "description": "Acclimatisation climbs and additional objectives (Lhotse, ski/snowboard, …).",
+        "of": [
+          {
+            "fieldsets": [
+              {
+                "name": "editions",
+                "title": "Bespoke · Crafted · Definitive",
+                "options": {
+                  "columns": 3
+                }
+              }
+            ],
+            "type": "configRow",
+            "title": "Row"
+          }
+        ],
+        "name": "acclimatisation",
+        "type": "array",
+        "title": "Acclimatisation & Additional Climb"
+      },
+      {
+        "description": "Lodging lines (Kathmandu, During Trekking, …).",
+        "of": [
+          {
+            "fieldsets": [
+              {
+                "name": "editions",
+                "title": "Bespoke · Crafted · Definitive",
+                "options": {
+                  "columns": 3
+                }
+              }
+            ],
+            "type": "configRow",
+            "title": "Row"
+          }
+        ],
+        "name": "accommodation",
+        "type": "array",
+        "title": "Accommodation Preferences"
+      },
+      {
+        "description": "Guide & sherpa ratios, camera person, … (Guide:Member).",
+        "of": [
+          {
+            "fieldsets": [
+              {
+                "name": "editions",
+                "title": "Bespoke · Crafted · Definitive",
+                "options": {
+                  "columns": 3
+                }
+              }
+            ],
+            "type": "configRow",
+            "title": "Row"
+          }
+        ],
+        "name": "guiding",
+        "type": "array",
+        "title": "Guiding Configurations"
+      },
+      {
+        "fieldsets": [
+          {
+            "name": "defaults",
+            "title": "Default Bottles (×4L) per Edition",
+            "options": {
+              "columns": 3
+            }
+          }
+        ],
+        "name": "oxygen",
+        "type": "oxygenConfig",
+        "title": "Oxygen Preferences"
+      },
+      {
+        "description": "Helicopter package(s). Usually a single row.",
+        "of": [
+          {
+            "fieldsets": [
+              {
+                "name": "editions",
+                "title": "Bespoke · Crafted · Definitive",
+                "options": {
+                  "columns": 3
+                }
+              }
+            ],
+            "type": "configRow",
+            "title": "Row"
+          }
+        ],
+        "name": "helicopter",
+        "type": "array",
+        "title": "Helicopter Inclusion"
+      }
+    ],
+    "name": "designConfig",
+    "type": "object",
+    "title": "Design Configuration"
   },
   {
     "fields": [

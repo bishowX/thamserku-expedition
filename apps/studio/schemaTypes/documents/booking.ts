@@ -6,6 +6,7 @@ export default defineType({
   type: 'document',
   groups: [
     { name: 'contact', title: 'Contact' },
+    { name: 'format', title: 'Format' },
     { name: 'config', title: 'Configuration' },
     { name: 'message', title: 'Message' },
   ],
@@ -15,6 +16,14 @@ export default defineType({
     defineField({ name: 'fullName', title: 'Full Name', type: 'string', group: 'contact' }),
     defineField({ name: 'email', title: 'Email', type: 'string', group: 'contact' }),
     defineField({ name: 'phone', title: 'Phone / WhatsApp', type: 'string', group: 'contact' }),
+    // Expedition format (universal — same fields for every peak)
+    defineField({ name: 'customPeakName', title: 'Custom Peak', type: 'string', group: 'format', description: 'Set when the climber asked for a peak not in our catalogue.' }),
+    defineField({ name: 'expeditionType', title: 'Expedition Type', type: 'string', group: 'format', readOnly: true }),
+    defineField({ name: 'numberOfClimbers', title: 'Number of Climbers', type: 'string', group: 'format', readOnly: true }),
+    defineField({ name: 'season', title: 'Preferred Season', type: 'string', group: 'format', readOnly: true }),
+    defineField({ name: 'startDate', title: 'Preferred Start Date', type: 'string', group: 'format', readOnly: true }),
+    defineField({ name: 'endDate', title: 'Preferred End Date', type: 'string', group: 'format', readOnly: true }),
+    defineField({ name: 'specialObjectives', title: 'Special Objectives', type: 'text', group: 'format', readOnly: true }),
     // Configuration
     defineField({
       name: 'expedition',
@@ -54,7 +63,9 @@ export default defineType({
       ],
     }),
     defineField({ name: 'basePrice', title: 'Base Price (USD)', type: 'number', group: 'config', readOnly: true }),
-    defineField({ name: 'estimatedTotal', title: 'Estimated Total (USD)', type: 'number', group: 'config', readOnly: true, description: 'Indicative quote = base + deltas. Null when no base price (A/E → price on request).' }),
+    defineField({ name: 'estimatedTotal', title: 'Estimated Total (USD)', type: 'number', group: 'config', readOnly: true, description: 'Calculated quote = base + deltas. Null when no base price (A/E → price on request).' }),
+    defineField({ name: 'estimatedLow', title: 'Estimated Low (USD)', type: 'number', group: 'config', readOnly: true, description: 'Calculated total −10% (rounded). The low end of the range quoted in the email.' }),
+    defineField({ name: 'estimatedHigh', title: 'Estimated High (USD)', type: 'number', group: 'config', readOnly: true, description: 'Calculated total +10% (rounded). The high end of the range quoted in the email.' }),
     defineField({ name: 'currency', title: 'Currency', type: 'string', group: 'config', readOnly: true, initialValue: 'USD' }),
     // Message
     defineField({ name: 'message', title: 'Message', type: 'text', group: 'message' }),

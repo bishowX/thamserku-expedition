@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { useLoaderData, useSearchParams, useActionData, Form } from 'react-router'
+import { useLoaderData, useSearchParams, useActionData, useNavigation, Form } from 'react-router'
 import type { ShouldRevalidateFunction } from 'react-router'
+import { Nav } from '../components/Nav'
 import { writeClient } from '../../lib/sanity.write'
 import { serverClient } from '../../lib/sanity.server'
 import { getDesignPageData, getExpeditionConfig } from '../../lib/queries'
 import type { DesignPageData, SanityExpeditionForDesign, SanityEditionForDesign } from '../../lib/queries'
-import { sendBookingEmail } from '../../lib/email.server'
+import { sendBookingEmail, sendBookingConfirmationEmail } from '../../lib/email.server'
 import {
   computeEstimate,
   configuratorGroups,
@@ -14,9 +15,9 @@ import {
   type EditionLetter,
   type SelectionValue,
 } from '../../lib/configMatrix'
-import { Step1PeakEdition } from '../components/design/steps/Step1PeakEdition'
-import { Step5Contact } from '../components/design/steps/Step5Contact'
-import { ConfiguratorStep } from '../components/design/ConfiguratorStep'
+import { StepFormat, CUSTOM_PEAK, type FormatValue } from '../components/design/steps/StepFormat'
+import { StepCustomContact } from '../components/design/steps/StepCustomContact'
+import { ConfiguratorStep, type NumberedGroup } from '../components/design/ConfiguratorStep'
 import { ConfigSummary, MobileConfigBar, type SummaryItem } from '../components/design/ConfigSummary'
 
 export async function loader() {
@@ -26,27 +27,48 @@ export async function loader() {
 // Loader data never depends on search params — suppress revalidation on step navigation
 export const shouldRevalidate: ShouldRevalidateFunction = () => false
 
-type ActionErrors = { fullName?: string; contact?: string }
+// Which matrix groups fall on which configuration step. Group names that aren't
+// listed here are appended to the last configuration step, so the flow degrades
+// gracefully if a peak introduces a new section.
+const STEP_A_GROUPS = ['Acclimatisation & Additional Climb', 'Accommodation Preferences']
+const STEP_B_GROUPS = ['Guiding Configurations', 'Oxygen Preferences', 'Helicopter Inclusion']
+
+const shortEdition = (name: string) => name.replace(/\s*Edition$/i, '')
+
+type ActionErrors = { fullName?: string; email?: string }
+
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
 
 export async function action({ request }: { request: Request }): Promise<
   { success: true } | { success: false; errors: ActionErrors }
 > {
   const formData = await request.formData()
+  const str = (k: string) => (formData.get(k) as string | null)?.trim() || undefined
 
-  const fullName = (formData.get('fullName') as string | null)?.trim() ?? ''
-  const email = (formData.get('email') as string | null)?.trim() ?? ''
-  const phone = (formData.get('phone') as string | null)?.trim() ?? ''
-  const message = (formData.get('message') as string | null)?.trim() || undefined
+  const fullName = str('fullName') ?? ''
+  const email = str('email') ?? ''
+  const phone = str('phone') ?? ''
+  const message = str('message')
 
   const errors: ActionErrors = {}
   if (!fullName) errors.fullName = 'Please enter your name.'
-  if (!email && !phone) errors.contact = 'Please enter an email address or phone number.'
+  if (!email) errors.email = 'Please enter your email address.'
+  else if (!EMAIL_RE.test(email)) errors.email = 'Please enter a valid email address.'
   if (Object.keys(errors).length > 0) return { success: false, errors }
 
-  const expeditionId = (formData.get('expeditionId') as string)?.trim() || undefined
-  const editionId = (formData.get('editionId') as string)?.trim() || undefined
-  const editionLetter = ((formData.get('editionLetter') as string)?.trim() || '') as EditionLetter
-  const editionName = (formData.get('editionName') as string)?.trim() || undefined
+  const expeditionId = str('expeditionId')
+  const editionId = str('editionId')
+  const editionLetter = (str('editionLetter') ?? '') as EditionLetter
+  const editionName = str('editionName')
+
+  // Universal expedition-format fields (not part of the per-peak matrix).
+  const customPeakName = str('customPeakName')
+  const expeditionType = str('expeditionType')
+  const numberOfClimbers = str('numberOfClimbers')
+  const season = str('season')
+  const startDate = str('startDate')
+  const endDate = str('endDate')
+  const specialObjectives = str('specialObjectives')
 
   // Parse the raw selection map, then price it server-side from the live matrix
   // (never trust client-supplied prices).
@@ -60,7 +82,7 @@ export async function action({ request }: { request: Request }): Promise<
   const config = expeditionId ? await getExpeditionConfig(expeditionId) : null
   const estimate = config
     ? computeEstimate(config.configMatrix, editionLetter, config.basePrices, rawSelections)
-    : { basePrice: null, total: null, currency: 'USD', lineItems: [] }
+    : { basePrice: null, total: null, low: null, high: null, currency: 'USD', lineItems: [] }
 
   const submittedAt = new Date().toISOString()
 
@@ -70,6 +92,13 @@ export async function action({ request }: { request: Request }): Promise<
     fullName,
     email: email || undefined,
     phone: phone || undefined,
+    customPeakName,
+    expeditionType,
+    numberOfClimbers,
+    season,
+    startDate,
+    endDate,
+    specialObjectives,
     message,
     expedition: expeditionId ? { _type: 'reference', _ref: expeditionId } : undefined,
     edition: editionId ? { _type: 'reference', _ref: editionId } : undefined,
@@ -84,68 +113,112 @@ export async function action({ request }: { request: Request }): Promise<
     })),
     basePrice: estimate.basePrice ?? undefined,
     estimatedTotal: estimate.total ?? undefined,
+    estimatedLow: estimate.low ?? undefined,
+    estimatedHigh: estimate.high ?? undefined,
     currency: estimate.currency,
   })
 
+  const emailData = {
+    fullName,
+    email: email || undefined,
+    phone: phone || undefined,
+    message,
+    expeditionName: config?.name,
+    customPeakName,
+    expeditionType,
+    numberOfClimbers,
+    season,
+    startDate,
+    endDate,
+    specialObjectives,
+    editionLetter: editionLetter || undefined,
+    editionName,
+    lineItems: estimate.lineItems,
+    basePrice: estimate.basePrice ?? undefined,
+    estimatedTotal: estimate.total ?? undefined,
+    estimatedLow: estimate.low ?? undefined,
+    estimatedHigh: estimate.high ?? undefined,
+    currency: estimate.currency,
+    submittedAt,
+  }
+
+  // Desk notification — to the enquiry address (if configured).
   try {
     const enquiryEmail = await serverClient.fetch<string | undefined>(
       `*[_type == "siteSettings"][0].enquiryEmail`,
     )
-    if (enquiryEmail) {
-      await sendBookingEmail(enquiryEmail, {
-        fullName,
-        email: email || undefined,
-        phone: phone || undefined,
-        message,
-        expeditionName: config?.name,
-        editionLetter: editionLetter || undefined,
-        editionName,
-        lineItems: estimate.lineItems,
-        basePrice: estimate.basePrice ?? undefined,
-        estimatedTotal: estimate.total ?? undefined,
-        currency: estimate.currency,
-        submittedAt,
-      })
-    }
+    if (enquiryEmail) await sendBookingEmail(enquiryEmail, emailData)
   } catch {
     // Non-fatal — booking is already saved in Sanity
+  }
+
+  // Confirmation to the climber (email is required, so always present).
+  try {
+    await sendBookingConfirmationEmail(email, emailData)
+  } catch {
+    // Non-fatal
   }
 
   return { success: true }
 }
 
+const EMPTY_FORMAT: FormatValue = {
+  expeditionType: '',
+  numberOfClimbers: '',
+  season: '',
+  startDate: '',
+  endDate: '',
+  customPeakName: '',
+}
+
 export default function DesignPage() {
   const data = useLoaderData<DesignPageData>()
   const actionData = useActionData<typeof action>()
+  const navigation = useNavigation()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { expeditions, editions } = data
 
-  const [expedition, setExpedition] = useState<SanityExpeditionForDesign | null>(
-    () => expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null,
-  )
+  const [selectedPeak, setSelectedPeak] = useState<string>(() => searchParams.get('expedition') ?? '')
   const [edition, setEdition] = useState<SanityEditionForDesign | null>(
     () => editions.find((e) => e.letter === searchParams.get('edition')) ?? null,
   )
+  const [format, setFormat] = useState<FormatValue>(EMPTY_FORMAT)
+  const [objectives, setObjectives] = useState<string[]>([])
+  const [objectivesNote, setObjectivesNote] = useState('')
+
+  const expedition: SanityExpeditionForDesign | null =
+    selectedPeak && selectedPeak !== CUSTOM_PEAK ? expeditions.find((e) => e.slug === selectedPeak) ?? null : null
+  const isCustomPeak = selectedPeak === CUSTOM_PEAK
+
   const [selections, setSelections] = useState<Record<string, SelectionValue>>(() => {
     const exp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
     const ed = editions.find((e) => e.letter === searchParams.get('edition')) ?? null
     return exp && ed ? defaultSelections(exp.configMatrix, ed.letter as EditionLetter) : {}
   })
 
-  // Dynamic steps: peak/edition → one per interactive group → contact.
-  const groups = expedition && edition ? configuratorGroups(expedition.configMatrix, edition.letter as EditionLetter) : []
-  const stepKeys = ['peakEdition', ...groups.map((g) => g.group), 'contact']
-  const isProject = Boolean(expedition && edition) && groups.length === 0
+  // ── Steps: format → (configure steps) → custom+contact ──────────────────────
+  const allGroups = expedition && edition ? configuratorGroups(expedition.configMatrix, edition.letter as EditionLetter) : []
+  const numbered: NumberedGroup[] = allGroups.map((group, i) => ({ number: 4 + i, group }))
+  const stepA = numbered.filter((n) => STEP_A_GROUPS.includes(n.group.group))
+  const stepBNamed = numbered.filter((n) => STEP_B_GROUPS.includes(n.group.group))
+  const unlisted = numbered.filter(
+    (n) => !STEP_A_GROUPS.includes(n.group.group) && !STEP_B_GROUPS.includes(n.group.group),
+  )
+  const configSteps = [stepA, [...stepBNamed, ...unlisted]].filter((s) => s.length > 0)
+
+  const stepKeys = ['format', ...configSteps.map((_, i) => `configure-${i}`), 'custom']
+  const isProject = Boolean(edition) && configSteps.length === 0
 
   const rawStep = Number(searchParams.get('step') ?? '0')
-  const step = expedition && edition ? Math.min(Math.max(rawStep, 0), stepKeys.length - 1) : 0
+  const step = Math.min(Math.max(rawStep, 0), stepKeys.length - 1)
+  const isLast = step === stepKeys.length - 1
 
   function syncToUrl(n: number) {
     setSearchParams(
       (prev) => {
         prev.set('step', String(n))
-        if (expedition) prev.set('expedition', expedition.slug)
+        if (selectedPeak) prev.set('expedition', selectedPeak)
         else prev.delete('expedition')
         if (edition) prev.set('edition', edition.letter)
         else prev.delete('edition')
@@ -155,68 +228,98 @@ export default function DesignPage() {
     )
   }
 
-  function handleExpeditionChange(slug: string) {
-    const exp = expeditions.find((e) => e.slug === slug) ?? null
-    setExpedition(exp)
-    setSelections(exp && edition ? defaultSelections(exp.configMatrix, edition.letter as EditionLetter) : {})
+  function reseed(peakSlug: string, ed: SanityEditionForDesign | null) {
+    const exp = peakSlug && peakSlug !== CUSTOM_PEAK ? expeditions.find((e) => e.slug === peakSlug) ?? null : null
+    setSelections(exp && ed ? defaultSelections(exp.configMatrix, ed.letter as EditionLetter) : {})
+  }
+
+  function handlePeakChange(slug: string) {
+    setSelectedPeak(slug)
+    reseed(slug, edition)
   }
 
   function handleEditionChange(letter: string) {
     const ed = editions.find((e) => e.letter === letter) ?? null
     setEdition(ed)
-    setSelections(expedition && ed ? defaultSelections(expedition.configMatrix, ed.letter as EditionLetter) : {})
+    reseed(selectedPeak, ed)
   }
 
   function setSelection(key: string, value: SelectionValue) {
     setSelections((prev) => ({ ...prev, [key]: value }))
   }
 
+  function toggleObjective(value: string) {
+    setObjectives((prev) => (prev.includes(value) ? prev.filter((x) => x !== value) : [...prev, value]))
+  }
+
   const submitted = actionData?.success === true
   const actionErrors = actionData && !actionData.success ? actionData.errors : undefined
+  const isSubmitting = navigation.state === 'submitting'
 
   // ── Summary + submit payload ───────────────────────────────────────────────
-  const summaryItems: SummaryItem[] = groups.flatMap((g) =>
+  const summaryItems: SummaryItem[] = allGroups.flatMap((g) =>
     g.features.map(({ feature, cell }) => ({
       label: feature.label,
       chosenLabel: chosenLabelFor(feature, cell, selections[feature.key]),
     })),
   )
-  const editionLabel = edition ? `${edition.letter} · ${edition.name}` : undefined
-  const summaryProps = { expeditionName: expedition?.name, editionLabel, items: summaryItems }
+  const editionLabel = edition ? `${edition.letter} · ${shortEdition(edition.name)}` : undefined
+  const summaryPeak = isCustomPeak
+    ? format.customPeakName || 'Custom Peak'
+    : expedition
+      ? `${expedition.name} ${expedition.altitude}`
+      : undefined
+  const summaryProps = { expeditionName: summaryPeak, editionLabel, items: summaryItems }
 
-  const interactiveKeys = new Set(groups.flatMap((g) => g.features.map((f) => f.feature.key)))
+  const combinedObjectives = [...objectives, objectivesNote.trim()].filter(Boolean).join('; ')
+  const interactiveKeys = new Set(allGroups.flatMap((g) => g.features.map((f) => f.feature.key)))
   const hiddenFields: Record<string, string> = {
     expeditionId: expedition?._id ?? '',
     editionId: edition?._id ?? '',
     editionLetter: edition?.letter ?? '',
-    editionName: edition?.name ?? '',
+    editionName: edition ? shortEdition(edition.name) : '',
+    customPeakName: isCustomPeak ? format.customPeakName : '',
+    expeditionType: format.expeditionType,
+    numberOfClimbers: format.numberOfClimbers,
+    season: format.season,
+    startDate: format.startDate,
+    endDate: format.endDate,
+    specialObjectives: combinedObjectives,
     selectionsJson: JSON.stringify(
       Object.fromEntries(Object.entries(selections).filter(([k]) => interactiveKeys.has(k))),
     ),
   }
 
+  // Can advance past the format step?
+  const peakChosen = Boolean(expedition) || (isCustomPeak && format.customPeakName.trim().length > 0)
+  const canAdvanceFormat = peakChosen && Boolean(edition)
+  const nextDisabled = step === 0 && !canAdvanceFormat
+
   if (submitted) {
     return (
-      <main className="min-h-screen bg-[#1A1A1A] flex items-center justify-center px-6">
-        <div className="text-center max-w-[48ch]">
-          <div className="w-12 h-12 rounded-full border border-[#E8710A]/40 flex items-center justify-center mx-auto mb-10">
-            <svg className="w-5 h-5 text-[#E8710A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+      <main className="min-h-screen bg-[#1A1A1A]">
+        <Nav />
+        <div className="flex items-center justify-center px-6 py-40">
+          <div className="text-center max-w-[48ch]">
+            <div className="w-12 h-12 rounded-full border border-[#3A3A3A] flex items-center justify-center mx-auto mb-10">
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] mb-6">
+              Configuration Received
+            </p>
+            <h1 className="font-['Cormorant_Garamond'] font-light text-4xl text-white mb-6">
+              Your expedition is taking shape.
+            </h1>
+            <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg leading-relaxed">
+              We have your configuration and will build the right proposal. You will hear from our desk within 48 hours.
+            </p>
+            <div className="h-px w-16 bg-[#2A2A2A] mx-auto mt-10 mb-6" />
+            <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#3A3A3A]">
+              Thamserku Expeditions · Desk
+            </p>
           </div>
-          <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] mb-6">
-            Configuration Received
-          </p>
-          <h1 className="font-['Cormorant_Garamond'] font-light text-4xl text-white mb-6">
-            Your expedition is taking shape.
-          </h1>
-          <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg leading-relaxed">
-            We have your configuration and will build the right proposal. You will hear from our desk within 48 hours.
-          </p>
-          <div className="h-px w-16 bg-[#2A2A2A] mx-auto mt-10 mb-6" />
-          <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#3A3A3A]">
-            Thamserku Expeditions · Desk
-          </p>
         </div>
       </main>
     )
@@ -224,69 +327,81 @@ export default function DesignPage() {
 
   return (
     <main className="min-h-screen bg-[#1A1A1A] pb-24 lg:pb-0">
-      {/* Header */}
-      <div className="border-b border-[#1F1F1F] py-10 px-6 md:px-12 text-center">
-        <h1 className="font-['Cormorant_Garamond'] font-light text-4xl md:text-5xl text-white mb-4">
-          Design Your Expedition.
-        </h1>
-        <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg max-w-[60ch] mx-auto">
-          Select your Edition first — it sets the standards. Then personalise every detail. We do not quote a number
-          before understanding your climb.
-        </p>
-      </div>
+      <Nav />
 
-      {/* Step indicator */}
-      <div className="px-6 md:px-12 py-8 flex justify-start lg:justify-center">
-        <StepDots stepKeys={stepKeys} current={step} />
-      </div>
-
-      {/* Content */}
-      <div className="px-6 md:px-12 pb-12">
-        <div className="flex gap-10 max-w-[1100px] mx-auto">
+      <div className="px-6 md:px-12 pt-28 md:pt-36 pb-12">
+        <div className="flex gap-12 max-w-[1180px] mx-auto">
           <div className="flex-1 min-w-0">
+            {/* Persistent title */}
+            <header className="mb-14">
+              <h1 className="font-['Cormorant_Garamond'] font-light text-4xl md:text-5xl text-white mb-3">
+                Design your Expedition
+              </h1>
+              <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg max-w-[64ch]">
+                Select your Edition first — it pre-configures the standards. Then personalise every detail. We do not
+                believe in quoting a number before understanding your climb.
+              </p>
+            </header>
+
             <Form method="post">
               {step === 0 && (
-                <Step1PeakEdition
+                <StepFormat
                   expeditions={expeditions}
                   editions={editions}
-                  selectedExpedition={expedition}
-                  selectedEdition={edition}
-                  onExpeditionChange={handleExpeditionChange}
+                  selectedPeak={selectedPeak}
+                  selectedEdition={edition?.letter ?? ''}
+                  format={format}
+                  onPeakChange={handlePeakChange}
                   onEditionChange={handleEditionChange}
-                  onContinue={() => syncToUrl(1)}
+                  onFormatChange={(patch) => setFormat((prev) => ({ ...prev, ...patch }))}
                 />
               )}
 
-              {step >= 1 && step <= groups.length && (
-                <div className="space-y-10">
-                  <ConfiguratorStep group={groups[step - 1]} selections={selections} onChange={setSelection} />
-                  <div className="pt-4 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => syncToUrl(step - 1)}
-                      className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#5A6673] hover:text-white transition-colors"
-                    >
-                      ← Back
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => syncToUrl(step + 1)}
-                      className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] bg-[#E8710A] text-white px-8 py-4 rounded hover:bg-[#D4630A] transition-colors"
-                    >
-                      Continue →
-                    </button>
-                  </div>
-                </div>
+              {step >= 1 && step <= configSteps.length && (
+                <ConfiguratorStep groups={configSteps[step - 1]} selections={selections} onChange={setSelection} />
               )}
 
-              {step === stepKeys.length - 1 && step !== 0 && (
-                <Step5Contact
+              {isLast && step !== 0 && (
+                <StepCustomContact
                   errors={actionErrors}
-                  onBack={() => syncToUrl(step - 1)}
                   hiddenFields={hiddenFields}
-                  variant={isProject ? 'project' : 'config'}
+                  objectives={objectives}
+                  objectivesNote={objectivesNote}
+                  onToggleObjective={toggleObjective}
+                  onNoteChange={setObjectivesNote}
+                  isProject={isProject}
                 />
               )}
+
+              {/* Nav */}
+              <div className="pt-14 flex items-center justify-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => syncToUrl(step - 1)}
+                  disabled={step === 0}
+                  className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  Previous ←
+                </button>
+                {isLast ? (
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#1A1A1A] bg-white border border-white px-10 md:px-16 py-4 rounded hover:bg-[#C8CDD2] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Submitting…' : 'Submit Your Expedition →'}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => syncToUrl(step + 1)}
+                    disabled={nextDisabled}
+                    className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    Next →
+                  </button>
+                )}
+              </div>
             </Form>
           </div>
 
@@ -296,40 +411,5 @@ export default function DesignPage() {
 
       <MobileConfigBar {...summaryProps} />
     </main>
-  )
-}
-
-function StepDots({ stepKeys, current }: { stepKeys: string[]; current: number }) {
-  return (
-    <div className="flex items-center gap-3 overflow-x-auto">
-      {stepKeys.map((key, i) => {
-        const label = key === 'peakEdition' ? 'Peak & Edition' : key === 'contact' ? 'Contact' : key
-        const active = i === current
-        const done = i < current
-        return (
-          <div key={`${key}-${i}`} className="flex items-center gap-3 shrink-0">
-            <span
-              className={`w-6 h-6 rounded-full flex items-center justify-center font-['JetBrains_Mono'] text-[10px] ${
-                active
-                  ? 'bg-[#E8710A] text-white'
-                  : done
-                    ? 'border border-[#E8710A]/50 text-[#E8710A]'
-                    : 'border border-[#2E2E2E] text-[#5A6673]'
-              }`}
-            >
-              {i + 1}
-            </span>
-            <span
-              className={`font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] ${
-                active ? 'text-white' : 'text-[#5A6673]'
-              }`}
-            >
-              {label}
-            </span>
-            {i < stepKeys.length - 1 && <span className="w-6 h-px bg-[#2A2A2A]" />}
-          </div>
-        )
-      })}
-    </div>
   )
 }

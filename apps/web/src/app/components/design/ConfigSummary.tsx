@@ -9,8 +9,8 @@ interface ConfigSummaryProps {
 function Rows({ expeditionName, editionLabel, items }: ConfigSummaryProps) {
   return (
     <div className="space-y-4">
-      <Row label="Peak" value={expeditionName ?? '—'} />
       <Row label="Edition" value={editionLabel ?? '—'} />
+      <Row label="Peak" value={expeditionName ?? '—'} />
       {items.length > 0 && <div className="h-px bg-[#2A2A2A] my-2" />}
       {items.map((it) => (
         <Row key={it.label} label={it.label} value={it.chosenLabel || '—'} />
@@ -32,6 +32,18 @@ function Row({ label, value }: { label: string; value: string }) {
   )
 }
 
+function Investment() {
+  return (
+    <div className="mt-6 pt-6 border-t border-[#2A2A2A]">
+      <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] text-[#5A6673] mb-3">Investment</p>
+      <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[15px] leading-relaxed">
+        We do not believe in quoting a number before understanding your climb. Submit your configuration and we will
+        build the right proposal.
+      </p>
+    </div>
+  )
+}
+
 /** Sticky desktop summary panel. */
 export function ConfigSummary(props: ConfigSummaryProps) {
   return (
@@ -41,6 +53,7 @@ export function ConfigSummary(props: ConfigSummaryProps) {
           Your Configuration
         </p>
         <Rows {...props} />
+        <Investment />
       </div>
     </aside>
   )

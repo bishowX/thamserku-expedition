@@ -1,5 +1,6 @@
 import { serverClient } from "./sanity.server";
-import type { ConfigMatrix, BasePrices } from "./configMatrix";
+import type { ConfigMatrix, BasePrices, DesignConfig } from "./configMatrix";
+import { normalizeDesignConfig } from "./configMatrix";
 
 export type SanityEditionRef = {
   _id: string;
@@ -332,7 +333,7 @@ export type SanityExpeditionDossier = {
 };
 
 export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditionDossier | null> {
-  return serverClient.fetch(
+  const raw = await serverClient.fetch<(Omit<SanityExpeditionDossier, "configMatrix" | "basePrices"> & WithRawDesignConfig) | null>(
     `*[_type == "expedition" && slug.current == $slug][0]{
       _id, number, code, name, slug,
       altitude, region, season, style, positioning, image,
@@ -351,10 +352,11 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       mandatoryPrerequisite,
       faqs[]{ question, answer },
       closingImage, closingStatement,
-      ${CONFIG_MATRIX_PROJECTION}
+      ${DESIGN_CONFIG_PROJECTION}
     }`,
     { slug }
   );
+  return raw ? attachConfig(raw) : null;
 }
 
 export type AtlasPageData = {
@@ -993,18 +995,35 @@ export type PrivateExpeditionsPageData = {
 // ── Design Your Expedition ─────────────────────────────────────────────────
 // Driven by the per-peak configuration matrix. See lib/configMatrix.ts.
 
-// Projection of the configMatrix array, shared by GROQ fragments below.
-const CONFIG_MATRIX_PROJECTION = `
-  "configMatrix": coalesce(configMatrix[]{
-    key, label, category, group, control, helpText,
-    editions[]{
-      edition, summary, state, defaultValue, priceDelta,
-      options[]{ value, label, priceDelta },
-      range
-    }
-  }, []),
-  basePrices
+// Projection of the raw `designConfig` (category-named storage), shared by the
+// GROQ fragments below. Normalized into the internal ConfigMatrix IR in JS via
+// `attachConfig` (see lib/configMatrix → normalizeDesignConfig).
+const EDITION_CONFIG_PROJECTION = `{
+  acclimatisation[]{ label, included, priceDelta },
+  accommodation[]{ name, options[]{ label, included, priceDelta } },
+  guiding[]{ name, options[]{ label, included, priceDelta } },
+  oxygen,
+  helicopter[]{ label, included, priceDelta }
+}`;
+const DESIGN_CONFIG_PROJECTION = `
+  "_designConfig": designConfig{
+    basePrices,
+    b${EDITION_CONFIG_PROJECTION},
+    c${EDITION_CONFIG_PROJECTION},
+    d${EDITION_CONFIG_PROJECTION}
+  }
 `;
+
+type WithRawDesignConfig = { _designConfig?: DesignConfig | null };
+
+/** Strip the raw `_designConfig` and attach the normalized matrix + base prices. */
+function attachConfig<T extends WithRawDesignConfig>(
+  doc: T,
+): Omit<T, "_designConfig"> & { configMatrix: ConfigMatrix; basePrices: BasePrices } {
+  const { _designConfig, ...rest } = doc;
+  const { configMatrix, basePrices } = normalizeDesignConfig(_designConfig ?? undefined);
+  return { ...rest, configMatrix, basePrices };
+}
 
 export type SanityExpeditionForDesign = {
   _id: string;
@@ -1029,28 +1048,39 @@ export type DesignPageData = {
 };
 
 export async function getDesignPageData(): Promise<DesignPageData> {
-  return serverClient.fetch(`{
+  const raw = await serverClient.fetch<{
+    expeditions: Array<Omit<SanityExpeditionForDesign, "configMatrix" | "basePrices"> & WithRawDesignConfig>;
+    editions: SanityEditionForDesign[];
+  }>(`{
     "expeditions": *[_type == "expedition"] | order(name asc) {
       _id, name, code, altitude,
       "slug": slug.current,
-      ${CONFIG_MATRIX_PROJECTION}
+      ${DESIGN_CONFIG_PROJECTION}
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, positioning
     }
   }`);
+  // Sort by parsed altitude (e.g. "8,848.86 m" → 8848.86), tallest first. The
+  // field is free text, so this can't be done reliably in GROQ.
+  const heightOf = (alt?: string) => parseFloat((alt ?? "").replace(/[^\d.]/g, "")) || 0;
+  const expeditions = raw.expeditions
+    .map(attachConfig)
+    .sort((a, b) => heightOf(b.altitude) - heightOf(a.altitude));
+  return { expeditions, editions: raw.editions };
 }
 
 // Matrix for a single peak (used by the server action to price/snapshot a booking).
 export async function getExpeditionConfig(id: string): Promise<{
   name?: string;
   configMatrix: ConfigMatrix;
-  basePrices?: BasePrices;
+  basePrices: BasePrices;
 } | null> {
-  return serverClient.fetch(
-    `*[_type == "expedition" && _id == $id][0]{ name, ${CONFIG_MATRIX_PROJECTION} }`,
+  const raw = await serverClient.fetch<({ name?: string } & WithRawDesignConfig) | null>(
+    `*[_type == "expedition" && _id == $id][0]{ name, ${DESIGN_CONFIG_PROJECTION} }`,
     { id },
   );
+  return raw ? attachConfig(raw) : null;
 }
 
 export async function getPrivateExpeditionsPageData(): Promise<PrivateExpeditionsPageData> {
