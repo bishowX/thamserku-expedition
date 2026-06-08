@@ -11,9 +11,19 @@ import { UnclaimedPeaks } from '../components/UnclaimedPeaks'
 import { Closing } from '../components/Closing'
 import { Footer } from '../components/Footer'
 import { getHomePageData, type HomePageData } from '../../lib/queries'
+import type { Route } from "./+types/Home";
+import { pageMeta } from "../../lib/seo";
 
 export async function loader() {
   return getHomePageData()
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  return pageMeta({
+    title: "Thamserku Expedition | World-Leading Himalayan Expeditions",
+    description: (data as HomePageData)?.homePage?.heroSubheading,
+    image: (data as HomePageData)?.homePage?.heroImage,
+  });
 }
 
 export default function Home() {

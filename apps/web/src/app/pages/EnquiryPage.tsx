@@ -11,9 +11,20 @@ import { getConsultationPageData, type ConsultationPageData } from '../../lib/qu
 import { serverClient } from '../../lib/sanity.server';
 import { writeClient } from '../../lib/sanity.write';
 import { sendEnquiryEmail } from '../../lib/email.server';
+import type { Route } from "./+types/EnquiryPage";
+import { pageMeta } from "../../lib/seo";
 
 export async function loader() {
   return getConsultationPageData();
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const d = data as ConsultationPageData | undefined;
+  return pageMeta({
+    title: d?.consultationPage?.heroHeadline ?? "Plan Your Expedition",
+    description: d?.consultationPage?.heroSubheading,
+    image: d?.consultationPage?.heroImage,
+  });
 }
 
 type ActionErrors = { fullName?: string; email?: string };

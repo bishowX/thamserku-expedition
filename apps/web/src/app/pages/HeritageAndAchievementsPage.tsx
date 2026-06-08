@@ -9,6 +9,8 @@ import {
   getAchievementsPageData,
   type AchievementsPageData,
 } from "../../lib/queries";
+import type { Route } from "./+types/HeritageAndAchievementsPage";
+import { pageMeta } from "../../lib/seo";
 
 const DEFAULT_STATS = [
   { value: "37+", label: "Years" },
@@ -19,6 +21,14 @@ const DEFAULT_STATS = [
 
 export async function loader() {
   return getAchievementsPageData();
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const d = data as AchievementsPageData | undefined;
+  return pageMeta({
+    title: d?.achievementsPage?.heroHeadline ?? "Heritage & Achievements",
+    description: d?.achievementsPage?.heroSubheading,
+  });
 }
 
 export default function HeritageAndAchievementsPage() {

@@ -12,6 +12,8 @@ export default [
   route("faq", "./app/pages/MainFAQ.tsx"),
   route("design-your-expedition", "./app/pages/DesignPage.tsx"),
   route("api/upload-cv", "./app/api/upload-cv.ts"),
+  route("sitemap.xml", "./app/api/sitemap.xml.ts"),
+  route("robots.txt", "./app/api/robots.txt.ts"),
   route("safety", "./app/pages/SafetyPage.tsx"),
   route(
     "heritage-and-achievements",

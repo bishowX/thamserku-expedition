@@ -11,9 +11,19 @@ import { SafetyCommunication } from "../components/safety/SafetyCommunication";
 import { SafetyEvacuation } from "../components/safety/SafetyEvacuation";
 import { SafetyClosing } from "../components/safety/SafetyClosing";
 import { Footer } from "../components/Footer";
+import type { Route } from "./+types/SafetyPage";
+import { pageMeta } from "../../lib/seo";
 
 export async function loader() {
   return getSafetyPageData();
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const d = data as SafetyPageData | undefined;
+  return pageMeta({
+    title: d?.safetyPage?.heroHeadline ?? "Safety Systems",
+    description: d?.safetyPage?.heroSubline,
+  });
 }
 
 export default function SafetyPage() {

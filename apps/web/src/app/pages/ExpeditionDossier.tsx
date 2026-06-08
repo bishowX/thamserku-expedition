@@ -1,5 +1,7 @@
 import { useLoaderData, redirect } from "react-router";
 import { getExpeditionBySlug, type SanityExpeditionDossier } from "../../lib/queries";
+import type { Route } from "./+types/ExpeditionDossier";
+import { pageMeta } from "../../lib/seo";
 import { ExpeditionHero } from "../components/everest/ExpeditionHero";
 import { QuickFacts } from "../components/everest/QuickFacts";
 import { StickySubNav } from "../components/everest/StickySubNav";
@@ -20,6 +22,15 @@ export async function loader({ params }: { params: { slug: string } }) {
     throw redirect("/");
   }
   return { expedition };
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const expedition = (data as { expedition: SanityExpeditionDossier } | undefined)?.expedition;
+  return pageMeta({
+    title: expedition ? `${expedition.name} Expedition` : "Expedition",
+    description: expedition?.positioning,
+    image: expedition?.heroImage ?? expedition?.image,
+  });
 }
 
 export default function ExpeditionDossier() {

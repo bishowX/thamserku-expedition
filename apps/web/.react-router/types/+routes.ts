@@ -46,6 +46,12 @@ type Pages = {
   "/api/upload-cv": {
     params: {};
   };
+  "/sitemap.xml": {
+    params: {};
+  };
+  "/robots.txt": {
+    params: {};
+  };
   "/safety": {
     params: {};
   };
@@ -57,7 +63,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/safety" | "/heritage-and-achievements";
+    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/sitemap.xml" | "/robots.txt" | "/safety" | "/heritage-and-achievements";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
@@ -103,6 +109,14 @@ type RouteFiles = {
     id: "app/api/upload-cv";
     page: "/api/upload-cv";
   };
+  "./app/api/sitemap.xml.ts": {
+    id: "app/api/sitemap.xml";
+    page: "/sitemap.xml";
+  };
+  "./app/api/robots.txt.ts": {
+    id: "app/api/robots.txt";
+    page: "/robots.txt";
+  };
   "./app/pages/SafetyPage.tsx": {
     id: "app/pages/SafetyPage";
     page: "/safety";
@@ -126,6 +140,8 @@ type RouteModules = {
   "app/pages/MainFAQ": typeof import("./src/./app/pages/MainFAQ.tsx");
   "app/pages/DesignPage": typeof import("./src/./app/pages/DesignPage.tsx");
   "app/api/upload-cv": typeof import("./src/./app/api/upload-cv.ts");
+  "app/api/sitemap.xml": typeof import("./src/./app/api/sitemap.xml.ts");
+  "app/api/robots.txt": typeof import("./src/./app/api/robots.txt.ts");
   "app/pages/SafetyPage": typeof import("./src/./app/pages/SafetyPage.tsx");
   "app/pages/HeritageAndAchievementsPage": typeof import("./src/./app/pages/HeritageAndAchievementsPage.tsx");
 };

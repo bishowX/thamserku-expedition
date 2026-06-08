@@ -5,6 +5,7 @@ import { Nav } from '../components/Nav'
 import { writeClient } from '../../lib/sanity.write'
 import { serverClient } from '../../lib/sanity.server'
 import { getDesignPageData, getExpeditionConfig } from '../../lib/queries'
+import { pageMeta } from "../../lib/seo";
 import type { DesignPageData, SanityExpeditionForDesign, SanityEditionForDesign } from '../../lib/queries'
 import { sendBookingEmail, sendBookingConfirmationEmail } from '../../lib/email.server'
 import {
@@ -25,6 +26,13 @@ export async function loader() {
 }
 
 // Loader data never depends on search params — suppress revalidation on step navigation
+export function meta() {
+  return pageMeta({
+    title: "Design Your Expedition",
+    description: "Configure your custom high-altitude expedition — choose your peak, edition, accommodation, guiding, and oxygen preferences.",
+  });
+}
+
 export const shouldRevalidate: ShouldRevalidateFunction = () => false
 
 // Which matrix groups fall on which configuration step. Group names that aren't

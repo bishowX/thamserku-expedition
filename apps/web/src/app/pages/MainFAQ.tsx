@@ -10,9 +10,19 @@ import { FAQRelatedPages } from '../components/faq/FAQRelatedPages';
 import { FAQNewsletterBanner } from '../components/faq/FAQNewsletterBanner';
 import { FAQClosing } from '../components/faq/FAQClosing';
 import { Footer } from '../components/Footer';
+import type { Route } from "./+types/MainFAQ";
+import { pageMeta } from "../../lib/seo";
 
 export async function loader() {
   return getFAQPageData();
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const d = data as FAQPageData | undefined;
+  return pageMeta({
+    title: d?.faqPage?.heroHeadline ?? "Frequently Asked Questions",
+    description: d?.faqPage?.heroSubline,
+  });
 }
 
 export default function MainFAQ() {

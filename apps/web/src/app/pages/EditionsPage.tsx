@@ -7,9 +7,20 @@ import { EditionsComparison } from "../components/editions/EditionsComparison";
 import { EditionsAvailability } from "../components/editions/EditionsAvailability";
 import { EditionsClosing } from "../components/editions/EditionsClosing";
 import { getEditionsPageData, type EditionsPageData } from "../../lib/queries";
+import type { Route } from "./+types/EditionsPage";
+import { pageMeta } from "../../lib/seo";
 
 export async function loader() {
   return getEditionsPageData();
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const d = data as EditionsPageData | undefined;
+  return pageMeta({
+    title: d?.editionsPage?.heroHeadline ?? "Our Expedition Editions",
+    description: d?.editionsPage?.heroSubheading,
+    image: d?.editionsPage?.heroImage,
+  });
 }
 
 export default function EditionsPage() {

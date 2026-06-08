@@ -4,9 +4,19 @@ import { getNewsletterData, type NewsletterData } from "../../lib/queries";
 import { Nav } from "../components/Nav";
 import { NewsletterSection } from "../components/NewsletterSection";
 import { Footer } from "../components/Footer";
+import type { Route } from "./+types/NewsletterPage";
+import { pageMeta } from "../../lib/seo";
 
 export async function loader() {
   return getNewsletterData();
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const d = data as NewsletterData | undefined;
+  return pageMeta({
+    title: d?.newsletterHeading ?? "Field Notes Newsletter",
+    description: d?.newsletterBody,
+  });
 }
 
 export default function NewsletterPage() {

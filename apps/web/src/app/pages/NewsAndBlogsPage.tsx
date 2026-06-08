@@ -4,9 +4,18 @@ import { getNewsletterData, type NewsletterData } from "../../lib/queries";
 import { Nav } from "../components/Nav";
 import { NewsletterSection } from "../components/NewsletterSection";
 import { Footer } from "../components/Footer";
+import type { Route } from "./+types/NewsAndBlogsPage";
+import { pageMeta } from "../../lib/seo";
 
 export async function loader() {
   return getNewsletterData();
+}
+
+export function meta(_: Route.MetaArgs) {
+  return pageMeta({
+    title: "News & Field Reports",
+    description: "Dispatches, updates, and field notes from Thamserku Expedition's operations across the Himalayas.",
+  });
 }
 
 export default function NewsAndBlogsPage() {
