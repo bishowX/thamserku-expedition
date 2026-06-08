@@ -19,34 +19,16 @@ type Pages = {
       "slug": string;
     };
   };
-  "/atlas": {
-    params: {};
-  };
   "/editions": {
     params: {};
   };
   "/legacy": {
     params: {};
   };
-  "/team": {
-    params: {};
-  };
   "/consultation": {
     params: {};
   };
-  "/archive": {
-    params: {};
-  };
   "/yeti-infrastructure": {
-    params: {};
-  };
-  "/7000m": {
-    params: {};
-  };
-  "/private": {
-    params: {};
-  };
-  "/field-notes": {
     params: {};
   };
   "/newsletter": {
@@ -75,7 +57,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/expeditions/:slug" | "/atlas" | "/editions" | "/legacy" | "/team" | "/consultation" | "/archive" | "/yeti-infrastructure" | "/7000m" | "/private" | "/field-notes" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/safety" | "/heritage-and-achievements";
+    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/safety" | "/heritage-and-achievements";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
@@ -85,10 +67,6 @@ type RouteFiles = {
     id: "app/pages/ExpeditionDossier";
     page: "/expeditions/:slug";
   };
-  "./app/pages/AtlasPage.tsx": {
-    id: "app/pages/AtlasPage";
-    page: "/atlas";
-  };
   "./app/pages/EditionsPage.tsx": {
     id: "app/pages/EditionsPage";
     page: "/editions";
@@ -97,33 +75,13 @@ type RouteFiles = {
     id: "app/pages/LegacyPage";
     page: "/legacy";
   };
-  "./app/pages/TeamPage.tsx": {
-    id: "app/pages/TeamPage";
-    page: "/team";
-  };
   "./app/pages/EnquiryPage.tsx": {
     id: "app/pages/EnquiryPage";
     page: "/consultation";
   };
-  "./app/pages/ExpeditionArchive.tsx": {
-    id: "app/pages/ExpeditionArchive";
-    page: "/archive";
-  };
   "./app/pages/YetiInfrastructure.tsx": {
     id: "app/pages/YetiInfrastructure";
     page: "/yeti-infrastructure";
-  };
-  "./app/pages/SevenThousandMeterPathway.tsx": {
-    id: "app/pages/SevenThousandMeterPathway";
-    page: "/7000m";
-  };
-  "./app/pages/PrivateExpeditions.tsx": {
-    id: "app/pages/PrivateExpeditions";
-    page: "/private";
-  };
-  "./app/pages/FieldNotes.tsx": {
-    id: "app/pages/FieldNotes";
-    page: "/field-notes";
   };
   "./app/pages/NewsletterPage.tsx": {
     id: "app/pages/NewsletterPage";
@@ -159,16 +117,10 @@ type RouteModules = {
   "root": typeof import("./src/root.tsx");
   "app/pages/Home": typeof import("./src/./app/pages/Home.tsx");
   "app/pages/ExpeditionDossier": typeof import("./src/./app/pages/ExpeditionDossier.tsx");
-  "app/pages/AtlasPage": typeof import("./src/./app/pages/AtlasPage.tsx");
   "app/pages/EditionsPage": typeof import("./src/./app/pages/EditionsPage.tsx");
   "app/pages/LegacyPage": typeof import("./src/./app/pages/LegacyPage.tsx");
-  "app/pages/TeamPage": typeof import("./src/./app/pages/TeamPage.tsx");
   "app/pages/EnquiryPage": typeof import("./src/./app/pages/EnquiryPage.tsx");
-  "app/pages/ExpeditionArchive": typeof import("./src/./app/pages/ExpeditionArchive.tsx");
   "app/pages/YetiInfrastructure": typeof import("./src/./app/pages/YetiInfrastructure.tsx");
-  "app/pages/SevenThousandMeterPathway": typeof import("./src/./app/pages/SevenThousandMeterPathway.tsx");
-  "app/pages/PrivateExpeditions": typeof import("./src/./app/pages/PrivateExpeditions.tsx");
-  "app/pages/FieldNotes": typeof import("./src/./app/pages/FieldNotes.tsx");
   "app/pages/NewsletterPage": typeof import("./src/./app/pages/NewsletterPage.tsx");
   "app/pages/NewsAndBlogsPage": typeof import("./src/./app/pages/NewsAndBlogsPage.tsx");
   "app/pages/MainFAQ": typeof import("./src/./app/pages/MainFAQ.tsx");

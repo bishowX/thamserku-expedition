@@ -20,7 +20,6 @@ export function Footer() {
             <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               EXPEDITIONS
             </h4>
-            <Link to="/atlas" className="hover:text-white transition-colors">Expedition Atlas</Link>
             <Link to="/expeditions/everest" className="hover:text-white transition-colors">Everest</Link>
             <Link to="/expeditions/ama-dablam" className="hover:text-white transition-colors">Ama Dablam</Link>
             <Link to="/expeditions/manaslu" className="hover:text-white transition-colors">Manaslu</Link>

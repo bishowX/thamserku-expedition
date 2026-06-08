@@ -53,29 +53,6 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
         ? `/design-your-expedition?expedition=${expeditionMatch[1]}`
         : "/design-your-expedition",
     };
-    switch (location.pathname) {
-      case "/expeditions/everest":
-        return {
-          label: "Schedule an Everest Consultation",
-          link: "/consultation?peak=everest",
-        };
-      case "/7000m":
-        return {
-          label: "Plan Your Qualifying Ascent",
-          link: "/consultation?intent=7000m",
-        };
-      case "/private":
-        return {
-          label: "Schedule a Private Consultation",
-          link: "/consultation?intent=private",
-        };
-      case "/field-notes":
-        return { label: "Receive Field Notes", link: "#newsletter" };
-      case "/consultation":
-        return { label: "Select a Consultation Time", link: "#calendar" };
-      default:
-        return { label: "Design Your Expedition", link: "/consultation" };
-    }
   };
   const { label: ctaLabel, link: ctaLink } = getCtaInfo();
 

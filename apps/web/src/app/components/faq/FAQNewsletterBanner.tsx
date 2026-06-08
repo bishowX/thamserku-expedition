@@ -1,5 +1,3 @@
-import { Link } from 'react-router';
-
 type PageData = {
   newsletterEyebrow?: string;
   newsletterHeadline?: string;
@@ -49,13 +47,6 @@ export const FAQNewsletterBanner = ({ page }: { page?: PageData }) => {
           {page?.newsletterPrivacyLine ?? 'BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS.'}
         </span>
 
-        {/* Bottom note */}
-        <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-[14px] text-center max-w-[60ch]">
-          {page?.newsletterBottomNote ?? 'Or read all our editorial pieces in the Field Notes section —'}{' '}
-          <Link to="/field-notes" className="hover:text-[#C8CDD2] transition-colors whitespace-nowrap">
-            → READ FIELD NOTES
-          </Link>
-        </p>
 
       </div>
     </section>

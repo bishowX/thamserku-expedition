@@ -17,7 +17,7 @@ import { Footer } from "../components/Footer";
 export async function loader({ params }: { params: { slug: string } }) {
   const expedition = await getExpeditionBySlug(params.slug);
   if (!expedition) {
-    throw redirect("/atlas");
+    throw redirect("/");
   }
   return { expedition };
 }

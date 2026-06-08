@@ -33,10 +33,10 @@ export const YetiClosing = ({ page }: { page?: PageData }) => {
           </Link>
 
           <Link
-            to="/atlas"
+            to="/editions"
             className="w-full sm:w-auto border border-white/30 text-[#C8CDD2] px-10 py-5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white hover:text-white transition-colors whitespace-nowrap"
           >
-            EXPLORE EXPEDITIONS →
+            EXPLORE EDITIONS →
           </Link>
         </div>
 

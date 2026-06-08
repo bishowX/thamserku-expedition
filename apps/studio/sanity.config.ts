@@ -3,7 +3,7 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
 
-const singletons = ['atlasPage', 'homePage', 'editionsPage', 'legacyPage', 'yetiInfrastructurePage', 'consultationPage', 'siteSettings', 'fieldNotesPage', 'faqPage', 'archivePage', 'safetyPage', 'teamPage', 'sevenThousandMeterPage', 'privateExpeditionsPage', 'achievementsPage']
+const singletons = ['homePage', 'editionsPage', 'legacyPage', 'yetiInfrastructurePage', 'consultationPage', 'siteSettings', 'faqPage', 'safetyPage', 'achievementsPage']
 
 export default defineConfig({
   name: 'thamserku-expedition',
@@ -23,10 +23,6 @@ export default defineConfig({
               .title('Home Page')
               .id('homePage')
               .child(S.document().schemaType('homePage').documentId('homePage')),
-            S.listItem()
-              .title('Atlas Page')
-              .id('atlasPage')
-              .child(S.document().schemaType('atlasPage').documentId('atlasPage')),
             S.listItem()
               .title('Editions Page')
               .id('editionsPage')
@@ -48,33 +44,13 @@ export default defineConfig({
               .id('siteSettings')
               .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
             S.listItem()
-              .title('Field Notes Page')
-              .id('fieldNotesPage')
-              .child(S.document().schemaType('fieldNotesPage').documentId('fieldNotesPage')),
-            S.listItem()
               .title('FAQ Page')
               .id('faqPage')
               .child(S.document().schemaType('faqPage').documentId('faqPage')),
             S.listItem()
-              .title('Archive Page')
-              .id('archivePage')
-              .child(S.document().schemaType('archivePage').documentId('archivePage')),
-            S.listItem()
               .title('Safety Page')
               .id('safetyPage')
               .child(S.document().schemaType('safetyPage').documentId('safetyPage')),
-            S.listItem()
-              .title('Team Page')
-              .id('teamPage')
-              .child(S.document().schemaType('teamPage').documentId('teamPage')),
-            S.listItem()
-              .title('7,000m Pathway Page')
-              .id('sevenThousandMeterPage')
-              .child(S.document().schemaType('sevenThousandMeterPage').documentId('sevenThousandMeterPage')),
-            S.listItem()
-              .title('Private Expeditions Page')
-              .id('privateExpeditionsPage')
-              .child(S.document().schemaType('privateExpeditionsPage').documentId('privateExpeditionsPage')),
             S.listItem()
               .title('Achievements Page')
               .id('achievementsPage')
@@ -82,9 +58,6 @@ export default defineConfig({
             S.divider(),
             S.documentTypeListItem('expedition').title('Expeditions'),
             S.documentTypeListItem('edition').title('Editions'),
-            S.documentTypeListItem('fieldNote').title('Field Notes'),
-            S.documentTypeListItem('archiveRecord').title('Archive Records'),
-            S.documentTypeListItem('chairmanLetter').title("Chairman's Letters"),
             S.divider(),
             S.documentTypeListItem('enquiry').title('Enquiries'),
             S.divider(),

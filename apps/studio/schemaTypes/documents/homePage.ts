@@ -12,7 +12,7 @@ export default defineType({
     { name: 'editions', title: 'Editions' },
     { name: 'legacy', title: 'Legacy' },
     { name: 'unclaimedPeaks', title: 'Unclaimed Peaks' },
-    { name: 'fieldNotes', title: 'Field Notes' },
+    { name: 'fieldNotes', title: 'Newsletter' },
     { name: 'closing', title: 'Closing' },
   ],
   fields: [
@@ -78,23 +78,12 @@ export default defineType({
     defineField({ name: 'unclaimedPeaksHeading', title: 'Heading', type: 'text', rows: 2, group: 'unclaimedPeaks', description: 'e.g. Five lenses through which to read the same mountain.' }),
     defineField({ name: 'unclaimedPeaksBody', title: 'Body', type: 'text', rows: 3, group: 'unclaimedPeaks' }),
 
-    // Field Notes
-    defineField({ name: 'fieldNotesEyebrow', title: 'Eyebrow', type: 'string', group: 'fieldNotes', description: 'e.g. 06 — FIELD NOTES' }),
-    defineField({ name: 'fieldNotesHeading', title: 'Heading', type: 'string', group: 'fieldNotes' }),
-    defineField({ name: 'newsletterEyebrow', title: 'Newsletter Eyebrow', type: 'string', group: 'fieldNotes', description: 'e.g. FIELD NOTES — NEWSLETTER' }),
+    // Newsletter
+    defineField({ name: 'newsletterEyebrow', title: 'Newsletter Eyebrow', type: 'string', group: 'fieldNotes', description: 'e.g. NEWSLETTER' }),
     defineField({ name: 'newsletterHeading', title: 'Newsletter Heading', type: 'string', group: 'fieldNotes' }),
     defineField({ name: 'newsletterBody', title: 'Newsletter Body', type: 'text', rows: 2, group: 'fieldNotes' }),
     defineField({ name: 'newsletterCta', title: 'Newsletter CTA', type: 'string', group: 'fieldNotes', description: 'e.g. Subscribe →' }),
     defineField({ name: 'newsletterPrivacyNote', title: 'Newsletter Privacy Note', type: 'text', rows: 2, group: 'fieldNotes' }),
-    defineField({
-      name: 'featuredFieldNotes',
-      title: 'Featured Field Notes',
-      type: 'array',
-      group: 'fieldNotes',
-      of: [{ type: 'reference', to: [{ type: 'fieldNote' }] }],
-      validation: (Rule) => Rule.max(4),
-      description: 'Up to 4 field notes shown on the homepage preview.',
-    }),
 
     // Closing
     defineField({ name: 'closingEyebrow', title: 'Eyebrow', type: 'string', group: 'closing', description: 'e.g. 07 — BEGIN PRIVATELY' }),
