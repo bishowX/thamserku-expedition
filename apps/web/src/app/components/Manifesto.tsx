@@ -71,7 +71,10 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
       const bodyWords = bodyRef.current?.querySelectorAll("[data-word]");
 
       if (headingWords?.length && bodyWords?.length) {
-        const allWords = [...Array.from(headingWords), ...Array.from(bodyWords)];
+        const allWords = [
+          ...Array.from(headingWords),
+          ...Array.from(bodyWords),
+        ];
 
         gsap.set(allWords, { opacity: 0.12 });
 
@@ -94,7 +97,7 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-16 px-5 md:py-32 md:px-8"
+      className="w-full bg-[#F4F2EC] text-[#1A1A1A] section-padding px-5 md:px-8"
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 md:gap-24">
         <div className="md:w-1/4">

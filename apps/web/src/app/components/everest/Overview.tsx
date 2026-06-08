@@ -16,7 +16,7 @@ export function Overview({
   const specs = overviewSpecs ?? [];
 
   return (
-    <section className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8">
+    <section id="overview" className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28">
       <div className="max-w-[1320px] mx-auto flex flex-col gap-8">
         <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           03 — Overview

@@ -24,7 +24,7 @@ export function ExpeditionEditions({ name, editions }: Props) {
   } — our curated standard. Every Edition below is available on ${expeditionName}. Select one to begin designing your expedition.`;
 
   return (
-    <section className="bg-[#2E353C] w-full text-white py-16 md:py-24 px-5 md:px-8">
+    <section id="expedition-type" className="bg-[#2E353C] w-full text-white py-16 md:py-24 px-5 md:px-8 scroll-mt-28">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-10 md:gap-12">
         {/* Header */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">

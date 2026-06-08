@@ -64,7 +64,7 @@ export function Inclusions({ inclusionCategories, exclusions, mandatoryPrerequis
   }
 
   return (
-    <section className="w-full bg-white text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8">
+    <section id="include-exclude" className="w-full bg-white text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-10 md:gap-14">
         {/* What's Included */}
         {categories.length > 0 && (

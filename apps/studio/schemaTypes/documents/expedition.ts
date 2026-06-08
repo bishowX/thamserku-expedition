@@ -57,7 +57,11 @@ export default defineType({
     defineField({ group: 'hero', name: 'heroImage', title: 'Hero Image', type: 'image', options: { hotspot: true }, description: 'Full-width hero background image.' }),
     defineField({ group: 'hero', name: 'heroTagline', title: 'Hero Tagline', type: 'string', description: 'Large h1 text.' }),
     defineField({ group: 'hero', name: 'heroSubtext', title: 'Hero Subtext', type: 'text', rows: 3, description: 'Paragraph below the h1.' }),
-    defineField({ group: 'hero', name: 'duration', title: 'Duration', type: 'string', description: 'e.g. 60–65 days' }),
+    defineField({ group: 'hero', name: 'duration', title: 'Duration', type: 'string', description: 'e.g. 38 Days' }),
+    defineField({ group: 'hero', name: 'difficulty', title: 'Difficulty', type: 'string', description: 'e.g. Extreme' }),
+    defineField({ group: 'hero', name: 'groupSize', title: 'Group Size', type: 'string', description: 'e.g. 4–12' }),
+    defineField({ group: 'hero', name: 'baseCamp', title: 'Base Camp', type: 'string', description: 'e.g. 5,345m' }),
+    defineField({ group: 'hero', name: 'leadGuide', title: 'Lead Guide', type: 'string', description: 'e.g. IFMGA' }),
     defineField({ group: 'hero', name: 'expeditionStyleFact', title: 'Expedition Style (Quick Facts)', type: 'string', description: 'e.g. Sherpa-led, oxygen-supported.' }),
     defineField({ group: 'hero', name: 'pricing', title: 'Pricing', type: 'string', description: 'e.g. By private consultation' }),
 

@@ -2,6 +2,7 @@ import { useLoaderData, redirect } from "react-router";
 import { getExpeditionBySlug, type SanityExpeditionDossier } from "../../lib/queries";
 import { ExpeditionHero } from "../components/everest/ExpeditionHero";
 import { QuickFacts } from "../components/everest/QuickFacts";
+import { StickySubNav } from "../components/everest/StickySubNav";
 import { Overview } from "../components/everest/Overview";
 import { WhoItIsFor } from "../components/everest/WhoItIsFor";
 import { Itinerary } from "../components/everest/Itinerary";
@@ -36,12 +37,13 @@ export default function ExpeditionDossier() {
         />
         <QuickFacts
           altitude={expedition.altitude}
-          region={expedition.region}
+          difficulty={expedition.difficulty}
+          groupSize={expedition.groupSize}
           duration={expedition.duration}
-          season={expedition.season}
-          expeditionStyleFact={expedition.expeditionStyleFact}
-          pricing={expedition.pricing}
+          baseCamp={expedition.baseCamp}
+          leadGuide={expedition.leadGuide}
         />
+        <StickySubNav />
         <Overview
           overviewHeadline={expedition.overviewHeadline}
           overviewHeadlineEmphasis={expedition.overviewHeadlineEmphasis}

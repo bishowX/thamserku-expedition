@@ -308,6 +308,10 @@ export type SanityExpeditionDossier = {
   heroTagline?: string;
   heroSubtext?: string;
   duration?: string;
+  difficulty?: string;
+  groupSize?: string;
+  baseCamp?: string;
+  leadGuide?: string;
   expeditionStyleFact?: string;
   pricing?: string;
   overviewHeadline?: string;
@@ -340,7 +344,8 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       _id, number, code, name, slug,
       altitude, region, season, style, positioning, image,
       heroImage, heroTagline, heroSubtext,
-      duration, expeditionStyleFact, pricing,
+      duration, difficulty, groupSize, baseCamp, leadGuide,
+      expeditionStyleFact, pricing,
       overviewHeadline, overviewHeadlineEmphasis, overviewBody,
       overviewSpecsHeading, overviewSpecs[]{ label, value },
       whoItIsForHeadline,

@@ -15,7 +15,7 @@ export function ExpeditionClosing({ name, closingImage, slug }: Props) {
   const designHref = `/design-your-expedition${slug ? `?expedition=${slug}` : ""}`;
 
   return (
-    <section className="relative bg-[#1A1A1A] w-full flex items-center justify-center text-center px-5 md:px-8 py-24 md:py-32 overflow-hidden">
+    <section id="configure" className="relative bg-[#1A1A1A] w-full flex items-center justify-center text-center px-5 md:px-8 py-24 md:py-32 overflow-hidden scroll-mt-28">
       <div className="absolute inset-0 z-0 pointer-events-none">
         {imageSrc ? (
           <img

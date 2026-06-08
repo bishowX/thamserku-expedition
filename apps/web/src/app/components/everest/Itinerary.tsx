@@ -16,7 +16,7 @@ export function Itinerary({ itineraryHeading, itinerary }: Props) {
   if (rows.length === 0 && !itineraryHeading) return null;
 
   return (
-    <section className="bg-[#2E353C] w-full text-white py-16 md:py-24 px-5 md:px-8">
+    <section id="program" className="bg-[#2E353C] w-full text-white py-16 md:py-24 px-5 md:px-8 scroll-mt-28">
       <div className="max-w-[1320px] mx-auto flex flex-col gap-10 md:gap-14">
         <div className="flex flex-col gap-6 md:gap-8">
           <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">

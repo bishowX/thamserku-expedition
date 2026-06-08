@@ -1,35 +1,35 @@
 type Props = {
   altitude?: string;
-  region?: string;
+  difficulty?: string;
+  groupSize?: string;
   duration?: string;
-  season?: string;
-  expeditionStyleFact?: string;
-  pricing?: string;
+  baseCamp?: string;
+  leadGuide?: string;
 };
 
 export function QuickFacts({
   altitude,
-  region,
+  difficulty,
+  groupSize,
   duration,
-  season,
-  expeditionStyleFact,
-  pricing,
+  baseCamp,
+  leadGuide,
 }: Props) {
   return (
-    <section id="dossier-facts" className="bg-[#1A1A1A] w-full text-white pt-6 border-b border-white/10 scroll-mt-24">
-      <div className="max-w-[1440px] mx-auto px-8 mb-6">
+    <section id="dossier-facts" className="bg-[#1A1A1A] w-full text-white border-b border-white/10 scroll-mt-24">
+      <div className="max-w-[1440px] mx-auto px-8 pt-6 pb-4">
         <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           02 — DOSSIER FACTS
         </h2>
       </div>
       <div className="w-full border-t border-white/20">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 divide-x divide-y lg:divide-y-0 divide-white/20">
+        <div className="max-w-[1440px] mx-auto flex items-center h-[117px] divide-x divide-white/20">
           <Fact title="ALTITUDE" value={altitude || "—"} />
-          <Fact title="REGION" value={region || "—"} />
+          <Fact title="DIFFICULTY" value={difficulty || "—"} />
+          <Fact title="GROUP SIZE" value={groupSize || "—"} />
           <Fact title="DURATION" value={duration || "—"} />
-          <Fact title="SEASON" value={season || "—"} />
-
-          <Fact title="PRICING" value={pricing || "—"} />
+          <Fact title="BASE CAMP" value={baseCamp || "—"} />
+          <Fact title="LEAD GUIDE" value={leadGuide || "—"} />
         </div>
       </div>
     </section>
@@ -38,11 +38,11 @@ export function QuickFacts({
 
 function Fact({ title, value }: { title: string; value: string }) {
   return (
-    <div className="px-6 py-[17px] md:px-8 flex flex-col gap-2.5 h-full">
-      <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+    <div className="flex-1 flex flex-col justify-center gap-[10px] px-8 h-[76px]">
+      <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] whitespace-nowrap">
         {title}
       </span>
-      <span className="font-['Radley'] text-2xl lg:text-[28px] text-white font-light leading-snug">
+      <span className="font-['Radley'] text-[28px] text-white font-normal leading-[1.375] whitespace-nowrap">
         {value}
       </span>
     </div>

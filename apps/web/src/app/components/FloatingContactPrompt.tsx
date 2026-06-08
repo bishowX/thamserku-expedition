@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-// TODO: Replace with the actual WhatsApp number (include country code, no + or spaces, e.g. "9771234567890")
-const WHATSAPP_NUMBER = "PENDING";
+const WHATSAPP_NUMBER = "97797052216623";
 
 export function FloatingContactPrompt() {
   const [isVisible, setIsVisible] = useState(false);
