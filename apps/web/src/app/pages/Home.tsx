@@ -3,7 +3,6 @@ import { Nav } from '../components/Nav'
 import { Hero } from '../components/Hero'
 import { Manifesto } from '../components/Manifesto'
 import { ManifestoStats } from '../components/ManifestoStats'
-import { YetiInfrastructurePreview } from '../components/YetiInfrastructurePreview'
 import { AtlasPreview } from '../components/AtlasPreview'
 import { NewsletterSection } from '../components/NewsletterSection'
 import { EditionsPreview } from '../components/EditionsPreview'
@@ -27,7 +26,6 @@ export default function Home() {
         <Hero data={data.homePage ?? undefined} />
         <Manifesto data={data.homePage ?? undefined} />
         <ManifestoStats stats={data.homePage?.manifestoStats} />
-        <YetiInfrastructurePreview data={data.homePage ?? undefined} />
         <AtlasPreview expeditions={data.homePage?.featuredExpeditions?.length ? data.homePage.featuredExpeditions : undefined} data={data.homePage ?? undefined} />
         <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} data={data.homePage ?? undefined} />
         <LegacyPreview data={data.homePage ?? undefined} />

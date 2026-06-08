@@ -81,14 +81,6 @@ export type SanityFieldNote = {
   coverImage?: { asset: { _ref: string } } | null;
 };
 
-export type SanityYetiPillar = {
-  number: string;
-  name: string;
-  subtitle: string;
-  body: string;
-};
-
-
 export type HomePageData = {
   homePage: {
     heroHeadline: string;
@@ -120,10 +112,6 @@ export type HomePageData = {
     unclaimedPeaksEyebrow?: string;
     unclaimedPeaksHeading?: string;
     unclaimedPeaksBody?: string;
-    infrastructureEyebrow: string;
-    infrastructureHeading: string;
-    infrastructureIntro: string;
-    infrastructurePillars: SanityYetiPillar[];
     featuredExpeditions: SanityExpedition[];
   } | null;
   editions: SanityEdition[];
@@ -161,7 +149,6 @@ export async function getHomePageData(): Promise<HomePageData> {
       legacyEyebrow, legacyHeading, legacyIntro,
       legacyTimelineItems[]{ year, title, description },
       unclaimedPeaksEyebrow, unclaimedPeaksHeading, unclaimedPeaksBody,
-      infrastructureEyebrow, infrastructureHeading, infrastructureIntro, infrastructurePillars,
       "featuredExpeditions": featuredExpeditions[]->{ _id, number, code, name, slug, altitude, region, season, style, positioning, image, editions[]->{ _id, letter, name, slug } }
     },
     "editions": *[_type == "edition"] | order(letter asc) {

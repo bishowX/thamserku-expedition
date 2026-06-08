@@ -146,7 +146,7 @@ function bookingRowGroups(data: BookingEmailData) {
             `${money(data.estimatedLow ?? Math.round(data.estimatedTotal * 0.9), currency)} – ${money(
               data.estimatedHigh ?? Math.round(data.estimatedTotal * 1.1),
               currency,
-            )} — indicative (±10%), final quote on confirmation`,
+            )} — final quote on confirmation`,
           )
         : row('Estimate', 'Price on request — our desk will prepare a custom quote'),
     messageRows: row('Message', data.message),
@@ -242,7 +242,7 @@ export function buildClimberHtml(data: BookingEmailData): string {
             ${section('Estimate', pricingRows)}
             ${messageRows ? section('Your Message', messageRows) : ''}
             <p style="font-family:Georgia,serif;font-style:italic;font-size:15px;line-height:1.6;color:#5A6673;margin:8px 0 0;">
-              We do not quote a number before understanding your climb. Nothing here is a commitment — it simply tells us how to build your expedition.
+              Contact us for more information and we'll help you take the next step.
             </p>
           </td>
         </tr>

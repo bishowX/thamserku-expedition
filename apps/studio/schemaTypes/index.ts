@@ -22,7 +22,6 @@ import teamPage from './documents/teamPage'
 import sevenThousandMeterPage from './documents/sevenThousandMeterPage'
 import privateExpeditionsPage from './documents/privateExpeditionsPage'
 import achievementsPage from './documents/achievementsPage'
-import yetiPillar from './objects/yetiPillar'
 import timelineEra from './objects/timelineEra'
 import consultationMoment from './objects/consultationMoment'
 import consultationStep from './objects/consultationStep'
@@ -67,7 +66,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   enquiry,
   booking,
   // Objects
-  yetiPillar,
   timelineEra,
   consultationMoment,
   consultationStep,

@@ -76,13 +76,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
                   </p>
                 )}
                 {ed.isStandard && (
-                  <span
-                    className={`inline-flex items-center justify-center self-start border px-[33px] py-[17px] mt-10 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] whitespace-nowrap ${
-                      isDark
-                        ? "border-white/30 text-white"
-                        : "border-[#1A1A1A]/30 text-[#1A1A1A]"
-                    }`}
-                  >
+                  <span className="inline-flex items-center justify-center self-start bg-[#c8cdd2] border border-white/30 px-[33px] py-[17px] mt-10 font-['JetBrains_Mono'] font-normal uppercase tracking-[2.42px] text-[11px] leading-[16.5px] text-[#25292c] whitespace-nowrap">
                     Standard Edition
                   </span>
                 )}

@@ -8,7 +8,6 @@ export default defineType({
     { name: 'hero', title: 'Hero' },
     { name: 'manifesto', title: 'Manifesto' },
     { name: 'stats', title: 'Stats' },
-    { name: 'infrastructure', title: 'Yeti Infrastructure' },
     { name: 'atlas', title: 'Atlas' },
     { name: 'editions', title: 'Editions' },
     { name: 'legacy', title: 'Legacy' },
@@ -41,12 +40,6 @@ export default defineType({
       of: [{ type: 'statItem' }],
       description: 'Stats shown in the dark bar below the manifesto (e.g. 37+ Years, 800+ Expeditions).',
     }),
-
-    // Yeti Infrastructure
-    defineField({ name: 'infrastructureEyebrow', title: 'Eyebrow', type: 'string', group: 'infrastructure', description: 'e.g. SECTION III — YETI INFRASTRUCTURE' }),
-    defineField({ name: 'infrastructureHeading', title: 'Heading', type: 'string', group: 'infrastructure' }),
-    defineField({ name: 'infrastructureIntro', title: 'Intro', type: 'text', rows: 3, group: 'infrastructure' }),
-    defineField({ name: 'infrastructurePillars', title: 'Pillars', type: 'array', group: 'infrastructure', of: [{ type: 'yetiPillar' }] }),
 
     // Atlas
     defineField({ name: 'atlasEyebrow', title: 'Eyebrow', type: 'string', group: 'atlas', description: 'e.g. 03 — EXPEDITION ATLAS' }),
