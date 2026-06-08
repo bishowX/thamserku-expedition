@@ -153,7 +153,7 @@ export function Hero({ data }: { data?: HeroData }) {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen flex flex-col justify-end text-white section-padding pb-24 overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col justify-end text-white p-12 overflow-hidden"
     >
       <div className="absolute inset-0 z-0">
         {bgImage && (
@@ -172,7 +172,7 @@ export function Hero({ data }: { data?: HeroData }) {
 
       <div
         ref={contentRef}
-        className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-8 will-change-transform"
+        className="relative z-10 w-full flex flex-col items-start gap-8 will-change-transform"
       >
         <div className="max-w-4xl">
           <h1

@@ -320,12 +320,12 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
             {/* Expedition Cards */}
             {expeditionsByTab.length > 0 ? (
-              <div className="flex gap-5 items-start w-full">
+              <div className="flex justify-center gap-5 items-start w-full">
                 {expeditionsByTab.slice(0, 6).map((exp) => (
                   <Link
                     key={exp._id}
                     to={`/expeditions/${exp.slug?.current}`}
-                    className="flex-1 flex flex-col gap-5 items-center min-w-0 group"
+                    className="flex-[0_0_calc((100%-100px)/6)] flex flex-col gap-5 items-center min-w-0 group"
                     onClick={() => setOpenMenu(null)}
                   >
                     <div className="relative w-full aspect-[3/2] overflow-hidden bg-[#2A2A2A]">
