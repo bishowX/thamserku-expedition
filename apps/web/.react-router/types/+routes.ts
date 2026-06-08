@@ -49,6 +49,12 @@ type Pages = {
   "/field-notes": {
     params: {};
   };
+  "/newsletter": {
+    params: {};
+  };
+  "/news-and-blogs": {
+    params: {};
+  };
   "/faq": {
     params: {};
   };
@@ -69,7 +75,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/expeditions/:slug" | "/atlas" | "/editions" | "/legacy" | "/team" | "/consultation" | "/archive" | "/yeti-infrastructure" | "/7000m" | "/private" | "/field-notes" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/safety" | "/heritage-and-achievements";
+    page: "/" | "/expeditions/:slug" | "/atlas" | "/editions" | "/legacy" | "/team" | "/consultation" | "/archive" | "/yeti-infrastructure" | "/7000m" | "/private" | "/field-notes" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/safety" | "/heritage-and-achievements";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
@@ -119,6 +125,14 @@ type RouteFiles = {
     id: "app/pages/FieldNotes";
     page: "/field-notes";
   };
+  "./app/pages/NewsletterPage.tsx": {
+    id: "app/pages/NewsletterPage";
+    page: "/newsletter";
+  };
+  "./app/pages/NewsAndBlogsPage.tsx": {
+    id: "app/pages/NewsAndBlogsPage";
+    page: "/news-and-blogs";
+  };
   "./app/pages/MainFAQ.tsx": {
     id: "app/pages/MainFAQ";
     page: "/faq";
@@ -155,6 +169,8 @@ type RouteModules = {
   "app/pages/SevenThousandMeterPathway": typeof import("./src/./app/pages/SevenThousandMeterPathway.tsx");
   "app/pages/PrivateExpeditions": typeof import("./src/./app/pages/PrivateExpeditions.tsx");
   "app/pages/FieldNotes": typeof import("./src/./app/pages/FieldNotes.tsx");
+  "app/pages/NewsletterPage": typeof import("./src/./app/pages/NewsletterPage.tsx");
+  "app/pages/NewsAndBlogsPage": typeof import("./src/./app/pages/NewsAndBlogsPage.tsx");
   "app/pages/MainFAQ": typeof import("./src/./app/pages/MainFAQ.tsx");
   "app/pages/DesignPage": typeof import("./src/./app/pages/DesignPage.tsx");
   "app/api/upload-cv": typeof import("./src/./app/api/upload-cv.ts");

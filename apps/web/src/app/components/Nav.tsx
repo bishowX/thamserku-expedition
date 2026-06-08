@@ -46,9 +46,12 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
   const location = useLocation();
 
   const getCtaInfo = () => {
+    const expeditionMatch = location.pathname.match(/^\/expeditions\/([^/]+)/);
     return {
       label: "Design Your Expedition",
-      link: "/design-your-expedition",
+      link: expeditionMatch
+        ? `/design-your-expedition?expedition=${expeditionMatch[1]}`
+        : "/design-your-expedition",
     };
     switch (location.pathname) {
       case "/expeditions/everest":

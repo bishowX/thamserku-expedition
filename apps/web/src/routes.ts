@@ -13,6 +13,8 @@ export default [
   route("7000m", "./app/pages/SevenThousandMeterPathway.tsx"),
   route("private", "./app/pages/PrivateExpeditions.tsx"),
   route("field-notes", "./app/pages/FieldNotes.tsx"),
+  route("newsletter", "./app/pages/NewsletterPage.tsx"),
+  route("news-and-blogs", "./app/pages/NewsAndBlogsPage.tsx"),
   route("faq", "./app/pages/MainFAQ.tsx"),
   route("design-your-expedition", "./app/pages/DesignPage.tsx"),
   route("api/upload-cv", "./app/api/upload-cv.ts"),

@@ -170,6 +170,21 @@ export async function getHomePageData(): Promise<HomePageData> {
   }`);
 }
 
+export type NewsletterData = {
+  newsletterEyebrow?: string;
+  newsletterHeading?: string;
+  newsletterBody?: string;
+  newsletterCta?: string;
+  newsletterPrivacyNote?: string;
+};
+
+export async function getNewsletterData(): Promise<NewsletterData> {
+  const data = await serverClient.fetch<NewsletterData | null>(`*[_type == "homePage"][0] {
+    newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote
+  }`);
+  return data ?? {};
+}
+
 export async function getYetiPageData(): Promise<YetiPageData> {
   return serverClient.fetch(`{
     "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
