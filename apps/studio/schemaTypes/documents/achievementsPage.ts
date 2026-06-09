@@ -39,6 +39,7 @@ export default defineType({
           defineField({ name: 'title', title: 'Title', type: 'string', description: 'e.g. Founding Years' }),
           defineField({ name: 'body', title: 'Body', type: 'text', rows: 8, description: 'Separate paragraphs with a blank line.' }),
           defineField({ name: 'meta', title: 'Meta Line', type: 'string', description: 'e.g. 17 expeditions · Dhaulagiri, Pumori, Everest' }),
+          defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
         ],
         preview: { select: { title: 'title', subtitle: 'years' } },
       }],

@@ -248,9 +248,7 @@ export type ConsultationPage = {
   heroMetaHandledBy?: string;
   heroMetaLanguages?: string;
   heroMetaConfidentiality?: string;
-  invitationHeading?: string;
-  invitationBody?: string;
-  trustQuote?: string;
+trustQuote?: string;
   trustBody?: string;
   formSectionLabel?: string;
   formAlternativeLabel?: string;
@@ -366,8 +364,7 @@ export async function getConsultationPageData(): Promise<ConsultationPageData> {
     "consultationPage": *[_type == "consultationPage"][0] {
       heroHeadline, heroSubheading, heroImage,
       heroMetaResponse, heroMetaHandledBy, heroMetaLanguages, heroMetaConfidentiality,
-      invitationHeading, invitationBody,
-      trustQuote, trustBody,
+trustQuote, trustBody,
       formSectionLabel, formAlternativeLabel, formAlternativeSubheading,
       formChapterATitle, formContactOptions,
       processHeading, processBgImage,
@@ -520,6 +517,7 @@ export type AchievementDecade = {
   title: string;
   body?: string;
   meta?: string;
+  image?: { asset: { _ref: string } } | null;
 };
 
 export type AchievementsPageData = {
@@ -537,7 +535,7 @@ export async function getAchievementsPageData(): Promise<AchievementsPageData> {
     "achievementsPage": *[_type == "achievementsPage"][0] {
       heroHeadline, heroSubheading, heroImage,
       stats[] { _key, value, label },
-      decades[] { _key, years, title, body, meta }
+      decades[] { _key, years, title, body, meta, image }
     }
   }`);
 }

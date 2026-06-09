@@ -1,6 +1,5 @@
 import { useLoaderData, useActionData } from 'react-router';
 import { EnquiryHero } from '../components/enquiry/EnquiryHero';
-import { EnquiryInvitation } from '../components/enquiry/EnquiryInvitation';
 import { TrustStatement } from '../components/enquiry/TrustStatement';
 import { EnquiryForm } from '../components/enquiry/EnquiryForm';
 import { EnquiryProcess } from '../components/enquiry/EnquiryProcess';
@@ -89,8 +88,7 @@ export default function EnquiryPage() {
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <EnquiryHero data={page} />
-      <EnquiryInvitation data={page} />
-      <TrustStatement data={page} />
+<TrustStatement data={page} />
       <EnquiryForm data={page} submitted={submitted} errors={errors} />
       <EnquiryProcess data={page} />
       <EnquiryAlternative data={page} />

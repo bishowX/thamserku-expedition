@@ -6,8 +6,7 @@ export default defineType({
   type: 'document',
   groups: [
     { name: 'hero', title: 'Hero' },
-    { name: 'invitation', title: 'Invitation' },
-    { name: 'trust', title: 'Trust Statement' },
+{ name: 'trust', title: 'Trust Statement' },
     { name: 'callCovers', title: 'What the Call Covers' },
     { name: 'form', title: 'Enquiry Form' },
     { name: 'process', title: 'Process' },
@@ -29,17 +28,6 @@ export default defineType({
     defineField({ name: 'heroMetaHandledBy', title: 'Meta · Handled By', type: 'string', group: 'hero', description: 'e.g. SENIOR EXPEDITION STAFF' }),
     defineField({ name: 'heroMetaLanguages', title: 'Meta · Languages', type: 'string', group: 'hero', description: 'e.g. ENGLISH · NEPALI' }),
     defineField({ name: 'heroMetaConfidentiality', title: 'Meta · Confidentiality', type: 'string', group: 'hero', description: 'e.g. ASSURED' }),
-
-    // Invitation
-    defineField({
-      name: 'invitationHeading',
-      title: 'Heading',
-      type: 'text',
-      rows: 3,
-      group: 'invitation',
-      description: 'The last sentence renders in italic blue.',
-    }),
-    defineField({ name: 'invitationBody', title: 'Body', type: 'text', rows: 4, group: 'invitation' }),
 
     // Trust Statement
     defineField({ name: 'trustQuote', title: 'Quote', type: 'text', rows: 3, group: 'trust' }),
