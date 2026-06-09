@@ -5,7 +5,7 @@ export function ManifestoStats({ stats }: { stats?: Stat[] | null }) {
   const items = stats;
 
   return (
-    <section className="w-full bg-[#2E353C] py-6 px-4 md:py-16 md:px-16">
+    <section className="w-full bg-[#2E353C] py-6 px-4 md:py-10 md:px-16">
       <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6 md:gap-0 md:justify-between">
         {items.map((stat) => (
           <div

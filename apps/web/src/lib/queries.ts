@@ -184,6 +184,7 @@ export type LegacyPageData = {
   legacyPage: {
     heroHeadline?: string;
     heroSubheading?: string;
+    heroImage?: { asset: { _ref: string } } | null;
     timelineEyebrow?: string;
     timelineHeading?: string;
     timelineFooterNote?: string;
@@ -194,7 +195,7 @@ export type LegacyPageData = {
 export async function getLegacyPageData(): Promise<LegacyPageData> {
   return serverClient.fetch(`{
     "legacyPage": *[_type == "legacyPage"][0] {
-      heroHeadline, heroSubheading,
+      heroHeadline, heroSubheading, heroImage,
       timelineEyebrow, timelineHeading, timelineFooterNote,
       timelineChapters[] { _key, roman, years, title, description, image }
     }
@@ -518,6 +519,7 @@ export type AchievementsPageData = {
   achievementsPage: {
     heroHeadline?: string;
     heroSubheading?: string;
+    heroImage?: { asset: { _ref: string } } | null;
     stats?: AchievementStat[];
     decades?: AchievementDecade[];
   } | null;
@@ -526,7 +528,7 @@ export type AchievementsPageData = {
 export async function getAchievementsPageData(): Promise<AchievementsPageData> {
   return serverClient.fetch(`{
     "achievementsPage": *[_type == "achievementsPage"][0] {
-      heroHeadline, heroSubheading,
+      heroHeadline, heroSubheading, heroImage,
       stats[] { _key, value, label },
       decades[] { _key, years, title, body, meta }
     }

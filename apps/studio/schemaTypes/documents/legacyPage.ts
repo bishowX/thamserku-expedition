@@ -12,6 +12,7 @@ export default defineType({
     // 01 — Hero
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'text', rows: 3, group: 'hero' }),
     defineField({ name: 'heroSubheading', title: 'Subheading', type: 'text', rows: 3, group: 'hero' }),
+    defineField({ name: 'heroImage', title: 'Background Image', type: 'image', options: { hotspot: true }, group: 'hero' }),
 
     // 02 — Timeline
     defineField({ name: 'timelineEyebrow', title: 'Eyebrow', type: 'string', group: 'timeline', description: 'e.g. 01 — TIMELINE' }),

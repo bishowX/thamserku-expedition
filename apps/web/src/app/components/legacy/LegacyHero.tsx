@@ -1,22 +1,37 @@
 import { Nav } from "../Nav";
 import type { LegacyPageData } from "../../../lib/queries";
+import { urlFor } from "../../../lib/sanity";
 
 type PageData = LegacyPageData['legacyPage'];
 
 export function LegacyHero({ page }: { page?: PageData }) {
+  const bgSrc = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : null;
+
   return (
     <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col overflow-hidden">
-      {/* Faint cartographic grid overlay */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #C8CDD2 1px, transparent 1px),
-            linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)
-          `,
-          backgroundSize: '96px 96px',
-        }}
-      />
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {bgSrc ? (
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
+              style={{ backgroundImage: `url('${bgSrc}')` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1A1A1A]/60 to-[#1A1A1A]" />
+          </>
+        ) : (
+          /* Faint cartographic grid fallback */
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, #C8CDD2 1px, transparent 1px),
+                linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)
+              `,
+              backgroundSize: '96px 96px',
+            }}
+          />
+        )}
+      </div>
 
       <Nav />
 

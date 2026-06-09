@@ -47,7 +47,7 @@ export function UnclaimedPeaks({ data }: { data?: UnclaimedPeaksData }) {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#2E353C] flex flex-col items-center justify-center gap-8 py-16 md:pt-24 md:pb-[127px] px-6 md:px-16"
+      className="w-full bg-[#2E353C] flex flex-col items-center justify-center gap-8 py-16 md:py-24 px-6 md:px-16"
     >
       <div className="w-full max-w-7xl flex flex-col gap-8">
         {/* Header: eyebrow label + heading */}

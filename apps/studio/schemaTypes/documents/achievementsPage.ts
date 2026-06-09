@@ -13,6 +13,7 @@ export default defineType({
     // 01 — Hero
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'text', rows: 2, group: 'hero', description: 'e.g. A history written in altitude.' }),
     defineField({ name: 'heroSubheading', title: 'Subheading', type: 'text', rows: 3, group: 'hero' }),
+    defineField({ name: 'heroImage', title: 'Background Image', type: 'image', options: { hotspot: true }, group: 'hero' }),
 
     // 02 — Stats Bar
     defineField({
