@@ -26,6 +26,7 @@ export function StickySubNav() {
 
   useEffect(() => {
     const handleScroll = () => {
+      if (document.body.getAttribute("data-route-pinned") === "1") return;
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setNavHidden(true);
