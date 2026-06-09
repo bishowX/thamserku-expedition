@@ -1,12 +1,27 @@
+import { urlFor } from '../../../lib/sanity';
+import type { SanityImageSource } from '@sanity/image-url';
 import type { ConsultationPage } from '../../../lib/queries';
 
 export const EnquiryProcess = ({ data }: { data?: ConsultationPage }) => {
   const heading = data?.processHeading;
   const steps = data?.processSteps ?? [];
   const footnote = data?.processFootnote;
+  const imageSrc = data?.processBgImage
+    ? urlFor(data.processBgImage as SanityImageSource).width(1920).url()
+    : null;
 
   return (
     <section className="relative py-24 overflow-hidden" style={{ background: 'linear-gradient(90deg, #2E353C 0%, #2E353C 100%)' }}>
+      {imageSrc && (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <img
+            src={imageSrc}
+            alt=""
+            className="w-full h-full object-cover opacity-10 mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#2E353C] via-transparent to-[#2E353C] opacity-70" />
+        </div>
+      )}
       <div className="relative z-10 max-w-[1440px] mx-auto px-8">
         <div className="mb-10 md:mb-24">
           <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">

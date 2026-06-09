@@ -258,6 +258,7 @@ export type ConsultationPage = {
   formChapterATitle?: string;
   formContactOptions?: string[];
   processHeading?: string;
+  processBgImage?: { asset: { _ref: string } } | null;
   processSteps?: ConsultationStep[];
   processFootnote?: string;
   alternativeHeading?: string;
@@ -369,7 +370,7 @@ export async function getConsultationPageData(): Promise<ConsultationPageData> {
       trustQuote, trustBody,
       formSectionLabel, formAlternativeLabel, formAlternativeSubheading,
       formChapterATitle, formContactOptions,
-      processHeading,
+      processHeading, processBgImage,
       processSteps[] { _key, stepNumber, marker, title, description },
       processFootnote,
       alternativeHeading,
@@ -475,6 +476,7 @@ export type SafetyPageData = {
     protocols?: SafetyProtocol[];
     foundationEyebrow?: string;
     foundationHeading?: string;
+    foundationBgImage?: { asset: { _ref: string } } | null;
     foundationBody?: string[];
     foundationSpecs?: SafetySpec[];
     communicationEyebrow?: string;
@@ -499,7 +501,7 @@ export async function getSafetyPageData(): Promise<SafetyPageData> {
       statsLabel, stats[] { value, label },
       numbersHeading, numbersCards[] { title, body },
       architectureEyebrow, architectureHeading, protocols[] { label, description },
-      foundationEyebrow, foundationHeading, foundationBody, foundationSpecs[] { label, value },
+      foundationEyebrow, foundationHeading, foundationBgImage, foundationBody, foundationSpecs[] { label, value },
       communicationEyebrow, communicationHeading, communicationItems[] { title, body },
       evacuationEyebrow, evacuationHeading, evacuationCards[] { title, body },
       evacuationQuote, evacuationBody,

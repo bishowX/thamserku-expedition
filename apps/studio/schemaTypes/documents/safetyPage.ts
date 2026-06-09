@@ -83,6 +83,7 @@ export default defineType({
     // 05 — Sherpa Foundation
     defineField({ name: 'foundationEyebrow', title: 'Eyebrow', type: 'string', group: 'foundation' }),
     defineField({ name: 'foundationHeading', title: 'Heading', type: 'string', group: 'foundation' }),
+    defineField({ name: 'foundationBgImage', title: 'Background Image', type: 'image', group: 'foundation', options: { hotspot: true } }),
     defineField({
       name: 'foundationBody',
       title: 'Body Paragraphs',

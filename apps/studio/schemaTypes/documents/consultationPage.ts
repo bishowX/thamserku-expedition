@@ -136,6 +136,7 @@ export default defineType({
 
     // Process
     defineField({ name: 'processHeading', title: 'Heading', type: 'text', rows: 2, group: 'process' }),
+    defineField({ name: 'processBgImage', title: 'Background Image', type: 'image', group: 'process', options: { hotspot: true } }),
     defineField({
       name: 'processSteps',
       title: 'Steps',

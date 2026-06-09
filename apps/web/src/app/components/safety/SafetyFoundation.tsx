@@ -1,3 +1,5 @@
+import { urlFor } from '../../../lib/sanity';
+import type { SanityImageSource } from '@sanity/image-url';
 import type { SafetyPageData } from '../../../lib/queries';
 
 type Props = { page: SafetyPageData['safetyPage'] };
@@ -5,10 +7,24 @@ type Props = { page: SafetyPageData['safetyPage'] };
 export const SafetyFoundation = ({ page }: Props) => {
   const body = page?.foundationBody ?? [];
   const specs = page?.foundationSpecs ?? [];
+  const imageSrc = page?.foundationBgImage
+    ? urlFor(page.foundationBgImage as SanityImageSource).width(1920).url()
+    : null;
 
   return (
-    <section className="bg-[#2E353C] section-padding">
-      <div className="max-w-[1180px] mx-auto flex flex-col items-center gap-12 md:gap-24">
+    <section className="relative bg-[#2E353C] section-padding overflow-hidden">
+      {imageSrc && (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <img
+            src={imageSrc}
+            alt=""
+            className="w-full h-full object-cover opacity-10 mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#2E353C] via-transparent to-[#2E353C] opacity-70" />
+        </div>
+      )}
+
+      <div className="relative z-10 max-w-[1180px] mx-auto flex flex-col items-center gap-12 md:gap-24">
         <div className="flex flex-col items-center gap-6 md:gap-8 text-center">
           {page?.foundationEyebrow && (
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
