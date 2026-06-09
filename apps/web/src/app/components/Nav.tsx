@@ -19,7 +19,7 @@ const ABOUT_LINKS = [
   { label: "Legacy", href: "/legacy" },
   { label: "Achievements", href: "/heritage-and-achievements" },
   { label: "YETI INFRASTRUCTURE", href: "/yeti-infrastructure" },
-  { label: "News & Blogs", href: "/news-and-blogs" },
+  { label: "Newsletter", href: "/news-and-blogs" },
 ];
 
 function parseAltitudeM(alt: string): number {

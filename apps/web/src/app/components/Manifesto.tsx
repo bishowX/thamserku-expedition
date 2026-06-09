@@ -123,7 +123,7 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
           </h2>
           <p
             ref={bodyRef}
-            className="font-['Lexend'] font-light text-[#5A6673] text-fluid-body leading-[1.8] max-w-[56ch]"
+            className="font-['Lexend'] font-light text-[#5A6673] text-fluid-body leading-[1.8] max-w-3xl"
           >
             <TextReveal text={body} />
           </p>

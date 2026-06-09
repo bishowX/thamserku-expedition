@@ -265,7 +265,13 @@ export default function DesignPage() {
   const isSubmitting = navigation.state === 'submitting'
 
   // ── Summary + submit payload ───────────────────────────────────────────────
-  const summaryItems: SummaryItem[] = allGroups.flatMap((g) =>
+  // Only reveal items from config steps the user has already reached.
+  // step 0 = format (none shown); step 1 = configure-0; step 2 = configure-1; etc.
+  const reachedGroups = configSteps
+    .slice(0, Math.min(step, configSteps.length))
+    .flat()
+    .map((n) => n.group)
+  const summaryItems: SummaryItem[] = reachedGroups.flatMap((g) =>
     g.features.map(({ feature, cell }) => ({
       label: feature.label,
       chosenLabel: chosenLabelFor(feature, cell, selections[feature.key]),

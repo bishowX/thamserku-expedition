@@ -84,7 +84,7 @@ export function EditionsPreview({
               <p className="font-['JetBrains_Mono'] text-[10px] tracking-[2.2px] uppercase text-[#C8CDD2] h-[38px]">
                 {ed.name}
               </p>
-              <p className="font-['Radley'] text-[22px] leading-[1.3] text-white">
+              <p className="font-['Radley'] text-[64px] leading-[1.3] text-white">
                 {ed.letter}
               </p>
               {ed.character && (

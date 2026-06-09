@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useLoaderData } from "react-router";
 import { getFAQPageData, type FAQPageData } from "../../lib/queries";
-import { Nav } from '../components/Nav';
-import { FAQHero } from '../components/faq/FAQHero';
-import { FAQCategoryNavigation } from '../components/faq/FAQCategoryNavigation';
-import { FAQList } from '../components/faq/FAQList';
-import { FAQQuickSection } from '../components/faq/FAQQuickSection';
-import { FAQRelatedPages } from '../components/faq/FAQRelatedPages';
-import { FAQNewsletterBanner } from '../components/faq/FAQNewsletterBanner';
-import { FAQClosing } from '../components/faq/FAQClosing';
-import { Footer } from '../components/Footer';
+import { Nav } from "../components/Nav";
+import { FAQHero } from "../components/faq/FAQHero";
+import { FAQCategoryNavigation } from "../components/faq/FAQCategoryNavigation";
+import { FAQList } from "../components/faq/FAQList";
+import { FAQQuickSection } from "../components/faq/FAQQuickSection";
+import { FAQRelatedPages } from "../components/faq/FAQRelatedPages";
+import { FAQNewsletterBanner } from "../components/faq/FAQNewsletterBanner";
+import { FAQClosing } from "../components/faq/FAQClosing";
+import { Footer } from "../components/Footer";
 import type { Route } from "./+types/MainFAQ";
 import { pageMeta } from "../../lib/seo";
 
@@ -36,13 +36,18 @@ export default function MainFAQ() {
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
       <FAQHero page={data.faqPage ?? undefined} />
-      <FAQCategoryNavigation page={data.faqPage ?? undefined} categories={data.faqPage?.categories ?? []} />
-      <FAQList page={data.faqPage ?? undefined} categories={data.faqPage?.categories ?? []} />
+      <FAQCategoryNavigation
+        page={data.faqPage ?? undefined}
+        categories={data.faqPage?.categories ?? []}
+      />
+      <FAQList
+        page={data.faqPage ?? undefined}
+        categories={data.faqPage?.categories ?? []}
+      />
       <FAQQuickSection page={data.faqPage ?? undefined} />
-      <FAQRelatedPages page={data.faqPage ?? undefined} />
       <FAQNewsletterBanner page={data.faqPage ?? undefined} />
       <FAQClosing page={data.faqPage ?? undefined} />
       <Footer />
     </main>
   );
-};
+}

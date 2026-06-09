@@ -41,7 +41,7 @@ export const FAQList = ({
       <div className="relative z-10 w-full max-w-[880px] mx-auto flex flex-col items-center">
         <div className="w-full flex justify-center mb-16 md:mb-24">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-            {page?.listEyebrow ?? 'FIFTEEN QUIET ANSWERS'}
+            {page?.listEyebrow ?? "FIFTEEN QUIET ANSWERS"}
           </span>
         </div>
 
@@ -52,7 +52,7 @@ export const FAQList = ({
             className="w-full flex flex-col scroll-mt-32"
           >
             {/* Category section header */}
-            <div className="w-full flex flex-col mb-[80px] md:mb-[100px]">
+            <div className="w-full flex flex-col mb-[50px]">
               <div className="h-[1px] w-full bg-[#C8CDD2]/30 mb-8" />
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
                 {category.numLabel} — {category.label}

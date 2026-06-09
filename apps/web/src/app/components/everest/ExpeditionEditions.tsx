@@ -24,7 +24,10 @@ export function ExpeditionEditions({ name, editions }: Props) {
   } — our curated standard. Every Edition below is available on ${expeditionName}. Select one to begin designing your expedition.`;
 
   return (
-    <section id="expedition-type" className="bg-[#2E353C] w-full text-white py-16 md:py-24 px-5 md:px-8 scroll-mt-28">
+    <section
+      id="expedition-type"
+      className="bg-[#2E353C] w-full text-white py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
+    >
       <div className="max-w-[1440px] mx-auto flex flex-col gap-10 md:gap-12">
         {/* Header */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
@@ -57,8 +60,8 @@ export function ExpeditionEditions({ name, editions }: Props) {
               <p className="font-['JetBrains_Mono'] text-[10px] tracking-[0.22em] uppercase text-[#C8CDD2] md:h-[38px]">
                 {ed.name}
               </p>
-              <div className="flex items-center gap-4">
-                <span className="font-['Radley'] text-[22px] leading-[1.3] text-white">
+              <div className="flex items-center gap-8">
+                <span className="font-['Radley'] text-[64px] leading-[1.3] text-white">
                   {ed.letter}
                 </span>
                 {ed.isStandard && (

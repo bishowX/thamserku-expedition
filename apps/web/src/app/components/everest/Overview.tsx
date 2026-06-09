@@ -16,7 +16,10 @@ export function Overview({
   const specs = overviewSpecs ?? [];
 
   return (
-    <section id="overview" className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28">
+    <section
+      id="overview"
+      className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
+    >
       <div className="max-w-[1320px] mx-auto flex flex-col gap-8">
         <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           03 — Overview
@@ -60,10 +63,10 @@ export function Overview({
                     key={i}
                     className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-5 md:py-6 border-b border-[rgba(26,26,26,0.2)]"
                   >
-                    <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] leading-[1.5] text-[#5A6673] pt-[3px]">
+                    <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[16px] leading-[1.5] text-[#5A6673] pt-[3px]">
                       {spec.label}
                     </p>
-                    <p className="font-['Radley'] text-[15px] md:text-[16px] leading-[1.5] text-[#1A1A1A]">
+                    <p className="font-['Radley'] text-[15px] md:text-[20px] leading-[1.5] text-[#1A1A1A]">
                       {spec.value}
                     </p>
                   </div>

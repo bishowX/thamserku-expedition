@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 type InclusionCategory = { category: string; items: string[] };
 
 function InclusionCategoryRow({ category, items }: InclusionCategory) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex flex-col">
@@ -55,16 +55,27 @@ type Props = {
   mandatoryPrerequisite?: string;
 };
 
-export function Inclusions({ inclusionCategories, exclusions, mandatoryPrerequisite }: Props) {
+export function Inclusions({
+  inclusionCategories,
+  exclusions,
+  mandatoryPrerequisite,
+}: Props) {
   const categories = inclusionCategories ?? [];
   const notIncluded = exclusions ?? [];
 
-  if (categories.length === 0 && notIncluded.length === 0 && !mandatoryPrerequisite) {
+  if (
+    categories.length === 0 &&
+    notIncluded.length === 0 &&
+    !mandatoryPrerequisite
+  ) {
     return null;
   }
 
   return (
-    <section id="include-exclude" className="w-full bg-white text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28">
+    <section
+      id="include-exclude"
+      className="w-full bg-white text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
+    >
       <div className="max-w-[1440px] mx-auto flex flex-col gap-10 md:gap-14">
         {/* What's Included */}
         {categories.length > 0 && (
@@ -84,7 +95,11 @@ export function Inclusions({ inclusionCategories, exclusions, mandatoryPrerequis
                   {categories
                     .filter((_, i) => i % 2 === col)
                     .map((cat, i) => (
-                      <InclusionCategoryRow key={i} category={cat.category} items={cat.items} />
+                      <InclusionCategoryRow
+                        key={i}
+                        category={cat.category}
+                        items={cat.items}
+                      />
                     ))}
                 </div>
               ))}
