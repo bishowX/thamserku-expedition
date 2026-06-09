@@ -1,4 +1,5 @@
 {
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "redirects": [
     { "source": "/thamserku_expedition_booking/mount-everest-expedition-8848m", "destination": "/expeditions/everest", "permanent": true },
     { "source": "/thamserku_expedition_booking/mount-everest-expedition-8848m/", "destination": "/expeditions/everest", "permanent": true },
@@ -90,11 +91,11 @@
   "rewrites": [
     {
       "source": "/studio/:path*",
-      "destination": "https://studio-kappa-eight-41.vercel.app/studio/:path*"
+      "destination": "https://thamserku-expedition-studio.vercel.app/studio/:path*"
     },
     {
       "source": "/static/:path*",
-      "destination": "https://studio-kappa-eight-41.vercel.app/static/:path*"
+      "destination": "https://thamserku-expedition-studio.vercel.app/static/:path*"
     }
   ]
 }
