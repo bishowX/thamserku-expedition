@@ -22,6 +22,7 @@ export default defineType({
     // Closing
     defineField({ name: 'closingHeading', title: 'Closing Heading', type: 'text', rows: 2, group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Closing Body', type: 'text', rows: 3, group: 'closing' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
   ],
   preview: { prepare: () => ({ title: 'Yeti Infrastructure Page' }) },
 })

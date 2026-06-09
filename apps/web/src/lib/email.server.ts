@@ -1,4 +1,16 @@
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
+
+function createTransport() {
+  return nodemailer.createTransport({
+    host: 'smtp.zoho.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZOHO_EMAIL,
+      pass: process.env.ZOHO_APP_PASSWORD,
+    },
+  })
+}
 
 export interface EnquiryEmailData {
   fullName: string
@@ -197,12 +209,10 @@ export function buildBookingHtml(data: BookingEmailData): string {
 }
 
 export async function sendBookingEmail(to: string, data: BookingEmailData): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM_EMAIL ?? 'noreply@thamserku.com'
-  if (!apiKey) return
+  const from = process.env.ZOHO_EMAIL
+  if (!from) return
 
-  const resend = new Resend(apiKey)
-  await resend.emails.send({
+  await createTransport().sendMail({
     from,
     to,
     subject: `New Booking Configuration — ${data.fullName}`,
@@ -259,13 +269,11 @@ export function buildClimberHtml(data: BookingEmailData): string {
 }
 
 export async function sendBookingConfirmationEmail(to: string, data: BookingEmailData): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM_EMAIL ?? 'noreply@thamserku.com'
-  if (!apiKey) return
+  const from = process.env.ZOHO_EMAIL
+  if (!from) return
 
   const peak = data.customPeakName || data.expeditionName
-  const resend = new Resend(apiKey)
-  await resend.emails.send({
+  await createTransport().sendMail({
     from,
     to,
     subject: peak ? `Your ${peak} expedition configuration — Thamserku` : 'Your expedition configuration — Thamserku',
@@ -274,12 +282,10 @@ export async function sendBookingConfirmationEmail(to: string, data: BookingEmai
 }
 
 export async function sendEnquiryEmail(to: string, data: EnquiryEmailData): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM_EMAIL ?? 'noreply@thamserku.com'
-  if (!apiKey) return
+  const from = process.env.ZOHO_EMAIL
+  if (!from) return
 
-  const resend = new Resend(apiKey)
-  await resend.emails.send({
+  await createTransport().sendMail({
     from,
     to,
     subject: `New Enquiry — ${data.fullName}`,

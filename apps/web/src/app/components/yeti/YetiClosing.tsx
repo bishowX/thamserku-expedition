@@ -1,13 +1,29 @@
 import { Link } from 'react-router';
+import { urlFor } from '../../../lib/sanity';
+import type { SanityImageSource } from '@sanity/image-url';
 import type { YetiPageData } from '../../../lib/queries';
 
 type PageData = YetiPageData['yetiPage'];
 
 export const YetiClosing = ({ page }: { page?: PageData }) => {
-  return (
- <section className="bg-[#1A1A1A] section-padding border-t border-white/10">
-      <div className="max-w-[880px] mx-auto flex flex-col items-center">
+  const imageSrc = page?.closingImage
+    ? urlFor(page.closingImage as SanityImageSource).width(1920).url()
+    : null;
 
+  return (
+    <section className="relative bg-[#1A1A1A] section-padding border-t border-white/10 overflow-hidden">
+      {imageSrc && (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <img
+            src={imageSrc}
+            alt="closing background"
+            className="w-full h-full object-cover opacity-20 mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A] opacity-80" />
+        </div>
+      )}
+
+      <div className="relative z-10 max-w-[880px] mx-auto flex flex-col items-center">
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-10">
           CONTINUE PRIVATELY — § VIII
         </span>
@@ -39,7 +55,6 @@ export const YetiClosing = ({ page }: { page?: PageData }) => {
             EXPLORE EDITIONS →
           </Link>
         </div>
-
       </div>
     </section>
   );

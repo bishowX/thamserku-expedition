@@ -150,21 +150,21 @@ export async function action({ request }: { request: Request }): Promise<
     submittedAt,
   }
 
-  // Desk notification — to the enquiry address (if configured).
+  // Desk notification — to the enquiry inbox configured in Sanity siteSettings.
   try {
     const enquiryEmail = await serverClient.fetch<string | undefined>(
-      `*[_type == "siteSettings"][0].enquiryEmail`,
+      `*[_type == "siteSettings"][0].enquiryEmail`
     )
     if (enquiryEmail) await sendBookingEmail(enquiryEmail, emailData)
-  } catch {
-    // Non-fatal — booking is already saved in Sanity
+  } catch (err) {
+    console.error('[email] sendBookingEmail failed:', err)
   }
 
   // Confirmation to the climber (email is required, so always present).
   try {
     await sendBookingConfirmationEmail(email, emailData)
-  } catch {
-    // Non-fatal
+  } catch (err) {
+    console.error('[email] sendBookingConfirmationEmail failed:', err)
   }
 
   return { success: true }

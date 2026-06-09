@@ -44,6 +44,7 @@ export default defineType({
     defineField({ name: 'closingHeading', title: 'Heading', type: 'text', rows: 2, group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 2, group: 'closing' }),
     defineField({ name: 'closingFootnote', title: 'Footnote', type: 'string', group: 'closing', description: 'e.g. RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
   ],
   preview: {
     prepare: () => ({ title: 'Editions Page' }),

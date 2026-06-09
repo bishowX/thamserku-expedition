@@ -103,6 +103,7 @@ export default defineType({
     defineField({ name: 'closingHeadline', title: 'Closing Headline', type: 'string', group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Closing Body', type: 'text', rows: 3, group: 'closing' }),
     defineField({ name: 'closingDisclaimerLine', title: 'Disclaimer Line', type: 'string', group: 'closing', description: 'e.g. "ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF."' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
   ],
   preview: { prepare: () => ({ title: 'FAQ Page' }) },
 })

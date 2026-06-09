@@ -162,6 +162,7 @@ export default defineType({
     defineField({ name: 'closingEyebrow', title: 'Eyebrow', type: 'string', group: 'closing' }),
     defineField({ name: 'closingHeadline', title: 'Headline', type: 'string', group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 3, group: 'closing' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
   ],
   preview: { prepare: () => ({ title: 'Safety Page' }) },
 })

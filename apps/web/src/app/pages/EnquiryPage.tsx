@@ -59,11 +59,11 @@ export async function action({ request }: { request: Request }): Promise<
   });
 
   try {
-    const settings = await serverClient.fetch<{ enquiryEmail?: string }>(
-      `*[_type == "siteSettings"][0]{ enquiryEmail }`
+    const enquiryEmail = await serverClient.fetch<string | undefined>(
+      `*[_type == "siteSettings"][0].enquiryEmail`
     );
-    if (settings?.enquiryEmail) {
-      await sendEnquiryEmail(settings.enquiryEmail, {
+    if (enquiryEmail) {
+      await sendEnquiryEmail(enquiryEmail, {
         fullName,
         email,
         phone: (formData.get('phone') as string)?.trim() || undefined,
@@ -72,8 +72,8 @@ export async function action({ request }: { request: Request }): Promise<
         submittedAt,
       });
     }
-  } catch {
-    // Non-fatal — enquiry is already saved in Sanity
+  } catch (err) {
+    console.error('[email] sendEnquiryEmail failed:', err)
   }
 
   return { success: true };

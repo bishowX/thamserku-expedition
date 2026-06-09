@@ -1,5 +1,6 @@
 import type { SchemaTypeDefinition } from 'sanity'
 import enquiry from './documents/enquiry'
+import newsletterSubscriber from './documents/newsletterSubscriber'
 import booking from './documents/booking'
 import edition from './documents/edition'
 import editionsPage from './documents/editionsPage'
@@ -45,6 +46,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   edition,
   sherpa,
   enquiry,
+  newsletterSubscriber,
   booking,
   // Objects
   timelineEra,

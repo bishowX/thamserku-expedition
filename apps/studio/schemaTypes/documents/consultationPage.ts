@@ -167,6 +167,7 @@ export default defineType({
       description: 'The last sentence renders in italic.',
     }),
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 3, group: 'closing' }),
+    defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
   ],
   preview: {
     prepare: () => ({ title: 'Consultation Page' }),

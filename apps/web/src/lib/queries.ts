@@ -67,6 +67,7 @@ export type YetiPageData = {
     definitionBody?: string;
     closingHeading?: string;
     closingBody?: string;
+    closingImage?: { asset: { _ref: string } } | null;
   } | null;
 };
 
@@ -124,6 +125,7 @@ export type EditionsPageData = {
     closingHeading?: string;
     closingBody?: string;
     closingFootnote?: string;
+    closingImage?: { asset: { _ref: string } } | null;
   } | null;
   editions: SanityEditionFull[];
   expeditions: SanityExpeditionForMatrix[];
@@ -166,7 +168,7 @@ export async function getYetiPageData(): Promise<YetiPageData> {
     "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
       heroHeadline, heroSubheading,
       definitionHeading, definitionTagline, definitionBody,
-      closingHeading, closingBody
+      closingHeading, closingBody, closingImage
     }
   }`);
 }
@@ -208,7 +210,7 @@ export async function getEditionsPageData(): Promise<EditionsPageData> {
       heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody,
       comparisonEyebrow, comparisonHeadline, comparisonNote,
       availabilityEyebrow, availabilityHeadline, availabilityNote,
-      closingEyebrow, closingHeading, closingBody, closingFootnote
+      closingEyebrow, closingHeading, closingBody, closingFootnote, closingImage
     },
     "editions": *[_type == "edition"] | order(letter asc) {
       _id, letter, name, subtitle, positioning, targetAudience, slug,
@@ -263,6 +265,7 @@ export type ConsultationPage = {
   closingLabel?: string;
   closingHeading?: string;
   closingBody?: string;
+  closingImage?: { asset: { _ref: string } } | null;
 };
 
 export type ConsultationPageData = {
@@ -371,7 +374,7 @@ export async function getConsultationPageData(): Promise<ConsultationPageData> {
       processFootnote,
       alternativeHeading,
       alternativeOptions[] { _key, label, title, value },
-      closingLabel, closingHeading, closingBody
+      closingLabel, closingHeading, closingBody, closingImage
     }
   }`);
 }
@@ -429,6 +432,7 @@ export type FAQPageData = {
     closingHeadline?: string;
     closingBody?: string;
     closingDisclaimerLine?: string;
+    closingImage?: { asset: { _ref: string } } | null;
   } | null;
 };
 
@@ -444,7 +448,7 @@ export async function getFAQPageData(): Promise<FAQPageData> {
       relatedPagesEyebrow, relatedPagesHeadline,
       relatedPages[] { eyebrow, title, desc, linkText, linkTo },
       newsletterEyebrow, newsletterHeadline, newsletterBody, newsletterPrivacyLine, newsletterBottomNote,
-      closingHeadline, closingBody, closingDisclaimerLine
+      closingHeadline, closingBody, closingDisclaimerLine, closingImage
     }
   }`);
 }
@@ -484,6 +488,7 @@ export type SafetyPageData = {
     closingEyebrow?: string;
     closingHeadline?: string;
     closingBody?: string;
+    closingImage?: { asset: { _ref: string } } | null;
   } | null;
 };
 
@@ -498,7 +503,7 @@ export async function getSafetyPageData(): Promise<SafetyPageData> {
       communicationEyebrow, communicationHeading, communicationItems[] { title, body },
       evacuationEyebrow, evacuationHeading, evacuationCards[] { title, body },
       evacuationQuote, evacuationBody,
-      closingEyebrow, closingHeadline, closingBody
+      closingEyebrow, closingHeadline, closingBody, closingImage
     }
   }`);
 }

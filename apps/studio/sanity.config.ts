@@ -60,6 +60,7 @@ export default defineConfig({
             S.documentTypeListItem('edition').title('Editions'),
             S.divider(),
             S.documentTypeListItem('enquiry').title('Enquiries'),
+            S.documentTypeListItem('newsletterSubscriber').title('Newsletter Subscribers'),
             S.divider(),
             S.documentTypeListItem('booking').title('Bookings'),
           ]),
