@@ -7,6 +7,12 @@ export const sanityClient = createClient({
   dataset: import.meta.env.VITE_SANITY_DATASET ?? 'production',
   apiVersion: '2026-05-21',
   useCdn: true,
+  // studioUrl lets stega-encoded content resolve click-to-edit links back to the
+  // Studio. Encoding itself is gated per-request (only on during preview), so this
+  // is inert for normal published reads. Also used by useLiveMode on the client.
+  stega: {
+    studioUrl: import.meta.env.VITE_SANITY_STUDIO_URL ?? 'http://localhost:3333',
+  },
 })
 
 const builder = createImageUrlBuilder(sanityClient)

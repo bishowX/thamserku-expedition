@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useLoaderData } from "react-router";
-import { getFAQPageData, type FAQPageData } from "../../lib/queries";
+import { useQuery } from "@sanity/react-loader";
+import type { QueryResponseInitial } from "@sanity/react-loader";
+import { FAQ_QUERY, type FAQPageData } from "../../lib/queries";
+import { getPreviewData } from "../../lib/preview.server";
+import { loadQuery } from "../../lib/loader.server";
 import { Nav } from "../components/Nav";
 import { FAQHero } from "../components/faq/FAQHero";
 import { FAQCategoryNavigation } from "../components/faq/FAQCategoryNavigation";
@@ -13,12 +17,14 @@ import { Footer } from "../components/Footer";
 import type { Route } from "./+types/MainFAQ";
 import { pageMeta } from "../../lib/seo";
 
-export async function loader() {
-  return getFAQPageData();
+export async function loader({ request }: { request: Request }) {
+  const { options } = await getPreviewData(request);
+  const initial = await loadQuery<FAQPageData>(FAQ_QUERY, {}, options);
+  return { initial };
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  const d = data as FAQPageData | undefined;
+  const d = (data as { initial: QueryResponseInitial<FAQPageData> } | undefined)?.initial.data;
   return pageMeta({
     title: d?.faqPage?.heroHeadline ?? "Frequently Asked Questions",
     description: d?.faqPage?.heroSubline,
@@ -26,7 +32,8 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 export default function MainFAQ() {
-  const data = useLoaderData() as FAQPageData;
+  const { initial } = useLoaderData() as { initial: QueryResponseInitial<FAQPageData> };
+  const { data } = useQuery<FAQPageData>(FAQ_QUERY, {}, { initial });
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -1,4 +1,4 @@
-import { getExpeditions } from "../../lib/queries";
+import { getExpeditions } from "../../lib/queries.server";
 
 const BASE = "https://thamserkuexpedition.com";
 

@@ -1,7 +1,15 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
+import { presentationTool, defineLocations } from 'sanity/presentation'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
+
+// Origin of the React Router app to preview. Override via SANITY_STUDIO_PREVIEW_ORIGIN.
+const previewOrigin = process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:5173'
+
+// Static-location helper for the singleton page documents.
+const pageLocation = (title: string, href: string) =>
+  defineLocations({ resolve: () => ({ locations: [{ title, href }] }) })
 
 const singletons = ['homePage', 'editionsPage', 'legacyPage', 'yetiInfrastructurePage', 'consultationPage', 'siteSettings', 'faqPage', 'safetyPage', 'achievementsPage']
 
@@ -14,6 +22,54 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
+    presentationTool({
+      previewUrl: {
+        origin: previewOrigin,
+        preview: '/',
+        previewMode: {
+          enable: '/api/preview-mode/enable',
+          disable: '/api/preview-mode/disable',
+        },
+      },
+      resolve: {
+        locations: {
+          homePage: defineLocations({
+            resolve: () => ({
+              locations: [
+                { title: 'Home', href: '/' },
+                { title: 'Newsletter', href: '/newsletter' },
+                { title: 'News & Field Reports', href: '/news-and-blogs' },
+              ],
+            }),
+          }),
+          editionsPage: pageLocation('Editions', '/editions'),
+          legacyPage: pageLocation('Legacy', '/legacy'),
+          consultationPage: pageLocation('Consultation', '/consultation'),
+          yetiInfrastructurePage: pageLocation('Yeti Infrastructure', '/yeti-infrastructure'),
+          faqPage: pageLocation('FAQ', '/faq'),
+          safetyPage: pageLocation('Safety', '/safety'),
+          achievementsPage: pageLocation('Heritage & Achievements', '/heritage-and-achievements'),
+          expedition: defineLocations({
+            select: { name: 'name', slug: 'slug.current' },
+            resolve: (doc) => ({
+              locations: [
+                { title: doc?.name || 'Expedition', href: `/expeditions/${doc?.slug}` },
+                { title: 'Design Your Expedition', href: '/design-your-expedition' },
+              ],
+            }),
+          }),
+          edition: defineLocations({
+            select: { name: 'name' },
+            resolve: (doc) => ({
+              locations: [
+                { title: doc?.name ? `${doc.name} · Editions` : 'Editions', href: '/editions' },
+                { title: 'Home', href: '/' },
+              ],
+            }),
+          }),
+        },
+      },
+    }),
     structureTool({
       structure: (S) =>
         S.list()

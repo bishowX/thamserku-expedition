@@ -46,6 +46,12 @@ type Pages = {
   "/api/upload-cv": {
     params: {};
   };
+  "/api/preview-mode/enable": {
+    params: {};
+  };
+  "/api/preview-mode/disable": {
+    params: {};
+  };
   "/sitemap.xml": {
     params: {};
   };
@@ -63,7 +69,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/sitemap.xml" | "/robots.txt" | "/safety" | "/heritage-and-achievements";
+    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/api/preview-mode/enable" | "/api/preview-mode/disable" | "/sitemap.xml" | "/robots.txt" | "/safety" | "/heritage-and-achievements";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
@@ -109,6 +115,14 @@ type RouteFiles = {
     id: "app/api/upload-cv";
     page: "/api/upload-cv";
   };
+  "./app/api/preview-mode.enable.ts": {
+    id: "app/api/preview-mode.enable";
+    page: "/api/preview-mode/enable";
+  };
+  "./app/api/preview-mode.disable.ts": {
+    id: "app/api/preview-mode.disable";
+    page: "/api/preview-mode/disable";
+  };
   "./app/api/sitemap.xml.ts": {
     id: "app/api/sitemap.xml";
     page: "/sitemap.xml";
@@ -140,6 +154,8 @@ type RouteModules = {
   "app/pages/MainFAQ": typeof import("./src/./app/pages/MainFAQ.tsx");
   "app/pages/DesignPage": typeof import("./src/./app/pages/DesignPage.tsx");
   "app/api/upload-cv": typeof import("./src/./app/api/upload-cv.ts");
+  "app/api/preview-mode.enable": typeof import("./src/./app/api/preview-mode.enable.ts");
+  "app/api/preview-mode.disable": typeof import("./src/./app/api/preview-mode.disable.ts");
   "app/api/sitemap.xml": typeof import("./src/./app/api/sitemap.xml.ts");
   "app/api/robots.txt": typeof import("./src/./app/api/robots.txt.ts");
   "app/pages/SafetyPage": typeof import("./src/./app/pages/SafetyPage.tsx");

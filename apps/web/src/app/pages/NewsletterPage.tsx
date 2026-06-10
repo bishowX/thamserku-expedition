@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useLoaderData, useActionData } from "react-router";
-import { getNewsletterData, type NewsletterData } from "../../lib/queries";
+import { useQuery } from "@sanity/react-loader";
+import type { QueryResponseInitial } from "@sanity/react-loader";
+import { NEWSLETTER_QUERY, type NewsletterData } from "../../lib/queries";
+import { getPreviewData } from "../../lib/preview.server";
+import { loadQuery } from "../../lib/loader.server";
 import { serverClient } from "../../lib/sanity.server";
 import { writeClient } from "../../lib/sanity.write";
 import { Nav } from "../components/Nav";
@@ -9,12 +13,14 @@ import { Footer } from "../components/Footer";
 import type { Route } from "./+types/NewsletterPage";
 import { pageMeta } from "../../lib/seo";
 
-export async function loader() {
-  return getNewsletterData();
+export async function loader({ request }: { request: Request }) {
+  const { options } = await getPreviewData(request);
+  const initial = await loadQuery<NewsletterData | null>(NEWSLETTER_QUERY, {}, options);
+  return { initial };
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  const d = data as NewsletterData | undefined;
+  const d = (data as { initial: QueryResponseInitial<NewsletterData | null> } | undefined)?.initial.data;
   return pageMeta({
     title: d?.newsletterHeading ?? "Field Notes Newsletter",
     description: d?.newsletterBody,
@@ -52,7 +58,9 @@ export async function action({ request }: { request: Request }): Promise<Newslet
 }
 
 export default function NewsletterPage() {
-  const data = useLoaderData() as NewsletterData;
+  const { initial } = useLoaderData() as { initial: QueryResponseInitial<NewsletterData | null> };
+  const { data: newsletter } = useQuery<NewsletterData | null>(NEWSLETTER_QUERY, {}, { initial });
+  const data = newsletter ?? {};
   const actionData = useActionData() as NewsletterActionData | undefined;
 
   useEffect(() => {

@@ -1,21 +1,30 @@
-import { useRef, useCallback, useEffect, Fragment } from "react";
+import { useRef, useEffect, Fragment } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { YetiPageData } from "../../../lib/queries";
+import { PartnerCard } from "./PartnerCard";
 
-import yetiAirlinesImg from "../../../assets/logos/yeti-airlines.png";
-import taraAirImg from "../../../assets/logos/tara-air.png";
-import gokarnaImg from "../../../assets/logos/gokarna-forest.png";
-import kerDowneyImg from "../../../assets/logos/ker-downey.png";
-import dynastyImg from "../../../assets/logos/dynasty.png";
-import himalayaImg from "../../../assets/logos/himalaya-airlines.png";
-import lumbiniImg from "../../../assets/logos/lumbini-hokke.png";
-import yetiAdventureImg from "../../../assets/logos/yeti-adventure.png";
-import yetiHolidaysImg from "../../../assets/logos/yeti-holidays.png";
-import koraImg from "../../../assets/logos/kora-tours.png";
-import yetiTravelImg from "../../../assets/logos/yeti-travel.png";
-import yetiWorldImg from "../../../assets/logos/yeti-world.png";
+import yetiAirlines from "../../../assets/logos/yeti-airlines.svg";
+import himalayaAirlines from "../../../assets/logos/himalaya-airlines.svg";
+import taraAir from "../../../assets/logos/tara-air.svg";
+import mountainLodges from "../../../assets/logos/mountain-lodges.svg";
+import gokarnaForest from "../../../assets/logos/gokarna-forest.svg";
+import yetiAdventure from "../../../assets/logos/yeti-adventure.svg";
+import koraTours from "../../../assets/logos/kora-tours.svg";
+import kasara from "../../../assets/logos/kasara.svg";
+import adventureQuest from "../../../assets/logos/adventure-quest.svg";
+import sherpaHospitality from "../../../assets/logos/sherpa-hospitality.svg";
+import pasangLhamu from "../../../assets/logos/pasang-lhamu-foundation.svg";
+import nomadHotel from "../../../assets/logos/nomad-hotel.svg";
+import shintaMani from "../../../assets/logos/shinta-mani-mustang.svg";
+import thamserkuTravel from "../../../assets/logos/thamserku-travel.svg";
+import thamserkuAdventure from "../../../assets/logos/thamserku-adventure.svg";
+import yetiHolidays from "../../../assets/logos/yeti-holidays.svg";
+import leSherpa from "../../../assets/logos/le-sherpa.svg";
+import lumbiniHokke from "../../../assets/logos/lumbini-hokke.svg";
+import hamroSafar from "../../../assets/logos/hamro-safar.svg";
+import yetiWorld from "../../../assets/logos/yeti-world.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,33 +33,42 @@ type PageData = YetiPageData["yetiPage"];
 interface Partner {
   id: string;
   name: string;
-  img: string;
+  logo: string;
+  label?: string; // category chip — omit for the unlabelled mark
   fx: number; // final x position (% of container, 0–100)
   fy: number; // final y position (% of container, 0–100)
   fr: number; // final rotation (deg)
   fs: number; // final scale
   z: number; // stacking order
   depth: number; // 0–1, 1 = nearest (brighter, more parallax)
-  hero?: boolean; // the central anchor logo
-  hasDarkBg?: boolean;
+  hero?: boolean; // the central anchor logo (starts large & centred)
 }
 
-// Organic cloud — scattered around the centre, denser at the edges so the
-// headline reads cleanly through the middle. `depth` drives opacity, scale
-// nudge and parallax strength so the cloud has a sense of front-to-back.
+// The full Yeti ecosystem — 20 partner cards mirroring the Figma hero. Positions
+// are taken straight from the design (centre of each card / frame bounds), so the
+// constellation is edge-weighted and the headline reads cleanly through the middle.
+// `depth` drives opacity, scale nudge and parallax strength for front-to-back feel.
 const P: Partner[] = [
-  { id: "yeti-world",     name: "Yeti World",        img: yetiWorldImg,     fx: 50, fy: 13, fr: 0,    fs: 1.0,  z: 12, depth: 1.0, hero: true },
-  { id: "yeti-airlines",  name: "Yeti Airlines",     img: yetiAirlinesImg,  fx: 16, fy: 21, fr: -2,   fs: 0.92, z: 9,  depth: 0.95 },
-  { id: "tara-air",       name: "Tara Air",          img: taraAirImg,       fx: 31, fy: 12, fr: 1.5,  fs: 0.84, z: 6,  depth: 0.78, hasDarkBg: true },
-  { id: "himalaya",       name: "Himalaya Airlines", img: himalayaImg,      fx: 70, fy: 12, fr: -1,   fs: 0.86, z: 7,  depth: 0.84 },
-  { id: "ker-downey",     name: "Ker & Downey",      img: kerDowneyImg,     fx: 85, fy: 22, fr: 2,    fs: 0.9,  z: 8,  depth: 0.9 },
-  { id: "dynasty",        name: "Air Dynasty",       img: dynastyImg,       fx: 9,  fy: 45, fr: -2.5, fs: 0.95, z: 10, depth: 1.0 },
-  { id: "gokarna",        name: "Gokarna Forest",    img: gokarnaImg,       fx: 91, fy: 41, fr: 1,    fs: 0.92, z: 9,  depth: 0.95 },
-  { id: "yeti-holidays",  name: "Yeti Holidays",     img: yetiHolidaysImg,  fx: 12, fy: 71, fr: 2,    fs: 0.85, z: 5,  depth: 0.78, hasDarkBg: true },
-  { id: "yeti-adventure", name: "Yeti Adventure",    img: yetiAdventureImg, fx: 88, fy: 65, fr: -1.5, fs: 0.9,  z: 7,  depth: 0.84, hasDarkBg: true },
-  { id: "kora",           name: "Kora Tours",        img: koraImg,          fx: 27, fy: 85, fr: -1.5, fs: 0.83, z: 4,  depth: 0.74, hasDarkBg: true },
-  { id: "yeti-travel",    name: "Yeti Expeditions",  img: yetiTravelImg,    fx: 50, fy: 88, fr: 2.5,  fs: 0.82, z: 3,  depth: 0.72 },
-  { id: "lumbini",        name: "Lumbini Hokke",     img: lumbiniImg,       fx: 74, fy: 84, fr: -2,   fs: 0.85, z: 6,  depth: 0.8, hasDarkBg: true },
+  { id: "hamro-safar",        name: "Hamro Safar",          logo: hamroSafar,        label: "Travel",     fx: 12.1, fy: 16.0, fr: -2,   fs: 0.90, z: 9,  depth: 0.95 },
+  { id: "yeti-airlines",      name: "Yeti Airlines",        logo: yetiAirlines,      label: "Airlines",   fx: 30.2, fy: 17.5, fr: 1.5,  fs: 0.92, z: 9,  depth: 0.95 },
+  { id: "himalaya-airlines",  name: "Himalaya Airlines",    logo: himalayaAirlines,  label: "Airlines",   fx: 48.3, fy: 17.4, fr: -1,   fs: 0.86, z: 7,  depth: 0.84 },
+  { id: "tara-air",           name: "Tara Air",             logo: taraAir,           label: "Airlines",   fx: 67.7, fy: 18.5, fr: 1.5,  fs: 0.84, z: 6,  depth: 0.80 },
+  { id: "mountain-lodges",    name: "Mountain Lodges of Nepal", logo: mountainLodges, label: "Hotel",     fx: 82.8, fy: 16.5, fr: -1.5, fs: 0.85, z: 6,  depth: 0.80 },
+  { id: "gokarna-forest",     name: "Gokarna Forest Resort", logo: gokarnaForest,    label: "Hotel",      fx: 94.4, fy: 26.3, fr: 1,    fs: 0.90, z: 8,  depth: 0.90 },
+  { id: "yeti-adventure",     name: "Yeti Adventure",       logo: yetiAdventure,     label: "Travel",     fx: 4.2,  fy: 32.7, fr: -2,   fs: 0.90, z: 8,  depth: 0.90 },
+  { id: "kora-tours",         name: "Kora Tours",           logo: koraTours,         label: "Travel",     fx: 20.5, fy: 40.7, fr: 1.5,  fs: 0.95, z: 10, depth: 1.00 },
+  { id: "yeti-world",         name: "Yeti World",           logo: yetiWorld,                              fx: 82.0, fy: 40.2, fr: -1,   fs: 0.82, z: 4,  depth: 0.80, hero: true },
+  { id: "kasara",             name: "Kasara",               logo: kasara,            label: "Hotel",      fx: 94.2, fy: 53.8, fr: 2,    fs: 0.85, z: 6,  depth: 0.80 },
+  { id: "adventure-quest",    name: "Adventure Quest",      logo: adventureQuest,    label: "Travel",     fx: 5.8,  fy: 56.0, fr: 2,    fs: 0.92, z: 9,  depth: 0.95 },
+  { id: "sherpa-hospitality", name: "Sherpa Hospitality Group", logo: sherpaHospitality, label: "Travel", fx: 18.3, fy: 65.2, fr: -1.5, fs: 0.88, z: 7,  depth: 0.85 },
+  { id: "pasang-lhamu",       name: "Pasang Lhamu Foundation", logo: pasangLhamu,    label: "Foundation", fx: 61.6, fy: 74.9, fr: 1,    fs: 0.85, z: 6,  depth: 0.80 },
+  { id: "nomad-hotel",        name: "Nomad Hotel",          logo: nomadHotel,        label: "Hotel",      fx: 84.3, fy: 69.7, fr: -2,   fs: 0.86, z: 7,  depth: 0.84 },
+  { id: "shinta-mani",        name: "Shinta Mani Mustang",  logo: shintaMani,        label: "Travel",     fx: 38.2, fy: 75.7, fr: -1.5, fs: 0.88, z: 7,  depth: 0.85 },
+  { id: "thamserku-travel",   name: "Thamserku Travel",     logo: thamserkuTravel,   label: "Travel",     fx: 25.9, fy: 85.9, fr: 2,    fs: 0.83, z: 5,  depth: 0.76 },
+  { id: "thamserku-adventure", name: "Thamserku Adventure", logo: thamserkuAdventure, label: "Travel",    fx: 49.8, fy: 90.0, fr: -2,   fs: 0.82, z: 4,  depth: 0.74 },
+  { id: "yeti-holidays",      name: "Yeti Holidays",        logo: yetiHolidays,      label: "Travel",     fx: 6.9,  fy: 91.1, fr: 2.5,  fs: 0.88, z: 8,  depth: 0.90 },
+  { id: "le-sherpa",          name: "Le Sherpa",            logo: leSherpa,          label: "Restaurant", fx: 74.7, fy: 87.2, fr: -1,   fs: 0.85, z: 6,  depth: 0.82 },
+  { id: "lumbini-hokke",      name: "Lumbini Hokke",        logo: lumbiniHokke,      label: "Hotel",      fx: 93.6, fy: 86.9, fr: 1.5,  fs: 0.85, z: 6,  depth: 0.80 },
 ];
 
 const HEADING = "The operating ecosystem behind every expedition.";
@@ -85,13 +103,6 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
   const scrollCueRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const setCardRef = useCallback(
-    (i: number) => (el: HTMLDivElement | null) => {
-      cardRefs.current[i] = el;
-    },
-    [],
-  );
-
   useGSAP(
     () => {
       const section = sectionRef.current;
@@ -100,21 +111,34 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
       const glow = glowRef.current;
       const scrollCue = scrollCueRef.current;
       if (!section || !h1 || !sub) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       if (cards.length === 0) return;
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       const cw = section.offsetWidth;
       const ch = section.offsetHeight;
       const isMobile = cw < 768;
 
-      const finalX = (p: Partner) => ((p.fx - 50) / 100) * cw;
-      const finalY = (p: Partner) => ((p.fy - 50) / 100) * ch;
+      // ── Mobile uses a curated subset (incl. the hero) arranged as top +
+      // bottom bands so the headline reads cleanly through the middle. ──
+      const mPos: Record<string, { fx: number; fy: number; fr: number }> = {
+        "yeti-world":     { fx: 50, fy: 12, fr: 0 },
+        "yeti-airlines":  { fx: 17, fy: 24, fr: -2 },
+        "gokarna-forest": { fx: 83, fy: 25, fr: 2 },
+        "yeti-holidays":  { fx: 18, fy: 86, fr: 2.5 },
+        "shinta-mani":    { fx: 50, fy: 90, fr: -1.5 },
+        "lumbini-hokke":  { fx: 82, fy: 85, fr: 1.5 },
+      };
+      const MS = 0.62; // mobile scale damping
 
-      // ── Continuous "cloud" drift — each logo bobs on its own slow loop so
-      // the constellation breathes. Applied to the inner [data-float] layer so
-      // it composes cleanly with the scroll (outer) and parallax (mid) layers.
+      const finalX = (fx: number) => ((fx - 50) / 100) * cw;
+      const finalY = (fy: number) => ((fy - 50) / 100) * ch;
+
+      // ── Continuous "cloud" drift — each card bobs on its own slow loop so the
+      // constellation breathes. Runs on the inner [data-float] layer so it
+      // composes cleanly with the scroll (outer) and parallax (mid) layers. ──
       const startFloat = (scaleDamp: number) => {
         cards.forEach((card, i) => {
           const floatEl = card.querySelector<HTMLElement>("[data-float]");
@@ -141,144 +165,74 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
         });
       };
 
-      if (isMobile) {
-        // ── Portrait mini-reveal: a curated 6-logo subset arranged as a top
-        // band + bottom band so the headline reads cleanly through the middle.
-        // Same beats as desktop (hero lifts, cloud emerges, copy reveals) but
-        // lighter, with a shorter pin and no pointer parallax.
-        const MS = 0.62; // mobile scale damping
-        const mPos: Record<string, { fx: number; fy: number; fr: number }> = {
-          "yeti-world":     { fx: 50, fy: 12, fr: 0 },
-          "yeti-airlines":  { fx: 17, fy: 25, fr: -2 },
-          "ker-downey":     { fx: 83, fy: 26, fr: 2 },
-          "dynasty":        { fx: 18, fy: 79, fr: -2.5 },
-          "yeti-adventure": { fx: 82, fy: 80, fr: -1.5 },
-          "lumbini":        { fx: 50, fy: 89, fr: -2 },
-        };
-        const mX = (m: { fx: number }) => ((m.fx - 50) / 100) * cw;
-        const mY = (m: { fy: number }) => ((m.fy - 50) / 100) * ch;
-        const heroIdx = P.findIndex((p) => p.hero);
+      const heroIdx = P.findIndex((p) => p.hero);
 
+      // Final resting transform for a card (null = not shown on this breakpoint).
+      const placeFinal = (p: Partner) => {
+        if (isMobile) {
+          const m = mPos[p.id];
+          return m ? { x: finalX(m.fx), y: finalY(m.fy), fr: m.fr } : null;
+        }
+        return { x: finalX(p.fx), y: finalY(p.fy), fr: p.fr };
+      };
+
+      // ── Reduced motion: skip the choreography, show the settled cloud + copy. ──
+      if (reduced) {
         cards.forEach((card, i) => {
           const p = P[i];
-          const m = mPos[p.id];
-          if (!m) {
-            // not part of the mobile subset — keep it out of the way
+          const f = placeFinal(p);
+          if (!f) {
             gsap.set(card, { opacity: 0, scale: 0, pointerEvents: "none" });
             return;
           }
-          const isHero = i === heroIdx;
           gsap.set(card, {
             xPercent: -50,
             yPercent: -50,
-            x: 0,
-            y: 0,
-            rotation: 0,
-            scale: isHero ? 1.8 : 0.45,
+            x: f.x,
+            y: f.y,
+            rotation: f.fr,
+            scale: p.fs * (isMobile ? MS : 1),
+            opacity: p.depth,
             zIndex: p.z,
-            opacity: isHero ? 1 : 0,
           });
           const chip = card.querySelector("[data-chip]");
-          if (chip) gsap.set(chip, { opacity: 0, y: 6 });
+          if (chip) gsap.set(chip, { opacity: 1, y: 0 });
         });
-
-        const words = h1.querySelectorAll("[data-word]");
-        gsap.set(words, { yPercent: 130, opacity: 0 });
-        gsap.set(sub, { opacity: 0, y: 16, filter: "blur(6px)" });
-        if (glow) gsap.set(glow, { opacity: 0 });
-
-        if (scrollCue) {
-          const line = scrollCue.querySelector("[data-scroll-line]");
-          if (line) {
-            gsap.fromTo(
-              line,
-              { yPercent: -100 },
-              { yPercent: 200, duration: 2, repeat: -1, ease: "power1.inOut" },
-            );
-          }
-        }
-
-        startFloat(0.55);
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "+=120%",
-            pin: true,
-            scrub: 1,
-            anticipatePin: 1,
-          },
-        });
-
-        if (scrollCue) {
-          tl.to(scrollCue, { opacity: 0, y: 10, duration: 0.08, ease: "power2.in" }, 0);
-        }
-
-        // hero anticipation + shrink/lift to its slot
-        if (cards[heroIdx]) {
-          const hm = mPos["yeti-world"];
-          tl.to(cards[heroIdx], { scale: 1.9, duration: 0.04, ease: "power1.in" }, 0);
-          tl.to(
-            cards[heroIdx],
-            {
-              x: mX(hm),
-              y: mY(hm),
-              rotation: hm.fr,
-              scale: P[heroIdx].fs * MS,
-              opacity: P[heroIdx].depth,
-              duration: 0.5,
-              ease: "power3.inOut",
-            },
-            0.04,
-          );
-        }
-
-        // the rest of the subset emerges from the centre
-        cards.forEach((card, i) => {
-          const p = P[i];
-          const m = mPos[p.id];
-          if (!m || i === heroIdx) return;
-          tl.to(
-            card,
-            {
-              x: mX(m),
-              y: mY(m),
-              rotation: m.fr,
-              scale: p.fs * MS,
-              opacity: p.depth,
-              duration: 0.46,
-              ease: "power3.out",
-            },
-            0.12,
-          );
-        });
-
-        // headline → glow → chips → subtitle
-        tl.to(
-          words,
-          { yPercent: 0, opacity: 1, stagger: 0.012, duration: 0.18, ease: "power3.out" },
-          0.42,
-        );
-        if (glow) {
-          tl.to(glow, { opacity: 1, duration: 0.25, ease: "power2.out" }, 0.42);
-        }
-        const mChipEls = cards
-          .map((c) => c.querySelector("[data-chip]"))
-          .filter((el): el is Element => el !== null);
-        tl.to(
-          mChipEls,
-          { opacity: 1, y: 0, stagger: 0.005, duration: 0.12, ease: "power2.out" },
-          0.56,
-        );
-        tl.to(
-          sub,
-          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.2, ease: "power2.out" },
-          0.62,
-        );
-
+        gsap.set(h1.querySelectorAll("[data-word]"), { yPercent: 0, opacity: 1 });
+        gsap.set(sub, { opacity: 1, y: 0, filter: "blur(0px)" });
+        if (glow) gsap.set(glow, { opacity: 1 });
+        if (scrollCue) gsap.set(scrollCue, { opacity: 0 });
         return;
       }
+
+      // ── Initial state: the hero logo sits centred & large, the rest collapsed
+      // into the centre behind it. The headline + subtitle stay hidden and only
+      // reveal at the very end of the scroll. ──
+      const words = h1.querySelectorAll("[data-word]");
+      gsap.set(words, { yPercent: 130, opacity: 0 });
+      gsap.set(sub, { opacity: 0, y: 20, filter: "blur(8px)" });
+      if (glow) gsap.set(glow, { opacity: 0 });
+
+      cards.forEach((card, i) => {
+        const p = P[i];
+        const isHero = i === heroIdx;
+        const cut = isMobile && !mPos[p.id];
+        gsap.set(card, {
+          xPercent: -50,
+          yPercent: -50,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: cut ? 0 : isHero ? (isMobile ? 1.8 : 2.1) : isMobile ? 0.45 : 0.5,
+          zIndex: p.z,
+          opacity: isHero ? 1 : 0,
+          pointerEvents: cut ? "none" : undefined,
+        });
+        const chip = card.querySelector("[data-chip]");
+        if (chip) gsap.set(chip, { opacity: 0, y: 6 });
+      });
+
+      startFloat(isMobile ? 0.55 : 1);
 
       // ── Scroll cue pulse ──
       if (scrollCue) {
@@ -292,40 +246,14 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
         }
       }
 
-      // ── Initial state: hero logo centred & large, the rest collapsed in ──
-      const heroIdx = P.findIndex((p) => p.hero);
-
-      cards.forEach((card, i) => {
-        const p = P[i];
-        const isHero = i === heroIdx;
-        gsap.set(card, {
-          xPercent: -50,
-          yPercent: -50,
-          x: 0,
-          y: 0,
-          rotation: 0,
-          scale: isHero ? 2.1 : 0.5,
-          zIndex: p.z,
-          opacity: isHero ? 1 : 0,
-        });
-        const chip = card.querySelector("[data-chip]");
-        if (chip) gsap.set(chip, { opacity: 0, y: 6 });
-      });
-
-      const words = h1.querySelectorAll("[data-word]");
-      gsap.set(words, { yPercent: 130, opacity: 0 });
-      gsap.set(sub, { opacity: 0, y: 20, filter: "blur(8px)" });
-      if (glow) gsap.set(glow, { opacity: 0 });
-
-      // Continuous drift runs independently of scroll — start it now.
-      startFloat(1);
-
-      // ── Master timeline ──
+      // ── Master timeline: hero anticipates, then shrinks & lifts to its cloud
+      // slot while the rest expand outward (depth-staggered), and the copy
+      // reveals at the very end. ──
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=160%",
+          end: isMobile ? "+=120%" : "+=160%",
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -336,85 +264,94 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
         tl.to(scrollCue, { opacity: 0, y: 10, duration: 0.08, ease: "power2.in" }, 0);
       }
 
-      // Phase 0: hero anticipation pulse
-      if (cards[heroIdx]) {
-        tl.to(cards[heroIdx], { scale: 2.25, duration: 0.04, ease: "power1.in" }, 0);
-      }
-
-      // Phase 1a: hero shrinks & lifts to its cloud position
+      // Phase 0/1a: hero anticipation pulse, then shrink/lift to its slot.
       if (cards[heroIdx]) {
         const hp = P[heroIdx];
+        const hf = placeFinal(hp);
         tl.to(
           cards[heroIdx],
-          {
-            x: finalX(hp),
-            y: finalY(hp),
-            rotation: hp.fr,
-            scale: hp.fs,
-            opacity: hp.depth,
-            duration: 0.5,
-            ease: "power3.inOut",
-          },
-          0.04,
+          { scale: isMobile ? 1.9 : 2.25, duration: 0.04, ease: "power1.in" },
+          0,
         );
+        if (hf) {
+          tl.to(
+            cards[heroIdx],
+            {
+              x: hf.x,
+              y: hf.y,
+              rotation: hf.fr,
+              scale: hp.fs * (isMobile ? MS : 1),
+              opacity: hp.depth,
+              duration: 0.5,
+              ease: "power3.inOut",
+            },
+            0.04,
+          );
+        }
       }
 
       // Phase 1b: the rest of the cloud expands outward from the centre,
-      // depth-staggered so nearer logos settle last and on top.
+      // depth-staggered so nearer cards settle last and on top.
       cards.forEach((card, i) => {
         if (i === heroIdx) return;
         const p = P[i];
-        const stagger = (1 - p.depth) * 0.12;
+        const f = placeFinal(p);
+        if (!f) return;
+        const stagger = (1 - p.depth) * (isMobile ? 0.1 : 0.12);
         tl.to(
           card,
           {
-            x: finalX(p),
-            y: finalY(p),
-            rotation: p.fr,
-            scale: p.fs,
+            x: f.x,
+            y: f.y,
+            rotation: f.fr,
+            scale: p.fs * (isMobile ? MS : 1),
             opacity: p.depth,
             duration: 0.46,
             ease: "power3.out",
           },
-          0.1 + stagger,
+          (isMobile ? 0.12 : 0.1) + stagger,
         );
       });
 
-      // Phase 2: headline word-by-word reveal
+      // Phase 2: headline word-by-word reveal (near the end).
       tl.to(
         words,
         { yPercent: 0, opacity: 1, stagger: 0.012, duration: 0.18, ease: "power3.out" },
-        0.46,
+        isMobile ? 0.42 : 0.46,
       );
 
-      // Center glow
+      // Center glow.
       if (glow) {
-        tl.to(glow, { opacity: 1, duration: 0.25, ease: "power2.out" }, 0.44);
+        tl.to(
+          glow,
+          { opacity: 1, duration: 0.25, ease: "power2.out" },
+          isMobile ? 0.42 : 0.44,
+        );
       }
 
-      // Phase 3: category chips fade in
+      // Phase 3: category chips fade in.
       const chipEls = cards
         .map((c) => c.querySelector("[data-chip]"))
         .filter((el): el is Element => el !== null);
       tl.to(
         chipEls,
         { opacity: 1, y: 0, stagger: 0.005, duration: 0.12, ease: "power2.out" },
-        0.58,
+        isMobile ? 0.56 : 0.58,
       );
 
-      // Phase 4: subtitle blur-to-clear
+      // Phase 4: subtitle blur-to-clear — the final beat.
       tl.to(
         sub,
         { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.2, ease: "power2.out" },
-        0.64,
+        isMobile ? 0.62 : 0.64,
       );
     },
     { scope: sectionRef },
   );
 
-  // ── Pointer parallax — nearer logos (higher depth) track the cursor more,
+  // ── Pointer parallax — nearer cards (higher depth) track the cursor more,
   // giving the cloud real front-to-back depth. Runs on the [data-parallax]
-  // mid-layer so it never fights the scroll or float transforms.
+  // mid-layer so it never fights the scroll or float transforms. ──
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -539,42 +476,30 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
         {P.map((partner, i) => (
           <div
             key={partner.id}
-            ref={setCardRef(i)}
+            ref={(el) => {
+              cardRefs.current[i] = el;
+            }}
             className="absolute left-1/2 top-1/2 opacity-0 will-change-transform"
             style={{
-              width: "clamp(110px, 10.5vw, 168px)",
+              width: "clamp(104px, 9.5vw, 160px)",
               transformStyle: "preserve-3d",
             }}
           >
             {/* mid-layer: pointer parallax */}
             <div data-parallax className="will-change-transform">
               {/* inner layer: continuous float */}
-              <div data-float className="will-change-transform">
-                <div
-                  className={`w-full rounded-xl overflow-hidden ${
-                    partner.hasDarkBg
-                      ? "border border-white/[0.06] shadow-[0_4px_24px_rgba(0,0,0,0.35),0_1px_2px_rgba(0,0,0,0.15)]"
-                      : "bg-white/[0.97] border border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.1),0_1px_2px_rgba(0,0,0,0.05)]"
-                  }`}
-                  style={
-                    partner.depth < 0.8
-                      ? { filter: "blur(0.4px)" }
-                      : undefined
-                  }
-                >
-                  <img
-                    src={partner.img}
-                    alt={partner.name}
-                    className="w-full h-auto block"
-                    loading="eager"
-                    draggable={false}
-                  />
-                </div>
-                <div data-chip className="mt-2.5 flex justify-center">
-                  <span className="inline-block bg-white/[0.06] backdrop-blur-md border border-white/[0.06] rounded-full px-2.5 py-1 font-['JetBrains_Mono'] uppercase tracking-[0.12em] text-[8px] text-white/50 whitespace-nowrap">
-                    {partner.name}
-                  </span>
-                </div>
+              <div
+                data-float
+                className="will-change-transform"
+                style={
+                  partner.depth < 0.8 ? { filter: "blur(0.4px)" } : undefined
+                }
+              >
+                <PartnerCard
+                  logo={partner.logo}
+                  name={partner.name}
+                  label={partner.label}
+                />
               </div>
             </div>
           </div>

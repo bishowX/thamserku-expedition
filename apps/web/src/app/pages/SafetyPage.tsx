@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useLoaderData } from "react-router";
-import { getSafetyPageData, type SafetyPageData } from "../../lib/queries";
+import { useQuery } from "@sanity/react-loader";
+import type { QueryResponseInitial } from "@sanity/react-loader";
+import { SAFETY_QUERY, type SafetyPageData } from "../../lib/queries";
+import { getPreviewData } from "../../lib/preview.server";
+import { loadQuery } from "../../lib/loader.server";
 import { Nav } from "../components/Nav";
 import { SafetyHero } from "../components/safety/SafetyHero";
 import { SafetyStats } from "../components/safety/SafetyStats";
@@ -14,12 +18,14 @@ import { Footer } from "../components/Footer";
 import type { Route } from "./+types/SafetyPage";
 import { pageMeta } from "../../lib/seo";
 
-export async function loader() {
-  return getSafetyPageData();
+export async function loader({ request }: { request: Request }) {
+  const { options } = await getPreviewData(request);
+  const initial = await loadQuery<SafetyPageData>(SAFETY_QUERY, {}, options);
+  return { initial };
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  const d = data as SafetyPageData | undefined;
+  const d = (data as { initial: QueryResponseInitial<SafetyPageData> } | undefined)?.initial.data;
   return pageMeta({
     title: d?.safetyPage?.heroHeadline ?? "Safety Systems",
     description: d?.safetyPage?.heroSubline,
@@ -27,7 +33,8 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 export default function SafetyPage() {
-  const data = useLoaderData() as SafetyPageData;
+  const { initial } = useLoaderData() as { initial: QueryResponseInitial<SafetyPageData> };
+  const { data } = useQuery<SafetyPageData>(SAFETY_QUERY, {}, { initial });
   const page = data.safetyPage;
 
   useEffect(() => {

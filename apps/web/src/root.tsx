@@ -1,6 +1,13 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router'
 import './styles/index.css'
 import { FloatingContactPrompt } from './app/components/FloatingContactPrompt'
+import { SanityVisualEditing } from './app/components/SanityVisualEditing'
+import { getPreviewData } from './lib/preview.server'
+
+export async function loader({ request }: { request: Request }) {
+  const { preview } = await getPreviewData(request)
+  return { preview }
+}
 
 export function meta() {
   return [
@@ -35,5 +42,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function Root() {
-  return <Outlet />
+  const { preview } = useLoaderData<typeof loader>()
+  return (
+    <>
+      <Outlet />
+      {preview && <SanityVisualEditing />}
+    </>
+  )
 }

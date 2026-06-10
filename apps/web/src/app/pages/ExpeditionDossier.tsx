@@ -1,5 +1,13 @@
 import { useLoaderData, redirect } from "react-router";
-import { getExpeditionBySlug, type SanityExpeditionDossier } from "../../lib/queries";
+import { useQuery } from "@sanity/react-loader";
+import type { QueryResponseInitial } from "@sanity/react-loader";
+import {
+  EXPEDITION_BY_SLUG_QUERY,
+  attachConfig,
+  type RawExpeditionDossier,
+} from "../../lib/queries";
+import { getPreviewData } from "../../lib/preview.server";
+import { loadQuery } from "../../lib/loader.server";
 import type { Route } from "./+types/ExpeditionDossier";
 import { pageMeta } from "../../lib/seo";
 import { ExpeditionHero } from "../components/everest/ExpeditionHero";
@@ -16,25 +24,41 @@ import { ExpeditionClosing } from "../components/everest/ExpeditionClosing";
 import { ComparisonTables } from "../components/expedition/ComparisonTables";
 import { Footer } from "../components/Footer";
 
-export async function loader({ params }: { params: { slug: string } }) {
-  const expedition = await getExpeditionBySlug(params.slug);
-  if (!expedition) {
+export async function loader({ params, request }: { params: { slug: string }; request: Request }) {
+  const { options } = await getPreviewData(request);
+  const initial = await loadQuery<RawExpeditionDossier | null>(
+    EXPEDITION_BY_SLUG_QUERY,
+    { slug: params.slug },
+    options,
+  );
+  if (!initial.data) {
     throw redirect("/");
   }
-  return { expedition };
+  return { initial, slug: params.slug };
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  const expedition = (data as { expedition: SanityExpeditionDossier } | undefined)?.expedition;
+  const raw = (data as { initial: QueryResponseInitial<RawExpeditionDossier | null> } | undefined)?.initial.data;
   return pageMeta({
-    title: expedition ? `${expedition.name} Expedition` : "Expedition",
-    description: expedition?.positioning,
-    image: expedition?.heroImage ?? expedition?.image,
+    title: raw ? `${raw.name} Expedition` : "Expedition",
+    description: raw?.positioning,
+    image: raw?.heroImage ?? raw?.image,
   });
 }
 
 export default function ExpeditionDossier() {
-  const { expedition } = useLoaderData() as { expedition: SanityExpeditionDossier };
+  const { initial, slug } = useLoaderData() as {
+    initial: QueryResponseInitial<RawExpeditionDossier | null>;
+    slug: string;
+  };
+  const { data: raw } = useQuery<RawExpeditionDossier | null>(
+    EXPEDITION_BY_SLUG_QUERY,
+    { slug },
+    { initial },
+  );
+  // Live updates return the raw doc; reattach the normalized config matrix here.
+  const expedition = raw ? attachConfig(raw) : null;
+  if (!expedition) return null;
 
   return (
     <div className="bg-[#1A1A1A] min-h-screen text-white font-['Lexend'] selection:bg-[#2E353C] selection:text-white">

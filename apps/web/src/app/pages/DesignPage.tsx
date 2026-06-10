@@ -1,12 +1,17 @@
 import { useState } from 'react'
 import { useLoaderData, useSearchParams, useActionData, useNavigation, Form } from 'react-router'
 import type { ShouldRevalidateFunction } from 'react-router'
+import { useQuery } from '@sanity/react-loader'
+import type { QueryResponseInitial } from '@sanity/react-loader'
 import { Nav } from '../components/Nav'
 import { writeClient } from '../../lib/sanity.write'
 import { serverClient } from '../../lib/sanity.server'
-import { getDesignPageData, getExpeditionConfig } from '../../lib/queries'
+import { DESIGN_QUERY, normalizeDesignPageData } from '../../lib/queries'
+import { getExpeditionConfig } from '../../lib/queries.server'
+import { getPreviewData } from '../../lib/preview.server'
+import { loadQuery } from '../../lib/loader.server'
 import { pageMeta } from "../../lib/seo";
-import type { DesignPageData, SanityExpeditionForDesign, SanityEditionForDesign } from '../../lib/queries'
+import type { RawDesignPageData, SanityExpeditionForDesign, SanityEditionForDesign } from '../../lib/queries'
 import { sendBookingEmail, sendBookingConfirmationEmail } from '../../lib/email.server'
 import {
   computeEstimate,
@@ -21,8 +26,10 @@ import { StepCustomContact } from '../components/design/steps/StepCustomContact'
 import { ConfiguratorStep, type NumberedGroup } from '../components/design/ConfiguratorStep'
 import { ConfigSummary, MobileConfigBar, type SummaryItem } from '../components/design/ConfigSummary'
 
-export async function loader() {
-  return getDesignPageData()
+export async function loader({ request }: { request: Request }) {
+  const { options } = await getPreviewData(request)
+  const initial = await loadQuery<RawDesignPageData>(DESIGN_QUERY, {}, options)
+  return { initial }
 }
 
 // Loader data never depends on search params — suppress revalidation on step navigation
@@ -180,12 +187,14 @@ const EMPTY_FORMAT: FormatValue = {
 }
 
 export default function DesignPage() {
-  const data = useLoaderData<DesignPageData>()
+  const { initial } = useLoaderData() as { initial: QueryResponseInitial<RawDesignPageData> }
+  const { data: raw } = useQuery<RawDesignPageData>(DESIGN_QUERY, {}, { initial })
   const actionData = useActionData<typeof action>()
   const navigation = useNavigation()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const { expeditions, editions } = data
+  // Live updates return the raw payload; reattach config matrices + sort here.
+  const { expeditions, editions } = normalizeDesignPageData(raw)
 
   const [selectedPeak, setSelectedPeak] = useState<string>(() => searchParams.get('expedition') ?? '')
   const [edition, setEdition] = useState<SanityEditionForDesign | null>(

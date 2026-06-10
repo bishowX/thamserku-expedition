@@ -1,4 +1,7 @@
-import { serverClient } from "./sanity.server";
+// Client-safe module: GROQ query strings, response types, and pure transforms.
+// Both loaders (loadQuery) and page components (useQuery) import from here, so it
+// must NOT pull in server-only code. The serverClient-backed fetchers live in
+// queries.server.ts.
 import type { ConfigMatrix, BasePrices, DesignConfig } from "./configMatrix";
 import { normalizeDesignConfig } from "./configMatrix";
 
@@ -131,22 +134,20 @@ export type EditionsPageData = {
   expeditions: SanityExpeditionForMatrix[];
 };
 
-export async function getHomePageData(): Promise<HomePageData> {
-  return serverClient.fetch(`{
-    "homePage": *[_type == "homePage"][0] {
-      heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoStats,
-      newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
-      closingEyebrow, closingHeading, closingBody, closingImage,
-      legacyEyebrow, legacyHeading, legacyIntro,
-      legacyTimelineItems[]{ year, title, description },
-      unclaimedPeaksEyebrow, unclaimedPeaksHeading, unclaimedPeaksBody,
-      "featuredExpeditions": featuredExpeditions[]->{ _id, number, code, name, slug, altitude, region, season, style, positioning, image, editions[]->{ _id, letter, name, slug } }
-    },
-    "editions": *[_type == "edition"] | order(letter asc) {
-      _id, letter, name, subtitle, positioning, targetAudience, character, slug
-    }
-  }`);
-}
+export const HOME_QUERY = `{
+  "homePage": *[_type == "homePage"][0] {
+    heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoStats,
+    newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
+    closingEyebrow, closingHeading, closingBody, closingImage,
+    legacyEyebrow, legacyHeading, legacyIntro,
+    legacyTimelineItems[]{ year, title, description },
+    unclaimedPeaksEyebrow, unclaimedPeaksHeading, unclaimedPeaksBody,
+    "featuredExpeditions": featuredExpeditions[]->{ _id, number, code, name, slug, altitude, region, season, style, positioning, image, editions[]->{ _id, letter, name, slug } }
+  },
+  "editions": *[_type == "edition"] | order(letter asc) {
+    _id, letter, name, subtitle, positioning, targetAudience, character, slug
+  }
+}`;
 
 export type NewsletterData = {
   newsletterEyebrow?: string;
@@ -156,22 +157,17 @@ export type NewsletterData = {
   newsletterPrivacyNote?: string;
 };
 
-export async function getNewsletterData(): Promise<NewsletterData> {
-  const data = await serverClient.fetch<NewsletterData | null>(`*[_type == "homePage"][0] {
-    newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote
-  }`);
-  return data ?? {};
-}
+export const NEWSLETTER_QUERY = `*[_type == "homePage"][0] {
+  newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote
+}`;
 
-export async function getYetiPageData(): Promise<YetiPageData> {
-  return serverClient.fetch(`{
-    "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
-      heroHeadline, heroSubheading,
-      definitionHeading, definitionTagline, definitionBody,
-      closingHeading, closingBody, closingImage
-    }
-  }`);
-}
+export const YETI_QUERY = `{
+  "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
+    heroHeadline, heroSubheading,
+    definitionHeading, definitionTagline, definitionBody,
+    closingHeading, closingBody, closingImage
+  }
+}`;
 
 export type LegacyTimelineChapter = {
   _key: string;
@@ -194,36 +190,32 @@ export type LegacyPageData = {
   } | null;
 };
 
-export async function getLegacyPageData(): Promise<LegacyPageData> {
-  return serverClient.fetch(`{
-    "legacyPage": *[_type == "legacyPage"][0] {
-      heroHeadline, heroSubheading, heroImage,
-      timelineEyebrow, timelineHeading, timelineFooterNote,
-      timelineChapters[] { _key, roman, years, title, description, image }
-    }
-  }`);
-}
+export const LEGACY_QUERY = `{
+  "legacyPage": *[_type == "legacyPage"][0] {
+    heroHeadline, heroSubheading, heroImage,
+    timelineEyebrow, timelineHeading, timelineFooterNote,
+    timelineChapters[] { _key, roman, years, title, description, image }
+  }
+}`;
 
-export async function getEditionsPageData(): Promise<EditionsPageData> {
-  return serverClient.fetch(`{
-    "editionsPage": *[_type == "editionsPage"][0] {
-      heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody,
-      comparisonEyebrow, comparisonHeadline, comparisonNote,
-      availabilityEyebrow, availabilityHeadline, availabilityNote,
-      closingEyebrow, closingHeading, closingBody, closingFootnote, closingImage
-    },
-    "editions": *[_type == "edition"] | order(letter asc) {
-      _id, letter, name, subtitle, positioning, targetAudience, slug,
-      tag, body1, body2, image, colorVariant, isStandard,
-      character, privacyLevel, comfortLevel, comparisonStyle, bestFor,
-      "mountainNames": *[_type == "expedition" && references(^._id)] | order(number asc).name
-    },
-    "expeditions": *[_type == "expedition"] | order(number asc) {
-      _id, name, altitude,
-      "editionLetters": editions[]->letter
-    }
-  }`);
-}
+export const EDITIONS_QUERY = `{
+  "editionsPage": *[_type == "editionsPage"][0] {
+    heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody,
+    comparisonEyebrow, comparisonHeadline, comparisonNote,
+    availabilityEyebrow, availabilityHeadline, availabilityNote,
+    closingEyebrow, closingHeading, closingBody, closingFootnote, closingImage
+  },
+  "editions": *[_type == "edition"] | order(letter asc) {
+    _id, letter, name, subtitle, positioning, targetAudience, slug,
+    tag, body1, body2, image, colorVariant, isStandard,
+    character, privacyLevel, comfortLevel, comparisonStyle, bestFor,
+    "mountainNames": *[_type == "expedition" && references(^._id)] | order(number asc).name
+  },
+  "expeditions": *[_type == "expedition"] | order(number asc) {
+    _id, name, altitude,
+    "editionLetters": editions[]->letter
+  }
+}`;
 
 export type ConsultationStep = {
   _key: string;
@@ -323,62 +315,24 @@ export type SanityExpeditionDossier = {
   basePrices?: BasePrices;
 };
 
-export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditionDossier | null> {
-  const raw = await serverClient.fetch<(Omit<SanityExpeditionDossier, "configMatrix" | "basePrices"> & WithRawDesignConfig) | null>(
-    `*[_type == "expedition" && slug.current == $slug][0]{
-      _id, number, code, name, slug,
-      altitude, region, season, style, positioning, image,
-      heroImage, heroTagline, heroSubtext,
-      duration, difficulty, groupSize, baseCamp, leadGuide,
-      expeditionStyleFact, pricing,
-      overviewHeadline, overviewHeadlineEmphasis, overviewBody,
-      overviewSpecsHeading, overviewSpecs[]{ label, value },
-      whoItIsForHeadline, highlightsImage,
-      audienceTiles[]{ label, subline, description },
-      itineraryHeading, itinerary[]{ days, activity, accommodation, meals },
-      routeWaypoints[]{ name, altitude },
-      routePhilosophy, acclimatisationNote, summitWindowNote,
-      editions[]->{ letter, name, subtitle, positioning, targetAudience, character, isStandard },
-      inclusionCategories[]{ category, items },
-      exclusions,
-      exclusionsImage,
-      mandatoryPrerequisite,
-      faqs[]{ question, answer },
-      closingImage, closingStatement,
-      ${DESIGN_CONFIG_PROJECTION}
-    }`,
-    { slug }
-  );
-  return raw ? attachConfig(raw) : null;
-}
+export type RawExpeditionDossier =
+  (Omit<SanityExpeditionDossier, "configMatrix" | "basePrices"> & WithRawDesignConfig);
 
-export async function getExpeditions(): Promise<SanityExpedition[]> {
-  return serverClient.fetch(
-    `*[_type == "expedition"] | order(number asc) {
-      _id, number, code, name, slug,
-      altitude, region, season, style, positioning, image,
-      editions[]->{ _id, letter, name, slug }
-    }`
-  );
-}
-
-export async function getConsultationPageData(): Promise<ConsultationPageData> {
-  return serverClient.fetch(`{
-    "consultationPage": *[_type == "consultationPage"][0] {
-      heroHeadline, heroSubheading, heroImage,
-      heroMetaResponse, heroMetaHandledBy, heroMetaLanguages, heroMetaConfidentiality,
+export const CONSULTATION_QUERY = `{
+  "consultationPage": *[_type == "consultationPage"][0] {
+    heroHeadline, heroSubheading, heroImage,
+    heroMetaResponse, heroMetaHandledBy, heroMetaLanguages, heroMetaConfidentiality,
 trustQuote, trustBody,
-      formSectionLabel, formAlternativeLabel, formAlternativeSubheading,
-      formChapterATitle, formContactOptions,
-      processHeading, processBgImage,
-      processSteps[] { _key, stepNumber, marker, title, description },
-      processFootnote,
-      alternativeHeading,
-      alternativeOptions[] { _key, label, title, value },
-      closingLabel, closingHeading, closingBody, closingImage
-    }
-  }`);
-}
+    formSectionLabel, formAlternativeLabel, formAlternativeSubheading,
+    formChapterATitle, formContactOptions,
+    processHeading, processBgImage,
+    processSteps[] { _key, stepNumber, marker, title, description },
+    processFootnote,
+    alternativeHeading,
+    alternativeOptions[] { _key, label, title, value },
+    closingLabel, closingHeading, closingBody, closingImage
+  }
+}`;
 
 // ─── FAQ Page ────────────────────────────────────────────────────────────────
 
@@ -437,22 +391,20 @@ export type FAQPageData = {
   } | null;
 };
 
-export async function getFAQPageData(): Promise<FAQPageData> {
-  return serverClient.fetch(`{
-    "faqPage": *[_id == "faqPage"][0] {
-      heroHeadline, heroSubline,
-      categoryNavEyebrow, categoryNavHeadline,
-      listEyebrow,
-      categories[] { label, title, subtitle, items[] { question, answer, linkText, linkTo } },
-      quickFaqEyebrow, quickFaqHeadline, quickFaqSubheading,
-      quickFaqs[] { _key, question, answer },
-      relatedPagesEyebrow, relatedPagesHeadline,
-      relatedPages[] { eyebrow, title, desc, linkText, linkTo },
-      newsletterEyebrow, newsletterHeadline, newsletterBody, newsletterPrivacyLine, newsletterBottomNote,
-      closingHeadline, closingBody, closingDisclaimerLine, closingImage
-    }
-  }`);
-}
+export const FAQ_QUERY = `{
+  "faqPage": *[_id == "faqPage"][0] {
+    heroHeadline, heroSubline,
+    categoryNavEyebrow, categoryNavHeadline,
+    listEyebrow,
+    categories[] { label, title, subtitle, items[] { question, answer, linkText, linkTo } },
+    quickFaqEyebrow, quickFaqHeadline, quickFaqSubheading,
+    quickFaqs[] { _key, question, answer },
+    relatedPagesEyebrow, relatedPagesHeadline,
+    relatedPages[] { eyebrow, title, desc, linkText, linkTo },
+    newsletterEyebrow, newsletterHeadline, newsletterBody, newsletterPrivacyLine, newsletterBottomNote,
+    closingHeadline, closingBody, closingDisclaimerLine, closingImage
+  }
+}`;
 
 // ─── Safety Page ─────────────────────────────────────────────────────────────
 
@@ -494,21 +446,19 @@ export type SafetyPageData = {
   } | null;
 };
 
-export async function getSafetyPageData(): Promise<SafetyPageData> {
-  return serverClient.fetch(`{
-    "safetyPage": *[_type == "safetyPage"][0] {
-      heroHeadline, heroSubline,
-      statsLabel, stats[] { value, label },
-      numbersHeading, numbersCards[] { title, body },
-      architectureEyebrow, architectureHeading, protocols[] { label, description },
-      foundationEyebrow, foundationHeading, foundationBgImage, foundationBody, foundationSpecs[] { label, value },
-      communicationEyebrow, communicationHeading, communicationItems[] { title, body },
-      evacuationEyebrow, evacuationHeading, evacuationCards[] { title, body },
-      evacuationQuote, evacuationBody,
-      closingEyebrow, closingHeadline, closingBody, closingImage
-    }
-  }`);
-}
+export const SAFETY_QUERY = `{
+  "safetyPage": *[_type == "safetyPage"][0] {
+    heroHeadline, heroSubline,
+    statsLabel, stats[] { value, label },
+    numbersHeading, numbersCards[] { title, body },
+    architectureEyebrow, architectureHeading, protocols[] { label, description },
+    foundationEyebrow, foundationHeading, foundationBgImage, foundationBody, foundationSpecs[] { label, value },
+    communicationEyebrow, communicationHeading, communicationItems[] { title, body },
+    evacuationEyebrow, evacuationHeading, evacuationCards[] { title, body },
+    evacuationQuote, evacuationBody,
+    closingEyebrow, closingHeadline, closingBody, closingImage
+  }
+}`;
 
 // ─── Achievements Page ───────────────────────────────────────────────────────
 
@@ -533,15 +483,13 @@ export type AchievementsPageData = {
   } | null;
 };
 
-export async function getAchievementsPageData(): Promise<AchievementsPageData> {
-  return serverClient.fetch(`{
-    "achievementsPage": *[_type == "achievementsPage"][0] {
-      heroHeadline, heroSubheading, heroImage,
-      stats[] { _key, value, label },
-      decades[] { _key, years, title, body, meta, image }
-    }
-  }`);
-}
+export const ACHIEVEMENTS_QUERY = `{
+  "achievementsPage": *[_type == "achievementsPage"][0] {
+    heroHeadline, heroSubheading, heroImage,
+    stats[] { _key, value, label },
+    decades[] { _key, years, title, body, meta, image }
+  }
+}`;
 
 // ── Design Your Expedition ─────────────────────────────────────────────────
 // Driven by the per-peak configuration matrix. See lib/configMatrix.ts.
@@ -556,7 +504,7 @@ const EDITION_CONFIG_PROJECTION = `{
   oxygen,
   helicopter[]{ label, included, priceDelta }
 }`;
-const DESIGN_CONFIG_PROJECTION = `
+export const DESIGN_CONFIG_PROJECTION = `
   "_designConfig": designConfig{
     basePrices,
     b${EDITION_CONFIG_PROJECTION},
@@ -565,16 +513,42 @@ const DESIGN_CONFIG_PROJECTION = `
   }
 `;
 
-type WithRawDesignConfig = { _designConfig?: DesignConfig | null };
+export type WithRawDesignConfig = { _designConfig?: DesignConfig | null };
 
 /** Strip the raw `_designConfig` and attach the normalized matrix + base prices. */
-function attachConfig<T extends WithRawDesignConfig>(
+export function attachConfig<T extends WithRawDesignConfig>(
   doc: T,
 ): Omit<T, "_designConfig"> & { configMatrix: ConfigMatrix; basePrices: BasePrices } {
   const { _designConfig, ...rest } = doc;
   const { configMatrix, basePrices } = normalizeDesignConfig(_designConfig ?? undefined);
   return { ...rest, configMatrix, basePrices };
 }
+
+// Shared by the loader (loadQuery) and the page (useQuery) so live preview
+// re-runs the exact same query. Declared here because it interpolates the
+// DESIGN_CONFIG_PROJECTION above.
+export const EXPEDITION_BY_SLUG_QUERY = `*[_type == "expedition" && slug.current == $slug][0]{
+  _id, number, code, name, slug,
+  altitude, region, season, style, positioning, image,
+  heroImage, heroTagline, heroSubtext,
+  duration, difficulty, groupSize, baseCamp, leadGuide,
+  expeditionStyleFact, pricing,
+  overviewHeadline, overviewHeadlineEmphasis, overviewBody,
+  overviewSpecsHeading, overviewSpecs[]{ label, value },
+  whoItIsForHeadline, highlightsImage,
+  audienceTiles[]{ label, subline, description },
+  itineraryHeading, itinerary[]{ days, activity, accommodation, meals },
+  routeWaypoints[]{ name, altitude },
+  routePhilosophy, acclimatisationNote, summitWindowNote,
+  editions[]->{ letter, name, subtitle, positioning, targetAudience, character, isStandard },
+  inclusionCategories[]{ category, items },
+  exclusions,
+  exclusionsImage,
+  mandatoryPrerequisite,
+  faqs[]{ question, answer },
+  closingImage, closingStatement,
+  ${DESIGN_CONFIG_PROJECTION}
+}`;
 
 export type SanityExpeditionForDesign = {
   _id: string;
@@ -598,20 +572,27 @@ export type DesignPageData = {
   editions: SanityEditionForDesign[];
 };
 
-export async function getDesignPageData(): Promise<DesignPageData> {
-  const raw = await serverClient.fetch<{
-    expeditions: Array<Omit<SanityExpeditionForDesign, "configMatrix" | "basePrices"> & WithRawDesignConfig>;
-    editions: SanityEditionForDesign[];
-  }>(`{
-    "expeditions": *[_type == "expedition"] | order(name asc) {
-      _id, name, code, altitude,
-      "slug": slug.current,
-      ${DESIGN_CONFIG_PROJECTION}
-    },
-    "editions": *[_type == "edition"] | order(letter asc) {
-      _id, letter, name, positioning
-    }
-  }`);
+export type RawDesignPageData = {
+  expeditions: Array<Omit<SanityExpeditionForDesign, "configMatrix" | "basePrices"> & WithRawDesignConfig>;
+  editions: SanityEditionForDesign[];
+};
+
+export const DESIGN_QUERY = `{
+  "expeditions": *[_type == "expedition"] | order(name asc) {
+    _id, name, code, altitude,
+    "slug": slug.current,
+    ${DESIGN_CONFIG_PROJECTION}
+  },
+  "editions": *[_type == "edition"] | order(letter asc) {
+    _id, letter, name, positioning
+  }
+}`;
+
+/**
+ * Normalize raw design-page data: attach the config matrix to each peak and sort
+ * tallest-first. Exported so the page can apply it after useQuery in live mode.
+ */
+export function normalizeDesignPageData(raw: RawDesignPageData): DesignPageData {
   // Sort by parsed altitude (e.g. "8,848.86 m" → 8848.86), tallest first. The
   // field is free text, so this can't be done reliably in GROQ.
   const heightOf = (alt?: string) => parseFloat((alt ?? "").replace(/[^\d.]/g, "")) || 0;
@@ -619,18 +600,5 @@ export async function getDesignPageData(): Promise<DesignPageData> {
     .map(attachConfig)
     .sort((a, b) => heightOf(b.altitude) - heightOf(a.altitude));
   return { expeditions, editions: raw.editions };
-}
-
-// Matrix for a single peak (used by the server action to price/snapshot a booking).
-export async function getExpeditionConfig(id: string): Promise<{
-  name?: string;
-  configMatrix: ConfigMatrix;
-  basePrices: BasePrices;
-} | null> {
-  const raw = await serverClient.fetch<({ name?: string } & WithRawDesignConfig) | null>(
-    `*[_type == "expedition" && _id == $id][0]{ name, ${DESIGN_CONFIG_PROJECTION} }`,
-    { id },
-  );
-  return raw ? attachConfig(raw) : null;
 }
 
