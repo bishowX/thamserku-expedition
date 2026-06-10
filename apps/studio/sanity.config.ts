@@ -18,7 +18,7 @@ export default defineConfig({
   title: 'Thamserku Expedition',
   basePath: '/studio',
 
-  projectId: 'ugjhuor8',
+  projectId: 'dh94bf5m',
   dataset: 'production',
 
   plugins: [

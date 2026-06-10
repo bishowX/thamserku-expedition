@@ -4,7 +4,7 @@ import { createClient } from '@sanity/client'
 // Server-only client used by react-loader. Mirrors sanity.ts but with the read
 // token (for drafts) and CDN disabled so previews always see fresh content.
 const client = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID ?? 'ugjhuor8',
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID ?? 'dh94bf5m',
   dataset: import.meta.env.VITE_SANITY_DATASET ?? 'production',
   apiVersion: '2026-05-21',
   useCdn: false,
