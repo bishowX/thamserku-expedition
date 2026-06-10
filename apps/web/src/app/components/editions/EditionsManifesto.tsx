@@ -7,7 +7,13 @@ type PageData = {
   manifestoBody?: string;
 };
 
-export function EditionsManifesto({ page, encodeDataAttribute }: { page?: PageData; encodeDataAttribute?: EncodeDataAttributeCallback }) {
+export function EditionsManifesto({
+  page,
+  encodeDataAttribute,
+}: {
+  page?: PageData;
+  encodeDataAttribute?: EncodeDataAttributeCallback;
+}) {
   const eyebrow = page?.manifestoEyebrow ?? "02 — THE READING";
   const cleanHeading = stegaClean(page?.manifestoHeading ?? "");
   const parts = cleanHeading ? cleanHeading.split(".").filter(Boolean) : [];
@@ -29,8 +35,11 @@ export function EditionsManifesto({ page, encodeDataAttribute }: { page?: PageDa
         <div className="col-span-1 md:col-span-8 lg:col-span-7 flex flex-col gap-12">
           {page?.manifestoHeading && (
             <h2
-              className="font-['Radley'] font-light text-4xl md:text-[52px] leading-[1.1] max-w-[30ch] tracking-tight text-[#1A1A1A]"
-              data-sanity={encodeDataAttribute?.(['editionsPage', 'manifestoHeading'])}
+              className="font-['Cormorant Garamond' font-light text-4xl md:text-[52px] leading-[1.1] max-w-[30ch] tracking-tight text-[#1A1A1A]"
+              data-sanity={encodeDataAttribute?.([
+                "editionsPage",
+                "manifestoHeading",
+              ])}
             >
               {leadText}
               {lastSentence && (

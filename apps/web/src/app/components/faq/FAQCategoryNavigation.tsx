@@ -29,12 +29,15 @@ export const FAQCategoryNavigation = ({ page, categories: sanityCategories }: { 
         </div>
 
         {/* Category navigation grid */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 border-t border-[#5A6673]/30">
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 mx-auto"
+          style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
+        >
           {items.map((cat, idx) => (
-            <a 
-              key={idx} 
+            <a
+              key={idx}
               href={cat.id}
-              className={`flex flex-col px-5 py-6 border-[#5A6673]/30 hover:bg-black/5 transition-colors cursor-pointer ${idx !== 0 ? 'border-t md:border-t-0 md:border-l' : ''}`}
+              className={`flex flex-col px-5 py-6 border-t border-[#5A6673]/30 hover:bg-black/5 transition-colors cursor-pointer ${idx !== 0 ? 'border-l border-[#5A6673]/30' : ''}`}
             >
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] mb-4 min-h-[3em]">
                 {cat.num} —<br />{cat.label}

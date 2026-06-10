@@ -89,7 +89,10 @@ export function Footer() {
             <Link to="/safety" className="hover:text-white transition-colors">
               Safety
             </Link>
-            <Link to="/heritage" className="hover:text-white transition-colors">
+            <Link
+              to="/heritage-and-achievements"
+              className="hover:text-white transition-colors"
+            >
               Heritage & Achievements
             </Link>
             <Link
@@ -104,7 +107,10 @@ export function Footer() {
             <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
               EDITORIAL & HELP
             </h4>
-            <Link to="/news" className="hover:text-white transition-colors">
+            <Link
+              to="/news-and-blogs"
+              className="hover:text-white transition-colors"
+            >
               News and Blogs
             </Link>
             <Link to="/faq" className="hover:text-white transition-colors">
