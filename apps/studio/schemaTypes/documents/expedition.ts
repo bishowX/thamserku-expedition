@@ -91,6 +91,7 @@ export default defineType({
 
     // ── Expedition Highlights (Who It Is For) ─────────────────────────────────
     defineField({ group: 'whoItIsFor', name: 'whoItIsForHeadline', title: 'Highlights — Heading', type: 'string', description: 'e.g. "Expedition Highlights"' }),
+    defineField({ group: 'whoItIsFor', name: 'highlightsImage', title: 'Highlights — Background Image', type: 'image', options: { hotspot: true }, description: 'Optional background image for the Expedition Highlights section.' }),
     defineField({
       group: 'whoItIsFor',
       name: 'audienceTiles',
@@ -154,6 +155,14 @@ export default defineType({
       of: [{ type: 'string' }],
       description: 'Items not covered by the expedition fee, e.g. International Airfare & Nepal Visa.',
     }),
+    defineField({
+      group: 'exclusions',
+      name: 'exclusionsImage',
+      title: 'Exclusions Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Image shown beside the exclusions list.',
+    }),
     // ── Mandatory Prerequisite ────────────────────────────────────────────────
     defineField({
       group: 'prerequisite',
@@ -161,7 +170,7 @@ export default defineType({
       title: 'Mandatory Prerequisite',
       type: 'text',
       rows: 6,
-      description: 'Shown beside the exclusions list. Line breaks are preserved.',
+      description: 'Shown below the exclusions list. Line breaks are preserved.',
     }),
 
     // ── FAQs ──────────────────────────────────────────────────────────────────

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { urlFor } from "../../../lib/sanity";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 type InclusionCategory = { category: string; items: string[] };
 
@@ -52,16 +54,21 @@ function InclusionCategoryRow({ category, items }: InclusionCategory) {
 type Props = {
   inclusionCategories?: InclusionCategory[] | null;
   exclusions?: string[] | null;
+  exclusionsImage?: { asset: { _ref: string } } | null;
   mandatoryPrerequisite?: string;
 };
 
 export function Inclusions({
   inclusionCategories,
   exclusions,
+  exclusionsImage,
   mandatoryPrerequisite,
 }: Props) {
   const categories = inclusionCategories ?? [];
   const notIncluded = exclusions ?? [];
+  const exclusionsImageSrc = exclusionsImage
+    ? urlFor(exclusionsImage as SanityImageSource).width(900).url()
+    : null;
 
   if (
     categories.length === 0 &&
@@ -108,37 +115,46 @@ export function Inclusions({
         )}
 
         {/* Not Included */}
-        {(notIncluded.length > 0 || mandatoryPrerequisite) && (
+        {notIncluded.length > 0 && (
           <div className="flex flex-col gap-6">
             <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.28] text-[#1A1A1A]">
               Not Included
             </h2>
 
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-x-[50px] items-start">
-              {notIncluded.length > 0 && (
-                <div className="w-full lg:flex-1 min-w-0 flex flex-col border-t border-[rgba(90,102,115,0.3)]">
-                  {notIncluded.map((item, i) => (
-                    <p
-                      key={i}
-                      className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
-                    >
-                      {item}
-                    </p>
-                  ))}
-                </div>
-              )}
-
-              {mandatoryPrerequisite && (
-                <div className="w-full lg:flex-1 min-w-0 flex flex-col gap-3">
-                  <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A]">
-                    Mandatory Prerequisite
-                  </h3>
-                  <p className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] whitespace-pre-line">
-                    {mandatoryPrerequisite}
+              <div className="w-full lg:flex-1 min-w-0 flex flex-col border-t border-[rgba(90,102,115,0.3)]">
+                {notIncluded.map((item, i) => (
+                  <p
+                    key={i}
+                    className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
+                  >
+                    {item}
                   </p>
+                ))}
+              </div>
+
+              {exclusionsImageSrc && (
+                <div className="w-full lg:flex-1 min-w-0 max-h-[360px] overflow-hidden">
+                  <img
+                    src={exclusionsImageSrc}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* Mandatory Prerequisite */}
+        {mandatoryPrerequisite && (
+          <div className="flex flex-col gap-3">
+            <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A]">
+              Mandatory Prerequisite
+            </h3>
+            <p className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] whitespace-pre-line">
+              {mandatoryPrerequisite}
+            </p>
           </div>
         )}
       </div>

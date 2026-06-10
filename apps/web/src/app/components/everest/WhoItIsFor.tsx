@@ -1,19 +1,33 @@
+import { urlFor } from "../../../lib/sanity";
+
 type AudienceTile = { label: string; subline?: string; description: string };
 
 type Props = {
   whoItIsForHeadline?: string;
+  highlightsImage?: { asset: { _ref: string } } | null;
   audienceTiles?: AudienceTile[];
 };
 
-export function WhoItIsFor({ whoItIsForHeadline, audienceTiles }: Props) {
+export function WhoItIsFor({ whoItIsForHeadline, highlightsImage, audienceTiles }: Props) {
   const tiles = audienceTiles ?? [];
+  const bgUrl = highlightsImage ? urlFor(highlightsImage).width(1800).url() : null;
 
   return (
     <section
       id="why-this-expedition"
-      className="bg-white w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
+      className="relative bg-white w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28 overflow-hidden"
     >
-      <div className="max-w-[1320px] mx-auto flex flex-col gap-8">
+      {bgUrl && (
+        <div
+          className="absolute inset-0 z-0 pointer-events-none mix-blend-multiply opacity-[0.12]"
+          style={{
+            backgroundImage: `url(${bgUrl})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      )}
+      <div className="relative z-10 max-w-[1320px] mx-auto flex flex-col gap-8">
         <div className="flex flex-col gap-6 md:gap-8">
           <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
             04 — Why This Expedition

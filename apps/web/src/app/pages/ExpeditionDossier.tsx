@@ -64,6 +64,7 @@ export default function ExpeditionDossier() {
         />
         <WhoItIsFor
           whoItIsForHeadline={expedition.whoItIsForHeadline}
+          highlightsImage={expedition.highlightsImage}
           audienceTiles={expedition.audienceTiles}
         />
         <Itinerary
@@ -73,6 +74,7 @@ export default function ExpeditionDossier() {
         <Inclusions
           inclusionCategories={expedition.inclusionCategories}
           exclusions={expedition.exclusions}
+          exclusionsImage={expedition.exclusionsImage}
           mandatoryPrerequisite={expedition.mandatoryPrerequisite}
         />
         <ExpeditionEditions name={expedition.name} editions={expedition.editions} />

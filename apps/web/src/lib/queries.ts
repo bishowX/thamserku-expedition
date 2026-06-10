@@ -303,6 +303,7 @@ export type SanityExpeditionDossier = {
   overviewSpecsHeading?: string;
   overviewSpecs?: Array<{ label: string; value: string }>;
   whoItIsForHeadline?: string;
+  highlightsImage?: { asset: { _ref: string } } | null;
   audienceTiles?: SanityAudienceTile[];
   itineraryHeading?: string;
   itinerary?: Array<{ days: string; activity: string; accommodation: string; meals: string }>;
@@ -313,6 +314,7 @@ export type SanityExpeditionDossier = {
   editions?: Array<{ letter: string; name: string; subtitle: string; positioning: string; targetAudience: string; character?: string; isStandard?: boolean }>;
   inclusionCategories?: SanityInclusionCategory[] | null;
   exclusions?: string[] | null;
+  exclusionsImage?: { asset: { _ref: string } } | null;
   mandatoryPrerequisite?: string;
   faqs?: SanityFaqItem[];
   closingImage?: { asset: { _ref: string } } | null;
@@ -331,7 +333,7 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       expeditionStyleFact, pricing,
       overviewHeadline, overviewHeadlineEmphasis, overviewBody,
       overviewSpecsHeading, overviewSpecs[]{ label, value },
-      whoItIsForHeadline,
+      whoItIsForHeadline, highlightsImage,
       audienceTiles[]{ label, subline, description },
       itineraryHeading, itinerary[]{ days, activity, accommodation, meals },
       routeWaypoints[]{ name, altitude },
@@ -339,6 +341,7 @@ export async function getExpeditionBySlug(slug: string): Promise<SanityExpeditio
       editions[]->{ letter, name, subtitle, positioning, targetAudience, character, isStandard },
       inclusionCategories[]{ category, items },
       exclusions,
+      exclusionsImage,
       mandatoryPrerequisite,
       faqs[]{ question, answer },
       closingImage, closingStatement,
