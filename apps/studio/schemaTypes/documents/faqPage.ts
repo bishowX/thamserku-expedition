@@ -16,6 +16,7 @@ export default defineType({
     // 01 — Hero
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'string', group: 'hero' }),
     defineField({ name: 'heroSubline', title: 'Subline', type: 'text', rows: 2, group: 'hero' }),
+    defineField({ name: 'heroImage', title: 'Background Image', type: 'image', group: 'hero', options: { hotspot: true } }),
 
     // 02 — FAQs
     defineField({ name: 'categoryNavEyebrow', title: 'Category Nav Eyebrow', type: 'string', group: 'faqs', description: 'e.g. "JUMP TO A CATEGORY — § I"' }),

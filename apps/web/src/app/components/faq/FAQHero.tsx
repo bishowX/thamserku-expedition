@@ -1,19 +1,52 @@
-type PageData = { heroHeadline?: string; heroSubline?: string };
+import { Nav } from "../Nav";
+import { urlFor } from "../../../lib/sanity";
+
+type PageData = {
+  heroHeadline?: string;
+  heroSubline?: string;
+  heroImage?: { asset: { _ref: string } } | null;
+};
 
 export const FAQHero = ({ page }: { page?: PageData }) => {
-  return (
-    <section className="relative w-full bg-[#1A1A1A] section-padding overflow-hidden">
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-center pt-24 md:pt-0">
-        {/* Headline */}
-        <h1 className="font-['Radley'] font-light text-fluid-heading tracking-tight text-white leading-[1.1] text-center max-w-[22ch] mb-6">
-          {page?.heroHeadline ?? "Fifteen quiet answers."}
-        </h1>
+  const bgSrc = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : null;
 
-        {/* Subline */}
-        <p className="font-['Lexend'] font-light text-fluid-body text-[#C8CDD2] leading-relaxed max-w-[60ch] text-center mb-20">
-          {page?.heroSubline ??
-            "The questions our expedition desk is asked most often. Short, considered placeholders at this stage — full answers will be drafted with our senior staff."}
-        </p>
+  return (
+    <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {bgSrc ? (
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
+              style={{ backgroundImage: `url('${bgSrc}')` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1A1A1A]/60 to-[#1A1A1A]" />
+          </>
+        ) : (
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, #C8CDD2 1px, transparent 1px),
+                linear-gradient(to bottom, #C8CDD2 1px, transparent 1px)
+              `,
+              backgroundSize: '96px 96px',
+            }}
+          />
+        )}
+      </div>
+
+      <Nav />
+
+      <div className="relative z-10 flex flex-grow flex-col items-center justify-center section-padding">
+        <div className="flex w-full max-w-[1138px] flex-col items-center gap-[30px]">
+          <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading leading-[1.1] tracking-tight text-center text-white">
+            {page?.heroHeadline ?? "Fifteen quiet answers."}
+          </h1>
+          <p className="font-['Lexend'] font-light text-[18px] leading-[1.55] text-center text-[#C8CDD2] max-w-[705px]">
+            {page?.heroSubline ??
+              "The questions our expedition desk is asked most often. Short, considered answers from our senior staff."}
+          </p>
+        </div>
       </div>
     </section>
   );

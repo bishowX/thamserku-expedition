@@ -11,7 +11,7 @@ const previewOrigin = process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localh
 const pageLocation = (title: string, href: string) =>
   defineLocations({ resolve: () => ({ locations: [{ title, href }] }) })
 
-const singletons = ['homePage', 'editionsPage', 'legacyPage', 'yetiInfrastructurePage', 'consultationPage', 'siteSettings', 'faqPage', 'safetyPage', 'achievementsPage']
+const singletons = ['homePage', 'editionsPage', 'legacyPage', 'yetiInfrastructurePage', 'consultationPage', 'siteSettings', 'faqPage', 'safetyPage', 'achievementsPage', 'designPage']
 
 export default defineConfig({
   name: 'thamserku-expedition',
@@ -49,6 +49,7 @@ export default defineConfig({
           faqPage: pageLocation('FAQ', '/faq'),
           safetyPage: pageLocation('Safety', '/safety'),
           achievementsPage: pageLocation('Heritage & Achievements', '/heritage-and-achievements'),
+          designPage: pageLocation('Design Your Expedition', '/design-your-expedition'),
           expedition: defineLocations({
             select: { name: 'name', slug: 'slug.current' },
             resolve: (doc) => ({
@@ -111,6 +112,10 @@ export default defineConfig({
               .title('Achievements Page')
               .id('achievementsPage')
               .child(S.document().schemaType('achievementsPage').documentId('achievementsPage')),
+            S.listItem()
+              .title('Design Your Expedition Page')
+              .id('designPage')
+              .child(S.document().schemaType('designPage').documentId('designPage')),
             S.divider(),
             S.documentTypeListItem('expedition').title('Expeditions'),
             S.documentTypeListItem('edition').title('Editions'),

@@ -1,17 +1,21 @@
+import { stegaClean } from "@sanity/client/stega";
+import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
+
 type PageData = {
   manifestoEyebrow?: string;
   manifestoHeading?: string;
   manifestoBody?: string;
 };
 
-export function EditionsManifesto({ page }: { page?: PageData }) {
+export function EditionsManifesto({ page, encodeDataAttribute }: { page?: PageData; encodeDataAttribute?: EncodeDataAttributeCallback }) {
   const eyebrow = page?.manifestoEyebrow ?? "02 — THE READING";
-  const parts = page?.manifestoHeading?.split(".").filter(Boolean) ?? [];
+  const cleanHeading = stegaClean(page?.manifestoHeading ?? "");
+  const parts = cleanHeading ? cleanHeading.split(".").filter(Boolean) : [];
   const lastSentence = parts.length > 1 ? parts[parts.length - 1].trim() : null;
   const leadText =
     parts.length > 1
       ? parts.slice(0, -1).join(".") + "."
-      : page?.manifestoHeading;
+      : cleanHeading || undefined;
 
   return (
     <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-8 px-5 md:py-16 md:px-8">
@@ -24,7 +28,10 @@ export function EditionsManifesto({ page }: { page?: PageData }) {
 
         <div className="col-span-1 md:col-span-8 lg:col-span-7 flex flex-col gap-12">
           {page?.manifestoHeading && (
-            <h2 className="font-['Radley'] font-light text-4xl md:text-[52px] leading-[1.1] max-w-[30ch] tracking-tight text-[#1A1A1A]">
+            <h2
+              className="font-['Radley'] font-light text-4xl md:text-[52px] leading-[1.1] max-w-[30ch] tracking-tight text-[#1A1A1A]"
+              data-sanity={encodeDataAttribute?.(['editionsPage', 'manifestoHeading'])}
+            >
               {leadText}
               {lastSentence && (
                 <>

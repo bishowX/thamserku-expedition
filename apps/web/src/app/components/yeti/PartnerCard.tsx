@@ -1,34 +1,14 @@
 interface PartnerCardProps {
-  /**
-   * Imported SVG asset URL. Vite resolves `.svg` imports to a URL string
-   * (see `assetsInclude` in vite.config), so pass the imported logo directly.
-   */
   logo: string;
-  /** Accessible name for the logo (used as the image alt text). */
   name: string;
-  /**
-   * Category label rendered inside the bordered chip, e.g. "Travel",
-   * "Airlines". Displayed uppercase. Omit to hide the chip entirely.
-   */
   label?: string;
-  /** Extra classes for the root element (positioning, width, etc.). */
+  href?: string;
   className?: string;
 }
 
-/**
- * A partner logo presented on a dark background with an optional bordered
- * category chip beneath it — the "Yeti ecosystem" card from the infrastructure
- * hero. Logos vary wildly in aspect ratio (wide airline wordmarks, tall vertical
- * marks), so the logo is constrained by height and `object-contain`ed to keep
- * every card visually balanced.
- *
- * The chip carries `data-chip` so the hero's scroll timeline can stagger it in.
- */
-export const PartnerCard = ({ logo, name, label, className }: PartnerCardProps) => {
-  return (
-    <div
-      className={`flex flex-col items-center gap-[clamp(7px,0.85vw,11px)] ${className ?? ""}`}
-    >
+export const PartnerCard = ({ logo, name, label, href, className }: PartnerCardProps) => {
+  const inner = (
+    <>
       <div className="flex h-[clamp(44px,4.6vw,68px)] w-full items-center justify-center">
         <img
           src={logo}
@@ -46,6 +26,28 @@ export const PartnerCard = ({ logo, name, label, className }: PartnerCardProps) 
           </span>
         </div>
       ) : null}
+    </>
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={name}
+        className={`flex flex-col items-center gap-[clamp(7px,0.85vw,11px)] cursor-pointer transition-opacity duration-200 hover:opacity-100 ${className ?? ""}`}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <div
+      className={`flex flex-col items-center gap-[clamp(7px,0.85vw,11px)] ${className ?? ""}`}
+    >
+      {inner}
     </div>
   );
 };

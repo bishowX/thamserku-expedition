@@ -2,6 +2,8 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { stegaClean } from "@sanity/client/stega";
+import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
 import { TextReveal } from "./TextReveal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,12 +26,12 @@ function splitAtLastSentence(text: string): [string, string] {
   return [text.slice(0, idx + 1), text.slice(idx + 2)];
 }
 
-export function Manifesto({ data }: { data?: ManifestoData }) {
+export function Manifesto({ data, encodeDataAttribute }: { data?: ManifestoData; encodeDataAttribute?: EncodeDataAttributeCallback }) {
   const [part1, part2] = data?.manifestoHeading
-    ? splitAtLastSentence(data.manifestoHeading)
+    ? splitAtLastSentence(stegaClean(data.manifestoHeading))
     : [DEFAULT_HEADING_PART1, DEFAULT_HEADING_PART2];
-  const body = data?.manifestoBody ?? DEFAULT_BODY;
-  const eyebrow = data?.manifestoEyebrow ?? "02 — MANIFESTO";
+  const body = stegaClean(data?.manifestoBody ?? DEFAULT_BODY);
+  const eyebrow = stegaClean(data?.manifestoEyebrow ?? "02 — MANIFESTO");
 
   const sectionRef = useRef<HTMLElement>(null);
   const eyebrowRef = useRef<HTMLDivElement>(null);
@@ -106,7 +108,10 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
               ref={lineRef}
               className="hidden md:block h-px w-8 bg-[#5A6673]"
             />
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+            <span
+              className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]"
+              data-sanity={encodeDataAttribute?.(['homePage', 'manifestoEyebrow'])}
+            >
               {eyebrow}
             </span>
           </div>
@@ -115,6 +120,7 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
           <h2
             ref={headingRef}
             className="font-['Radley'] font-light text-fluid-heading leading-[1.2] max-w-3xl"
+            data-sanity={encodeDataAttribute?.(['homePage', 'manifestoHeading'])}
           >
             <TextReveal text={part1} />{" "}
             <em className="text-[#0A3A77] italic">
@@ -124,6 +130,7 @@ export function Manifesto({ data }: { data?: ManifestoData }) {
           <p
             ref={bodyRef}
             className="font-['Lexend'] font-light text-[#5A6673] text-fluid-body leading-[1.8] max-w-3xl"
+            data-sanity={encodeDataAttribute?.(['homePage', 'manifestoBody'])}
           >
             <TextReveal text={body} />
           </p>

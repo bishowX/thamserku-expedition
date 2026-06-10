@@ -9,7 +9,7 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
   const subheading = data?.heroSubheading;
 
   return (
-    <section className="relative min-h-screen bg-[#1A1A1A] flex flex-col overflow-hidden">
+    <section className="relative min-h-screen bg-[#1A1A1A] flex flex-col overflow-hidden p-12 xl:p-40">
       <div className="absolute inset-0 z-0 pointer-events-none">
         {heroImgSrc && (
           <ImageWithFallback
@@ -23,7 +23,7 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
 
       <Nav />
 
-      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end h-full mt-32 md:mt-48 flex-grow pb-32">
+      <div className="relative z-20 w-full flex flex-col justify-end flex-grow">
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-6">
           THE EXPEDITION DESK — SCHEDULE A CONSULTATION
         </span>

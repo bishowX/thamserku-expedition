@@ -37,7 +37,7 @@ export function LegacyHero({ page }: { page?: PageData }) {
 
       <div className="relative z-10 flex flex-grow flex-col items-center justify-center section-padding">
         <div className="flex w-full max-w-[1138px] flex-col items-center gap-[30px]">
-          <h1 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] tracking-tight text-center text-white">
+          <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading leading-[1.1] tracking-tight text-center text-white">
             {page?.heroHeadline ?? 'Born in the high Himalaya. Built for the hard way up.'}
           </h1>
           <p className="font-['Lexend'] font-light text-[18px] leading-[1.55] text-center text-[#C8CDD2] max-w-[705px]">

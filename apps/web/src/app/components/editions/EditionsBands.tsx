@@ -1,3 +1,4 @@
+import { stegaClean } from "@sanity/client/stega";
 import { urlFor } from "../../../lib/sanity";
 import type { SanityEditionFull } from "../../../lib/queries";
 
@@ -31,7 +32,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
   return (
     <section className="w-full flex flex-col">
       {editions.map((ed, idx) => {
-        const variant = ed.colorVariant ?? "dark";
+        const variant = stegaClean(ed.colorVariant ?? "dark");
         const isDark = variant === "dark" || variant === "blue";
         const bgClass = BG_CLASS[variant] ?? "bg-[#1A1A1A]";
         const letterColor = LETTER_COLOR[variant] ?? "text-[#C8CDD2]/20";

@@ -1,3 +1,5 @@
+import { stegaClean } from "@sanity/client/stega";
+import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
 import type { AchievementsPageData, AchievementDecade } from "../../../lib/queries";
 import { urlFor } from "../../../lib/sanity";
 
@@ -38,14 +40,14 @@ const DEFAULT_DECADES: AchievementDecade[] = [
   },
 ];
 
-export function AchievementsDecades({ page }: { page?: PageData }) {
+export function AchievementsDecades({ page, encodeDataAttribute }: { page?: PageData; encodeDataAttribute?: EncodeDataAttributeCallback }) {
   const decades = page?.decades?.length ? page.decades : DEFAULT_DECADES;
 
   return (
     <section className="w-full bg-[#1A1A1A] flex justify-center pt-24 pb-24 section-padding">
       <div className="flex flex-col items-center gap-24 w-full">
         {decades.map((decade, idx) => {
-          const paragraphs = (decade.body ?? '').split(/\n\s*\n/).filter(Boolean);
+          const paragraphs = stegaClean(decade.body ?? '').split(/\n\s*\n/).filter(Boolean);
           const imageSrc = decade.image ? urlFor(decade.image).width(600).url() : null;
           const isImageLeft = idx % 2 === 0;
 
@@ -74,7 +76,10 @@ export function AchievementsDecades({ page }: { page?: PageData }) {
                   </div>
 
                   {paragraphs.length > 0 && (
-                    <div className="flex flex-col gap-[24.375px]">
+                    <div
+                      className="flex flex-col gap-[24.375px]"
+                      data-sanity={encodeDataAttribute?.(['achievementsPage', 'decades', idx, 'body'])}
+                    >
                       {paragraphs.map((para, i) => (
                         <p key={i} className="font-['Inter'] font-light text-[15px] leading-[24.375px] text-[#C8CDD2]">
                           {para}
@@ -105,7 +110,10 @@ export function AchievementsDecades({ page }: { page?: PageData }) {
               </div>
 
               {paragraphs.length > 0 && (
-                <div className="flex flex-col gap-[24.375px]">
+                <div
+                  className="flex flex-col gap-[24.375px]"
+                  data-sanity={encodeDataAttribute?.(['achievementsPage', 'decades', idx, 'body'])}
+                >
                   {paragraphs.map((para, i) => (
                     <p key={i} className="font-['Inter'] font-light text-[15px] leading-[24.375px] text-[#C8CDD2]">
                       {para}

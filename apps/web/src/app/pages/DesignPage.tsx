@@ -4,6 +4,7 @@ import type { ShouldRevalidateFunction } from 'react-router'
 import { useQuery } from '@sanity/react-loader'
 import type { QueryResponseInitial } from '@sanity/react-loader'
 import { Nav } from '../components/Nav'
+import { urlFor } from '../../lib/sanity'
 import { writeClient } from '../../lib/sanity.write'
 import { serverClient } from '../../lib/sanity.server'
 import { DESIGN_QUERY, normalizeDesignPageData } from '../../lib/queries'
@@ -18,6 +19,7 @@ import {
   configuratorGroups,
   defaultSelections,
   chosenLabelFor,
+  chosenLabelsArr,
   type EditionLetter,
   type SelectionValue,
 } from '../../lib/configMatrix'
@@ -194,7 +196,11 @@ export default function DesignPage() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   // Live updates return the raw payload; reattach config matrices + sort here.
-  const { expeditions, editions } = normalizeDesignPageData(raw)
+  const { expeditions, editions, page } = normalizeDesignPageData(raw)
+
+  const heroHeadline = page?.heroHeadline || 'Design your Expedition'
+  const heroSubheading = page?.heroSubheading || 'Select your Edition first — it pre-configures the standards. Then personalise every detail. We do not believe in quoting a number before understanding your climb.'
+  const bgImageSrc = page?.heroBgImage ? urlFor(page.heroBgImage).width(1920).url() : undefined
 
   const [selectedPeak, setSelectedPeak] = useState<string>(() => searchParams.get('expedition') ?? '')
   const [edition, setEdition] = useState<SanityEditionForDesign | null>(
@@ -281,10 +287,13 @@ export default function DesignPage() {
     .flat()
     .map((n) => n.group)
   const summaryItems: SummaryItem[] = reachedGroups.flatMap((g) =>
-    g.features.map(({ feature, cell }) => ({
-      label: feature.label,
-      chosenLabel: chosenLabelFor(feature, cell, selections[feature.key]),
-    })),
+    g.features.map(({ feature, cell }) => {
+      const arr = chosenLabelsArr(feature, cell, selections[feature.key])
+      return {
+        label: feature.label,
+        chosenLabel: arr !== null ? arr : chosenLabelFor(feature, cell, selections[feature.key]),
+      }
+    }),
   )
   const editionLabel = edition ? `${edition.letter} · ${shortEdition(edition.name)}` : undefined
   const summaryPeak = isCustomPeak
@@ -352,17 +361,24 @@ export default function DesignPage() {
     <main className="min-h-screen bg-[#1A1A1A] pb-24 lg:pb-0">
       <Nav />
 
-      <div className="px-6 md:px-12 pt-28 md:pt-36 pb-12">
-        <div className="flex gap-12 max-w-[1180px] mx-auto">
+      <div className="relative px-6 md:px-12 pt-28 md:pt-36 pb-12">
+        {bgImageSrc && (
+          <img
+            src={bgImageSrc}
+            alt=""
+            aria-hidden
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-[0.08] grayscale pointer-events-none select-none"
+          />
+        )}
+        <div className="relative flex gap-12 max-w-[1440px] mx-auto">
           <div className="flex-1 min-w-0">
             {/* Persistent title */}
             <header className="mb-14">
               <h1 className="font-['Cormorant_Garamond'] font-light text-4xl md:text-5xl text-white mb-3">
-                Design your Expedition
+                {heroHeadline}
               </h1>
-              <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg max-w-[64ch]">
-                Select your Edition first — it pre-configures the standards. Then personalise every detail. We do not
-                believe in quoting a number before understanding your climb.
+              <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg">
+                {heroSubheading}
               </p>
             </header>
 
@@ -397,7 +413,7 @@ export default function DesignPage() {
               )}
 
               {/* Nav */}
-              <div className="pt-14 flex items-center justify-center gap-4">
+              <div className="pt-14 flex items-center justify-end gap-4">
                 <button
                   type="button"
                   onClick={() => syncToUrl(step - 1)}

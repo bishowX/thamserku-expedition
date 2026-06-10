@@ -16,7 +16,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
   const imageSrc = heroImage ? urlFor(heroImage as SanityImageSource).width(1920).url() : null;
 
   return (
-    <section className="relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden p-12">
+    <section className="relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden p-12 xl:p-40">
       <div className="absolute inset-0 z-0">
         {imageSrc ? (
           <img src={imageSrc} alt={`${name} hero`} className="w-full h-full object-cover object-center" />
@@ -37,7 +37,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       </div>
 
       <div className="relative z-20 w-full flex flex-col items-start justify-end h-full">
-        <h1 className="font-['Radley'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch]">
+        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch]">
           {heroTagline || `${name} Expedition`}
         </h1>
 

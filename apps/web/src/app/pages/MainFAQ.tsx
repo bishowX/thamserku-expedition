@@ -5,7 +5,6 @@ import type { QueryResponseInitial } from "@sanity/react-loader";
 import { FAQ_QUERY, type FAQPageData } from "../../lib/queries";
 import { getPreviewData } from "../../lib/preview.server";
 import { loadQuery } from "../../lib/loader.server";
-import { Nav } from "../components/Nav";
 import { FAQHero } from "../components/faq/FAQHero";
 import { FAQCategoryNavigation } from "../components/faq/FAQCategoryNavigation";
 import { FAQList } from "../components/faq/FAQList";
@@ -41,7 +40,6 @@ export default function MainFAQ() {
 
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
-      <Nav />
       <FAQHero page={data.faqPage ?? undefined} />
       <FAQCategoryNavigation
         page={data.faqPage ?? undefined}

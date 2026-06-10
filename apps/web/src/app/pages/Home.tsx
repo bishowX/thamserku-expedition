@@ -35,21 +35,21 @@ export function meta({ data }: Route.MetaArgs) {
 
 export default function Home() {
   const { initial } = useLoaderData() as { initial: QueryResponseInitial<HomePageData> }
-  const { data } = useQuery<HomePageData>(HOME_QUERY, {}, { initial })
+  const { data, encodeDataAttribute } = useQuery<HomePageData>(HOME_QUERY, {}, { initial })
 
   return (
     <>
       <Nav />
       <main>
-        <Hero data={data.homePage ?? undefined} />
-        <Manifesto data={data.homePage ?? undefined} />
+        <Hero data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
+        <Manifesto data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
         <ManifestoStats stats={data.homePage?.manifestoStats} />
         <AtlasPreview expeditions={data.homePage?.featuredExpeditions?.length ? data.homePage.featuredExpeditions : undefined} data={data.homePage ?? undefined} />
         <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} data={data.homePage ?? undefined} />
         <LegacyPreview data={data.homePage ?? undefined} />
         <UnclaimedPeaks data={data.homePage ?? undefined} />
         <NewsletterSection data={data.homePage ?? undefined} />
-        <Closing data={data.homePage ?? undefined} />
+        <Closing data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
       </main>
       <Footer />
     </>

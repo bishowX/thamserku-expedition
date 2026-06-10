@@ -28,14 +28,14 @@ export function meta({ data }: Route.MetaArgs) {
 
 export default function YetiInfrastructure() {
   const { initial } = useLoaderData() as { initial: QueryResponseInitial<YetiPageData> };
-  const { data } = useQuery<YetiPageData>(YETI_QUERY, {}, { initial });
+  const { data, encodeDataAttribute } = useQuery<YetiPageData>(YETI_QUERY, {}, { initial });
   const page = data.yetiPage ?? undefined;
 
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
-      <YetiHero page={page} />
-      <YetiDefinition page={page} />
+      <YetiHero page={page} encodeDataAttribute={encodeDataAttribute} />
+      <YetiDefinition page={page} encodeDataAttribute={encodeDataAttribute} />
       <YetiClosing page={page} />
       <Footer />
     </main>

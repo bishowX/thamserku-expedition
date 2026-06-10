@@ -368,6 +368,7 @@ export type FAQPageData = {
   faqPage: {
     heroHeadline?: string;
     heroSubline?: string;
+    heroImage?: { asset: { _ref: string } } | null;
     categoryNavEyebrow?: string;
     categoryNavHeadline?: string;
     listEyebrow?: string;
@@ -393,7 +394,7 @@ export type FAQPageData = {
 
 export const FAQ_QUERY = `{
   "faqPage": *[_id == "faqPage"][0] {
-    heroHeadline, heroSubline,
+    heroHeadline, heroSubline, heroImage,
     categoryNavEyebrow, categoryNavHeadline,
     listEyebrow,
     categories[] { label, title, subtitle, items[] { question, answer, linkText, linkTo } },
@@ -419,6 +420,7 @@ export type SafetyPageData = {
   safetyPage: {
     heroHeadline?: string;
     heroSubline?: string;
+    heroBgImage?: { asset: { _ref: string } } | null;
     statsLabel?: string;
     stats?: SafetyStat[];
     numbersHeading?: string;
@@ -448,7 +450,7 @@ export type SafetyPageData = {
 
 export const SAFETY_QUERY = `{
   "safetyPage": *[_type == "safetyPage"][0] {
-    heroHeadline, heroSubline,
+    heroHeadline, heroSubline, heroBgImage,
     statsLabel, stats[] { value, label },
     numbersHeading, numbersCards[] { title, body },
     architectureEyebrow, architectureHeading, protocols[] { label, description },
@@ -570,11 +572,17 @@ export type SanityEditionForDesign = {
 export type DesignPageData = {
   expeditions: SanityExpeditionForDesign[];
   editions: SanityEditionForDesign[];
+  page?: RawDesignPageData['page'];
 };
 
 export type RawDesignPageData = {
   expeditions: Array<Omit<SanityExpeditionForDesign, "configMatrix" | "basePrices"> & WithRawDesignConfig>;
   editions: SanityEditionForDesign[];
+  page?: {
+    heroHeadline?: string;
+    heroSubheading?: string;
+    heroBgImage?: { asset: { _ref: string } } | null;
+  } | null;
 };
 
 export const DESIGN_QUERY = `{
@@ -585,6 +593,9 @@ export const DESIGN_QUERY = `{
   },
   "editions": *[_type == "edition"] | order(letter asc) {
     _id, letter, name, positioning
+  },
+  "page": *[_type == "designPage"][0] {
+    heroHeadline, heroSubheading, heroBgImage
   }
 }`;
 
@@ -599,6 +610,6 @@ export function normalizeDesignPageData(raw: RawDesignPageData): DesignPageData 
   const expeditions = raw.expeditions
     .map(attachConfig)
     .sort((a, b) => heightOf(b.altitude) - heightOf(a.altitude));
-  return { expeditions, editions: raw.editions };
+  return { expeditions, editions: raw.editions, page: raw.page };
 }
 

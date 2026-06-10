@@ -31,7 +31,7 @@ export function meta({ data }: Route.MetaArgs) {
 
 export default function EditionsPage() {
   const { initial } = useLoaderData() as { initial: QueryResponseInitial<EditionsPageData> };
-  const { data } = useQuery<EditionsPageData>(EDITIONS_QUERY, {}, { initial });
+  const { data, encodeDataAttribute } = useQuery<EditionsPageData>(EDITIONS_QUERY, {}, { initial });
 
   return (
     <div className="w-full min-h-screen bg-[#1A1A1A] text-white">
@@ -39,7 +39,7 @@ export default function EditionsPage() {
         editions={data.editions}
         page={data.editionsPage ?? undefined}
       />
-      <EditionsManifesto page={data.editionsPage ?? undefined} />
+      <EditionsManifesto page={data.editionsPage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
       <EditionsBands editions={data.editions} />
       <EditionsComparison
         editions={data.editions}

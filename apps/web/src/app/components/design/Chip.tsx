@@ -18,7 +18,7 @@ export function Chip({ label, selected, onClick }: ChipProps) {
       className={`font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.12em] px-4 py-2.5 rounded border transition-colors ${
         selected
           ? 'bg-white text-[#1A1A1A] border-white'
-          : 'bg-transparent text-[#C8CDD2] border-[#2E2E2E] hover:border-[#5A6673]'
+          : 'bg-transparent text-[#C8CDD2] border-[#C8CDD2] hover:border-[#5A6673]'
       }`}
     >
       {label}

@@ -18,7 +18,7 @@ export function EditionsHero({
   const bgSrc = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : null;
 
   return (
- <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-end py-24 overflow-hidden">
+ <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-end p-12 xl:p-40 overflow-hidden">
       <div className="absolute inset-0 z-0 pointer-events-none">
         {bgSrc && (
           <div
@@ -31,9 +31,9 @@ export function EditionsHero({
 
       <Nav />
 
-      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-8 flex flex-col justify-end mt-48">
+      <div className="relative z-20 w-full flex flex-col">
         {page?.heroHeadline && (
-          <h1 className="font-['Radley'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch] text-white">
+          <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch] text-white">
             {page.heroHeadline}
           </h1>
         )}

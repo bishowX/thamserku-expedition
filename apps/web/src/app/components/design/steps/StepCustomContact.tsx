@@ -27,7 +27,7 @@ interface StepCustomContactProps {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-8">{children}</h2>
+    <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">{children}</h2>
   )
 }
 

@@ -21,7 +21,7 @@ export function ConfiguratorStep({ groups, selections, onChange }: ConfiguratorS
     <div className="space-y-16">
       {groups.map(({ number, group }) => (
         <section key={group.group}>
-          <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-8">
+          <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
             {number}. {group.group}
           </h2>
           <div className="space-y-9">

@@ -131,14 +131,14 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
       <div
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 text-white ${
           hasDarkBg
-            ? "bg-[#1A1A1A]/95 backdrop-blur-md border-b border-white/5"
+            ? "bg-[#1A1A1A]/95 backdrop-blur-md"
             : "bg-transparent"
         } ${hidden && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"}`}
         onMouseLeave={handleNavLeave}
       >
         <nav>
           {/* Main row */}
-          <div className="flex items-center justify-between px-8 pt-4 pb-1 relative">
+          <div className="flex items-center justify-between px-8 pt-4 pb-1">
             {/* Logo */}
             <div
               className="shrink-0 w-auto lg:w-[196px] z-50"
@@ -244,11 +244,6 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
               )}
             </button>
 
-            {/* Scroll Progress */}
-            <div
-              className="absolute bottom-0 left-0 h-[2px] bg-white/40 transition-none"
-              style={{ width: `${scrollProgress}%` }}
-            />
           </div>
         </nav>
 
@@ -330,6 +325,15 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
             )}
           </div>
         </div>
+
+        {/* Scroll Progress */}
+        {hasDarkBg && (
+          <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/5" />
+        )}
+        <div
+          className="absolute bottom-0 left-0 h-[1px] bg-white/40 transition-none"
+          style={{ width: `${scrollProgress}%` }}
+        />
       </div>
 
       {/* Mobile Menu Overlay */}

@@ -39,7 +39,7 @@ export function meta({ data }: Route.MetaArgs) {
 
 export default function HeritageAndAchievementsPage() {
   const { initial } = useLoaderData() as { initial: QueryResponseInitial<AchievementsPageData> };
-  const { data } = useQuery<AchievementsPageData>(ACHIEVEMENTS_QUERY, {}, { initial });
+  const { data, encodeDataAttribute } = useQuery<AchievementsPageData>(ACHIEVEMENTS_QUERY, {}, { initial });
   const page = data.achievementsPage ?? undefined;
   const stats = page?.stats?.length ? page.stats : DEFAULT_STATS;
 
@@ -52,7 +52,7 @@ export default function HeritageAndAchievementsPage() {
       <Nav />
       <AchievementsHero page={page} />
       <ManifestoStats stats={stats} />
-      <AchievementsDecades page={page} />
+      <AchievementsDecades page={page} encodeDataAttribute={encodeDataAttribute} />
       <Footer />
     </main>
   );

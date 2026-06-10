@@ -2,6 +2,8 @@ import { useRef, useEffect, Fragment } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { stegaClean } from "@sanity/client/stega";
+import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
 import type { YetiPageData } from "../../../lib/queries";
 import { PartnerCard } from "./PartnerCard";
 
@@ -35,6 +37,7 @@ interface Partner {
   name: string;
   logo: string;
   label?: string; // category chip — omit for the unlabelled mark
+  href?: string; // external link — omit to leave card non-clickable
   fx: number; // final x position (% of container, 0–100)
   fy: number; // final y position (% of container, 0–100)
   fr: number; // final rotation (deg)
@@ -49,26 +52,266 @@ interface Partner {
 // constellation is edge-weighted and the headline reads cleanly through the middle.
 // `depth` drives opacity, scale nudge and parallax strength for front-to-back feel.
 const P: Partner[] = [
-  { id: "hamro-safar",        name: "Hamro Safar",          logo: hamroSafar,        label: "Travel",     fx: 12.1, fy: 16.0, fr: -2,   fs: 0.90, z: 9,  depth: 0.95 },
-  { id: "yeti-airlines",      name: "Yeti Airlines",        logo: yetiAirlines,      label: "Airlines",   fx: 30.2, fy: 17.5, fr: 1.5,  fs: 0.92, z: 9,  depth: 0.95 },
-  { id: "himalaya-airlines",  name: "Himalaya Airlines",    logo: himalayaAirlines,  label: "Airlines",   fx: 48.3, fy: 17.4, fr: -1,   fs: 0.86, z: 7,  depth: 0.84 },
-  { id: "tara-air",           name: "Tara Air",             logo: taraAir,           label: "Airlines",   fx: 67.7, fy: 18.5, fr: 1.5,  fs: 0.84, z: 6,  depth: 0.80 },
-  { id: "mountain-lodges",    name: "Mountain Lodges of Nepal", logo: mountainLodges, label: "Hotel",     fx: 82.8, fy: 16.5, fr: -1.5, fs: 0.85, z: 6,  depth: 0.80 },
-  { id: "gokarna-forest",     name: "Gokarna Forest Resort", logo: gokarnaForest,    label: "Hotel",      fx: 94.4, fy: 26.3, fr: 1,    fs: 0.90, z: 8,  depth: 0.90 },
-  { id: "yeti-adventure",     name: "Yeti Adventure",       logo: yetiAdventure,     label: "Travel",     fx: 4.2,  fy: 32.7, fr: -2,   fs: 0.90, z: 8,  depth: 0.90 },
-  { id: "kora-tours",         name: "Kora Tours",           logo: koraTours,         label: "Travel",     fx: 20.5, fy: 40.7, fr: 1.5,  fs: 0.95, z: 10, depth: 1.00 },
-  { id: "yeti-world",         name: "Yeti World",           logo: yetiWorld,                              fx: 82.0, fy: 40.2, fr: -1,   fs: 0.82, z: 4,  depth: 0.80, hero: true },
-  { id: "kasara",             name: "Kasara",               logo: kasara,            label: "Hotel",      fx: 94.2, fy: 53.8, fr: 2,    fs: 0.85, z: 6,  depth: 0.80 },
-  { id: "adventure-quest",    name: "Adventure Quest",      logo: adventureQuest,    label: "Travel",     fx: 5.8,  fy: 56.0, fr: 2,    fs: 0.92, z: 9,  depth: 0.95 },
-  { id: "sherpa-hospitality", name: "Sherpa Hospitality Group", logo: sherpaHospitality, label: "Travel", fx: 18.3, fy: 65.2, fr: -1.5, fs: 0.88, z: 7,  depth: 0.85 },
-  { id: "pasang-lhamu",       name: "Pasang Lhamu Foundation", logo: pasangLhamu,    label: "Foundation", fx: 61.6, fy: 74.9, fr: 1,    fs: 0.85, z: 6,  depth: 0.80 },
-  { id: "nomad-hotel",        name: "Nomad Hotel",          logo: nomadHotel,        label: "Hotel",      fx: 84.3, fy: 69.7, fr: -2,   fs: 0.86, z: 7,  depth: 0.84 },
-  { id: "shinta-mani",        name: "Shinta Mani Mustang",  logo: shintaMani,        label: "Travel",     fx: 38.2, fy: 75.7, fr: -1.5, fs: 0.88, z: 7,  depth: 0.85 },
-  { id: "thamserku-travel",   name: "Thamserku Travel",     logo: thamserkuTravel,   label: "Travel",     fx: 25.9, fy: 85.9, fr: 2,    fs: 0.83, z: 5,  depth: 0.76 },
-  { id: "thamserku-adventure", name: "Thamserku Adventure", logo: thamserkuAdventure, label: "Travel",    fx: 49.8, fy: 90.0, fr: -2,   fs: 0.82, z: 4,  depth: 0.74 },
-  { id: "yeti-holidays",      name: "Yeti Holidays",        logo: yetiHolidays,      label: "Travel",     fx: 6.9,  fy: 91.1, fr: 2.5,  fs: 0.88, z: 8,  depth: 0.90 },
-  { id: "le-sherpa",          name: "Le Sherpa",            logo: leSherpa,          label: "Restaurant", fx: 74.7, fy: 87.2, fr: -1,   fs: 0.85, z: 6,  depth: 0.82 },
-  { id: "lumbini-hokke",      name: "Lumbini Hokke",        logo: lumbiniHokke,      label: "Hotel",      fx: 93.6, fy: 86.9, fr: 1.5,  fs: 0.85, z: 6,  depth: 0.80 },
+  {
+    id: "hamro-safar",
+    name: "Hamro Safar",
+    logo: hamroSafar,
+    label: "Travel",
+    href: "",
+    fx: 12.1,
+    fy: 16.0,
+    fr: -2,
+    fs: 0.9,
+    z: 9,
+    depth: 0.95,
+  },
+  {
+    id: "yeti-airlines",
+    name: "Yeti Airlines",
+    logo: yetiAirlines,
+    label: "Airlines",
+    href: "",
+    fx: 30.2,
+    fy: 17.5,
+    fr: 1.5,
+    fs: 0.92,
+    z: 9,
+    depth: 0.95,
+  },
+  {
+    id: "himalaya-airlines",
+    name: "Himalaya Airlines",
+    logo: himalayaAirlines,
+    label: "Airlines",
+    href: "",
+    fx: 48.3,
+    fy: 17.4,
+    fr: -1,
+    fs: 0.86,
+    z: 7,
+    depth: 0.84,
+  },
+  {
+    id: "tara-air",
+    name: "Tara Air",
+    logo: taraAir,
+    label: "Airlines",
+    href: "",
+    fx: 67.7,
+    fy: 18.5,
+    fr: 1.5,
+    fs: 0.84,
+    z: 6,
+    depth: 0.8,
+  },
+  {
+    id: "mountain-lodges",
+    name: "Mountain Lodges of Nepal",
+    logo: mountainLodges,
+    label: "Hotel",
+    href: "",
+    fx: 82.8,
+    fy: 16.5,
+    fr: -1.5,
+    fs: 0.85,
+    z: 6,
+    depth: 0.8,
+  },
+  {
+    id: "gokarna-forest",
+    name: "Gokarna Forest Resort",
+    logo: gokarnaForest,
+    label: "Hotel",
+    href: "",
+    fx: 94.4,
+    fy: 26.3,
+    fr: 1,
+    fs: 0.9,
+    z: 8,
+    depth: 0.9,
+  },
+  {
+    id: "yeti-adventure",
+    name: "Yeti Adventure",
+    logo: yetiAdventure,
+    label: "Travel",
+    href: "",
+    fx: 4.2,
+    fy: 32.7,
+    fr: -2,
+    fs: 0.9,
+    z: 8,
+    depth: 0.9,
+  },
+  {
+    id: "kora-tours",
+    name: "Kora Tours",
+    logo: koraTours,
+    label: "Travel",
+    href: "",
+    fx: 20.5,
+    fy: 40.7,
+    fr: 1.5,
+    fs: 0.95,
+    z: 10,
+    depth: 1.0,
+  },
+  {
+    id: "yeti-world",
+    name: "Yeti World",
+    logo: yetiWorld,
+    href: "",
+    fx: 82.0,
+    fy: 40.2,
+    fr: -1,
+    fs: 0.82,
+    z: 4,
+    depth: 0.8,
+    hero: true,
+  },
+  {
+    id: "kasara",
+    name: "Kasara",
+    logo: kasara,
+    label: "Hotel",
+    href: "",
+    fx: 94.2,
+    fy: 53.8,
+    fr: 2,
+    fs: 0.85,
+    z: 6,
+    depth: 0.8,
+  },
+  {
+    id: "adventure-quest",
+    name: "Adventure Quest",
+    logo: adventureQuest,
+    label: "Travel",
+    href: "",
+    fx: 5.8,
+    fy: 56.0,
+    fr: 2,
+    fs: 0.92,
+    z: 9,
+    depth: 0.95,
+  },
+  {
+    id: "sherpa-hospitality",
+    name: "Sherpa Hospitality Group",
+    logo: sherpaHospitality,
+    label: "Travel",
+    href: "",
+    fx: 18.3,
+    fy: 65.2,
+    fr: -1.5,
+    fs: 0.88,
+    z: 7,
+    depth: 0.85,
+  },
+  {
+    id: "pasang-lhamu",
+    name: "Pasang Lhamu Foundation",
+    logo: pasangLhamu,
+    label: "Foundation",
+    href: "",
+    fx: 61.6,
+    fy: 74.9,
+    fr: 1,
+    fs: 0.85,
+    z: 6,
+    depth: 0.8,
+  },
+  {
+    id: "nomad-hotel",
+    name: "Nomad Hotel",
+    logo: nomadHotel,
+    label: "Hotel",
+    href: "",
+    fx: 84.3,
+    fy: 69.7,
+    fr: -2,
+    fs: 0.86,
+    z: 7,
+    depth: 0.84,
+  },
+  {
+    id: "shinta-mani",
+    name: "Shinta Mani Mustang",
+    logo: shintaMani,
+    label: "Travel",
+    href: "",
+    fx: 38.2,
+    fy: 75.7,
+    fr: -1.5,
+    fs: 0.88,
+    z: 7,
+    depth: 0.85,
+  },
+  {
+    id: "thamserku-travel",
+    name: "Thamserku Travel",
+    logo: thamserkuTravel,
+    label: "Travel",
+    href: "",
+    fx: 25.9,
+    fy: 85.9,
+    fr: 2,
+    fs: 0.83,
+    z: 5,
+    depth: 0.76,
+  },
+  {
+    id: "thamserku-adventure",
+    name: "Thamserku Adventure",
+    logo: thamserkuAdventure,
+    label: "Travel",
+    href: "",
+    fx: 49.8,
+    fy: 90.0,
+    fr: -2,
+    fs: 0.82,
+    z: 4,
+    depth: 0.74,
+  },
+  {
+    id: "yeti-holidays",
+    name: "Yeti Holidays",
+    logo: yetiHolidays,
+    label: "Travel",
+    href: "",
+    fx: 6.9,
+    fy: 91.1,
+    fr: 2.5,
+    fs: 0.88,
+    z: 8,
+    depth: 0.9,
+  },
+  {
+    id: "le-sherpa",
+    name: "Le Sherpa",
+    logo: leSherpa,
+    label: "Restaurant",
+    href: "",
+    fx: 74.7,
+    fy: 87.2,
+    fr: -1,
+    fs: 0.85,
+    z: 6,
+    depth: 0.82,
+  },
+  {
+    id: "lumbini-hokke",
+    name: "Lumbini Hokke",
+    logo: lumbiniHokke,
+    label: "Hotel",
+    href: "",
+    fx: 93.6,
+    fy: 86.9,
+    fr: 1.5,
+    fs: 0.85,
+    z: 6,
+    depth: 0.8,
+  },
 ];
 
 const HEADING = "The operating ecosystem behind every expedition.";
@@ -92,8 +335,14 @@ function SplitWords({ text }: { text: string }) {
   );
 }
 
-export const YetiHero = ({ page }: { page?: PageData }) => {
-  const heading = page?.heroHeadline ?? HEADING;
+export const YetiHero = ({
+  page,
+  encodeDataAttribute,
+}: {
+  page?: PageData;
+  encodeDataAttribute?: EncodeDataAttributeCallback;
+}) => {
+  const heading = stegaClean(page?.heroHeadline ?? HEADING);
   const subtext = page?.heroSubheading ?? SUBTEXT;
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -115,7 +364,9 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       if (cards.length === 0) return;
 
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
       const cw = section.offsetWidth;
       const ch = section.offsetHeight;
@@ -124,12 +375,12 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
       // ── Mobile uses a curated subset (incl. the hero) arranged as top +
       // bottom bands so the headline reads cleanly through the middle. ──
       const mPos: Record<string, { fx: number; fy: number; fr: number }> = {
-        "yeti-world":     { fx: 50, fy: 12, fr: 0 },
-        "yeti-airlines":  { fx: 17, fy: 24, fr: -2 },
+        "yeti-world": { fx: 50, fy: 12, fr: 0 },
+        "yeti-airlines": { fx: 17, fy: 24, fr: -2 },
         "gokarna-forest": { fx: 83, fy: 25, fr: 2 },
-        "yeti-holidays":  { fx: 18, fy: 86, fr: 2.5 },
-        "shinta-mani":    { fx: 50, fy: 90, fr: -1.5 },
-        "lumbini-hokke":  { fx: 82, fy: 85, fr: 1.5 },
+        "yeti-holidays": { fx: 18, fy: 86, fr: 2.5 },
+        "shinta-mani": { fx: 50, fy: 90, fr: -1.5 },
+        "lumbini-hokke": { fx: 82, fy: 85, fr: 1.5 },
       };
       const MS = 0.62; // mobile scale damping
 
@@ -198,7 +449,10 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
           const chip = card.querySelector("[data-chip]");
           if (chip) gsap.set(chip, { opacity: 1, y: 0 });
         });
-        gsap.set(h1.querySelectorAll("[data-word]"), { yPercent: 0, opacity: 1 });
+        gsap.set(h1.querySelectorAll("[data-word]"), {
+          yPercent: 0,
+          opacity: 1,
+        });
         gsap.set(sub, { opacity: 1, y: 0, filter: "blur(0px)" });
         if (glow) gsap.set(glow, { opacity: 1 });
         if (scrollCue) gsap.set(scrollCue, { opacity: 0 });
@@ -223,7 +477,15 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
           x: 0,
           y: 0,
           rotation: 0,
-          scale: cut ? 0 : isHero ? (isMobile ? 1.8 : 2.1) : isMobile ? 0.45 : 0.5,
+          scale: cut
+            ? 0
+            : isHero
+              ? isMobile
+                ? 1.8
+                : 2.1
+              : isMobile
+                ? 0.45
+                : 0.5,
           zIndex: p.z,
           opacity: isHero ? 1 : 0,
           pointerEvents: cut ? "none" : undefined,
@@ -261,7 +523,11 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
       });
 
       if (scrollCue) {
-        tl.to(scrollCue, { opacity: 0, y: 10, duration: 0.08, ease: "power2.in" }, 0);
+        tl.to(
+          scrollCue,
+          { opacity: 0, y: 10, duration: 0.08, ease: "power2.in" },
+          0,
+        );
       }
 
       // Phase 0/1a: hero anticipation pulse, then shrink/lift to its slot.
@@ -316,7 +582,13 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
       // Phase 2: headline word-by-word reveal (near the end).
       tl.to(
         words,
-        { yPercent: 0, opacity: 1, stagger: 0.012, duration: 0.18, ease: "power3.out" },
+        {
+          yPercent: 0,
+          opacity: 1,
+          stagger: 0.012,
+          duration: 0.18,
+          ease: "power3.out",
+        },
         isMobile ? 0.42 : 0.46,
       );
 
@@ -335,14 +607,26 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
         .filter((el): el is Element => el !== null);
       tl.to(
         chipEls,
-        { opacity: 1, y: 0, stagger: 0.005, duration: 0.12, ease: "power2.out" },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.005,
+          duration: 0.12,
+          ease: "power2.out",
+        },
         isMobile ? 0.56 : 0.58,
       );
 
       // Phase 4: subtitle blur-to-clear — the final beat.
       tl.to(
         sub,
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.2, ease: "power2.out" },
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.2,
+          ease: "power2.out",
+        },
         isMobile ? 0.62 : 0.64,
       );
     },
@@ -356,7 +640,8 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
     const section = sectionRef.current;
     if (!section) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(max-width: 767px), (pointer: coarse)").matches) return;
+    if (window.matchMedia("(max-width: 767px), (pointer: coarse)").matches)
+      return;
 
     const parEls = Array.from(
       section.querySelectorAll<HTMLElement>("[data-parallax]"),
@@ -440,7 +725,8 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
       <div className="absolute inset-0 z-[6] flex flex-col items-center justify-center px-8 pointer-events-none select-none">
         <h1
           ref={headingRef}
-          className="font-['Radley'] font-light text-[clamp(2rem,4.8vw,4.75rem)] tracking-[-0.015em] text-white leading-[1.06] text-center max-w-[16ch] mb-6"
+          className="font-['Cormorant_Garamond'] font-light text-[clamp(2rem,4.8vw,4.75rem)] tracking-[-0.015em] text-white leading-[1.06] text-center max-w-[16ch] mb-6"
+          data-sanity={encodeDataAttribute?.(["yetiPage", "heroHeadline"])}
         >
           <SplitWords text={heading} />
         </h1>
@@ -499,6 +785,7 @@ export const YetiHero = ({ page }: { page?: PageData }) => {
                   logo={partner.logo}
                   name={partner.name}
                   label={partner.label}
+                  href={partner.href || undefined}
                 />
               </div>
             </div>

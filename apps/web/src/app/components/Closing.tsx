@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { stegaClean } from "@sanity/client/stega";
+import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { urlFor } from "../../lib/sanity";
 import { TextReveal } from "./TextReveal";
@@ -17,10 +19,10 @@ type ClosingData = {
   closingImage?: { asset: { _ref: string } } | null;
 };
 
-export function Closing({ data }: { data?: ClosingData }) {
+export function Closing({ data, encodeDataAttribute }: { data?: ClosingData; encodeDataAttribute?: EncodeDataAttributeCallback }) {
   const eyebrow = data?.closingEyebrow ?? "07 — BEGIN PRIVATELY";
-  const heading =
-    data?.closingHeading ?? "Begin with knowledge. Move with respect.";
+  const heading = stegaClean(
+    data?.closingHeading ?? "Begin with knowledge. Move with respect.");
   const body =
     data?.closingBody ??
     "Every Thamserku journey begins with a private conversation — with our expedition desk, not a booking page.";
@@ -132,6 +134,7 @@ export function Closing({ data }: { data?: ClosingData }) {
         <h2
           ref={headingRef}
           className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-2"
+          data-sanity={encodeDataAttribute?.(['homePage', 'closingHeading'])}
         >
           <TextReveal text={heading} />
         </h2>

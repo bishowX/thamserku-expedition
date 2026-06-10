@@ -56,7 +56,7 @@ export function StepFormat({
     <div className="space-y-16">
       {/* 1. Expedition Format */}
       <section>
-        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-8">
+        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
           1. Expedition Format
         </h2>
 
@@ -115,7 +115,7 @@ export function StepFormat({
 
       {/* 2. Season */}
       <section>
-        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-8">
+        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
           2. Season
         </h2>
         <div className="space-y-9">
@@ -154,12 +154,12 @@ export function StepFormat({
 
       {/* 3. Edition Selection */}
       <section>
-        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-8">
+        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
           3. Edition Selection
         </h2>
         <div>
           <FieldLabel>3.1 Choose Your Edition</FieldLabel>
-          <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] text-[#3A3A3A] mb-5 -mt-2">
+          <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] text-[#5A6673] mb-5 -mt-2">
             This pre-configures your expedition standards. You can customise everything in the next steps.
           </p>
           <ChipRow>

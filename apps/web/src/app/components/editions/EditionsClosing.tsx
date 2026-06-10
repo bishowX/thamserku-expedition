@@ -16,7 +16,9 @@ export function EditionsClosing({ page }: { page?: PageData }) {
     page?.closingFootnote ??
     "RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF";
   const imageSrc = page?.closingImage
-    ? urlFor(page.closingImage as SanityImageSource).width(1920).url()
+    ? urlFor(page.closingImage as SanityImageSource)
+        .width(1920)
+        .url()
     : null;
 
   return (
@@ -51,7 +53,7 @@ export function EditionsClosing({ page }: { page?: PageData }) {
 
         <div className="mb-8 md:mb-16">
           <Link
-            to="/enquiry"
+            to="/consultation"
             className="inline-flex items-center justify-center px-16 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-white text-white hover:bg-white hover:text-[#2E353C]"
           >
             ENQUIRE

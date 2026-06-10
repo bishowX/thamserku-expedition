@@ -167,6 +167,12 @@ export function formatRange(cell: ConfigCell, n: number): string {
   return `${n}${unit}`
 }
 
+/** For multiselect features, returns each chosen label as a separate string. Returns null for other control types. */
+export function chosenLabelsArr(feature: ConfigFeature, cell: ConfigCell, value: SelectionValue): string[] | null {
+  if (feature.control !== 'multiselect') return null
+  return ((value as string[]) ?? []).map((v) => optionByValue(cell, v)?.label ?? v)
+}
+
 export function chosenLabelFor(feature: ConfigFeature, cell: ConfigCell, value: SelectionValue): string {
   switch (feature.control) {
     case 'select':

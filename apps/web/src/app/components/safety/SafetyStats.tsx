@@ -1,22 +1,25 @@
-import type { SafetyPageData } from '../../../lib/queries';
+import type { SafetyPageData } from "../../../lib/queries";
 
-type Props = { page: SafetyPageData['safetyPage'] };
+type Props = { page: SafetyPageData["safetyPage"] };
 
 export const SafetyStats = ({ page }: Props) => {
   const stats = page?.stats ?? [];
 
   return (
-    <section className="bg-[#2E353C] py-10 md:py-[60px] px-5 md:px-8">
+    <section className="bg-[#2E353C] md:py-[32px] px-5 md:px-8">
       <div className="max-w-[1738px] mx-auto flex flex-col items-center">
         {page?.statsLabel && (
-          <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-white text-center mb-12 md:mb-16">
+          <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-white text-center mb-6">
             {page.statsLabel}
           </span>
         )}
 
         <div className="w-full grid grid-cols-2 gap-y-10 gap-x-6 sm:grid-cols-3 md:flex md:flex-wrap md:justify-center md:gap-x-16 lg:gap-x-24">
           {stats.map((stat, i) => (
-            <div key={i} className="flex flex-col items-center justify-center text-center">
+            <div
+              key={i}
+              className="flex flex-col items-center justify-center text-center"
+            >
               <p className="font-['Radley'] text-[clamp(2rem,1.5rem+1.6vw,2.625rem)] text-white leading-[1.2]">
                 {stat.value}
               </p>
