@@ -45,7 +45,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
           >
             {imageUrl && (
               <div
-                className={`absolute inset-0 z-0 pointer-events-none mix-blend-luminosity ${isDark ? "opacity-30" : "opacity-[0.08]"}`}
+                className={`absolute inset-0 z-0 pointer-events-none ${isDark ? "mix-blend-luminosity opacity-30" : "mix-blend-multiply opacity-[0.35]"}`}
                 style={{
                   backgroundImage: `url(${imageUrl})`,
                   backgroundPosition: "left center",

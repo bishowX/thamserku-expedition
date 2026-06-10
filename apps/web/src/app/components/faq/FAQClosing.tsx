@@ -1,6 +1,6 @@
-import { Link } from 'react-router';
-import { urlFor } from '../../../lib/sanity';
-import type { SanityImageSource } from '@sanity/image-url';
+import { Link } from "react-router";
+import { urlFor } from "../../../lib/sanity";
+import type { SanityImageSource } from "@sanity/image-url";
 
 type PageData = {
   closingHeadline?: string;
@@ -11,10 +11,12 @@ type PageData = {
 
 export const FAQClosing = ({ page }: { page?: PageData }) => {
   const imageSrc = page?.closingImage
-    ? urlFor(page.closingImage as SanityImageSource).width(1920).url()
+    ? urlFor(page.closingImage as SanityImageSource)
+        .width(1920)
+        .url()
     : null;
 
-  return (
+return (
     <section className="relative bg-[#2E353C] section-padding overflow-hidden">
       {imageSrc && (
         <div className="absolute inset-0 z-0 pointer-events-none">
@@ -33,11 +35,12 @@ export const FAQClosing = ({ page }: { page?: PageData }) => {
         </span>
 
         <h2 className="font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.1] text-center max-w-[26ch] mb-8">
-          {page?.closingHeadline ?? 'Your question is not on this page?'}
+          {page?.closingHeadline ?? "Your question is not on this page?"}
         </h2>
 
         <p className="font-['Lexend'] font-light text-[17px] text-[#C8CDD2] leading-[1.65] text-center max-w-[60ch] mb-8 md:mb-16">
-          {page?.closingBody ?? 'Write to the expedition desk. A senior advisor will respond personally — quietly, and within 48 hours — and the conversation begins.'}
+          {page?.closingBody ??
+            "Write to the expedition desk. A senior advisor will respond personally — quietly, and within 48 hours — and the conversation begins."}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto items-center justify-center mb-8 md:mb-16">
@@ -50,7 +53,8 @@ export const FAQClosing = ({ page }: { page?: PageData }) => {
         </div>
 
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center">
-          {page?.closingDisclaimerLine ?? 'ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF.'}
+          {page?.closingDisclaimerLine ??
+            "ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF."}
         </span>
       </div>
     </section>

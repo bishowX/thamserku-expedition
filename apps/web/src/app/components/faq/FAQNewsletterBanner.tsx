@@ -8,22 +8,23 @@ type PageData = {
 
 export const FAQNewsletterBanner = ({ page }: { page?: PageData }) => {
   return (
- <section className="bg-[#1A1A1A] section-padding">
+    <section className="bg-[#2E353C] section-padding">
       <div className="max-w-[880px] mx-auto flex flex-col items-center">
-
         {/* Eyebrow */}
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-8">
-          {page?.newsletterEyebrow ?? 'FIELD NOTES — NEWSLETTER'}
+          {page?.newsletterEyebrow ?? "FIELD NOTES — NEWSLETTER"}
         </span>
 
         {/* Headline */}
         <h2 className="font-['Radley'] font-light text-[40px] md:text-[52px] text-white leading-[1.1] text-center max-w-[26ch] mb-6">
-          {page?.newsletterHeadline ?? 'Receive Field Notes from the expedition desk.'}
+          {page?.newsletterHeadline ??
+            "Receive Field Notes from the expedition desk."}
         </h2>
 
         {/* Sub-paragraph */}
         <p className="font-['Lexend'] font-light text-[16px] text-[#C8CDD2] leading-[1.7] text-center max-w-[60ch] mb-12">
-          {page?.newsletterBody ?? 'A quiet quarterly letter — field reports, route judgements, Sherpa notes, and Himalayan readings. No marketing. Unsubscribe anytime.'}
+          {page?.newsletterBody ??
+            "A quiet quarterly letter — field reports, route judgements, Sherpa notes, and Himalayan readings. No marketing. Unsubscribe anytime."}
         </p>
 
         {/* Inline Newsletter Form */}
@@ -44,10 +45,9 @@ export const FAQNewsletterBanner = ({ page }: { page?: PageData }) => {
 
         {/* Small privacy line */}
         <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#C8CDD2] text-center mb-6">
-          {page?.newsletterPrivacyLine ?? 'BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS.'}
+          {page?.newsletterPrivacyLine ??
+            "BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS."}
         </span>
-
-
       </div>
     </section>
   );

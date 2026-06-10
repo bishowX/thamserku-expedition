@@ -436,7 +436,7 @@ export type FAQPageData = {
 
 export async function getFAQPageData(): Promise<FAQPageData> {
   return serverClient.fetch(`{
-    "faqPage": *[_type == "faqPage"][0] {
+    "faqPage": *[_id == "faqPage"][0] {
       heroHeadline, heroSubline,
       categoryNavEyebrow, categoryNavHeadline,
       listEyebrow,
