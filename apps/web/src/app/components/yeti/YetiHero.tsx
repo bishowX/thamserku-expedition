@@ -5,28 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { stegaClean } from "@sanity/client/stega";
 import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
 import type { YetiPageData } from "../../../lib/queries";
+import { urlFor } from "../../../lib/sanity";
 import { PartnerCard } from "./PartnerCard";
-
-import yetiAirlines from "../../../assets/logos/yeti-airlines.svg";
-import himalayaAirlines from "../../../assets/logos/himalaya-airlines.svg";
-import taraAir from "../../../assets/logos/tara-air.svg";
-import mountainLodges from "../../../assets/logos/mountain-lodges.svg";
-import gokarnaForest from "../../../assets/logos/gokarna-forest.svg";
-import yetiAdventure from "../../../assets/logos/yeti-adventure.svg";
-import koraTours from "../../../assets/logos/kora-tours.svg";
-import kasara from "../../../assets/logos/kasara.svg";
-import adventureQuest from "../../../assets/logos/adventure-quest.svg";
-import sherpaHospitality from "../../../assets/logos/sherpa-hospitality.svg";
-import pasangLhamu from "../../../assets/logos/pasang-lhamu-foundation.svg";
-import nomadHotel from "../../../assets/logos/nomad-hotel.svg";
-import shintaMani from "../../../assets/logos/shinta-mani-mustang.svg";
-import thamserkuTravel from "../../../assets/logos/thamserku-travel.svg";
-import thamserkuAdventure from "../../../assets/logos/thamserku-adventure.svg";
-import yetiHolidays from "../../../assets/logos/yeti-holidays.svg";
-import leSherpa from "../../../assets/logos/le-sherpa.svg";
-import lumbiniHokke from "../../../assets/logos/lumbini-hokke.svg";
-import hamroSafar from "../../../assets/logos/hamro-safar.svg";
-import yetiWorld from "../../../assets/logos/yeti-world.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,283 +16,68 @@ interface Partner {
   id: string;
   name: string;
   logo: string;
-  label?: string; // category chip — omit for the unlabelled mark
-  href?: string; // external link — omit to leave card non-clickable
-  fx: number; // final x position (% of container, 0–100)
-  fy: number; // final y position (% of container, 0–100)
-  fr: number; // final rotation (deg)
-  fs: number; // final scale
-  z: number; // stacking order
-  depth: number; // 0–1, 1 = nearest (brighter, more parallax)
-  hero?: boolean; // the central anchor logo (starts large & centred)
+  label?: string;
+  href?: string;
+  fx: number;
+  fy: number;
+  fr: number;
+  fs: number;
+  z: number;
+  depth: number;
+  hero?: boolean;
 }
 
-// The full Yeti ecosystem — 20 partner cards mirroring the Figma hero. Positions
-// are taken straight from the design (centre of each card / frame bounds), so the
-// constellation is edge-weighted and the headline reads cleanly through the middle.
-// `depth` drives opacity, scale nudge and parallax strength for front-to-back feel.
-const P: Partner[] = [
-  {
-    id: "hamro-safar",
-    name: "Hamro Safar",
-    logo: hamroSafar,
-    label: "Travel",
-    href: "",
-    fx: 12.1,
-    fy: 16.0,
-    fr: -2,
-    fs: 0.9,
-    z: 9,
-    depth: 0.95,
-  },
-  {
-    id: "yeti-airlines",
-    name: "Yeti Airlines",
-    logo: yetiAirlines,
-    label: "Airlines",
-    href: "",
-    fx: 30.2,
-    fy: 17.5,
-    fr: 1.5,
-    fs: 0.92,
-    z: 9,
-    depth: 0.95,
-  },
-  {
-    id: "himalaya-airlines",
-    name: "Himalaya Airlines",
-    logo: himalayaAirlines,
-    label: "Airlines",
-    href: "",
-    fx: 48.3,
-    fy: 17.4,
-    fr: -1,
-    fs: 0.86,
-    z: 7,
-    depth: 0.84,
-  },
-  {
-    id: "tara-air",
-    name: "Tara Air",
-    logo: taraAir,
-    label: "Airlines",
-    href: "",
-    fx: 67.7,
-    fy: 18.5,
-    fr: 1.5,
-    fs: 0.84,
-    z: 6,
-    depth: 0.8,
-  },
-  {
-    id: "mountain-lodges",
-    name: "Mountain Lodges of Nepal",
-    logo: mountainLodges,
-    label: "Hotel",
-    href: "",
-    fx: 82.8,
-    fy: 16.5,
-    fr: -1.5,
-    fs: 0.85,
-    z: 6,
-    depth: 0.8,
-  },
-  {
-    id: "gokarna-forest",
-    name: "Gokarna Forest Resort",
-    logo: gokarnaForest,
-    label: "Hotel",
-    href: "",
-    fx: 94.4,
-    fy: 26.3,
-    fr: 1,
-    fs: 0.9,
-    z: 8,
-    depth: 0.9,
-  },
-  {
-    id: "yeti-adventure",
-    name: "Yeti Adventure",
-    logo: yetiAdventure,
-    label: "Travel",
-    href: "",
-    fx: 4.2,
-    fy: 32.7,
-    fr: -2,
-    fs: 0.9,
-    z: 8,
-    depth: 0.9,
-  },
-  {
-    id: "kora-tours",
-    name: "Kora Tours",
-    logo: koraTours,
-    label: "Travel",
-    href: "",
-    fx: 20.5,
-    fy: 40.7,
-    fr: 1.5,
-    fs: 0.95,
-    z: 10,
-    depth: 1.0,
-  },
-  {
-    id: "yeti-world",
-    name: "Yeti World",
-    logo: yetiWorld,
-    href: "",
-    fx: 82.0,
-    fy: 40.2,
-    fr: -1,
-    fs: 0.82,
-    z: 4,
-    depth: 0.8,
-    hero: true,
-  },
-  {
-    id: "kasara",
-    name: "Kasara",
-    logo: kasara,
-    label: "Hotel",
-    href: "",
-    fx: 94.2,
-    fy: 53.8,
-    fr: 2,
-    fs: 0.85,
-    z: 6,
-    depth: 0.8,
-  },
-  {
-    id: "adventure-quest",
-    name: "Adventure Quest",
-    logo: adventureQuest,
-    label: "Travel",
-    href: "",
-    fx: 5.8,
-    fy: 56.0,
-    fr: 2,
-    fs: 0.92,
-    z: 9,
-    depth: 0.95,
-  },
-  {
-    id: "sherpa-hospitality",
-    name: "Sherpa Hospitality Group",
-    logo: sherpaHospitality,
-    label: "Travel",
-    href: "",
-    fx: 18.3,
-    fy: 65.2,
-    fr: -1.5,
-    fs: 0.88,
-    z: 7,
-    depth: 0.85,
-  },
-  {
-    id: "pasang-lhamu",
-    name: "Pasang Lhamu Foundation",
-    logo: pasangLhamu,
-    label: "Foundation",
-    href: "",
-    fx: 61.6,
-    fy: 74.9,
-    fr: 1,
-    fs: 0.85,
-    z: 6,
-    depth: 0.8,
-  },
-  {
-    id: "nomad-hotel",
-    name: "Nomad Hotel",
-    logo: nomadHotel,
-    label: "Hotel",
-    href: "",
-    fx: 84.3,
-    fy: 69.7,
-    fr: -2,
-    fs: 0.86,
-    z: 7,
-    depth: 0.84,
-  },
-  {
-    id: "shinta-mani",
-    name: "Shinta Mani Mustang",
-    logo: shintaMani,
-    label: "Travel",
-    href: "",
-    fx: 38.2,
-    fy: 75.7,
-    fr: -1.5,
-    fs: 0.88,
-    z: 7,
-    depth: 0.85,
-  },
-  {
-    id: "thamserku-travel",
-    name: "Thamserku Travel",
-    logo: thamserkuTravel,
-    label: "Travel",
-    href: "",
-    fx: 25.9,
-    fy: 85.9,
-    fr: 2,
-    fs: 0.83,
-    z: 5,
-    depth: 0.76,
-  },
-  {
-    id: "thamserku-adventure",
-    name: "Thamserku Adventure",
-    logo: thamserkuAdventure,
-    label: "Travel",
-    href: "",
-    fx: 49.8,
-    fy: 90.0,
-    fr: -2,
-    fs: 0.82,
-    z: 4,
-    depth: 0.74,
-  },
-  {
-    id: "yeti-holidays",
-    name: "Yeti Holidays",
-    logo: yetiHolidays,
-    label: "Travel",
-    href: "",
-    fx: 6.9,
-    fy: 91.1,
-    fr: 2.5,
-    fs: 0.88,
-    z: 8,
-    depth: 0.9,
-  },
-  {
-    id: "le-sherpa",
-    name: "Le Sherpa",
-    logo: leSherpa,
-    label: "Restaurant",
-    href: "",
-    fx: 74.7,
-    fy: 87.2,
-    fr: -1,
-    fs: 0.85,
-    z: 6,
-    depth: 0.82,
-  },
-  {
-    id: "lumbini-hokke",
-    name: "Lumbini Hokke",
-    logo: lumbiniHokke,
-    label: "Hotel",
-    href: "",
-    fx: 93.6,
-    fy: 86.9,
-    fr: 1.5,
-    fs: 0.85,
-    z: 6,
-    depth: 0.8,
-  },
-];
+// Deterministic position for the i-th card out of `total`.
+//
+// Uses a rectangular perimeter (equal arc-length spacing) rather than an ellipse.
+// Ellipses bunch cards near the top/bottom poles; a rectangle keeps spacing uniform.
+// Starting at the top-centre ensures corners always fall *between* two cards, so the
+// worst-case neighbour gap is predictably large (never a short diagonal shortcut).
+// Jitter amplitude scales with available spacing so it can never cause overlap.
+function computePosition(i: number, total: number) {
+  const L = 5, R = 95, T = 9, B = 92;
+  const W = R - L, H = B - T;  // 90 × 83
+  const perim = 2 * (W + H);   // 346
+
+  // Start at top-centre so no card lands right on a corner
+  let d = ((W / 2 + (i / total) * perim) % perim + perim) % perim;
+
+  let bx: number, by: number;
+  if (d < W) {
+    bx = L + d;            by = T;
+  } else if (d < W + H) {
+    bx = R;                by = T + (d - W);
+  } else if (d < 2 * W + H) {
+    bx = R - (d - W - H);  by = B;
+  } else {
+    bx = L;                by = B - (d - 2 * W - H);
+  }
+
+  // Nudge inward 5–8 % so cards don't hug the raw edge
+  const cx = 50, cy = 52;
+  const dx0 = cx - bx, dy0 = cy - by;
+  const len = Math.hypot(dx0, dy0) || 1;
+  const nudge = 5 + Math.abs(Math.sin(i * 1.3)) * 3;
+  bx += (dx0 / len) * nudge;
+  by += (dy0 / len) * nudge;
+
+  // Jitter: capped at 14 % of the available spacing — guarantees no overlap
+  const spacing   = perim / total;
+  const jitterAmp = Math.max(0.4, spacing * 0.14);
+  const jx = Math.sin(i * 2.618 + 1.0) * jitterAmp;
+  const jy = Math.cos(i * 1.618 + 2.0) * jitterAmp * 0.8;
+
+  const fx = Math.max(3, Math.min(97, bx + jx));
+  const fy = Math.max(7, Math.min(94, by + jy));
+  const fr = parseFloat((Math.sin(i * 0.9 + 0.4) * 2.5).toFixed(1));
+
+  const dist  = Math.hypot((fx - cx) / 45, (fy - cy) / 41);
+  const depth = parseFloat(Math.max(0.74, Math.min(1.0, 0.60 + dist * 0.48)).toFixed(2));
+  const fs    = parseFloat((0.78 + depth * 0.16).toFixed(2));
+  const z     = Math.round(depth * 11);
+
+  return { fx, fy, fr, fs, z, depth };
+}
 
 const HEADING = "The operating ecosystem behind every expedition.";
 const SUBTEXT =
@@ -344,6 +109,16 @@ export const YetiHero = ({
 }) => {
   const heading = stegaClean(page?.heroHeadline ?? HEADING);
   const subtext = page?.heroSubheading ?? SUBTEXT;
+
+  const partners: Partner[] = (page?.heroPartners ?? []).map((sp, i, arr) => ({
+    id: sp._key,
+    name: sp.name ?? "",
+    logo: sp.logo ? urlFor(sp.logo).width(320).url() : "",
+    label: sp.label,
+    href: sp.href,
+    hero: sp._key === "yeti-world",
+    ...computePosition(i, arr.length),
+  }));
 
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -394,7 +169,7 @@ export const YetiHero = ({
         cards.forEach((card, i) => {
           const floatEl = card.querySelector<HTMLElement>("[data-float]");
           if (!floatEl) return;
-          const p = P[i];
+          const p = partners[i];
           const amp = (5 + p.depth * 7) * scaleDamp;
           const dur = 4.5 + (i % 4) * 0.8;
           gsap.to(floatEl, {
@@ -416,7 +191,7 @@ export const YetiHero = ({
         });
       };
 
-      const heroIdx = P.findIndex((p) => p.hero);
+      const heroIdx = partners.findIndex((p) => p.hero);
 
       // Final resting transform for a card (null = not shown on this breakpoint).
       const placeFinal = (p: Partner) => {
@@ -430,7 +205,7 @@ export const YetiHero = ({
       // ── Reduced motion: skip the choreography, show the settled cloud + copy. ──
       if (reduced) {
         cards.forEach((card, i) => {
-          const p = P[i];
+          const p = partners[i];
           const f = placeFinal(p);
           if (!f) {
             gsap.set(card, { opacity: 0, scale: 0, pointerEvents: "none" });
@@ -468,7 +243,7 @@ export const YetiHero = ({
       if (glow) gsap.set(glow, { opacity: 0 });
 
       cards.forEach((card, i) => {
-        const p = P[i];
+        const p = partners[i];
         const isHero = i === heroIdx;
         const cut = isMobile && !mPos[p.id];
         gsap.set(card, {
@@ -532,7 +307,7 @@ export const YetiHero = ({
 
       // Phase 0/1a: hero anticipation pulse, then shrink/lift to its slot.
       if (cards[heroIdx]) {
-        const hp = P[heroIdx];
+        const hp = partners[heroIdx];
         const hf = placeFinal(hp);
         tl.to(
           cards[heroIdx],
@@ -560,7 +335,7 @@ export const YetiHero = ({
       // depth-staggered so nearer cards settle last and on top.
       cards.forEach((card, i) => {
         if (i === heroIdx) return;
-        const p = P[i];
+        const p = partners[i];
         const f = placeFinal(p);
         if (!f) return;
         const stagger = (1 - p.depth) * (isMobile ? 0.1 : 0.12);
@@ -651,7 +426,7 @@ export const YetiHero = ({
     const setters = parEls.map((el, i) => ({
       x: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3" }),
       y: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3" }),
-      depth: P[i]?.depth ?? 0.8,
+      depth: partners[i]?.depth ?? 0.8,
     }));
 
     const MAX = 28;
@@ -759,7 +534,7 @@ export const YetiHero = ({
         className="absolute inset-0 z-10"
         style={{ perspective: "1200px", perspectiveOrigin: "50% 48%" }}
       >
-        {P.map((partner, i) => (
+        {partners.map((partner, i) => (
           <div
             key={partner.id}
             ref={(el) => {

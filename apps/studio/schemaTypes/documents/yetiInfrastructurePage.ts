@@ -13,6 +13,24 @@ export default defineType({
     // Hero
     defineField({ name: 'heroHeadline', title: 'Headline', type: 'string', group: 'hero' }),
     defineField({ name: 'heroSubheading', title: 'Subheading', type: 'text', rows: 3, group: 'hero' }),
+    defineField({
+      name: 'heroPartners',
+      title: 'Partner Logos',
+      type: 'array',
+      group: 'hero',
+      description: 'The logos that float in the hero constellation. Order determines position. Leave empty to use built-in defaults.',
+      of: [{
+        type: 'object',
+        name: 'partner',
+        fields: [
+          defineField({ name: 'name', title: 'Name', type: 'string' }),
+          defineField({ name: 'logo', title: 'Logo', type: 'image', options: { hotspot: false }, description: 'Upload an SVG or PNG with a transparent background.' }),
+          defineField({ name: 'label', title: 'Category Chip', type: 'string', description: 'e.g. Travel, Airlines, Hotel. Leave blank to hide the chip.' }),
+          defineField({ name: 'href', title: 'Website URL', type: 'url', description: 'Opens in a new tab when the card is clicked.' }),
+        ],
+        preview: { select: { title: 'name', media: 'logo', subtitle: 'label' } },
+      }],
+    }),
 
     // Definition §I
     defineField({ name: 'definitionHeading', title: 'Heading', type: 'string', group: 'definition' }),

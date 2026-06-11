@@ -61,10 +61,19 @@ export type SanityExpeditionForMatrix = {
   editionLetters: string[];
 };
 
+export type SanityPartner = {
+  _key: string;
+  name?: string;
+  logo?: { asset: { _ref: string } } | null;
+  label?: string;
+  href?: string;
+};
+
 export type YetiPageData = {
   yetiPage: {
     heroHeadline?: string;
     heroSubheading?: string;
+    heroPartners?: SanityPartner[];
     definitionHeading?: string;
     definitionTagline?: string;
     definitionBody?: string;
@@ -164,6 +173,7 @@ export const NEWSLETTER_QUERY = `*[_type == "homePage"][0] {
 export const YETI_QUERY = `{
   "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
     heroHeadline, heroSubheading,
+    heroPartners[] { _key, name, logo, label, href },
     definitionHeading, definitionTagline, definitionBody,
     closingHeading, closingBody, closingImage
   }
