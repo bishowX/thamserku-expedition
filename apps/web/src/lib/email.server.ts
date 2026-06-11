@@ -1,14 +1,15 @@
 import nodemailer from 'nodemailer'
 
 function createTransport() {
+  const user = process.env.ZOHO_EMAIL
+  const pass = process.env.ZOHO_APP_PASSWORD
+  console.log('[email] createTransport: ZOHO_EMAIL set =', Boolean(user), '| ZOHO_APP_PASSWORD set =', Boolean(pass))
+  if (user) console.log('[email] createTransport: ZOHO_EMAIL =', user)
   return nodemailer.createTransport({
     host: 'smtp.zoho.com',
     port: 465,
     secure: true,
-    auth: {
-      user: process.env.ZOHO_EMAIL,
-      pass: process.env.ZOHO_APP_PASSWORD,
-    },
+    auth: { user, pass },
   })
 }
 
@@ -210,14 +211,24 @@ export function buildBookingHtml(data: BookingEmailData): string {
 
 export async function sendBookingEmail(to: string, data: BookingEmailData): Promise<void> {
   const from = process.env.ZOHO_EMAIL
-  if (!from) return
+  console.log('[email] sendBookingEmail: from =', from ?? '(not set)', '| to =', to)
+  if (!from) {
+    console.warn('[email] sendBookingEmail: ZOHO_EMAIL not set, skipping')
+    return
+  }
 
-  await createTransport().sendMail({
-    from,
-    to,
-    subject: `New Booking Configuration — ${data.fullName}`,
-    html: buildBookingHtml(data),
-  })
+  try {
+    const info = await createTransport().sendMail({
+      from,
+      to,
+      subject: `New Booking Configuration — ${data.fullName}`,
+      html: buildBookingHtml(data),
+    })
+    console.log('[email] sendBookingEmail: sent OK | messageId =', info.messageId, '| response =', info.response)
+  } catch (err: any) {
+    console.error('[email] sendBookingEmail: SMTP error | code =', err?.code, '| responseCode =', err?.responseCode, '| response =', err?.response, '| command =', err?.command)
+    throw err
+  }
 }
 
 // Climber-facing confirmation — a warm recap of what they configured. Same
@@ -270,15 +281,25 @@ export function buildClimberHtml(data: BookingEmailData): string {
 
 export async function sendBookingConfirmationEmail(to: string, data: BookingEmailData): Promise<void> {
   const from = process.env.ZOHO_EMAIL
-  if (!from) return
+  console.log('[email] sendBookingConfirmationEmail: from =', from ?? '(not set)', '| to =', to)
+  if (!from) {
+    console.warn('[email] sendBookingConfirmationEmail: ZOHO_EMAIL not set, skipping')
+    return
+  }
 
   const peak = data.customPeakName || data.expeditionName
-  await createTransport().sendMail({
-    from,
-    to,
-    subject: peak ? `Your ${peak} expedition configuration — Thamserku` : 'Your expedition configuration — Thamserku',
-    html: buildClimberHtml(data),
-  })
+  try {
+    const info = await createTransport().sendMail({
+      from,
+      to,
+      subject: peak ? `Your ${peak} expedition configuration — Thamserku` : 'Your expedition configuration — Thamserku',
+      html: buildClimberHtml(data),
+    })
+    console.log('[email] sendBookingConfirmationEmail: sent OK | messageId =', info.messageId, '| response =', info.response)
+  } catch (err: any) {
+    console.error('[email] sendBookingConfirmationEmail: SMTP error | code =', err?.code, '| responseCode =', err?.responseCode, '| response =', err?.response, '| command =', err?.command)
+    throw err
+  }
 }
 
 export async function sendEnquiryEmail(to: string, data: EnquiryEmailData): Promise<void> {

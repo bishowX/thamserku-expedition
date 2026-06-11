@@ -3,6 +3,7 @@ import { useLoaderData, useSearchParams, useActionData, useNavigation, Form } fr
 import type { ShouldRevalidateFunction } from 'react-router'
 import { useQuery } from '@sanity/react-loader'
 import type { QueryResponseInitial } from '@sanity/react-loader'
+import { stegaClean } from '@sanity/client/stega'
 import { Nav } from '../components/Nav'
 import { urlFor } from '../../lib/sanity'
 import { writeClient } from '../../lib/sanity.write'
@@ -27,6 +28,7 @@ import { StepFormat, CUSTOM_PEAK, type FormatValue } from '../components/design/
 import { StepCustomContact } from '../components/design/steps/StepCustomContact'
 import { ConfiguratorStep, type NumberedGroup } from '../components/design/ConfiguratorStep'
 import { ConfigSummary, MobileConfigBar, type SummaryItem } from '../components/design/ConfigSummary'
+import { StepTimelineA } from '../components/design/StepTimeline'
 
 export async function loader({ request }: { request: Request }) {
   const { options } = await getPreviewData(request)
@@ -164,12 +166,15 @@ export async function action({ request }: { request: Request }): Promise<
     const enquiryEmail = await serverClient.fetch<string | undefined>(
       `*[_type == "siteSettings"][0].enquiryEmail`
     )
+    console.log('[email] desk enquiryEmail from Sanity =', enquiryEmail ?? '(not set)')
     if (enquiryEmail) await sendBookingEmail(enquiryEmail, emailData)
+    else console.warn('[email] sendBookingEmail skipped: enquiryEmail not configured in Sanity siteSettings')
   } catch (err) {
     console.error('[email] sendBookingEmail failed:', err)
   }
 
   // Confirmation to the climber (email is required, so always present).
+  console.log('[email] climber confirmation to =', email)
   try {
     await sendBookingConfirmationEmail(email, emailData)
   } catch (err) {
@@ -178,6 +183,10 @@ export async function action({ request }: { request: Request }): Promise<
 
   return { success: true }
 }
+
+// edition.letter comes from Sanity and may carry stega hidden characters. Strip
+// them before using the letter as an EditionLetter key in the config matrix.
+const cleanLetter = (letter: string): EditionLetter => stegaClean(letter) as EditionLetter
 
 const EMPTY_FORMAT: FormatValue = {
   expeditionType: '',
@@ -217,11 +226,11 @@ export default function DesignPage() {
   const [selections, setSelections] = useState<Record<string, SelectionValue>>(() => {
     const exp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
     const ed = editions.find((e) => e.letter === searchParams.get('edition')) ?? null
-    return exp && ed ? defaultSelections(exp.configMatrix, ed.letter as EditionLetter) : {}
+    return exp && ed ? defaultSelections(exp.configMatrix, cleanLetter(ed.letter)) : {}
   })
 
   // ── Steps: format → (configure steps) → custom+contact ──────────────────────
-  const allGroups = expedition && edition ? configuratorGroups(expedition.configMatrix, edition.letter as EditionLetter) : []
+  const allGroups = expedition && edition ? configuratorGroups(expedition.configMatrix, cleanLetter(edition.letter)) : []
   const numbered: NumberedGroup[] = allGroups.map((group, i) => ({ number: 4 + i, group }))
   const stepA = numbered.filter((n) => STEP_A_GROUPS.includes(n.group.group))
   const stepBNamed = numbered.filter((n) => STEP_B_GROUPS.includes(n.group.group))
@@ -233,6 +242,20 @@ export default function DesignPage() {
   const stepKeys = ['format', ...configSteps.map((_, i) => `configure-${i}`), 'custom']
   const isProject = Boolean(edition) && configSteps.length === 0
 
+  const stepLabels = stepKeys.map((key) => {
+    if (key === 'format') return 'Expedition Format'
+    if (key === 'custom') return 'Your Details'
+    const idx = parseInt(key.split('-')[1] ?? '0')
+    return idx === 0 ? 'Acclimatisation' : 'Guiding & Oxygen'
+  })
+
+  // Before an edition is chosen, configSteps is empty and stepLabels collapses to
+  // ['Expedition Format', 'Your Details']. Show the full expected flow as a placeholder
+  // so the user sees where they're headed before committing to an edition tier.
+  const timelineLabels = edition
+    ? stepLabels
+    : ['Expedition Format', 'Acclimatisation', 'Guiding & Oxygen', 'Your Details']
+
   const rawStep = Number(searchParams.get('step') ?? '0')
   const step = Math.min(Math.max(rawStep, 0), stepKeys.length - 1)
   const isLast = step === stepKeys.length - 1
@@ -243,7 +266,7 @@ export default function DesignPage() {
         prev.set('step', String(n))
         if (selectedPeak) prev.set('expedition', selectedPeak)
         else prev.delete('expedition')
-        if (edition) prev.set('edition', edition.letter)
+        if (edition) prev.set('edition', cleanLetter(edition.letter))
         else prev.delete('edition')
         return prev
       },
@@ -253,7 +276,7 @@ export default function DesignPage() {
 
   function reseed(peakSlug: string, ed: SanityEditionForDesign | null) {
     const exp = peakSlug && peakSlug !== CUSTOM_PEAK ? expeditions.find((e) => e.slug === peakSlug) ?? null : null
-    setSelections(exp && ed ? defaultSelections(exp.configMatrix, ed.letter as EditionLetter) : {})
+    setSelections(exp && ed ? defaultSelections(exp.configMatrix, cleanLetter(ed.letter)) : {})
   }
 
   function handlePeakChange(slug: string) {
@@ -295,7 +318,7 @@ export default function DesignPage() {
       }
     }),
   )
-  const editionLabel = edition ? `${edition.letter} · ${shortEdition(edition.name)}` : undefined
+  const editionLabel = edition ? `${cleanLetter(edition.letter)} · ${shortEdition(edition.name)}` : undefined
   const summaryPeak = isCustomPeak
     ? format.customPeakName || 'Custom Peak'
     : expedition
@@ -308,7 +331,7 @@ export default function DesignPage() {
   const hiddenFields: Record<string, string> = {
     expeditionId: expedition?._id ?? '',
     editionId: edition?._id ?? '',
-    editionLetter: edition?.letter ?? '',
+    editionLetter: edition ? cleanLetter(edition.letter) : '',
     editionName: edition ? shortEdition(edition.name) : '',
     customPeakName: isCustomPeak ? format.customPeakName : '',
     expeditionType: format.expeditionType,
@@ -381,6 +404,10 @@ export default function DesignPage() {
                 {heroSubheading}
               </p>
             </header>
+
+            <div className="mb-12">
+              <StepTimelineA steps={timelineLabels} currentStep={step} />
+            </div>
 
             <Form method="post">
               {step === 0 && (
