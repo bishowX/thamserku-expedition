@@ -66,13 +66,30 @@ export function RouteMap({
 
   useGSAP(
     () => {
-      const path = pathRef.current;
-      const svg = svgRef.current;
       const stage = stageRef.current;
-      if (!path || !svg || !stage || n < 2) return;
+      if (!stage || n < 2) return;
 
       const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
+
+      // Mobile: ascent-ladder rows fade up as they enter the viewport.
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        const rows = gsap.utils.toArray<HTMLElement>(".rm-ladder-row", stage);
+        rows.forEach((row) => {
+          gsap.from(row, {
+            opacity: 0,
+            y: 16,
+            duration: 0.5,
+            ease: "power2.out",
+            scrollTrigger: { trigger: row, start: "top 85%", once: true },
+          });
+        });
+      });
+
+      // Desktop: pinned stage with scroll-scrubbed line drawing.
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+        const path = pathRef.current;
+        const svg = svgRef.current;
+        if (!path || !svg) return;
         const len = path.getTotalLength();
 
         // x is monotonic along the path, so binary-search the arc length
@@ -141,7 +158,7 @@ export function RouteMap({
     >
       <div
         ref={stageRef}
-        className="relative h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
+        className="relative md:h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
@@ -151,7 +168,7 @@ export function RouteMap({
           />
         </div>
 
-        <div className="relative max-w-[1440px] w-full mx-auto px-8 flex flex-col gap-6">
+        <div className="relative max-w-[1440px] w-full mx-auto px-5 md:px-8 flex flex-col gap-6">
           <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
             06 — ROUTE
           </p>
@@ -162,8 +179,38 @@ export function RouteMap({
           </h2>
         </div>
 
+        {/* Mobile — ascent ladder */}
         {n > 0 && (
-          <div className="relative flex-1 min-h-0 max-w-[1440px] w-full mx-auto px-8">
+          <div className="relative md:hidden max-w-[1440px] w-full mx-auto px-5 pt-4">
+            <div className="flex flex-col">
+              {coords.map((c, idx) => (
+                <div key={idx} className="rm-ladder-row relative flex gap-5 pb-10 last:pb-0">
+                  {idx < n - 1 && (
+                    <span className="absolute left-[5px] top-4 bottom-0 w-px bg-white/25" aria-hidden />
+                  )}
+                  <span
+                    className={`relative mt-[7px] shrink-0 rounded-full bg-white ${
+                      c.isSummit ? "w-[11px] h-[11px]" : "ml-[2px] w-[7px] h-[7px]"
+                    }`}
+                    aria-hidden
+                  />
+                  <div className="flex flex-col gap-1">
+                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2]">
+                      {c.name}
+                    </span>
+                    <span className={`font-['Radley'] font-light text-white leading-none ${c.isSummit ? "text-[26px]" : "text-[20px]"}`}>
+                      {c.altitude}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Desktop — elevation chart */}
+        {n > 0 && (
+          <div className="relative hidden md:block flex-1 min-h-0 max-w-[1440px] w-full mx-auto px-8">
             <div className="w-full h-full overflow-x-auto">
               <svg
                 ref={svgRef}

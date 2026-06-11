@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useLoaderData, useSearchParams, useActionData, useNavigation, Form } from 'react-router'
 import type { ShouldRevalidateFunction } from 'react-router'
 import { useQuery } from '@sanity/react-loader'
@@ -326,6 +326,16 @@ export default function DesignPage() {
       : undefined
   const summaryProps = { expeditionName: summaryPeak, editionLabel, items: summaryItems }
 
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const [isStuck, setIsStuck] = useState(false)
+  useEffect(() => {
+    const el = sentinelRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => setIsStuck(!entry.isIntersecting), { threshold: 1 })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   const combinedObjectives = [...objectives, objectivesNote.trim()].filter(Boolean).join('; ')
   const interactiveKeys = new Set(allGroups.flatMap((g) => g.features.map((f) => f.feature.key)))
   const hiddenFields: Record<string, string> = {
@@ -405,7 +415,8 @@ export default function DesignPage() {
               </p>
             </header>
 
-            <div className="sticky top-0 z-30 bg-[#1A1A1A] -mx-6 px-6 md:mx-0 md:px-0 py-4 mb-8">
+            <div ref={sentinelRef} className="h-0" />
+            <div className={`sticky top-0 z-30 -mx-6 px-6 md:mx-0 md:px-0 py-4 mb-8 transition-[background-color,backdrop-filter] duration-300 ${isStuck ? 'bg-[#1A1A1A]/80 backdrop-blur-sm' : ''}`}>
               <StepTimelineA steps={timelineLabels} currentStep={step} />
             </div>
 
