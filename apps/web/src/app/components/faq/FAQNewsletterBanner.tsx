@@ -32,8 +32,9 @@ export const FAQNewsletterBanner = ({ page }: { page?: PageData }) => {
           <div className="flex-grow flex flex-col md:border-b md:border-[#C8CDD2]/30 md:mr-6 mb-6 md:mb-0">
             <input
               type="email"
+              autoComplete="email"
               placeholder="Your email address"
-              className="w-full bg-transparent border-b border-[#C8CDD2]/30 md:border-none py-4 text-white font-['Lexend'] text-[16px] placeholder:font-['Cormorant_Garamond'] placeholder:italic placeholder:text-[#C8CDD2]/50 focus:outline-none focus:border-white/60 transition-colors"
+              className="w-full bg-transparent border-b border-[#C8CDD2]/30 md:border-none py-4 text-white font-['Lexend'] text-[16px] placeholder:font-['Cormorant_Garamond'] placeholder:italic placeholder:text-[#C8CDD2]/70 focus:outline-none focus:border-white/60 transition-colors"
             />
           </div>
           <div className="md:border-l md:border-[#C8CDD2]/30 md:pl-6 flex items-center justify-center">

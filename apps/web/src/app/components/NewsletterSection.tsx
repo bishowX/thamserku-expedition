@@ -53,9 +53,10 @@ export function NewsletterSection({
               <input
                 type="email"
                 name="email"
+                autoComplete="email"
                 placeholder="Your email address"
                 required
-                className="w-full bg-transparent border-b border-[#C8CDD2] pb-2 font-['Radley'] italic text-[14px] tracking-[2.4px] text-[#1A1A1A] placeholder:text-[#C8CDD2] focus:outline-none focus:border-[#1A1A1A] transition-colors"
+                className="w-full bg-transparent border-b border-[#C8CDD2] pb-2 font-['Radley'] italic text-[14px] tracking-[2.4px] text-[#1A1A1A] placeholder:text-[#5A6673]/70 focus:outline-none focus:border-[#1A1A1A] transition-colors"
               />
               {actionData?.success === false && (
                 <p className="font-['JetBrains_Mono'] text-[11px] text-red-600 tracking-[1px]">

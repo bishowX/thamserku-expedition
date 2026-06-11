@@ -33,7 +33,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
-    <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#5A6673] mb-4">
+    <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#8C97A3] mb-4">
       {children}
       {required && <span className="text-white"> ·</span>}
     </p>
@@ -41,7 +41,7 @@ function FieldLabel({ children, required }: { children: React.ReactNode; require
 }
 
 const lineInput =
-  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-white transition-colors placeholder:text-[#3A3A3A]"
+  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-white transition-colors placeholder:text-[#C8CDD2]/50"
 
 export function StepCustomContact({
   errors,
@@ -62,7 +62,7 @@ export function StepCustomContact({
       <section>
         <SectionTitle>Custom Fields</SectionTitle>
         {isProject && (
-          <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg -mt-6 mb-8">
+          <p className="font-['Cormorant_Garamond'] italic text-[#8C97A3] text-lg -mt-6 mb-8">
             This edition is shaped entirely around your objective — tell us what you have in mind and our desk will design it with you.
           </p>
         )}
@@ -104,6 +104,7 @@ export function StepCustomContact({
             <input
               type="text"
               name="fullName"
+              autoComplete="name"
               placeholder="How would you like us to address you?"
               className={`${lineInput} ${errors?.fullName ? 'border-red-500' : ''}`}
             />
@@ -120,6 +121,7 @@ export function StepCustomContact({
               <input
                 type="email"
                 name="email"
+                autoComplete="email"
                 placeholder="name@domain.com"
                 className={`${lineInput} ${errors?.email ? 'border-red-500' : ''}`}
               />
@@ -134,10 +136,11 @@ export function StepCustomContact({
               <input
                 type="tel"
                 name="phone"
+                autoComplete="tel"
                 placeholder="Number with country code"
                 className={lineInput}
               />
-              <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.12em] text-[#3A3A3A] mt-2">
+              <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.12em] text-[#8C97A3] mt-2">
                 Optional
               </p>
             </div>

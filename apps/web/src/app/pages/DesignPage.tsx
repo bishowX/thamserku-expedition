@@ -405,7 +405,7 @@ export default function DesignPage() {
               </p>
             </header>
 
-            <div className="mb-12">
+            <div className="sticky top-0 z-30 bg-[#1A1A1A] -mx-6 px-6 md:mx-0 md:px-0 py-4 mb-8">
               <StepTimelineA steps={timelineLabels} currentStep={step} />
             </div>
 
@@ -440,12 +440,12 @@ export default function DesignPage() {
               )}
 
               {/* Nav */}
-              <div className="pt-14 flex items-center justify-end gap-4">
+              <div className="pt-14 flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-3 sm:gap-4">
                 <button
                   type="button"
                   onClick={() => syncToUrl(step - 1)}
                   disabled={step === 0}
-                  className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-full sm:w-auto whitespace-nowrap font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-6 sm:px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   Previous ←
                 </button>
@@ -453,7 +453,7 @@ export default function DesignPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#1A1A1A] bg-white border border-white px-10 md:px-16 py-4 rounded hover:bg-[#C8CDD2] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto whitespace-nowrap font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#1A1A1A] bg-white border border-white px-6 sm:px-10 md:px-16 py-4 rounded hover:bg-[#C8CDD2] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Submitting…' : 'Submit Your Expedition →'}
                   </button>
@@ -462,7 +462,7 @@ export default function DesignPage() {
                     type="button"
                     onClick={() => syncToUrl(step + 1)}
                     disabled={nextDisabled}
-                    className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto whitespace-nowrap font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-6 sm:px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Next →
                   </button>

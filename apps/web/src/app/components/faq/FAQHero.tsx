@@ -37,12 +37,12 @@ export const FAQHero = ({ page }: { page?: PageData }) => {
 
       <Nav />
 
-      <div className="relative z-10 flex flex-grow flex-col items-center justify-center section-padding">
-        <div className="flex w-full max-w-[1138px] flex-col items-center gap-[30px]">
-          <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading leading-[1.1] tracking-tight text-center text-white">
+      <div className="relative z-10 flex flex-grow flex-col items-start justify-end md:items-center md:justify-center section-padding pb-16 md:pb-24">
+        <div className="flex w-full max-w-[1138px] flex-col items-start md:items-center gap-5 md:gap-[30px]">
+          <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading leading-[1.1] tracking-tight text-left md:text-center text-white">
             {page?.heroHeadline ?? "Fifteen quiet answers."}
           </h1>
-          <p className="font-['Lexend'] font-light text-[18px] leading-[1.55] text-center text-[#C8CDD2] max-w-[705px]">
+          <p className="font-['Lexend'] font-light text-fluid-body leading-relaxed text-left md:text-center text-[#C8CDD2] max-w-[705px]">
             {page?.heroSubline ??
               "The questions our expedition desk is asked most often. Short, considered answers from our senior staff."}
           </p>

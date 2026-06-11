@@ -60,57 +60,57 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
   useGSAP(() => {
     const section = sectionRef.current!;
     const container = cardsRef.current!;
-    const cards = gsap.utils.toArray<HTMLElement>('.timeline-card', container);
 
-    const cardWidth = 380;
-    const cardGap = 96;
-    const sectionPadding = 64; // px-8 both sides
-    const totalCardsWidth = cards.length * cardWidth + (cards.length - 1) * cardGap;
-    const getScrollAmount = () => {
-      const visibleWidth = Math.min(1440, window.innerWidth) - sectionPadding;
-      return -(totalCardsWidth - visibleWidth);
-    };
+    // Pin + horizontal scrub on desktop only; mobile uses native overflow scroll.
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 768px)', () => {
+      const getScrollAmount = () => -(container.scrollWidth - container.clientWidth);
 
-    gsap.to(container, {
-      x: getScrollAmount,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${Math.abs(getScrollAmount())}`,
-        pin: true,
-        pinSpacing: true,
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
+      gsap.to(container, {
+        x: getScrollAmount,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: () => (section.offsetHeight < window.innerHeight ? 'center center' : 'top top'),
+          end: () => `+=${Math.abs(getScrollAmount())}`,
+          pin: true,
+          pinSpacing: true,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
     });
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-24 overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-8 flex flex-col gap-12">
+    <section ref={sectionRef} className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-16 md:py-20 overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-8 flex flex-col gap-8 md:gap-10">
         {/* Header */}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
             {page?.timelineEyebrow ?? '04 — TIMELINE'}
           </span>
-          <h2 className="font-['Cormorant_Garamond'] font-light text-[56px] leading-[70px] text-[#1A1A1A] max-w-[588px]">
+          <h2 className="font-['Cormorant_Garamond'] font-light text-[34px] md:text-[44px] xl:text-[56px] leading-[1.2] text-[#1A1A1A] max-w-[588px]">
             {page?.timelineHeading ?? 'Five chapters in the life of a Himalayan expedition house.'}
           </h2>
         </div>
 
-        {/* Chapter Cards */}
-        <div ref={cardsRef} className="flex gap-24 items-start">
+        {/* Chapter Cards — native swipe on mobile, GSAP-pinned scrub on md+ */}
+        <div
+          ref={cardsRef}
+          className="flex gap-10 md:gap-24 items-start overflow-x-auto md:overflow-visible -mx-5 px-5 md:mx-0 md:px-0 snap-x snap-mandatory md:snap-none scroll-pl-5 md:scroll-pl-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {chapters.map((chapter) => {
             const imgSrc = chapter.image ? urlFor(chapter.image).width(680).url() : null;
 
             return (
-              <div key={chapter._key} className="timeline-card flex flex-col gap-6 shrink-0 w-[380px] bg-[#F4F2EC]">
-                <div className="h-[255px] w-full overflow-hidden bg-[#E5E7EB]">
+              <div key={chapter._key} className="timeline-card flex flex-col gap-6 shrink-0 w-[min(320px,82vw)] md:w-[380px] snap-start bg-[#F4F2EC]">
+                <div className="h-[200px] md:h-[clamp(190px,26vh,255px)] w-full overflow-hidden bg-[#E5E7EB]">
                   {imgSrc && (
                     <img
                       src={imgSrc}
                       alt={chapter.title}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   )}

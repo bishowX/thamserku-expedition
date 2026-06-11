@@ -55,12 +55,13 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
             return (
               <article
                 key={decade._key}
-                className={`flex w-full max-w-[1100px] gap-12 items-start ${isImageLeft ? 'flex-row' : 'flex-row-reverse'}`}
+                className={`flex w-full max-w-[1100px] flex-col gap-8 md:gap-12 md:items-start ${isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
               >
-                <div className="w-[280px] flex-shrink-0">
+                <div className="w-full md:w-[280px] flex-shrink-0">
                   <img
                     src={imageSrc}
                     alt={decade.title}
+                    loading="lazy"
                     className="w-full aspect-[3/4] object-cover"
                   />
                 </div>

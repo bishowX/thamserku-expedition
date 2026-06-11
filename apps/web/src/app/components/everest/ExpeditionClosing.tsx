@@ -21,6 +21,7 @@ export function ExpeditionClosing({ name, closingImage, slug }: Props) {
           <img
             src={imageSrc}
             alt={`${expeditionName} closing`}
+            loading="lazy"
             className="w-full h-full object-cover object-bottom"
           />
         ) : null}

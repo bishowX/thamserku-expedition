@@ -16,7 +16,8 @@ export const EnquiryClosing = ({ data }: { data?: ConsultationPage }) => {
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img
             src={imageSrc}
-            alt="closing background"
+            alt=""
+            loading="lazy"
             className="w-full h-full object-cover opacity-20 mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#191919] via-transparent to-[#191919] opacity-80" />

@@ -17,6 +17,7 @@ export const EnquiryProcess = ({ data }: { data?: ConsultationPage }) => {
           <img
             src={imageSrc}
             alt=""
+            loading="lazy"
             className="w-full h-full object-cover opacity-10 mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2E353C] via-transparent to-[#2E353C] opacity-70" />

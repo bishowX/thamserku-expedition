@@ -10,7 +10,7 @@ export const SafetyHero = ({ page }: Props) => {
     : null;
 
   return (
-    <section className="relative w-full min-h-[80vh] md:min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-center section-padding overflow-hidden">
+    <section className="relative w-full min-h-[80vh] md:min-h-[90vh] bg-[#1A1A1A] flex flex-col justify-end md:justify-center section-padding overflow-hidden">
       {/* Background image */}
       {imageSrc && (
         <div className="absolute inset-0 z-0 pointer-events-none">
@@ -35,12 +35,12 @@ export const SafetyHero = ({ page }: Props) => {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-center">
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-display tracking-tight text-white leading-[1.1] text-center max-w-[18ch] mb-6">
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-start md:items-center">
+        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight text-white leading-[1.1] text-left md:text-center max-w-[18ch] mb-6">
           {page?.heroHeadline}
         </h1>
 
-        <p className="font-['Lexend'] font-light text-[18px] text-[#C8CDD2] leading-[1.55] max-w-[58ch] text-center">
+        <p className="font-['Lexend'] font-light text-fluid-body text-[#C8CDD2] leading-relaxed max-w-[58ch] text-left md:text-center">
           {page?.heroSubline}
         </p>
       </div>

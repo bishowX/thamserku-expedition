@@ -6,7 +6,7 @@ export const SafetyStats = ({ page }: Props) => {
   const stats = page?.stats ?? [];
 
   return (
-    <section className="bg-[#2E353C] md:py-[32px] px-5 md:px-8">
+    <section className="bg-[#2E353C] py-12 md:py-[32px] px-5 md:px-8">
       <div className="max-w-[1738px] mx-auto flex flex-col items-center">
         {page?.statsLabel && (
           <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-white text-center mb-6">

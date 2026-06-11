@@ -138,6 +138,7 @@ export function Inclusions({
                   <img
                     src={exclusionsImageSrc}
                     alt=""
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 </div>

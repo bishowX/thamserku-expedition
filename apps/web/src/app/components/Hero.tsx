@@ -184,7 +184,7 @@ export function Hero({
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen flex flex-col justify-end text-white p-12 xl:p-40 overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col justify-end text-white p-5 pb-16 md:p-12 xl:p-40 overflow-hidden"
     >
       <div className="absolute inset-0 z-0">
         {bgImage && (

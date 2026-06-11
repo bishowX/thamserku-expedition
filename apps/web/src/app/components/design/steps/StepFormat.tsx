@@ -31,12 +31,12 @@ function editionChipLabel(ed: SanityEditionForDesign): string {
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#5A6673] mb-4">{children}</p>
+    <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#8C97A3] mb-4">{children}</p>
   )
 }
 
 const lineInput =
-  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-white transition-colors placeholder:text-[#3A3A3A] [color-scheme:dark]"
+  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-white transition-colors placeholder:text-[#C8CDD2]/50 [color-scheme:dark]"
 
 export function StepFormat({
   expeditions,
@@ -159,7 +159,7 @@ export function StepFormat({
         </h2>
         <div>
           <FieldLabel>3.1 Choose Your Edition</FieldLabel>
-          <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] text-[#5A6673] mb-5 -mt-2">
+          <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] text-[#8C97A3] mb-5 -mt-2">
             This pre-configures your expedition standards. You can customise everything in the next steps.
           </p>
           <ChipRow>

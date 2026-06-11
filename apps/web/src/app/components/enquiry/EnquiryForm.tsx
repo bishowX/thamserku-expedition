@@ -22,6 +22,7 @@ export const EnquiryForm = ({
   const isSubmitting = navigation.state === "submitting";
 
   const [contactMethod, setContactMethod] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
 
   const alternativeLabel = data?.formAlternativeLabel;
   const alternativeSubheading = data?.formAlternativeSubheading;
@@ -92,8 +93,9 @@ export const EnquiryForm = ({
                 <input
                   type="text"
                   name="fullName"
+                  autoComplete="name"
                   placeholder="How would you like us to address you?"
-                  className={`w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/50 ${errors?.fullName ? "border-red-400 focus:border-red-500" : "border-[#5A6673] focus:border-[#2E353C]"}`}
+                  className={`w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/70 ${errors?.fullName ? "border-red-400 focus:border-red-500" : "border-[#5A6673] focus:border-[#2E353C]"}`}
                 />
                 {errors?.fullName && (
                   <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-red-500 mt-2">
@@ -109,8 +111,9 @@ export const EnquiryForm = ({
                 <input
                   type="email"
                   name="email"
+                  autoComplete="email"
                   placeholder="name@domain.com"
-                  className={`w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/50 ${errors?.email ? "border-red-400 focus:border-red-500" : "border-[#5A6673] focus:border-[#2E353C]"}`}
+                  className={`w-full bg-transparent border-b pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none transition-colors placeholder:text-[#5A6673]/70 ${errors?.email ? "border-red-400 focus:border-red-500" : "border-[#5A6673] focus:border-[#2E353C]"}`}
                 />
                 {errors?.email && (
                   <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-red-500 mt-2">
@@ -126,8 +129,9 @@ export const EnquiryForm = ({
                 <input
                   type="tel"
                   name="phone"
+                  autoComplete="tel"
                   placeholder="Your number with country code"
-                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#2E353C] transition-colors placeholder:text-[#5A6673]/50"
+                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-[#2E353C] transition-colors placeholder:text-[#5A6673]/70"
                 />
                 <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] mt-3">
                   OPTIONAL · USED ONLY IF YOU PREFER VOICE OR WHATSAPP CONTACT.
@@ -141,8 +145,9 @@ export const EnquiryForm = ({
                 <div className="relative border-b border-[#5A6673] pb-3 cursor-pointer group">
                   <select
                     name="countryOfResidence"
-                    defaultValue=""
-                    className="w-full bg-transparent text-[#1A1A1A] font-['Cormorant_Garamond'] italic text-xl appearance-none focus:outline-none cursor-pointer group-hover:text-[#2E353C] transition-colors text-[#5A6673]/50"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className={`w-full bg-transparent font-['Cormorant_Garamond'] italic text-xl appearance-none focus:outline-none cursor-pointer transition-colors ${country ? "text-[#1A1A1A]" : "text-[#5A6673]/70"}`}
                   >
                     <option value="" disabled>
                       Select country
@@ -202,7 +207,7 @@ export const EnquiryForm = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="shrink-0 font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#2E353C] border border-[#2E353C] px-8 py-6 hover:bg-[#2E353C] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="shrink-0 self-center md:self-auto font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[12px] text-[#2E353C] border border-[#2E353C] px-8 py-4 hover:bg-[#2E353C] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "SENDING…" : "SEND THE FORM →"}
               </button>
