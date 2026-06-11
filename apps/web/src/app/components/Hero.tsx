@@ -34,6 +34,7 @@ export function Hero({
     : undefined;
 
   const sectionRef = useRef<HTMLElement>(null);
+  const bgWrapRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -146,9 +147,11 @@ export function Hero({
         });
       }
 
-      // Scroll parallax — background drifts down, content fades and drifts up
-      if (bgRef.current && sectionRef.current) {
-        gsap.to(bgRef.current, {
+      // Scroll parallax — background drifts down, content fades and drifts up.
+      // Targets the wrapper, NOT the img: the img is owned by the entrance +
+      // ken-burns tweens, and two tweens writing scale on one element flicker.
+      if (bgWrapRef.current && sectionRef.current) {
+        gsap.to(bgWrapRef.current, {
           yPercent: 35,
           scale: 1.1,
           ease: "none",
@@ -185,12 +188,14 @@ export function Hero({
     >
       <div className="absolute inset-0 z-0">
         {bgImage && (
-          <img
-            ref={bgRef}
-            src={bgImage}
-            alt="Hero background"
-            className="w-full h-full object-cover will-change-transform"
-          />
+          <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
+            <img
+              ref={bgRef}
+              src={bgImage}
+              alt="Hero background"
+              className="w-full h-full object-cover will-change-transform"
+            />
+          </div>
         )}
         <div
           ref={overlayRef}

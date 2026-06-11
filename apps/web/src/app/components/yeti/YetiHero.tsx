@@ -293,7 +293,6 @@ export const YetiHero = ({
           end: isMobile ? "+=120%" : "+=160%",
           pin: true,
           scrub: 1,
-          anticipatePin: 1,
         },
       });
 
