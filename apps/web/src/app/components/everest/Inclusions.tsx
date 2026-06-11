@@ -16,8 +16,8 @@ function InclusionCategoryRow({ category, items }: InclusionCategory) {
         aria-expanded={open}
         className="flex items-center justify-between gap-4 text-left cursor-pointer"
       >
-        <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A]">
-          {category}
+        <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A] capitalize">
+          {category.toLowerCase()}
         </h3>
         <ChevronDown
           className={`w-5 h-5 shrink-0 text-[#5A6673] transition-transform duration-300 ${

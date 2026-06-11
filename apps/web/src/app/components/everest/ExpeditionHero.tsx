@@ -37,7 +37,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       </div>
 
       <div className="relative z-20 w-full flex flex-col items-start justify-end h-full">
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch]">
+        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[700px]">
           {heroTagline || `${name} Expedition`}
         </h1>
 

@@ -23,7 +23,7 @@ export const SafetyStats = ({ page }: Props) => {
               <p className="font-['Radley'] text-[clamp(2rem,1.5rem+1.6vw,2.625rem)] text-white leading-[1.2]">
                 {stat.value}
               </p>
-              <p className="font-['Lexend'] text-[#C8CDD2] text-[15px] md:text-[16px] mt-1">
+              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] md:text-[16px] mt-1">
                 {stat.label}
               </p>
             </div>
