@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { getLenis } from "../../hooks/useLenis";
 
 const NAV_ITEMS = [
   { label: "OVERVIEW", id: "overview" },
@@ -21,12 +22,17 @@ export function StickySubNav() {
   const handleClick = useCallback((id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const lenis = getLenis();
+    if (lenis) {
+      // -112 mirrors the sections' scroll-mt-28 (main nav + subnav)
+      lenis.scrollTo(el, { offset: -112 });
+    } else {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (document.body.getAttribute("data-route-pinned") === "1") return;
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setNavHidden(true);

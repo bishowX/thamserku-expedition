@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useLoaderData, redirect } from "react-router";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useQuery } from "@sanity/react-loader";
 import type { QueryResponseInitial } from "@sanity/react-loader";
 import {
@@ -58,6 +60,21 @@ export default function ExpeditionDossier() {
   );
   // Live updates return the raw doc; reattach the normalized config matrix here.
   const expedition = raw ? attachConfig(raw) : null;
+
+  // Client-side navigation between peaks keeps every section mounted, so all
+  // ScrollTriggers hold positions measured against the previous peak's layout.
+  // Re-measure once the new content has painted.
+  useEffect(() => {
+    let raf2: number;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [slug]);
+
   if (!expedition) return null;
 
   return (

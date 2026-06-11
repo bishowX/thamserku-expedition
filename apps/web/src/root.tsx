@@ -1,7 +1,9 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router'
 import './styles/index.css'
+import 'lenis/dist/lenis.css'
 import { FloatingContactPrompt } from './app/components/FloatingContactPrompt'
 import { SanityVisualEditing } from './app/components/SanityVisualEditing'
+import { useLenis } from './app/hooks/useLenis'
 import { getPreviewData } from './lib/preview.server'
 
 export async function loader({ request }: { request: Request }) {
@@ -43,6 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function Root() {
   const { preview } = useLoaderData<typeof loader>()
+  useLenis()
   return (
     <>
       <Outlet />

@@ -5,21 +5,31 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+let lenis: Lenis | null = null;
+
+// shared instance so anchors/subnavs can scroll through Lenis instead of
+// fighting it with native smooth scrolling
+export function getLenis() {
+  return lenis;
+}
+
 export function useLenis() {
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.1 });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    lenis = new Lenis({ lerp: 0.1 });
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
+    const tick = (time: number) => {
+      lenis?.raf(time * 1000);
+    };
+    gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      lenis.destroy();
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
+      gsap.ticker.remove(tick);
+      lenis?.destroy();
+      lenis = null;
     };
   }, []);
 }

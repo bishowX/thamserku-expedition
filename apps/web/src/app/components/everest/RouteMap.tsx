@@ -20,7 +20,6 @@ const SVG_H = 650;
 const PAD_X = 48;
 const PAD_Y_TOP = 130;
 const PAD_Y_BOT = 60;
-const HEADER_OFFSET = 112; // 64px main nav + 48px subnav
 
 function parseAlt(s: string): number {
   return parseFloat(s.replace(/[^\d.]/g, "")) || 0;
@@ -60,44 +59,89 @@ export function RouteMap({
     return { x, y, name: wp.name, altitude: wp.altitude, isSummit: idx === n - 1 };
   });
 
-  const outerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
 
   useGSAP(
     () => {
       const path = pathRef.current;
-      const outer = outerRef.current;
-      if (!path || !outer || n < 2) return;
+      const svg = svgRef.current;
+      const stage = stageRef.current;
+      if (!path || !svg || !stage || n < 2) return;
 
-      const len = path.getTotalLength();
-      gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const len = path.getTotalLength();
 
-      gsap.to(path, {
-        strokeDashoffset: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: outer,
-          start: `top ${HEADER_OFFSET}px`,
-          end: () => `+=${window.innerHeight}`,
-          scrub: 0.5,
-          onToggle: (self) => {
-            document.body.setAttribute("data-route-pinned", self.isActive ? "1" : "0");
+        // x is monotonic along the path, so binary-search the arc length
+        // where the line reaches each waypoint's x
+        const lengthAtX = (x: number) => {
+          let lo = 0;
+          let hi = len;
+          for (let i = 0; i < 24; i++) {
+            const mid = (lo + hi) / 2;
+            if (path.getPointAtLength(mid).x < x) lo = mid;
+            else hi = mid;
+          }
+          return (lo + hi) / 2;
+        };
+
+        const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
+
+        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.set(pointGroups, { opacity: 0, y: 10 });
+
+        // the stage is a viewport-height block-level child of the section,
+        // so the pin-spacer reserves its space correctly (pinning a flex
+        // child breaks spacing, which is why the chart used to drift)
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: stage,
+            start: "top top",
+            end: "+=110%",
+            pin: true,
+            scrub: 0.6,
           },
-          onKill: () => {
-            document.body.removeAttribute("data-route-pinned");
-          },
-        },
+        });
+
+        // a beat after the lock engages before drawing starts, and a dwell
+        // on the finished chart before it releases, so neither boundary
+        // coincides with visible motion
+        const LEAD = 0.08;
+        const TAIL = 0.25;
+
+        tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, LEAD);
+        pointGroups.forEach((g, idx) => {
+          tl.to(
+            g,
+            { opacity: 1, y: 0, duration: 0.06, ease: "power2.out" },
+            LEAD + lengthAtX(coords[idx].x) / len
+          );
+        });
+        tl.to({}, { duration: TAIL });
       });
     },
-    { scope: outerRef, dependencies: [n] }
+    {
+      scope: sectionRef,
+      // key on the actual waypoint data (not just the count) and fully
+      // revert the old context — otherwise client-side navigation between
+      // peaks leaves stale pins/tweens measured against the previous page
+      dependencies: [points.map((p) => `${p.name}@${p.altitude}`).join("|")],
+      revertOnUpdate: true,
+    }
   );
 
   return (
-    <div ref={outerRef} id="route" className="scroll-mt-28" style={{ minHeight: "220vh" }}>
-      <section
-        className="sticky bg-[#191919] w-full text-white py-24 overflow-hidden relative"
-        style={{ top: `${HEADER_OFFSET}px` }}
+    <section
+      ref={sectionRef}
+      id="route"
+      className="scroll-mt-28 bg-[#191919] w-full text-white relative"
+    >
+      <div
+        ref={stageRef}
+        className="relative h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
@@ -107,24 +151,25 @@ export function RouteMap({
           />
         </div>
 
-        <div className="relative max-w-[1440px] mx-auto px-8 flex flex-col gap-8 md:gap-16">
-          <div className="flex flex-col gap-8">
-            <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-              06 — ROUTE
-            </p>
-            <h2 className="font-['Radley'] font-light text-[56px] leading-[1.1] max-w-[32ch] text-white">
-              {n > 0
-                ? `From ${points[0].name} to the summit. ${n - 1} points on the line.`
-                : "The route."}
-            </h2>
-          </div>
+        <div className="relative max-w-[1440px] w-full mx-auto px-8 flex flex-col gap-6">
+          <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            06 — ROUTE
+          </p>
+          <h2 className="font-['Radley'] font-light text-[clamp(34px,3.9vw,56px)] leading-[1.1] max-w-[32ch] text-white">
+            {n > 0
+              ? `From ${points[0].name} to the summit. ${n - 1} points on the line.`
+              : "The route."}
+          </h2>
+        </div>
 
-          {n > 0 && (
-            <div className="w-full overflow-x-auto">
+        {n > 0 && (
+          <div className="relative flex-1 min-h-0 max-w-[1440px] w-full mx-auto px-8">
+            <div className="w-full h-full overflow-x-auto">
               <svg
                 ref={svgRef}
                 viewBox={`0 0 ${SVG_W} ${SVG_H}`}
-                className="w-full min-w-[700px]"
+                preserveAspectRatio="xMidYMid meet"
+                className="w-full h-full min-w-[700px]"
                 aria-hidden="true"
               >
                 <path
@@ -135,12 +180,10 @@ export function RouteMap({
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray="10000"
-                  strokeDashoffset="10000"
                 />
 
                 {coords.map((c, idx) => (
-                  <g key={idx}>
+                  <g key={idx} className="rm-point">
                     <circle cx={c.x} cy={c.y} r={c.isSummit ? 6 : 4} fill="white" />
                     <text
                       x={c.x}
@@ -169,42 +212,44 @@ export function RouteMap({
                 ))}
               </svg>
             </div>
-          )}
+          </div>
+        )}
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/20 pt-16">
-            <div className="flex flex-col gap-4">
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-                ROUTE PHILOSOPHY
-              </span>
-              {routePhilosophy && (
-                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
-                  {routePhilosophy}
-                </p>
-              )}
-            </div>
-            <div className="flex flex-col gap-4">
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-                ACCLIMATISATION CYCLE
-              </span>
-              {acclimatisationNote && (
-                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
-                  {acclimatisationNote}
-                </p>
-              )}
-            </div>
-            <div className="flex flex-col gap-4">
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-                SUMMIT WINDOW
-              </span>
-              {summitWindowNote && (
-                <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
-                  {summitWindowNote}
-                </p>
-              )}
-            </div>
+      <div className="relative max-w-[1440px] mx-auto px-8 pb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/20 pt-16">
+          <div className="flex flex-col gap-4">
+            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+              ROUTE PHILOSOPHY
+            </span>
+            {routePhilosophy && (
+              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
+                {routePhilosophy}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col gap-4">
+            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+              ACCLIMATISATION CYCLE
+            </span>
+            {acclimatisationNote && (
+              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
+                {acclimatisationNote}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col gap-4">
+            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+              SUMMIT WINDOW
+            </span>
+            {summitWindowNote && (
+              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
+                {summitWindowNote}
+              </p>
+            )}
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
