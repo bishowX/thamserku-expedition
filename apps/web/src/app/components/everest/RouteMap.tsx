@@ -224,20 +224,20 @@ export function RouteMap({
                   d={smoothPath(coords)}
                   fill="none"
                   stroke="white"
-                  strokeWidth="1.5"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
 
                 {coords.map((c, idx) => (
                   <g key={idx} className="rm-point">
-                    <circle cx={c.x} cy={c.y} r={c.isSummit ? 6 : 4} fill="white" />
+                    <circle cx={c.x} cy={c.y} r={c.isSummit ? 9 : 6} fill="white" />
                     <text
                       x={c.x}
-                      y={c.y - 56}
+                      y={c.y - 66}
                       textAnchor="middle"
                       fontFamily="'JetBrains Mono', monospace"
-                      fontSize="11"
+                      fontSize="13"
                       fill="#C8CDD2"
                       letterSpacing="2.42"
                       style={{ textTransform: "uppercase" }}
@@ -246,10 +246,10 @@ export function RouteMap({
                     </text>
                     <text
                       x={c.x}
-                      y={c.y - 34}
+                      y={c.y - 42}
                       textAnchor="middle"
                       fontFamily="Radley, serif"
-                      fontSize={c.isSummit ? "24" : "18"}
+                      fontSize={c.isSummit ? "28" : "21"}
                       fill="white"
                       fontWeight="300"
                     >
