@@ -136,7 +136,7 @@ export function Footer() {
             <div>© THAMSERKU EXPEDITION · YETI GROUP</div>
             <div>KATHMANDU - NEPAL</div>
           </div>
-          <div className="flex flex-col gap-2 text-right">
+          <div className="flex flex-col gap-2 md:text-right">
             <a
               href="mailto:info@thamserkuexpedition.com"
               className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal"
