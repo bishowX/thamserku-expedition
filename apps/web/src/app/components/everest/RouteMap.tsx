@@ -56,7 +56,13 @@ export function RouteMap({
   const coords = points.map((wp, idx) => {
     const x = PAD_X + (n > 1 ? (idx / (n - 1)) * chartW : chartW / 2);
     const y = PAD_Y_TOP + chartH - ((alts[idx] - minAlt) / altRange) * chartH;
-    return { x, y, name: wp.name, altitude: wp.altitude, isSummit: idx === n - 1 };
+    return {
+      x,
+      y,
+      name: wp.name,
+      altitude: wp.altitude,
+      isSummit: idx === n - 1,
+    };
   });
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,73 +78,79 @@ export function RouteMap({
       const mm = gsap.matchMedia();
 
       // Mobile: ascent-ladder rows fade up as they enter the viewport.
-      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
-        const rows = gsap.utils.toArray<HTMLElement>(".rm-ladder-row", stage);
-        rows.forEach((row) => {
-          gsap.from(row, {
-            opacity: 0,
-            y: 16,
-            duration: 0.5,
-            ease: "power2.out",
-            scrollTrigger: { trigger: row, start: "top 85%", once: true },
+      mm.add(
+        "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const rows = gsap.utils.toArray<HTMLElement>(".rm-ladder-row", stage);
+          rows.forEach((row) => {
+            gsap.from(row, {
+              opacity: 0,
+              y: 16,
+              duration: 0.5,
+              ease: "power2.out",
+              scrollTrigger: { trigger: row, start: "top 85%", once: true },
+            });
           });
-        });
-      });
+        },
+      );
 
       // Desktop: pinned stage with scroll-scrubbed line drawing.
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-        const path = pathRef.current;
-        const svg = svgRef.current;
-        if (!path || !svg) return;
-        const len = path.getTotalLength();
+      mm.add(
+        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const path = pathRef.current;
+          const svg = svgRef.current;
+          if (!path || !svg) return;
+          const len = path.getTotalLength();
 
-        // x is monotonic along the path, so binary-search the arc length
-        // where the line reaches each waypoint's x
-        const lengthAtX = (x: number) => {
-          let lo = 0;
-          let hi = len;
-          for (let i = 0; i < 24; i++) {
-            const mid = (lo + hi) / 2;
-            if (path.getPointAtLength(mid).x < x) lo = mid;
-            else hi = mid;
-          }
-          return (lo + hi) / 2;
-        };
+          // x is monotonic along the path, so binary-search the arc length
+          // where the line reaches each waypoint's x
+          const lengthAtX = (x: number) => {
+            let lo = 0;
+            let hi = len;
+            for (let i = 0; i < 24; i++) {
+              const mid = (lo + hi) / 2;
+              if (path.getPointAtLength(mid).x < x) lo = mid;
+              else hi = mid;
+            }
+            return (lo + hi) / 2;
+          };
 
-        const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
+          const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
 
-        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-        gsap.set(pointGroups, { opacity: 0, y: 10 });
+          gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+          gsap.set(pointGroups, { opacity: 0, y: 10 });
 
-        // the stage is a viewport-height block-level child of the section,
-        // so the pin-spacer reserves its space correctly (pinning a flex
-        // child breaks spacing, which is why the chart used to drift)
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: stage,
-            start: "top top",
-            end: "+=110%",
-            pin: true,
-            scrub: 0.6,
-          },
-        });
+          // the stage is a viewport-height block-level child of the section,
+          // so the pin-spacer reserves its space correctly (pinning a flex
+          // child breaks spacing, which is why the chart used to drift)
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: stage,
+              start: "top top",
+              end: "+=110%",
+              pin: true,
+              scrub: 0.6,
+            },
+          });
 
-        // a beat after the lock engages before drawing starts, and a dwell
-        // on the finished chart before it releases, so neither boundary
-        // coincides with visible motion
-        const LEAD = 0.08;
-        const TAIL = 0.25;
+          // a beat after the lock engages before drawing starts, and a dwell
+          // on the finished chart before it releases, so neither boundary
+          // coincides with visible motion
+          const LEAD = 0.08;
+          const TAIL = 0.25;
 
-        tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, LEAD);
-        pointGroups.forEach((g, idx) => {
-          tl.to(
-            g,
-            { opacity: 1, y: 0, duration: 0.06, ease: "power2.out" },
-            LEAD + lengthAtX(coords[idx].x) / len
-          );
-        });
-        tl.to({}, { duration: TAIL });
-      });
+          tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, LEAD);
+          pointGroups.forEach((g, idx) => {
+            tl.to(
+              g,
+              { opacity: 1, y: 0, duration: 0.06, ease: "power2.out" },
+              LEAD + lengthAtX(coords[idx].x) / len,
+            );
+          });
+          tl.to({}, { duration: TAIL });
+        },
+      );
     },
     {
       scope: sectionRef,
@@ -147,7 +159,7 @@ export function RouteMap({
       // peaks leaves stale pins/tweens measured against the previous page
       dependencies: [points.map((p) => `${p.name}@${p.altitude}`).join("|")],
       revertOnUpdate: true,
-    }
+    },
   );
 
   return (
@@ -184,13 +196,21 @@ export function RouteMap({
           <div className="relative md:hidden max-w-[1440px] w-full mx-auto px-5 pt-4">
             <div className="flex flex-col">
               {coords.map((c, idx) => (
-                <div key={idx} className="rm-ladder-row relative flex gap-5 pb-10 last:pb-0">
+                <div
+                  key={idx}
+                  className="rm-ladder-row relative flex gap-5 pb-10 last:pb-0"
+                >
                   {idx < n - 1 && (
-                    <span className="absolute left-[5px] top-4 bottom-0 w-px bg-white/25" aria-hidden />
+                    <span
+                      className="absolute left-[5px] top-4 bottom-0 w-px bg-white/25"
+                      aria-hidden
+                    />
                   )}
                   <span
                     className={`relative mt-[7px] shrink-0 rounded-full bg-white ${
-                      c.isSummit ? "w-[11px] h-[11px]" : "ml-[2px] w-[7px] h-[7px]"
+                      c.isSummit
+                        ? "w-[11px] h-[11px]"
+                        : "ml-[2px] w-[7px] h-[7px]"
                     }`}
                     aria-hidden
                   />
@@ -198,7 +218,9 @@ export function RouteMap({
                     <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2]">
                       {c.name}
                     </span>
-                    <span className={`font-['Radley'] font-light text-white leading-none ${c.isSummit ? "text-[26px]" : "text-[20px]"}`}>
+                    <span
+                      className={`font-['Radley'] font-light text-white leading-none ${c.isSummit ? "text-[26px]" : "text-[20px]"}`}
+                    >
                       {c.altitude}
                     </span>
                   </div>
@@ -231,7 +253,12 @@ export function RouteMap({
 
                 {coords.map((c, idx) => (
                   <g key={idx} className="rm-point">
-                    <circle cx={c.x} cy={c.y} r={c.isSummit ? 9 : 6} fill="white" />
+                    <circle
+                      cx={c.x}
+                      cy={c.y}
+                      r={c.isSummit ? 9 : 6}
+                      fill="white"
+                    />
                     <text
                       x={c.x}
                       y={c.y - 66}
@@ -263,7 +290,7 @@ export function RouteMap({
         )}
       </div>
 
-      <div className="relative max-w-[1440px] mx-auto px-8 pb-24">
+      <div className="relative max-w-[1440px] mx-auto px-8 pb-16 md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/20 pt-16">
           <div className="flex flex-col gap-4">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">

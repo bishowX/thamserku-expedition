@@ -39,7 +39,7 @@ export const FAQHero = ({ page }: { page?: PageData }) => {
 
       <div className="relative z-10 flex flex-grow flex-col items-start justify-end md:items-center md:justify-center section-padding pb-16 md:pb-24">
         <div className="flex w-full max-w-[1138px] flex-col items-start md:items-center gap-5 md:gap-[30px]">
-          <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading leading-[1.1] tracking-tight text-left md:text-center text-white">
+          <h1 className="font-['Cormorant_Garamond'] font-light text-[32px] md:text-[48px] leading-[1.1] tracking-tight text-left md:text-center text-white">
             {page?.heroHeadline ?? "Fifteen quiet answers."}
           </h1>
           <p className="font-['Lexend'] font-light text-fluid-body leading-relaxed text-left md:text-center text-[#C8CDD2] max-w-[705px]">

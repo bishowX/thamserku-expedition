@@ -29,7 +29,7 @@ export const EnquiryClosing = ({ data }: { data?: ConsultationPage }) => {
           {label}
         </p>
 
-        <h2 className="font-['Radley'] font-light text-5xl md:text-[56px] lg:text-[80px] leading-[1.1] text-white max-w-[24ch] mb-12">
+        <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] leading-[1.1] text-white max-w-[24ch] mb-12">
           {heading}
         </h2>
 

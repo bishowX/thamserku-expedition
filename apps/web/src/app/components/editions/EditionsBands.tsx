@@ -42,7 +42,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
         return (
           <div
             key={ed._id}
-            className={`w-full relative overflow-hidden ${bgClass} section-padding`}
+            className={`w-full relative overflow-hidden ${bgClass} px-5 md:px-8 pt-6 md:pt-24 pb-12 md:pb-24`}
           >
             {imageUrl && (
               <div
@@ -72,7 +72,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
                   {ed.letter}
                 </div>
                 {ed.tag && (
-                  <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mt-8 max-w-[20ch] leading-relaxed text-[#5A6673]">
+                  <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mt-4 md:mt-8 max-w-[20ch] leading-relaxed text-[#5A6673]">
                     {ed.tag}
                   </p>
                 )}
@@ -96,20 +96,20 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
 
                 {ed.subtitle && (
                   <p
-                    className={`font-['Radley'] italic text-[24px] md:text-[28px] mb-12 ${sigColor}`}
+                    className={`font-['Radley'] italic text-[24px] md:text-[28px] mb-6 md:mb-12 ${sigColor}`}
                   >
                     {ed.subtitle}
                   </p>
                 )}
 
                 <div
-                  className={`font-['Lexend'] font-light text-[16px] leading-relaxed max-w-[56ch] mb-16 ${copyColor}`}
+                  className={`font-['Lexend'] font-light text-[16px] leading-relaxed max-w-[56ch] mb-8 md:mb-16 ${copyColor}`}
                 >
                   {ed.body1 && <p className="mb-6">{ed.body1}</p>}
                   {ed.body2 && <p>{ed.body2}</p>}
                 </div>
 
-                <div className="flex flex-col gap-10 max-w-[56ch]">
+                <div className="flex flex-col gap-6 md:gap-10 max-w-[56ch]">
                   {ed.targetAudience && (
                     <div>
                       <p

@@ -16,7 +16,7 @@ export const FAQNewsletterBanner = ({ page }: { page?: PageData }) => {
         </span>
 
         {/* Headline */}
-        <h2 className="font-['Radley'] font-light text-[40px] md:text-[52px] text-white leading-[1.1] text-center max-w-[26ch] mb-6">
+        <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] text-white leading-[1.1] text-center max-w-[26ch] mb-6">
           {page?.newsletterHeadline ??
             "Receive Field Notes from the expedition desk."}
         </h2>

@@ -41,7 +41,7 @@ export function EditionsClosing({ page }: { page?: PageData }) {
         </p>
 
         {page?.closingHeading && (
-          <h2 className="font-['Radley'] font-light text-5xl md:text-[64px] lg:text-[80px] leading-[1.05] tracking-tight mb-8">
+          <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] leading-[1.05] tracking-tight mb-8">
             {page.closingHeading}
           </h2>
         )}

@@ -14,7 +14,7 @@ export const FAQRelatedPages = ({ page }: { page?: PageData }) => {
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] text-center mb-6">
             {page?.relatedPagesEyebrow ?? 'READ THE PAGES — § II'}
           </span>
-          <h2 className="font-['Radley'] font-light text-[36px] md:text-[48px] text-[#1A1A1A] leading-[1.1] text-center max-w-[28ch]">
+          <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] text-[#1A1A1A] leading-[1.1] text-center max-w-[28ch]">
             {page?.relatedPagesHeadline ?? 'Each question links to a page.'}
           </h2>
         </div>

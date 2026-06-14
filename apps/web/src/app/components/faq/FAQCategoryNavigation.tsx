@@ -23,21 +23,18 @@ export const FAQCategoryNavigation = ({ page, categories: sanityCategories }: { 
           <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] text-center mb-6">
             {page?.categoryNavEyebrow ?? 'JUMP TO A CATEGORY — § I'}
           </span>
-          <h2 className="font-['Radley'] font-light text-[36px] md:text-[44px] text-[#1A1A1A] leading-[1.1] text-center max-w-[24ch]">
+          <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] text-[#1A1A1A] leading-[1.1] text-center max-w-[24ch]">
             {page?.categoryNavHeadline ?? 'Seven categories of question.'}
           </h2>
         </div>
 
         {/* Category navigation grid */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-3 mx-auto"
-          style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
-        >
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 border-t border-l border-[#5A6673]/30">
           {items.map((cat, idx) => (
             <a
               key={idx}
               href={cat.id}
-              className={`flex flex-col px-5 py-6 border-t border-[#5A6673]/30 hover:bg-black/5 transition-colors cursor-pointer ${idx !== 0 ? 'border-l border-[#5A6673]/30' : ''}`}
+              className="flex flex-col px-5 py-6 border-b border-r border-[#5A6673]/30 hover:bg-black/5 transition-colors cursor-pointer"
             >
               <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] mb-4 min-h-[3em]">
                 {cat.num} —<br />{cat.label}

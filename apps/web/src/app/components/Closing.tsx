@@ -133,7 +133,7 @@ export function Closing({ data, encodeDataAttribute }: { data?: ClosingData; enc
 
         <h2
           ref={headingRef}
-          className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-2"
+          className="font-['Radley'] font-light text-[32px] md:text-[48px] leading-[1.1] mb-2"
           data-sanity={encodeDataAttribute?.(['homePage', 'closingHeading'])}
         >
           <TextReveal text={heading} />

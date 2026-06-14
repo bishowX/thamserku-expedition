@@ -35,7 +35,7 @@ return (
           BEGIN PRIVATELY — § III
         </span>
 
-        <h2 className="font-['Radley'] font-light text-[60px] md:text-[80px] text-white leading-[1.1] text-center max-w-[26ch] mb-8">
+        <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] text-white leading-[1.1] text-center max-w-[26ch] mb-8">
           {page?.closingHeadline ?? "Your question is not on this page?"}
         </h2>
 

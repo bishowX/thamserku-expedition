@@ -33,7 +33,7 @@ export function ExpeditionClosing({ name, closingImage, slug }: Props) {
           10 — Configure
         </span>
 
-        <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.1] text-white">
+        <h2 className="font-['Radley'] text-[32px] md:text-[48px] leading-[1.1] text-white">
           Design your {expeditionName} Expedition
         </h2>
 

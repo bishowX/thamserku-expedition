@@ -31,7 +31,7 @@ export const SafetyClosing = ({ page }: Props) => {
           </span>
         )}
 
-        <h2 className="font-['Radley'] font-light text-[44px] md:text-[80px] text-white leading-[1.05] text-center max-w-[16ch] mb-8">
+        <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] text-white leading-[1.05] text-center max-w-[16ch] mb-8">
           {page?.closingHeadline}
         </h2>
 
