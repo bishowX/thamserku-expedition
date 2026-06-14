@@ -45,7 +45,7 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
 
   return (
     <section className="w-full bg-[#1A1A1A] flex justify-center pt-24 pb-24 section-padding">
-      <div className="flex flex-col items-center gap-24 w-full">
+      <div className="flex flex-col items-center gap-12 md:gap-24 w-full">
         {decades.map((decade, idx) => {
           const paragraphs = stegaClean(decade.body ?? '').split(/\n\s*\n/).filter(Boolean);
           const imageSrc = decade.image ? urlFor(decade.image).width(600).url() : null;
@@ -62,7 +62,7 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
                     src={imageSrc}
                     alt={decade.title}
                     loading="lazy"
-                    className="w-full aspect-[3/4] object-cover"
+                    className="w-full aspect-[3/2] object-cover"
                   />
                 </div>
 

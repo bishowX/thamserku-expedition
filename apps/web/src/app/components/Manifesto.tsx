@@ -26,7 +26,13 @@ function splitAtLastSentence(text: string): [string, string] {
   return [text.slice(0, idx + 1), text.slice(idx + 2)];
 }
 
-export function Manifesto({ data, encodeDataAttribute }: { data?: ManifestoData; encodeDataAttribute?: EncodeDataAttributeCallback }) {
+export function Manifesto({
+  data,
+  encodeDataAttribute,
+}: {
+  data?: ManifestoData;
+  encodeDataAttribute?: EncodeDataAttributeCallback;
+}) {
   const [part1, part2] = data?.manifestoHeading
     ? splitAtLastSentence(stegaClean(data.manifestoHeading))
     : [DEFAULT_HEADING_PART1, DEFAULT_HEADING_PART2];
@@ -101,7 +107,7 @@ export function Manifesto({ data, encodeDataAttribute }: { data?: ManifestoData;
       ref={sectionRef}
       className="w-full bg-[#F4F2EC] text-[#1A1A1A] section-padding px-5 md:px-8"
     >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 md:gap-24">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 md:gap-24">
         <div className="md:w-1/4">
           <div ref={eyebrowRef} className="flex items-center gap-4">
             <span
@@ -110,17 +116,23 @@ export function Manifesto({ data, encodeDataAttribute }: { data?: ManifestoData;
             />
             <span
               className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]"
-              data-sanity={encodeDataAttribute?.(['homePage', 'manifestoEyebrow'])}
+              data-sanity={encodeDataAttribute?.([
+                "homePage",
+                "manifestoEyebrow",
+              ])}
             >
               {eyebrow}
             </span>
           </div>
         </div>
-        <div className="md:w-3/4 flex flex-col gap-10">
+        <div className="md:w-3/4 flex flex-col gap-4 md:gap-10">
           <h2
             ref={headingRef}
             className="font-['Radley'] font-light text-fluid-heading leading-[1.2] max-w-3xl"
-            data-sanity={encodeDataAttribute?.(['homePage', 'manifestoHeading'])}
+            data-sanity={encodeDataAttribute?.([
+              "homePage",
+              "manifestoHeading",
+            ])}
           >
             <TextReveal text={part1} />{" "}
             <em className="text-[#0A3A77] italic">
@@ -130,7 +142,7 @@ export function Manifesto({ data, encodeDataAttribute }: { data?: ManifestoData;
           <p
             ref={bodyRef}
             className="font-['Lexend'] font-light text-[#5A6673] text-fluid-body leading-[1.8] max-w-3xl"
-            data-sanity={encodeDataAttribute?.(['homePage', 'manifestoBody'])}
+            data-sanity={encodeDataAttribute?.(["homePage", "manifestoBody"])}
           >
             <TextReveal text={body} />
           </p>

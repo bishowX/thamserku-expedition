@@ -4,7 +4,7 @@ import ThamserkuLogo from "./logo/ThamserkuLogo";
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#2E353C] text-[#C8CDD2] pt-24 pb-8 px-8">
+    <footer className="w-full bg-[#2E353C] text-[#C8CDD2] pt-16 md:pt-24 pb-8 px-8">
       <div className="max-w-7xl mx-auto flex flex-col gap-12 md:gap-24">
         <div className="flex flex-col md:flex-row gap-8 justify-between items-start">
           <div className="w-full md:w-4/12 flex flex-col items-start gap-8 justify-between self-stretch">

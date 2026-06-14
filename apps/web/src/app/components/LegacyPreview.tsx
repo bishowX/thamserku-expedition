@@ -72,7 +72,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
       id="legacy"
       className="w-full bg-[#C8CDD2] min-h-screen flex flex-col justify-center overflow-hidden"
     >
-      <div className="max-w-[1440px] mx-auto px-8 py-16 w-full flex flex-col gap-12">
+      <div className="max-w-[1440px] mx-auto px-8 md:py-16 w-full flex flex-col gap-12">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
           {data?.legacyEyebrow && (

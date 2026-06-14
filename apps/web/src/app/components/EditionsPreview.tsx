@@ -50,7 +50,7 @@ export function EditionsPreview({
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
         <div
           ref={headerRef}
-          className="flex flex-col md:flex-row gap-12 md:gap-16 items-start"
+          className="flex flex-col md:flex-row gap-6 md:gap-16 items-start"
         >
           <div className="shrink-0 md:w-[280px]">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2]">

@@ -118,10 +118,10 @@ export function AtlasPreview({
       id="atlas"
       className="relative w-full bg-[#1A1A1A] text-white section-padding overflow-hidden"
     >
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-8 md:gap-16">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-6 md:gap-16">
         <div
           ref={headerRef}
-          className="flex flex-col md:flex-row gap-12 md:gap-24 items-start"
+          className="flex flex-col md:flex-row gap-6 md:gap-24 items-start"
         >
           <div className="md:w-1/4">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
@@ -130,7 +130,7 @@ export function AtlasPreview({
           </div>
           <div className="md:w-1/2">
             {data?.atlasHeading && (
-              <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-6">
+              <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-1 md:mb-6">
                 {data.atlasHeading}
               </h2>
             )}

@@ -22,14 +22,18 @@ export function NewsletterSection({
   const subscribed = actionData?.success === true;
 
   return (
-    <section id="newsletter" className="w-full bg-[#F4F2EC] py-24 px-6 md:px-16">
+    <section
+      id="newsletter"
+      className="w-full bg-[#F4F2EC] py-16 md:py-24 px-6 md:px-16"
+    >
       <div className="flex flex-col items-center text-center gap-6">
         <p className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#5A6673]">
           {data?.newsletterEyebrow ?? "07 — FIELD NOTES — NEWSLETTER"}
         </p>
 
         <h2 className="font-['Radley'] text-[40px] leading-[1.1] text-[#1A1A1A] max-w-[480px]">
-          {data?.newsletterHeading ?? "Receive Field Notes from the expedition desk."}
+          {data?.newsletterHeading ??
+            "Receive Field Notes from the expedition desk."}
         </h2>
 
         <p className="font-['Lexend'] font-light text-[16px] leading-[1.1] text-[#5A6673] max-w-[540px]">
@@ -69,7 +73,9 @@ export function NewsletterSection({
               disabled={submitting}
               className="w-full md:w-auto border border-[rgba(10,58,119,0.35)] px-8 py-[14px] font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#0A3A77] hover:border-[#0A3A77] transition-colors whitespace-nowrap disabled:opacity-50"
             >
-              {submitting ? "SENDING..." : (data?.newsletterCta ?? "SUBSCRIBE →")}
+              {submitting
+                ? "SENDING..."
+                : (data?.newsletterCta ?? "SUBSCRIBE →")}
             </button>
           </Form>
         )}
