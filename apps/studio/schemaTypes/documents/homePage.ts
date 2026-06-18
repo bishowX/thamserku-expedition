@@ -51,7 +51,7 @@ export default defineType({
       type: 'array',
       group: 'atlas',
       of: [{ type: 'reference', to: [{ type: 'expedition' }] }],
-      validation: (Rule) => Rule.max(5),
+      validation: (Rule) => Rule.max(15),
       description: 'Up to 5 expeditions shown in the homepage Atlas preview.',
     }),
 
