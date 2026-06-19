@@ -310,6 +310,7 @@ export type SanityExpeditionDossier = {
   itineraryHeading?: string;
   itinerary?: Array<{ days: string; activity: string; accommodation: string; meals: string }>;
   routeWaypoints?: SanityRouteWaypoint[];
+  routeHeadline?: string;
   routePhilosophy?: string;
   acclimatisationNote?: string;
   summitWindowNote?: string;
@@ -551,7 +552,7 @@ export const EXPEDITION_BY_SLUG_QUERY = `*[_type == "expedition" && slug.current
   audienceTiles[]{ label, subline, description },
   itineraryHeading, itinerary[]{ days, activity, accommodation, meals },
   routeWaypoints[]{ name, altitude },
-  routePhilosophy, acclimatisationNote, summitWindowNote,
+  routeHeadline, routePhilosophy, acclimatisationNote, summitWindowNote,
   editions[]->{ letter, name, subtitle, positioning, targetAudience, character, isStandard },
   inclusionCategories[]{ category, items },
   exclusions,

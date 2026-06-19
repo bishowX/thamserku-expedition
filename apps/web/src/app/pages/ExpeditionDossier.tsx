@@ -126,6 +126,7 @@ export default function ExpeditionDossier() {
         />
         <RouteMap
           waypoints={expedition.routeWaypoints}
+          routeHeadline={expedition.routeHeadline}
           routePhilosophy={expedition.routePhilosophy}
           acclimatisationNote={expedition.acclimatisationNote}
           summitWindowNote={expedition.summitWindowNote}

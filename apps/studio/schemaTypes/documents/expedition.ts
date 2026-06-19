@@ -132,6 +132,7 @@ export default defineType({
       of: [{ type: 'routeWaypoint' }],
       description: 'Ordered list of waypoints for the elevation diagram.',
     }),
+    defineField({ group: 'route', name: 'routeHeadline', title: 'Route Headline', type: 'string', description: 'Headline shown above the elevation diagram. Leave blank to auto-generate from waypoint count.' }),
     defineField({ group: 'route', name: 'routePhilosophy', title: 'Route Philosophy', type: 'text', rows: 3 }),
     defineField({ group: 'route', name: 'acclimatisationNote', title: 'Acclimatisation Cycle Note', type: 'text', rows: 3 }),
     defineField({ group: 'route', name: 'summitWindowNote', title: 'Summit Window Note', type: 'text', rows: 3 }),

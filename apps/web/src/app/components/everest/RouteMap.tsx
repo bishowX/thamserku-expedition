@@ -10,6 +10,7 @@ type Waypoint = { name: string; altitude: string };
 
 type Props = {
   waypoints?: Waypoint[];
+  routeHeadline?: string;
   routePhilosophy?: string;
   acclimatisationNote?: string;
   summitWindowNote?: string;
@@ -40,6 +41,7 @@ function smoothPath(pts: { x: number; y: number }[]): string {
 
 export function RouteMap({
   waypoints,
+  routeHeadline,
   routePhilosophy,
   acclimatisationNote,
   summitWindowNote,
@@ -185,9 +187,9 @@ export function RouteMap({
             07 — ROUTE
           </p>
           <h2 className="font-['Radley'] font-light text-[clamp(34px,3.9vw,56px)] leading-[1.1] max-w-[32ch] text-white">
-            {n > 0
+            {routeHeadline || (n > 0
               ? `From ${points[0].name} to the summit. ${n - 1} points on the line.`
-              : "The route."}
+              : "The route.")}
           </h2>
         </div>
 
