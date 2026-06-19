@@ -22,7 +22,7 @@ export function Overview({
     >
       <div className="max-w-[1320px] mx-auto flex flex-col gap-8">
         <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-          03 — Overview
+          02 — Overview
         </span>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-start">

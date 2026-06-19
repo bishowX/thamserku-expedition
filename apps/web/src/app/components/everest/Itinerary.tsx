@@ -20,7 +20,7 @@ export function Itinerary({ itineraryHeading, itinerary }: Props) {
       <div className="max-w-[1320px] mx-auto flex flex-col gap-10 md:gap-14">
         <div className="flex flex-col gap-6 md:gap-8">
           <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-            05 — Program
+            04 — Program
           </span>
           {itineraryHeading && (
             <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.2] text-white">

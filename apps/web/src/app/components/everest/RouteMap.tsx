@@ -182,7 +182,7 @@ export function RouteMap({
 
         <div className="relative max-w-[1440px] w-full mx-auto px-5 md:px-8 flex flex-col gap-6">
           <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-            06 — ROUTE
+            07 — ROUTE
           </p>
           <h2 className="font-['Radley'] font-light text-[clamp(34px,3.9vw,56px)] leading-[1.1] max-w-[32ch] text-white">
             {n > 0

@@ -28,7 +28,7 @@ export function QuickFacts({
     <section id="dossier-facts" className="bg-[#1A1A1A] w-full text-white border-b border-white/10 scroll-mt-24">
       <div className="max-w-[1440px] mx-auto px-8 pt-6 pb-4">
         <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-          02 — DOSSIER FACTS
+          01 — DOSSIER FACTS
         </h2>
       </div>
       <div className="w-full border-t border-white/20">

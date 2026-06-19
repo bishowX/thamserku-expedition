@@ -89,7 +89,7 @@ export function Inclusions({
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
               <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-                06 — Crafted Edition Standard
+                05 — Crafted Edition Standard
               </span>
               <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.28] text-[#1A1A1A]">
                 What's Included

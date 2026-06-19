@@ -30,7 +30,7 @@ export function WhoItIsFor({ whoItIsForHeadline, highlightsImage, audienceTiles 
       <div className="relative z-10 max-w-[1320px] mx-auto flex flex-col gap-8">
         <div className="flex flex-col gap-6 md:gap-8">
           <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
-            04 — Why This Expedition
+            03 — Why This Expedition
           </span>
           {whoItIsForHeadline && (
             <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.15] text-[#1A1A1A]">

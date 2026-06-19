@@ -33,7 +33,7 @@ export function ExpeditionEditions({ name, editions }: Props) {
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
           <div className="shrink-0 md:w-[280px]">
             <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-              07 — Choose Your Philosophy
+              06 — Choose Your Philosophy
             </span>
           </div>
           <div className="flex-1">
