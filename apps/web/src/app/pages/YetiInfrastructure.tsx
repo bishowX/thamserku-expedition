@@ -3,7 +3,6 @@ import { useQuery } from "@sanity/react-loader";
 import type { QueryResponseInitial } from "@sanity/react-loader";
 import { Nav } from '../components/Nav';
 import { YetiHero } from '../components/yeti/YetiHero';
-import { YetiPartnerGrid } from '../components/yeti/YetiPartnerGrid';
 import { YetiDefinition } from '../components/yeti/YetiDefinition';
 import { YetiClosing } from '../components/yeti/YetiClosing';
 import { Footer } from '../components/Footer';
@@ -36,7 +35,6 @@ export default function YetiInfrastructure() {
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
       <YetiHero page={page} encodeDataAttribute={encodeDataAttribute} />
-      <YetiPartnerGrid page={page} />
       <YetiDefinition page={page} encodeDataAttribute={encodeDataAttribute} />
       <YetiClosing page={page} />
       <Footer />
