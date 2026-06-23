@@ -29,52 +29,42 @@ interface Partner {
 
 // Deterministic position for the i-th card out of `total`.
 //
-// Uses a rectangular perimeter (equal arc-length spacing) rather than an ellipse.
-// Ellipses bunch cards near the top/bottom poles; a rectangle keeps spacing uniform.
-// Starting at the top-centre ensures corners always fall *between* two cards, so the
-// worst-case neighbour gap is predictably large (never a short diagonal shortcut).
-// Jitter amplitude scales with available spacing so it can never cause overlap.
+// Logos sit on concentric elliptical rings around the centred headline, evenly
+// spaced by angle. With more than RING_ONE_MAX logos we split into two rings so
+// neither gets crowded; the inner ring stays clear of the copy and the outer
+// ring hugs the viewport. Upright, no tilt, even angular spacing.
+const RING_ONE_MAX = 14;
+
 function computePosition(i: number, total: number) {
-  const L = 5, R = 95, T = 9, B = 92;
-  const W = R - L, H = B - T;  // 90 × 83
-  const perim = 2 * (W + H);   // 346
+  const cx = 50, cy = 50;
+  const useTwoRings = total > RING_ONE_MAX;
 
-  // Start at top-centre so no card lands right on a corner
-  let d = ((W / 2 + (i / total) * perim) % perim + perim) % perim;
+  // Split the cloud across an inner and outer ring (outer gets the extras).
+  const outerCount = useTwoRings ? Math.ceil(total / 2) : total;
+  const innerCount = total - outerCount;
 
-  let bx: number, by: number;
-  if (d < W) {
-    bx = L + d;            by = T;
-  } else if (d < W + H) {
-    bx = R;                by = T + (d - W);
-  } else if (d < 2 * W + H) {
-    bx = R - (d - W - H);  by = B;
-  } else {
-    bx = L;                by = B - (d - 2 * W - H);
-  }
+  const onOuter = i < outerCount;
+  const ringIndex = onOuter ? i : i - outerCount;
+  const ringCount = onOuter ? outerCount : innerCount;
 
-  // Nudge inward 5–8 % so cards don't hug the raw edge
-  const cx = 50, cy = 52;
-  const dx0 = cx - bx, dy0 = cy - by;
-  const len = Math.hypot(dx0, dy0) || 1;
-  const nudge = 5 + Math.abs(Math.sin(i * 1.3)) * 3;
-  bx += (dx0 / len) * nudge;
-  by += (dy0 / len) * nudge;
+  // Ellipse radii (% of width / height). Outer hugs the viewport; inner sits
+  // close in but clears the headline. Single-ring layouts use the outer radii.
+  const Rx = onOuter ? 43 : 26;
+  const Ry = onOuter ? 40 : 25;
 
-  // Jitter: capped at 14 % of the available spacing — guarantees no overlap
-  const spacing   = perim / total;
-  const jitterAmp = Math.max(0.4, spacing * 0.14);
-  const jx = Math.sin(i * 2.618 + 1.0) * jitterAmp;
-  const jy = Math.cos(i * 1.618 + 2.0) * jitterAmp * 0.8;
+  // Even angular spacing, starting at the top. Offset the inner ring by half a
+  // step so its logos interleave with the outer ring rather than line up.
+  const offset = onOuter ? 0 : Math.PI / ringCount;
+  const ang = -Math.PI / 2 + (ringIndex / ringCount) * Math.PI * 2 + offset;
 
-  const fx = Math.max(3, Math.min(97, bx + jx));
-  const fy = Math.max(7, Math.min(94, by + jy));
-  const fr = parseFloat((Math.sin(i * 0.9 + 0.4) * 2.5).toFixed(1));
+  const fx = cx + Rx * Math.cos(ang);
+  const fy = cy + Ry * Math.sin(ang);
+  const fr = 0; // upright — no tilt
 
-  const dist  = Math.hypot((fx - cx) / 45, (fy - cy) / 41);
-  const depth = parseFloat(Math.max(0.74, Math.min(1.0, 0.60 + dist * 0.48)).toFixed(2));
-  const fs    = parseFloat((0.78 + depth * 0.16).toFixed(2));
-  const z     = Math.round(depth * 11);
+  // Outer ring reads as the nearer/larger layer; inner sits slightly back.
+  const depth = onOuter ? 0.98 : 0.86;
+  const fs    = parseFloat((0.84 + depth * 0.10).toFixed(2));
+  const z     = onOuter ? 10 : 8;
 
   return { fx, fy, fr, fs, z, depth };
 }
@@ -151,11 +141,11 @@ export const YetiHero = ({
       // bottom bands so the headline reads cleanly through the middle. ──
       const mPos: Record<string, { fx: number; fy: number; fr: number }> = {
         "yeti-world": { fx: 50, fy: 12, fr: 0 },
-        "yeti-airlines": { fx: 17, fy: 24, fr: -2 },
-        "gokarna-forest": { fx: 83, fy: 25, fr: 2 },
-        "yeti-holidays": { fx: 18, fy: 86, fr: 2.5 },
-        "shinta-mani": { fx: 50, fy: 90, fr: -1.5 },
-        "lumbini-hokke": { fx: 82, fy: 85, fr: 1.5 },
+        "yeti-airlines": { fx: 18, fy: 24, fr: 0 },
+        "gokarna-forest": { fx: 82, fy: 24, fr: 0 },
+        "yeti-holidays": { fx: 18, fy: 86, fr: 0 },
+        "shinta-mani": { fx: 50, fy: 88, fr: 0 },
+        "lumbini-hokke": { fx: 82, fy: 86, fr: 0 },
       };
       const MS = 0.62; // mobile scale damping
 
@@ -499,14 +489,14 @@ export const YetiHero = ({
       <div className="absolute inset-0 z-[6] flex flex-col items-center justify-center px-8 pointer-events-none select-none">
         <h1
           ref={headingRef}
-          className="font-['Cormorant_Garamond'] font-light text-[clamp(2rem,4.8vw,4.75rem)] tracking-[-0.015em] text-white leading-[1.06] text-center max-w-[16ch] mb-6"
+          className="font-['Fraunces'] font-light text-display-xl tracking-[-0.015em] text-white text-center max-w-[16ch] mb-6"
           data-sanity={encodeDataAttribute?.(["yetiPage", "heroHeadline"])}
         >
           <SplitWords text={heading} />
         </h1>
         <p
           ref={subRef}
-          className="font-['Lexend'] font-light text-[clamp(0.825rem,0.95vw,1rem)] text-[#9CA3AF] leading-[1.75] max-w-[50ch] text-center opacity-0"
+          className="font-['DM_Sans'] font-light text-body text-[#9CA3AF] leading-[1.75] max-w-[50ch] text-center opacity-0"
         >
           {subtext}
         </p>
@@ -517,7 +507,7 @@ export const YetiHero = ({
         ref={scrollCueRef}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[7] flex flex-col items-center gap-3"
       >
-        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.3em] text-[9px] text-white/20">
+        <span className="font-['DM_Mono'] uppercase tracking-[0.3em] text-[11px] text-white/20">
           Scroll
         </span>
         <div className="w-px h-8 bg-white/[0.08] relative overflow-hidden rounded-full">
