@@ -48,9 +48,9 @@ function computePosition(i: number, total: number) {
   const ringCount = onOuter ? outerCount : innerCount;
 
   // Ellipse radii (% of width / height). Outer hugs the viewport; inner sits
-  // close in but clears the headline. Single-ring layouts use the outer radii.
-  const Rx = onOuter ? 43 : 26;
-  const Ry = onOuter ? 40 : 25;
+  // back far enough to leave clear space around the centred headline.
+  const Rx = onOuter ? 43 : 34;
+  const Ry = onOuter ? 40 : 34;
 
   // Even angular spacing, starting at the top. Offset the inner ring by half a
   // step so its logos interleave with the outer ring rather than line up.

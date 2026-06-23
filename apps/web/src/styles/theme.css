@@ -31,7 +31,7 @@
   --text-display-l--line-height:   1.08;
   --text-display-m:                clamp(1.5rem, 1.368rem + 0.56vw, 1.875rem);  /* 24px → 30px */
   --text-display-m--line-height:   1.17;
-  --text-stat:                     clamp(3.25rem, 2.634rem + 2.63vw, 5rem);     /* 52px → 80px */
+  --text-stat:                     clamp(2.125rem, 1.729rem + 1.69vw, 3.25rem); /* 34px → 52px */
   --text-stat--line-height:        1;
   --text-body-lg:                  clamp(1.0625rem, 1.019rem + 0.19vw, 1.1875rem); /* 17px → 19px */
   --text-body-lg--line-height:     1.526;
