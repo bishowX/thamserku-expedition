@@ -68,6 +68,7 @@ export function RouteMap({
   });
 
   const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -96,28 +97,25 @@ export function RouteMap({
         },
       );
 
-      // Shared between the pinned and static desktop chart: reset the line +
-      // markers to their hidden state and return the measured handles.
-      const prepChart = () => {
-        const path = pathRef.current;
-        const svg = svgRef.current;
-        if (!path || !svg) return null;
-        const len = path.getTotalLength();
-        const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
-        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-        gsap.set(pointGroups, { opacity: 0, y: 10 });
-        return { path, len, pointGroups };
-      };
-
-      // Desktop, tall + wide enough for the cinematic experience: pinned stage
-      // with the line drawn under the scrollbar (scrubbed). Gated on min-height
-      // so short laptops don't get a pin that has no room to breathe.
+      // Desktop: the chart is "pinned" by native CSS position:sticky (the
+      // track/stage wrappers in the markup), NOT by ScrollTrigger. Sticky is a
+      // browser primitive that Lenis drives natively, so there's no pin-spacer
+      // and no fixed↔relative toggle at the boundaries — that toggle, fighting
+      // Lenis momentum, was the shift on unpin. This ScrollTrigger only scrubs
+      // the line-draw against scroll progress through the track; it never
+      // touches layout, so there is nothing left to jank.
       mm.add(
-        "(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)",
+        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
         () => {
-          const chart = prepChart();
-          if (!chart) return;
-          const { path, len, pointGroups } = chart;
+          const path = pathRef.current;
+          const svg = svgRef.current;
+          const track = trackRef.current;
+          if (!path || !svg || !track) return;
+          const len = path.getTotalLength();
+          const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
+
+          gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+          gsap.set(pointGroups, { opacity: 0, y: 10 });
 
           // x is monotonic along the path, so binary-search the arc length
           // where the line reaches each waypoint's x
@@ -132,27 +130,22 @@ export function RouteMap({
             return (lo + hi) / 2;
           };
 
-          // the stage is a viewport-height block-level child of the section,
-          // so the pin-spacer reserves its space correctly (pinning a flex
-          // child breaks spacing, which is why the chart used to drift).
-          // anticipatePin avoids the one-frame snap when the lock engages on
-          // a fast scroll.
+          // progress runs from the moment the stage sticks (track top hits the
+          // viewport top) to the moment it releases (track bottom hits the
+          // viewport bottom) — exactly matching the sticky lock window
           const tl = gsap.timeline({
             scrollTrigger: {
-              trigger: stage,
+              trigger: track,
               start: "top top",
-              end: "+=110%",
-              pin: true,
-              anticipatePin: 1,
+              end: "bottom bottom",
               scrub: 0.6,
             },
           });
 
-          // a beat after the lock engages before drawing starts, and a dwell
-          // on the finished chart before it releases, so neither boundary
-          // coincides with visible motion
+          // dwell before drawing starts and after it finishes, so neither the
+          // stick nor the release coincides with visible motion
           const LEAD = 0.08;
-          const TAIL = 0.25;
+          const TAIL = 0.22;
 
           tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, LEAD);
           pointGroups.forEach((g, idx) => {
@@ -164,36 +157,6 @@ export function RouteMap({
           });
           tl.to({}, { duration: TAIL });
         },
-      );
-
-      // Desktop, but not tall+wide enough to pin (tablets 768–1023px, or short
-      // laptops): no pin — the chart draws itself once when it scrolls into
-      // view. Same visual, zero pin jank, never clips on cramped viewports.
-      const drawOnce = () => {
-        const chart = prepChart();
-        if (!chart) return;
-        const { path, pointGroups } = chart;
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: stage, start: "top 75%", once: true },
-        });
-        tl.to(path, {
-          strokeDashoffset: 0,
-          ease: "power1.inOut",
-          duration: 1.4,
-        });
-        tl.to(
-          pointGroups,
-          { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" },
-          "<0.4",
-        );
-      };
-      mm.add(
-        "(min-width: 768px) and (max-width: 1023px) and (prefers-reduced-motion: no-preference)",
-        drawOnce,
-      );
-      mm.add(
-        "(min-width: 1024px) and (max-height: 699px) and (prefers-reduced-motion: no-preference)",
-        drawOnce,
       );
     },
     {
@@ -212,9 +175,12 @@ export function RouteMap({
       id="route"
       className="scroll-mt-28 bg-[#191919] w-full text-white relative"
     >
+      {/* Desktop: tall track gives the sticky stage room to lock while the line
+          draws. Mobile: no height, so the ladder just flows normally. */}
+      <div ref={trackRef} className="md:h-[200svh]">
       <div
         ref={stageRef}
-        className="relative md:min-h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
+        className="relative md:sticky md:top-0 md:h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
@@ -332,6 +298,7 @@ export function RouteMap({
             </div>
           </div>
         )}
+      </div>
       </div>
 
       <div className="relative max-w-[1440px] mx-auto px-8 pb-16 md:pb-24">
