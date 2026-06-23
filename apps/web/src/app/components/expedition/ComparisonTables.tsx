@@ -70,7 +70,7 @@ export function ComparisonTables({
               <span className="flex items-center gap-2">
                 Add-on
                 {addonCount > 0 && (
-                  <span className="bg-white text-[#5A6673] px-[3px] py-px font-['Lexend'] text-[11px] leading-none uppercase tracking-normal">
+                  <span className="bg-white text-[#5A6673] px-[3px] py-px font-['DM_Sans'] text-[11px] leading-none uppercase tracking-normal">
                     {addonCount} available
                   </span>
                 )}
@@ -85,13 +85,13 @@ export function ComparisonTables({
             <table className="w-full table-fixed border-collapse min-w-[760px]">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left py-[10px] pr-4 font-['JetBrains_Mono'] font-normal text-[11px] tracking-[0.22em] uppercase text-[#C8CDD2]">
+                  <th className="text-left py-[10px] pr-4 font-['DM_Mono'] font-normal text-[11px] tracking-[0.22em] uppercase text-[#C8CDD2]">
                     Feature
                   </th>
                   {colMeta.map(({ letter, hasData }) => (
                     <th
                       key={letter}
-                      className={`text-left py-[10px] px-4 font-['Radley'] font-normal text-[24px] leading-9 ${
+                      className={`text-left py-[10px] px-4 font-['Fraunces'] font-normal text-display-m leading-9 ${
                         hasData
                           ? "text-white"
                           : "text-[#7E868F] bg-white/[0.02]"
@@ -108,7 +108,7 @@ export function ComparisonTables({
                     key={r.key}
                     className="h-16 border-b border-white/10 align-middle"
                   >
-                    <td className="pr-4 font-['JetBrains_Mono'] text-[11px] tracking-[0.22em] uppercase text-[#C8CDD2]">
+                    <td className="pr-4 font-['DM_Mono'] text-[11px] tracking-[0.22em] uppercase text-[#C8CDD2]">
                       {r.label}
                     </td>
                     {colMeta.map(({ letter, hasData }) => {
@@ -121,7 +121,7 @@ export function ComparisonTables({
                         return (
                           <td
                             key={letter}
-                            className="px-4 text-center align-middle bg-white/[0.02] font-['Cormorant_Garamond'] italic text-[15px] text-[#8A929B]"
+                            className="px-4 text-center align-middle bg-white/[0.02] font-['Fraunces'] italic text-body text-[#8A929B]"
                           >
                             {isMiddle ? "Project dependent" : ""}
                           </td>
@@ -133,7 +133,7 @@ export function ComparisonTables({
                       return (
                         <td
                           key={letter}
-                          className="px-4 font-['Lexend'] font-light text-[16px] leading-5 text-white"
+                          className="px-4 font-['DM_Sans'] font-light text-body leading-5 text-white"
                         >
                           {text}
                         </td>
@@ -149,7 +149,7 @@ export function ComparisonTables({
             <button
               type="button"
               onClick={() => setExpanded((v) => !v)}
-              className="font-['Lexend'] text-[14px] tracking-[0.17em] uppercase text-white hover:text-[#C8CDD2] transition-colors mt-2"
+              className="font-['DM_Sans'] text-body tracking-[0.17em] uppercase text-white hover:text-[#C8CDD2] transition-colors mt-2"
             >
               {expanded ? "See less" : "See more"}
             </button>
@@ -173,7 +173,7 @@ function Tab({
     <button
       type="button"
       onClick={onClick}
-      className={`font-[''] text-[18px] tracking-[0.13em] transition-colors font-normal ${
+      className={`font-['DM_Mono'] text-[18px] tracking-[0.13em] transition-colors font-normal ${
         active
           ? "text-white underline underline-offset-4"
           : "text-[#C8CDD2] hover:text-white"

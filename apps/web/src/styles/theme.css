@@ -15,17 +15,38 @@
   --color-ring: var(--ring);
 }
 
-/* Fluid typography — 375px → 1440px viewport
-   Generates text-fluid-* utility classes */
+/* ── Reference type scale (Thamserku Type System v3) — 375px → 1440px ──
+   Canonical tiers. Each carries the reference line-height so size + leading
+   travel together. Fluid: mobile min → desktop reference max.
+     display-xl  Hero / Display XL   Fraunces 300 · 76 / 78 · opsz 144
+     display-l   Section H2 / Disp L Fraunces 350 · 48 / 52 · opsz 100
+     display-m   Card H3 / Display M Fraunces 400 · 30 / 35 · opsz 72
+     stat        Stats numeral       Fraunces 250 · 80 · opsz 144
+     body-lg     Body Large          DM Sans 400 · 19 / 29
+     body        Body Regular        DM Sans 400 · 16 / 26 */
 @theme {
-  --text-fluid-display:  clamp(2.25rem, 1.634rem + 2.63vw, 4rem);       /* 36px → 64px */
-  --text-fluid-section:  clamp(2rem, 1.473rem + 2.25vw, 3.5rem);        /* 32px → 56px */
-  --text-fluid-heading:  clamp(1.75rem, 1.31rem + 1.88vw, 3rem);        /* 28px → 48px */
-  --text-fluid-mountain: clamp(1.625rem, 1.23rem + 1.69vw, 2.75rem);    /* 26px → 44px */
-  --text-fluid-xl:       clamp(1.5rem, 1.148rem + 1.5vw, 2.5rem);       /* 24px → 40px */
-  --text-fluid-lg:       clamp(1.125rem, 0.905rem + 0.94vw, 1.75rem);   /* 18px → 28px */
-  --text-fluid-md:       clamp(1rem, 0.869rem + 0.56vw, 1.375rem);      /* 16px → 22px */
-  --text-fluid-body:     clamp(0.875rem, 0.831rem + 0.19vw, 1rem);      /* 14px → 16px */
+  --text-display-xl:               clamp(2.875rem, 2.215rem + 2.82vw, 4.75rem); /* 46px → 76px */
+  --text-display-xl--line-height:  1.03;
+  --text-display-l:                clamp(2rem, 1.648rem + 1.5vw, 3rem);         /* 32px → 48px */
+  --text-display-l--line-height:   1.08;
+  --text-display-m:                clamp(1.5rem, 1.368rem + 0.56vw, 1.875rem);  /* 24px → 30px */
+  --text-display-m--line-height:   1.17;
+  --text-stat:                     clamp(3.25rem, 2.634rem + 2.63vw, 5rem);     /* 52px → 80px */
+  --text-stat--line-height:        1;
+  --text-body-lg:                  clamp(1.0625rem, 1.019rem + 0.19vw, 1.1875rem); /* 17px → 19px */
+  --text-body-lg--line-height:     1.526;
+  --text-body:                     clamp(0.9375rem, 0.916rem + 0.09vw, 1rem);   /* 15px → 16px */
+  --text-body--line-height:        1.625;
+
+  /* Legacy fluid tokens — retained so any un-migrated class keeps working */
+  --text-fluid-display:  clamp(2.875rem, 2.215rem + 2.82vw, 4.75rem);  /* → display-xl */
+  --text-fluid-section:  clamp(2rem, 1.648rem + 1.5vw, 3rem);          /* → display-l */
+  --text-fluid-heading:  clamp(2rem, 1.648rem + 1.5vw, 3rem);          /* → display-l */
+  --text-fluid-mountain: clamp(2rem, 1.648rem + 1.5vw, 3rem);          /* → display-l */
+  --text-fluid-xl:       clamp(1.5rem, 1.368rem + 0.56vw, 1.875rem);   /* → display-m */
+  --text-fluid-lg:       clamp(1.5rem, 1.368rem + 0.56vw, 1.875rem);   /* → display-m */
+  --text-fluid-md:       clamp(1.0625rem, 1.019rem + 0.19vw, 1.1875rem); /* → body-lg */
+  --text-fluid-body:     clamp(0.9375rem, 0.916rem + 0.09vw, 1rem);    /* → body */
   --text-fluid-body-sm:  clamp(0.8125rem, 0.768rem + 0.19vw, 0.9375rem); /* 13px → 15px */
 }
 
@@ -124,26 +145,65 @@
     transform: translateX(4px);
   }
 
+  /* ── Fraunces display optical-sizing ──────────────────────────────────
+     Fraunces is a variable font with an opsz axis (9–144). Its editorial
+     "display" character — high stroke contrast, fine hairlines — only shows
+     near the top of that range. `font-optical-sizing: auto` just maps
+     opsz ≈ font-size, so large headings still render in the sturdier text
+     master. We lock opsz per size tier to match the reference type scale. */
+  [class*="Fraunces"] {
+    font-optical-sizing: auto;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  /* Display XL — hero → opsz 144, weight 300 */
+  [class*="Fraunces"][class*="text-display-xl"] {
+    font-variation-settings: "opsz" 144;
+    font-weight: 300;
+  }
+  /* Stats numeral → opsz 144, weight 250 */
+  [class*="Fraunces"][class*="text-stat"] {
+    font-variation-settings: "opsz" 144;
+    font-weight: 250;
+  }
+  /* Display L — section headlines → opsz 100, weight 350 */
+  [class*="Fraunces"][class*="text-display-l"] {
+    font-variation-settings: "opsz" 100;
+    font-weight: 350;
+  }
+  /* Display M — card titles + mid heads → opsz 72, weight 400 */
+  [class*="Fraunces"][class*="text-display-m"] {
+    font-variation-settings: "opsz" 72;
+    font-weight: 400;
+  }
+  /* Italic accent — Fraunces Italic with the WONK axis on (restate opsz,
+     since font-variation-settings replaces the whole property) */
+  [class*="Fraunces"].italic,
+  [class*="Fraunces"][class*="italic"] {
+    font-variation-settings: "WONK" 1;
+    font-weight: 350;
+  }
+
   h1 {
-    font-size: var(--text-fluid-display);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.1;
+    font-size: var(--text-display-xl);
+    font-weight: 300;
+    line-height: 1.03;
   }
 
   h2 {
-    font-size: var(--text-fluid-heading);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.1;
+    font-size: var(--text-display-l);
+    font-weight: 350;
+    line-height: 1.08;
   }
 
   h3 {
-    font-size: var(--text-fluid-lg);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.2;
+    font-size: var(--text-display-m);
+    font-weight: 400;
+    line-height: 1.17;
   }
 
   h4 {
-    font-size: var(--text-fluid-md);
+    font-size: var(--text-body-lg);
     font-weight: var(--font-weight-medium);
     line-height: 1.3;
   }

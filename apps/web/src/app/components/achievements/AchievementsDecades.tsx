@@ -68,10 +68,10 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
 
                 <div className="flex flex-col gap-4 flex-1">
                   <div className="flex flex-col gap-1">
-                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+                    <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
                       {decade.years}
                     </span>
-                    <h3 className="font-['Cormorant_Garamond'] font-medium text-[28px] leading-[35px] text-white">
+                    <h3 className="font-['Fraunces'] font-normal text-display-m text-white">
                       {decade.title}
                     </h3>
                   </div>
@@ -82,7 +82,7 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
                       data-sanity={encodeDataAttribute?.(['achievementsPage', 'decades', idx, 'body'])}
                     >
                       {paragraphs.map((para, i) => (
-                        <p key={i} className="font-['Inter'] font-light text-[15px] leading-[24.375px] text-[#C8CDD2]">
+                        <p key={i} className="font-['DM_Sans'] font-light text-body leading-[24.375px] text-[#C8CDD2]">
                           {para}
                         </p>
                       ))}
@@ -90,7 +90,7 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
                   )}
 
                   {decade.meta && (
-                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+                    <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
                       {decade.meta}
                     </span>
                   )}
@@ -102,10 +102,10 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
           return (
             <article key={decade._key} className="flex flex-col gap-4 items-start w-full max-w-[855px]">
               <div className="flex flex-col gap-1">
-                <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+                <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
                   {decade.years}
                 </span>
-                <h3 className="font-['Cormorant_Garamond'] font-medium text-[28px] leading-[35px] text-white">
+                <h3 className="font-['Fraunces'] font-normal text-display-m text-white">
                   {decade.title}
                 </h3>
               </div>
@@ -116,7 +116,7 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
                   data-sanity={encodeDataAttribute?.(['achievementsPage', 'decades', idx, 'body'])}
                 >
                   {paragraphs.map((para, i) => (
-                    <p key={i} className="font-['Inter'] font-light text-[15px] leading-[24.375px] text-[#C8CDD2]">
+                    <p key={i} className="font-['DM_Sans'] font-light text-body leading-[24.375px] text-[#C8CDD2]">
                       {para}
                     </p>
                   ))}
@@ -124,7 +124,7 @@ export function AchievementsDecades({ page, encodeDataAttribute }: { page?: Page
               )}
 
               {decade.meta && (
-                <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+                <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
                   {decade.meta}
                 </span>
               )}

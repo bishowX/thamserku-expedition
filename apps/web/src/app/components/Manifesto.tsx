@@ -115,7 +115,7 @@ export function Manifesto({
               className="hidden md:block h-px w-8 bg-[#5A6673]"
             />
             <span
-              className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]"
+              className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]"
               data-sanity={encodeDataAttribute?.([
                 "homePage",
                 "manifestoEyebrow",
@@ -128,7 +128,7 @@ export function Manifesto({
         <div className="md:w-3/4 flex flex-col gap-4 md:gap-10">
           <h2
             ref={headingRef}
-            className="font-['Radley'] font-light text-fluid-heading leading-[1.2] max-w-3xl"
+            className="font-['Fraunces'] font-light text-display-l max-w-3xl"
             data-sanity={encodeDataAttribute?.([
               "homePage",
               "manifestoHeading",
@@ -141,7 +141,7 @@ export function Manifesto({
           </h2>
           <p
             ref={bodyRef}
-            className="font-['Lexend'] font-light text-[#5A6673] text-fluid-body leading-[1.8] max-w-3xl"
+            className="font-['DM_Sans'] font-light text-[#5A6673] text-body max-w-3xl"
             data-sanity={encodeDataAttribute?.(["homePage", "manifestoBody"])}
           >
             <TextReveal text={body} />

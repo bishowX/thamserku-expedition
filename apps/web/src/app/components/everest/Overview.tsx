@@ -21,7 +21,7 @@ export function Overview({
       className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
     >
       <div className="max-w-[1320px] mx-auto flex flex-col gap-8">
-        <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+        <span className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           02 — Overview
         </span>
 
@@ -29,12 +29,12 @@ export function Overview({
           {/* Left — narrative */}
           <div className="flex flex-col gap-8 md:gap-12 lg:pr-[100px]">
             {(overviewHeadline || overviewHeadlineEmphasis) && (
-              <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.19] text-[#1A1A1A]">
+              <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
                 {overviewHeadline}
                 {overviewHeadlineEmphasis && (
                   <>
                     {overviewHeadline && " "}
-                    <span className="font-['Radley'] italic text-[#0A3A77]">
+                    <span className="font-['Fraunces'] italic text-[#0A3A77]">
                       {overviewHeadlineEmphasis}
                     </span>
                   </>
@@ -42,7 +42,7 @@ export function Overview({
               </h2>
             )}
             {overviewBody && (
-              <p className="font-['Lexend'] font-light text-[16px] leading-[1.8] text-[#5A6673]">
+              <p className="font-['DM_Sans'] font-light text-body leading-[1.8] text-[#5A6673]">
                 {overviewBody}
               </p>
             )}
@@ -51,7 +51,7 @@ export function Overview({
           {/* Right — spec table */}
           <div className="flex flex-col">
             {overviewSpecsHeading && (
-              <p className="font-['JetBrains_Mono'] text-[20px] md:text-[23px] leading-[1.25] text-[#5A6673] mb-6 md:mb-8">
+              <p className="font-['DM_Mono'] text-[20px] md:text-[23px] leading-[1.25] text-[#5A6673] mb-6 md:mb-8">
                 {overviewSpecsHeading}
               </p>
             )}
@@ -63,10 +63,10 @@ export function Overview({
                     key={i}
                     className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-5 md:py-6 border-b border-[rgba(26,26,26,0.2)]"
                   >
-                    <p className="font-['JetBrains_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] md:text-[16px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
+                    <p className="font-['DM_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] md:text-[16px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
                       {spec.label}
                     </p>
-                    <p className="font-['Radley'] text-[15px] md:text-[20px] leading-[1.5] text-[#1A1A1A]">
+                    <p className="font-['Fraunces'] text-body text-[#1A1A1A]">
                       {spec.value}
                     </p>
                   </div>

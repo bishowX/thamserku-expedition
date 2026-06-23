@@ -46,10 +46,10 @@ export function EditionsComparison({
   return (
     <section className="w-full bg-white text-[#1A1A1A] section-padding">
       <div className="w-full max-w-[1440px] mx-auto">
-        <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
+        <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
           {eyebrow}
         </p>
-        <h2 className="font-['Radley'] font-light text-4xl md:text-[56px] leading-[1.1] mb-10 md:mb-24 max-w-[20ch]">
+        <h2 className="font-['Fraunces'] font-light text-display-l mb-10 md:mb-24 max-w-[20ch]">
           {headline}
         </h2>
 
@@ -57,13 +57,13 @@ export function EditionsComparison({
           <table className="w-full min-w-[1024px] text-left border-collapse">
             <thead>
               <tr className="border-b border-[#1A1A1A]/10">
-                <th className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-[#5A6673] py-8 w-1/6">
+                <th className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-[#5A6673] py-8 w-1/6">
                   EDITION
                 </th>
                 {editions.map((ed) => (
                   <th
                     key={ed._id}
-                    className="font-['Radley'] font-light text-2xl md:text-3xl text-[#1A1A1A] py-8 w-[16.66%]"
+                    className="font-['Fraunces'] font-light text-display-m text-[#1A1A1A] py-8 w-[16.66%]"
                   >
                     {ed.name.replace(" Edition", "")}
                   </th>
@@ -76,13 +76,13 @@ export function EditionsComparison({
                   key={row.label}
                   className="border-b border-[#1A1A1A]/10 transition-colors hover:bg-[#F4F2EC]/50"
                 >
-                  <td className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] py-1 md:py-8">
+                  <td className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] py-1 md:py-8">
                     {row.label}
                   </td>
                   {editions.map((ed) => (
                     <td
                       key={ed._id}
-                      className="font-['Lexend'] font-light text-[15px] text-[#1A1A1A] py-1 md:py-8 pr-4"
+                      className="font-['DM_Sans'] font-light text-body text-[#1A1A1A] py-1 md:py-8 pr-4"
                     >
                       {row.getValue(ed, expeditions)}
                     </td>
@@ -93,7 +93,7 @@ export function EditionsComparison({
           </table>
         </div>
 
-        <p className="font-['Radley'] italic text-[#5A6673] text-[16px] mt-16 max-w-[80ch]">
+        <p className="font-['Fraunces'] italic text-[#5A6673] text-body mt-16 max-w-[80ch]">
           {note}
         </p>
       </div>

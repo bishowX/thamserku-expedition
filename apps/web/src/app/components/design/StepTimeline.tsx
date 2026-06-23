@@ -44,7 +44,7 @@ export function StepTimelineA({ steps, currentStep }: StepTimelineProps) {
                   </svg>
                 ) : (
                   <span
-                    className={`font-['JetBrains_Mono'] text-[10px] leading-none transition-colors duration-300 ${
+                    className={`font-['DM_Mono'] text-[10px] leading-none transition-colors duration-300 ${
                       active ? 'text-[#1A1A1A]' : 'text-[#6A6A6A]'
                     }`}
                   >
@@ -54,7 +54,7 @@ export function StepTimelineA({ steps, currentStep }: StepTimelineProps) {
               </div>
 
               <span
-                className={`mt-2 font-['JetBrains_Mono'] text-[8px] uppercase tracking-[0.18em] text-center max-w-[80px] leading-tight transition-colors duration-300 ${
+                className={`mt-2 font-['DM_Mono'] text-[8px] uppercase tracking-[0.18em] text-center max-w-[80px] leading-tight transition-colors duration-300 ${
                   active ? 'text-white' : done ? 'text-[#5A6673]' : 'text-[#4A4A4A]'
                 }`}
               >
@@ -86,14 +86,14 @@ export function StepTimelineB({ steps, currentStep }: StepTimelineProps) {
             }`}
           >
             <div
-              className={`font-['JetBrains_Mono'] text-[8px] uppercase tracking-[0.25em] mb-1.5 transition-colors duration-300 ${
+              className={`font-['DM_Mono'] text-[8px] uppercase tracking-[0.25em] mb-1.5 transition-colors duration-300 ${
                 active ? 'text-[#888888]' : done ? 'text-[#3A3A3A]' : 'text-[#2A2A2A]'
               }`}
             >
               {done ? '✓' : String(i + 1).padStart(2, '0')}
             </div>
             <div
-              className={`font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.14em] leading-tight transition-colors duration-300 ${
+              className={`font-['DM_Mono'] text-[9px] uppercase tracking-[0.14em] leading-tight transition-colors duration-300 ${
                 active ? 'text-[#1A1A1A]' : done ? 'text-[#5A6673]' : 'text-[#2E2E2E]'
               }`}
             >
@@ -115,10 +115,10 @@ export function StepTimelineC({ steps, currentStep }: StepTimelineProps) {
   return (
     <div>
       <div className="flex items-baseline justify-between mb-3">
-        <span className="font-['Cormorant_Garamond'] italic text-white text-xl leading-none">
+        <span className="font-['Fraunces'] italic text-white text-body">
           {steps[currentStep]}
         </span>
-        <span className="font-['JetBrains_Mono'] text-[10px] text-[#5A6673] tracking-[0.2em]">
+        <span className="font-['DM_Mono'] text-[11px] text-[#5A6673] tracking-[0.2em]">
           {String(currentStep + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
         </span>
       </div>
@@ -155,7 +155,7 @@ export function StepTimelineC({ steps, currentStep }: StepTimelineProps) {
           return (
             <span
               key={i}
-              className={`absolute font-['JetBrains_Mono'] text-[8px] uppercase tracking-[0.15em] -translate-x-1/2 transition-colors duration-300 whitespace-nowrap ${
+              className={`absolute font-['DM_Mono'] text-[8px] uppercase tracking-[0.15em] -translate-x-1/2 transition-colors duration-300 whitespace-nowrap ${
                 isActive ? 'text-white' : isDone ? 'text-[#3A3A3A]' : 'text-[#242424]'
               }`}
               style={{ left: `${pos}%` }}

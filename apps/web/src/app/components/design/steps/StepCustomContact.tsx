@@ -27,13 +27,13 @@ interface StepCustomContactProps {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">{children}</h2>
+    <h2 className="font-['Fraunces'] font-light text-display-m text-white mb-4">{children}</h2>
   )
 }
 
 function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
-    <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#8C97A3] mb-4">
+    <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#8C97A3] mb-4">
       {children}
       {required && <span className="text-white"> ·</span>}
     </p>
@@ -41,7 +41,7 @@ function FieldLabel({ children, required }: { children: React.ReactNode; require
 }
 
 const lineInput =
-  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-white transition-colors placeholder:text-[#C8CDD2]/50"
+  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Fraunces'] italic text-body-lg focus:outline-none focus:border-white transition-colors placeholder:text-[#C8CDD2]/50"
 
 export function StepCustomContact({
   errors,
@@ -62,7 +62,7 @@ export function StepCustomContact({
       <section>
         <SectionTitle>Custom Fields</SectionTitle>
         {isProject && (
-          <p className="font-['Cormorant_Garamond'] italic text-[#8C97A3] text-lg -mt-6 mb-8">
+          <p className="font-['Fraunces'] italic text-[#8C97A3] text-body -mt-6 mb-8">
             This edition is shaped entirely around your objective — tell us what you have in mind and our desk will design it with you.
           </p>
         )}
@@ -109,7 +109,7 @@ export function StepCustomContact({
               className={`${lineInput} ${errors?.fullName ? 'border-red-500' : ''}`}
             />
             {errors?.fullName && (
-              <p className="font-['JetBrains_Mono'] text-[10px] text-red-400 mt-2 uppercase tracking-[0.12em]">
+              <p className="font-['DM_Mono'] text-[11px] text-red-400 mt-2 uppercase tracking-[0.12em]">
                 {errors.fullName}
               </p>
             )}
@@ -126,7 +126,7 @@ export function StepCustomContact({
                 className={`${lineInput} ${errors?.email ? 'border-red-500' : ''}`}
               />
               {errors?.email && (
-                <p className="font-['JetBrains_Mono'] text-[10px] text-red-400 mt-2 uppercase tracking-[0.12em]">
+                <p className="font-['DM_Mono'] text-[11px] text-red-400 mt-2 uppercase tracking-[0.12em]">
                   {errors.email}
                 </p>
               )}
@@ -140,7 +140,7 @@ export function StepCustomContact({
                 placeholder="Number with country code"
                 className={lineInput}
               />
-              <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.12em] text-[#8C97A3] mt-2">
+              <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.12em] text-[#8C97A3] mt-2">
                 Optional
               </p>
             </div>

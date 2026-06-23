@@ -11,10 +11,10 @@ export const FAQRelatedPages = ({ page }: { page?: PageData }) => {
 
         {/* Section Header */}
         <div className="flex flex-col items-center mb-16 md:mb-20">
-          <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] text-center mb-6">
+          <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] text-center mb-6">
             {page?.relatedPagesEyebrow ?? 'READ THE PAGES — § II'}
           </span>
-          <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] text-[#1A1A1A] leading-[1.1] text-center max-w-[28ch]">
+          <h2 className="font-['Fraunces'] font-light text-display-l text-[#1A1A1A] text-center max-w-[28ch]">
             {page?.relatedPagesHeadline ?? 'Each question links to a page.'}
           </h2>
         </div>
@@ -26,16 +26,16 @@ export const FAQRelatedPages = ({ page }: { page?: PageData }) => {
               key={idx}
               className={`flex flex-col px-6 py-8 border-[#5A6673]/30 ${idx !== 0 ? 'border-t md:border-t-0 md:border-l' : ''} ${idx >= 4 ? 'lg:border-t' : ''} ${idx === 4 ? 'lg:border-l-0' : ''}`}
             >
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#5A6673] mb-6 min-h-[3em]">
+              <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6 min-h-[3em]">
                 {item.eyebrow}
               </span>
-              <h3 className="font-['Radley'] font-light text-[20px] md:text-[24px] text-[#1A1A1A] leading-[1.2] mb-4">
+              <h3 className="font-['Fraunces'] font-light text-display-m text-[#1A1A1A] mb-4">
                 {item.title}
               </h3>
-              <p className="font-['Lexend'] font-light text-[14px] text-[#5A6673] leading-[1.5] mb-8 flex-grow">
+              <p className="font-['DM_Sans'] font-light text-body text-[#5A6673] leading-[1.5] mb-8 flex-grow">
                 {item.desc}
               </p>
-              <Link to={item.linkTo} className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#0A3A77] mt-auto hover:text-[#1A1A1A] transition-colors">
+              <Link to={item.linkTo} className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] mt-auto hover:text-[#1A1A1A] transition-colors">
                 {item.linkText}
               </Link>
             </div>

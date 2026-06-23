@@ -15,7 +15,7 @@ export function Chip({ label, selected, onClick }: ChipProps) {
       type="button"
       onClick={onClick}
       aria-pressed={selected}
-      className={`font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.12em] px-4 py-2.5 rounded border transition-colors ${
+      className={`font-['DM_Mono'] text-[11px] uppercase tracking-[0.12em] px-4 py-2.5 rounded border transition-colors ${
         selected
           ? 'bg-white text-[#1A1A1A] border-white'
           : 'bg-transparent text-[#C8CDD2] border-[#C8CDD2] hover:border-[#5A6673]'

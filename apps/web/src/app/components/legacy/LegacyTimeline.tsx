@@ -87,10 +87,10 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
       <div className="max-w-[1440px] mx-auto px-5 md:px-8 flex flex-col gap-8 md:gap-10">
         {/* Header */}
         <div className="flex flex-col gap-4">
-          <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+          <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
             {page?.timelineEyebrow ?? '04 — TIMELINE'}
           </span>
-          <h2 className="font-['Cormorant_Garamond'] font-light text-[34px] md:text-[44px] xl:text-[56px] leading-[1.2] text-[#1A1A1A] max-w-[588px]">
+          <h2 className="font-['Fraunces'] font-light text-display-l text-[#1A1A1A] max-w-[588px]">
             {page?.timelineHeading ?? 'Five chapters in the life of a Himalayan expedition house.'}
           </h2>
         </div>
@@ -116,13 +116,13 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
                   )}
                 </div>
                 <div className="flex flex-col gap-4 px-2">
-                  <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+                  <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
                     CHAPTER {chapter.roman} · {chapter.years}
                   </span>
-                  <h3 className="font-['Cormorant_Garamond'] font-medium text-[28px] leading-[35px] text-[#1A1A1A]">
+                  <h3 className="font-['Fraunces'] font-normal text-display-m text-[#1A1A1A]">
                     {chapter.title}
                   </h3>
-                  <p className="font-['Inter'] font-light text-[#5A6673] text-[15px] leading-[24.375px]">
+                  <p className="font-['DM_Sans'] font-light text-[#5A6673] text-body leading-[24.375px]">
                     {chapter.description}
                   </p>
                 </div>
@@ -132,7 +132,7 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
         </div>
 
         {/* Footer Note */}
-        <p className="font-['Cormorant_Garamond'] italic text-[16px] leading-[24px] text-[#5A6673] max-w-[393px]">
+        <p className="font-['Fraunces'] italic text-body text-[#5A6673] max-w-[393px]">
           {page?.timelineFooterNote ?? 'Note · This is not a corporate milestone chart. It is the rhythm of a house that has measured time in seasons, not quarters.'}
         </p>
       </div>

@@ -21,7 +21,7 @@ export function ConfiguratorStep({ groups, selections, onChange }: ConfiguratorS
     <div className="space-y-16">
       {groups.map(({ number, group }) => (
         <section key={group.group}>
-          <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
+          <h2 className="font-['Fraunces'] font-light text-display-m text-white mb-4">
             {number}. {group.group}
           </h2>
           <div className="space-y-9">
@@ -45,12 +45,12 @@ export function ConfiguratorStep({ groups, selections, onChange }: ConfiguratorS
 function FieldShell({ label, helpText, children }: { label: string; helpText?: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#5A6673] mb-4">
+      <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#5A6673] mb-4">
         {label}
       </p>
       {children}
       {helpText && (
-        <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.12em] text-[#3A3A3A] mt-3">
+        <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.12em] text-[#3A3A3A] mt-3">
           {helpText}
         </p>
       )}
@@ -116,7 +116,7 @@ function FeatureField({
           <button type="button" aria-label="Decrease" onClick={() => set(n - step)} disabled={n <= min} className={btn}>
             −
           </button>
-          <span className="font-['JetBrains_Mono'] text-[12px] uppercase tracking-[0.14em] text-white min-w-[120px] text-center">
+          <span className="font-['DM_Mono'] text-[13px] uppercase tracking-[0.14em] text-white min-w-[120px] text-center">
             {formatRange(cell, n)}
           </span>
           <button type="button" aria-label="Increase" onClick={() => set(n + step)} disabled={n >= max} className={btn}>

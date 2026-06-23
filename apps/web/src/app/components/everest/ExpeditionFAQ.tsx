@@ -24,11 +24,11 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
     >
       <div className="relative z-10 w-full max-w-[880px] mx-auto px-8 flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-10 md:mb-32">
-          <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
+          <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
             FREQUENTLY ASKED
             {expeditionName ? ` — ${expeditionName.toUpperCase()}` : ""}
           </span>
-          <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] leading-[1.1] text-white max-w-[22ch] mb-8">
+          <h2 className="font-['Fraunces'] font-light text-display-l text-white max-w-[22ch] mb-8">
             "Quiet answers, before you write to us."
           </h2>
         </div>
@@ -50,15 +50,15 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
                     aria-expanded={isOpen}
                   >
                     <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 flex-1 pr-8">
-                      <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] md:min-w-[80px] md:pt-2">
+                      <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] md:min-w-[80px] md:pt-2">
                         {qLabel} —
                       </span>
-                      <h3 className="font-['Radley'] font-light text-[22px] md:text-[24px] leading-[1.3] text-white max-w-[60ch] transition-colors">
+                      <h3 className="font-['Fraunces'] font-light text-display-m text-white max-w-[60ch] transition-colors">
                         {faq.question}
                       </h3>
                     </div>
                     <span
-                      className={`font-['JetBrains_Mono'] text-[14px] text-[#C8CDD2] transition-all duration-[250ms] ease-out transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                      className={`font-['DM_Mono'] text-[14px] text-[#C8CDD2] transition-all duration-[250ms] ease-out transform ${isOpen ? "rotate-180" : "rotate-0"}`}
                     >
                       ▾
                     </span>
@@ -69,10 +69,10 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
                   >
                     <div className="overflow-hidden">
                       <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 pb-8 md:pb-10">
-                        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] md:min-w-[80px] md:pt-1">
+                        <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] md:min-w-[80px] md:pt-1">
                           {aLabel} —
                         </span>
-                        <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65] max-w-[60ch]">
+                        <p className="font-['DM_Sans'] font-light text-body text-[#C8CDD2] leading-[1.65] max-w-[60ch]">
                           {faq.answer}
                         </p>
                       </div>
@@ -86,7 +86,7 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
 
         <Link
           to="/faq"
-          className="group flex items-center justify-center gap-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors"
+          className="group flex items-center justify-center gap-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors"
         >
           <span className="border-b border-white/30 group-hover:border-[#C8CDD2] pb-1 transition-colors">
             READ ALL FAQS ON THE MAIN FAQ PAGE

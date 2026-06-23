@@ -76,17 +76,17 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
           {data?.legacyEyebrow && (
-            <p className="font-['JetBrains_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#1A1A1A]">
+            <p className="font-['DM_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#1A1A1A]">
               {data.legacyEyebrow}
             </p>
           )}
           {data?.legacyHeading && (
-            <h2 className="font-['Radley'] text-fluid-heading leading-[1.1] text-[#1A1A1A]">
+            <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
               {data.legacyHeading}
             </h2>
           )}
           {data?.legacyIntro && (
-            <p className="font-['Lexend'] font-light text-[15px] leading-[1.6] text-[#202121] max-w-[540px] mx-auto">
+            <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[540px] mx-auto">
               {data.legacyIntro}
             </p>
           )}
@@ -112,16 +112,16 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
                 style={{ width: `${CARD_WIDTH}px` }}
               >
                 <div className="bg-[#2E353C] px-2 h-[15px] flex items-center mt-2 mb-4">
-                  <span className="font-['JetBrains_Mono'] text-[10px] text-white tracking-[2.2px] uppercase whitespace-nowrap">
+                  <span className="font-['DM_Mono'] text-[11px] text-white tracking-[2.2px] uppercase whitespace-nowrap">
                     {item.year}
                   </span>
                 </div>
                 <div className="w-4 h-4 rounded-full bg-[#2E353C] border border-white relative z-10 mb-16" />
                 <div className="flex flex-col gap-4 items-center text-center px-8">
-                  <h3 className="font-['Radley'] text-[24px] leading-[1.4] text-[#1A1A1A]">
+                  <h3 className="font-['Fraunces'] text-display-m text-[#1A1A1A]">
                     {item.title}
                   </h3>
-                  <p className="font-['Lexend'] font-light text-[15px] leading-[1.75] text-[#5A6673]">
+                  <p className="font-['DM_Sans'] font-light text-body leading-[1.75] text-[#5A6673]">
                     {item.description}
                   </p>
                 </div>

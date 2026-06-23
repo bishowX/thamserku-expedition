@@ -43,8 +43,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['Lexend'] font-light text-fluid-body-sm">
-            <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
+          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['DM_Sans'] font-light text-body">
+            <h4 className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-2">
               EXPEDITIONS
             </h4>
             <Link
@@ -79,8 +79,8 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="w-full md:w-3/12 flex flex-col gap-6 font-['Lexend'] font-light text-fluid-body-sm">
-            <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
+          <div className="w-full md:w-3/12 flex flex-col gap-6 font-['DM_Sans'] font-light text-body">
+            <h4 className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-2">
               THE HOUSE
             </h4>
             <Link to="/legacy" className="hover:text-white transition-colors">
@@ -103,8 +103,8 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['Lexend'] font-light text-fluid-body-sm">
-            <h4 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673] mb-2">
+          <div className="w-full md:w-2/12 flex flex-col gap-6 font-['DM_Sans'] font-light text-body">
+            <h4 className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-2">
               EDITORIAL & HELP
             </h4>
             <Link
@@ -131,7 +131,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[#5A6673]/30 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#5A6673]">
+        <div className="border-t border-[#5A6673]/30 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           <div className="flex flex-col gap-2">
             <div>© THAMSERKU EXPEDITION · YETI GROUP</div>
             <div>KATHMANDU - NEPAL</div>

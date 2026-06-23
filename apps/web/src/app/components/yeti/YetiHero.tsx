@@ -489,7 +489,7 @@ export const YetiHero = ({
       <div className="absolute inset-0 z-[6] flex flex-col items-center justify-center px-8 pointer-events-none select-none">
         <h1
           ref={headingRef}
-          className="font-['Fraunces'] font-light text-display-xl tracking-[-0.015em] text-white text-center max-w-[16ch] mb-6"
+          className="font-['Fraunces'] font-light text-display-xl tracking-[-0.015em] text-balance text-white text-center max-w-[26ch] mb-6"
           data-sanity={encodeDataAttribute?.(["yetiPage", "heroHeadline"])}
         >
           <SplitWords text={heading} />

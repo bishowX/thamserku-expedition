@@ -210,14 +210,14 @@ export function Hero({
         <div>
           <h1
             ref={headlineRef}
-            className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[0.95] mb-6 opacity-0 max-w-[700px]"
+            className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 opacity-0 max-w-[26ch]"
             data-sanity={encodeDataAttribute?.(["homePage", "heroHeadline"])}
           >
             <TextReveal text={headline} />
           </h1>
           <p
             ref={subRef}
-            className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body max-w-[60ch] leading-relaxed opacity-0"
+            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body max-w-[60ch] leading-relaxed opacity-0"
           >
             {subheading}
           </p>
@@ -226,7 +226,7 @@ export function Hero({
         <div ref={ctaRef} className="flex mt-4 opacity-0">
           <Link
             to="/design-your-expedition"
-            className="bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px]"
+            className="bg-white text-[#0A3A77] px-8 py-4 font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px]"
           >
             DESIGN YOUR EXPEDITION
           </Link>

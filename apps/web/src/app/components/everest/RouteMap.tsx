@@ -96,14 +96,28 @@ export function RouteMap({
         },
       );
 
-      // Desktop: pinned stage with scroll-scrubbed line drawing.
+      // Shared between the pinned and static desktop chart: reset the line +
+      // markers to their hidden state and return the measured handles.
+      const prepChart = () => {
+        const path = pathRef.current;
+        const svg = svgRef.current;
+        if (!path || !svg) return null;
+        const len = path.getTotalLength();
+        const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
+        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.set(pointGroups, { opacity: 0, y: 10 });
+        return { path, len, pointGroups };
+      };
+
+      // Desktop, tall + wide enough for the cinematic experience: pinned stage
+      // with the line drawn under the scrollbar (scrubbed). Gated on min-height
+      // so short laptops don't get a pin that has no room to breathe.
       mm.add(
-        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        "(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)",
         () => {
-          const path = pathRef.current;
-          const svg = svgRef.current;
-          if (!path || !svg) return;
-          const len = path.getTotalLength();
+          const chart = prepChart();
+          if (!chart) return;
+          const { path, len, pointGroups } = chart;
 
           // x is monotonic along the path, so binary-search the arc length
           // where the line reaches each waypoint's x
@@ -118,20 +132,18 @@ export function RouteMap({
             return (lo + hi) / 2;
           };
 
-          const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
-
-          gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-          gsap.set(pointGroups, { opacity: 0, y: 10 });
-
           // the stage is a viewport-height block-level child of the section,
           // so the pin-spacer reserves its space correctly (pinning a flex
-          // child breaks spacing, which is why the chart used to drift)
+          // child breaks spacing, which is why the chart used to drift).
+          // anticipatePin avoids the one-frame snap when the lock engages on
+          // a fast scroll.
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: stage,
               start: "top top",
               end: "+=110%",
               pin: true,
+              anticipatePin: 1,
               scrub: 0.6,
             },
           });
@@ -146,12 +158,42 @@ export function RouteMap({
           pointGroups.forEach((g, idx) => {
             tl.to(
               g,
-              { opacity: 1, y: 0, duration: 0.06, ease: "power2.out" },
+              { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" },
               LEAD + lengthAtX(coords[idx].x) / len,
             );
           });
           tl.to({}, { duration: TAIL });
         },
+      );
+
+      // Desktop, but not tall+wide enough to pin (tablets 768–1023px, or short
+      // laptops): no pin — the chart draws itself once when it scrolls into
+      // view. Same visual, zero pin jank, never clips on cramped viewports.
+      const drawOnce = () => {
+        const chart = prepChart();
+        if (!chart) return;
+        const { path, pointGroups } = chart;
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: stage, start: "top 75%", once: true },
+        });
+        tl.to(path, {
+          strokeDashoffset: 0,
+          ease: "power1.inOut",
+          duration: 1.4,
+        });
+        tl.to(
+          pointGroups,
+          { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" },
+          "<0.4",
+        );
+      };
+      mm.add(
+        "(min-width: 768px) and (max-width: 1023px) and (prefers-reduced-motion: no-preference)",
+        drawOnce,
+      );
+      mm.add(
+        "(min-width: 1024px) and (max-height: 699px) and (prefers-reduced-motion: no-preference)",
+        drawOnce,
       );
     },
     {
@@ -172,7 +214,7 @@ export function RouteMap({
     >
       <div
         ref={stageRef}
-        className="relative md:h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
+        className="relative md:min-h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
@@ -183,10 +225,10 @@ export function RouteMap({
         </div>
 
         <div className="relative max-w-[1440px] w-full mx-auto px-5 md:px-8 flex flex-col gap-6">
-          <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+          <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
             07 — ROUTE
           </p>
-          <h2 className="font-['Radley'] font-light text-[clamp(34px,3.9vw,56px)] leading-[1.1] max-w-[32ch] text-white">
+          <h2 className="font-['Fraunces'] font-light text-display-l max-w-[32ch] text-white">
             {routeHeadline || (n > 0
               ? `From ${points[0].name} to the summit. ${n - 1} points on the line.`
               : "The route.")}
@@ -217,11 +259,11 @@ export function RouteMap({
                     aria-hidden
                   />
                   <div className="flex flex-col gap-1">
-                    <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] text-[#C8CDD2]">
+                    <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
                       {c.name}
                     </span>
                     <span
-                      className={`font-['Radley'] font-light text-white leading-none ${c.isSummit ? "text-[26px]" : "text-[20px]"}`}
+                      className={`font-['Fraunces'] font-light text-white leading-none ${c.isSummit ? "text-display-m" : "text-body-lg"}`}
                     >
                       {c.altitude}
                     </span>
@@ -265,7 +307,7 @@ export function RouteMap({
                       x={c.x}
                       y={c.y - 66}
                       textAnchor="middle"
-                      fontFamily="'JetBrains Mono', monospace"
+                      fontFamily="'DM Mono', monospace"
                       fontSize="13"
                       fill="#C8CDD2"
                       letterSpacing="2.42"
@@ -277,7 +319,7 @@ export function RouteMap({
                       x={c.x}
                       y={c.y - 42}
                       textAnchor="middle"
-                      fontFamily="Radley, serif"
+                      fontFamily="Fraunces, serif"
                       fontSize={c.isSummit ? "28" : "21"}
                       fill="white"
                       fontWeight="300"
@@ -295,31 +337,31 @@ export function RouteMap({
       <div className="relative max-w-[1440px] mx-auto px-8 pb-16 md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/20 pt-16">
           <div className="flex flex-col gap-4">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
               ROUTE PHILOSOPHY
             </span>
             {routePhilosophy && (
-              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
+              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.8] max-w-[40ch]">
                 {routePhilosophy}
               </p>
             )}
           </div>
           <div className="flex flex-col gap-4">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
               ACCLIMATISATION CYCLE
             </span>
             {acclimatisationNote && (
-              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
+              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.8] max-w-[40ch]">
                 {acclimatisationNote}
               </p>
             )}
           </div>
           <div className="flex flex-col gap-4">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
               SUMMIT WINDOW
             </span>
             {summitWindowNote && (
-              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[15px] leading-[1.8] max-w-[40ch]">
+              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.8] max-w-[40ch]">
                 {summitWindowNote}
               </p>
             )}

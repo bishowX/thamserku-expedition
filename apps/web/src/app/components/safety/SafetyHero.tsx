@@ -36,11 +36,11 @@ export const SafetyHero = ({ page }: Props) => {
       />
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col items-start md:items-center">
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight text-white leading-[1.1] text-left md:text-center max-w-[18ch] mb-6">
+        <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance text-white text-left md:text-center max-w-[22ch] mb-6 mx-auto">
           {page?.heroHeadline}
         </h1>
 
-        <p className="font-['Lexend'] font-light text-fluid-body text-[#C8CDD2] leading-relaxed max-w-[58ch] text-left md:text-center">
+        <p className="font-['DM_Sans'] font-light text-body text-[#C8CDD2] leading-relaxed max-w-[58ch] text-left md:text-center">
           {page?.heroSubline}
         </p>
       </div>

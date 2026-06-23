@@ -124,20 +124,20 @@ export function AtlasPreview({
           className="flex flex-col md:flex-row gap-6 md:gap-24 items-start"
         >
           <div className="md:w-1/4">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
               {data?.atlasEyebrow ?? "03 — EXPEDITION ATLAS"}
             </span>
           </div>
           <div className="md:w-1/2">
             {data?.atlasHeading && (
-              <h2 className="font-['Radley'] font-light text-fluid-heading leading-[1.1] mb-1 md:mb-6">
+              <h2 className="font-['Fraunces'] font-light text-display-l mb-1 md:mb-6">
                 {data.atlasHeading}
               </h2>
             )}
           </div>
           <div className="md:w-1/4">
             {data?.atlasIntro && (
-              <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-[1.6]">
+              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.6]">
                 {data.atlasIntro}
               </p>
             )}
@@ -165,18 +165,18 @@ export function AtlasPreview({
                 </div>
 
                 <div className="relative z-10">
-                  <div className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#C8CDD2] mb-8">
+                  <div className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.22em] text-[#C8CDD2] mb-8">
                     {exp.code}
                   </div>
-                  <h3 className="font-['Radley'] font-light text-fluid-mountain leading-none mb-4">
+                  <h3 className="font-['Fraunces'] font-light text-display-l mb-4">
                     {exp.name}
                   </h3>
-                  <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-relaxed max-w-[40ch]">
+                  <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-relaxed max-w-[40ch]">
                     {exp.positioning}
                   </p>
                 </div>
 
-                <div className="relative z-10 mt-12 flex flex-col gap-4 font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.1em] text-[#5A6673]">
+                <div className="relative z-10 mt-12 flex flex-col gap-4 font-['DM_Mono'] text-[11px] uppercase tracking-[0.1em] text-[#5A6673]">
                   <div className="grid grid-cols-2 gap-y-2 gap-x-4  transition-opacity duration-300">
                     <div>ALT: {exp.altitude}</div>
                     <div>REG: {exp.region}</div>

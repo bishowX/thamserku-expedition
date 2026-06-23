@@ -31,12 +31,12 @@ function editionChipLabel(ed: SanityEditionForDesign): string {
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#8C97A3] mb-4">{children}</p>
+    <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#8C97A3] mb-4">{children}</p>
   )
 }
 
 const lineInput =
-  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Cormorant_Garamond'] italic text-xl focus:outline-none focus:border-white transition-colors placeholder:text-[#C8CDD2]/50 [color-scheme:dark]"
+  "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Fraunces'] italic text-xl focus:outline-none focus:border-white transition-colors placeholder:text-[#C8CDD2]/50 [color-scheme:dark]"
 
 export function StepFormat({
   expeditions,
@@ -56,7 +56,7 @@ export function StepFormat({
     <div className="space-y-16">
       {/* 1. Expedition Format */}
       <section>
-        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
+        <h2 className="font-['Fraunces'] font-light text-display-m text-white mb-4">
           1. Expedition Format
         </h2>
 
@@ -115,7 +115,7 @@ export function StepFormat({
 
       {/* 2. Season */}
       <section>
-        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
+        <h2 className="font-['Fraunces'] font-light text-display-m text-white mb-4">
           2. Season
         </h2>
         <div className="space-y-9">
@@ -154,12 +154,12 @@ export function StepFormat({
 
       {/* 3. Edition Selection */}
       <section>
-        <h2 className="font-['Cormorant_Garamond'] font-light text-3xl md:text-[2.1rem] text-white mb-4">
+        <h2 className="font-['Fraunces'] font-light text-display-m text-white mb-4">
           3. Edition Selection
         </h2>
         <div>
           <FieldLabel>3.1 Choose Your Edition</FieldLabel>
-          <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.14em] text-[#8C97A3] mb-5 -mt-2">
+          <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.14em] text-[#8C97A3] mb-5 -mt-2">
             This pre-configures your expedition standards. You can customise everything in the next steps.
           </p>
           <ChipRow>

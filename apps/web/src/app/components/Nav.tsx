@@ -154,7 +154,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
             </div>
 
             {/* Desktop Nav Links */}
-            <div className="hidden lg:flex items-center gap-8 font-['JetBrains_Mono'] uppercase tracking-[2.4px]">
+            <div className="hidden lg:flex items-center gap-8 font-['DM_Mono'] uppercase tracking-[2.4px]">
               <Link
                 to="/"
                 className="text-[11px] nav-link-underline hover:text-[#C8CDD2] transition-colors"
@@ -225,7 +225,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                 to={ctaLink}
                 className={`btn-cta btn-cta-secondary border ${
                   hasDarkBg ? "border-white/50" : "border-white/30"
-                } px-6 py-3.5 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[10px] whitespace-nowrap`}
+                } px-6 py-3.5 flex items-center justify-center font-['DM_Mono'] uppercase tracking-[2.4px] text-[10px] whitespace-nowrap`}
               >
                 <span>{ctaLabel}</span>
               </Link>
@@ -253,7 +253,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
             openMenu === "about" ? "max-h-24 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="px-8 lg:px-48 pb-4 flex items-center justify-center gap-10 font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-white flex-wrap">
+          <div className="px-8 lg:px-48 pb-4 flex items-center justify-center gap-10 font-['DM_Mono'] uppercase tracking-[2.4px] text-white flex-wrap">
             {ABOUT_LINKS.map((item) => (
               <Link
                 key={item.label}
@@ -277,7 +277,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
         >
           <div className="px-8 lg:px-48 pb-6 flex flex-col gap-5">
             {/* Altitude Tabs */}
-            <div className="flex items-center justify-center gap-10 font-['JetBrains_Mono'] uppercase tracking-[2.4px]">
+            <div className="flex items-center justify-center gap-10 font-['DM_Mono'] uppercase tracking-[2.4px]">
               {(["8000", "7000", "6000"] as ExpeditionTab[]).map((tab) => (
                 <button
                   key={tab}
@@ -312,14 +312,14 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                         />
                       )}
                     </div>
-                    <p className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-white text-center w-full group-hover:text-[#C8CDD2] transition-colors">
+                    <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-white text-center w-full group-hover:text-[#C8CDD2] transition-colors">
                       {exp.name} Expedition
                     </p>
                   </Link>
                 ))}
               </div>
             ) : (
-              <p className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2] text-center py-4">
+              <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2] text-center py-4">
                 No expeditions in this category
               </p>
             )}
@@ -342,7 +342,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } lg:hidden overflow-y-auto`}
       >
-        <div className="flex flex-col font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[12px] text-white">
+        <div className="flex flex-col font-['DM_Mono'] uppercase tracking-[0.22em] text-[13px] text-white">
           <Link
             to="/"
             className="hover:text-[#C8CDD2] transition-colors py-5 border-b border-white/10"
@@ -406,7 +406,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
             {mobileExpanded === "expedition" && (
               <div className="flex flex-col gap-5 pb-6">
                 {/* Altitude Tabs */}
-                <div className="flex items-center gap-6 font-['JetBrains_Mono'] uppercase tracking-[2.4px]">
+                <div className="flex items-center gap-6 font-['DM_Mono'] uppercase tracking-[2.4px]">
                   {(["8000", "7000", "6000"] as ExpeditionTab[]).map((tab) => (
                     <button
                       key={tab}
@@ -444,14 +444,14 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                             />
                           )}
                         </div>
-                        <p className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[10px] text-white group-hover:text-[#C8CDD2] transition-colors">
+                        <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-white group-hover:text-[#C8CDD2] transition-colors">
                           {exp.name}
                         </p>
                       </Link>
                     ))}
                   </div>
                 ) : (
-                  <p className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2]">
+                  <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2]">
                     No expeditions in this category
                   </p>
                 )}
@@ -479,7 +479,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
         <div className="mt-6 pb-8">
           <Link
             to={ctaLink}
-            className="btn-cta btn-cta-secondary w-full border border-white/30 py-4 flex items-center justify-center font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-white"
+            className="btn-cta btn-cta-secondary w-full border border-white/30 py-4 flex items-center justify-center font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-white"
             onClick={() => setMobileMenuOpen(false)}
           >
             <span>{ctaLabel}</span>

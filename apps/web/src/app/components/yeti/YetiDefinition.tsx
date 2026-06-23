@@ -20,12 +20,12 @@ export const YetiDefinition = ({
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-16 md:gap-8">
         <div className="md:col-span-5 flex flex-col items-start">
           {page?.definitionHeading && (
-            <h2 className="font-['Radley'] font-light text-fluid-heading text-[#1A1A1A] leading-[1.1] max-w-[16ch] mb-6">
+            <h2 className="font-['Fraunces'] font-light text-display-l text-[#1A1A1A] max-w-[16ch] mb-6">
               {page.definitionHeading}
             </h2>
           )}
           {page?.definitionTagline && (
-            <p className="font-['Cormorant_Garamond'] italic text-[#0A3A77] text-[22px] max-w-[30ch]">
+            <p className="font-['Fraunces'] italic text-[#0A3A77] text-display-m max-w-[30ch]">
               {page.definitionTagline}
             </p>
           )}
@@ -42,7 +42,7 @@ export const YetiDefinition = ({
           {paragraphs.map((para, i) => (
             <p
               key={i}
-              className="font-['Lexend'] font-light text-[17px] text-[#5A6673] leading-[1.75] max-w-[60ch]"
+              className="font-['DM_Sans'] font-light text-body text-[#5A6673] leading-[1.75] max-w-[60ch]"
             >
               {para}
             </p>

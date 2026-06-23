@@ -53,20 +53,20 @@ export function EditionsPreview({
           className="flex flex-col md:flex-row gap-6 md:gap-16 items-start"
         >
           <div className="shrink-0 md:w-[280px]">
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2]">
+            <span className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2]">
               {data?.editionsEyebrow ?? "04 — EDITIONS"}
             </span>
           </div>
           <div className="flex-1">
             {data?.editionsHeading && (
-              <h2 className="font-['Radley'] text-fluid-heading leading-[1.1] tracking-[-0.5px] text-white">
+              <h2 className="font-['Fraunces'] text-display-l tracking-[-0.5px] text-white">
                 {data.editionsHeading}
               </h2>
             )}
           </div>
           <div className="shrink-0 flex items-center md:w-[253px]">
             {data?.editionsIntro && (
-              <p className="font-['Lexend'] font-light text-[15px] leading-[1.2] tracking-[-0.5px] text-white">
+              <p className="font-['DM_Sans'] font-light text-body leading-[1.2] tracking-[-0.5px] text-white">
                 {data.editionsIntro}
               </p>
             )}
@@ -81,14 +81,14 @@ export function EditionsPreview({
                 i > 0 ? "border-l border-[rgba(200,205,210,0.3)]" : ""
               }`}
             >
-              <p className="font-['JetBrains_Mono'] text-[10px] tracking-[2.2px] uppercase text-[#C8CDD2] h-[38px]">
+              <p className="font-['DM_Mono'] text-[11px] tracking-[2.2px] uppercase text-[#C8CDD2] h-[38px]">
                 {ed.name}
               </p>
-              <p className="font-['Radley'] text-[64px] leading-[1.3] text-white">
+              <p className="font-['Fraunces'] text-display-xl text-white">
                 {ed.letter}
               </p>
               {ed.character && (
-                <p className="font-['Lexend'] font-light text-[14px] text-[#C8CDD2] leading-[1.65]">
+                <p className="font-['DM_Sans'] font-light text-body text-[#C8CDD2] leading-[1.65]">
                   {ed.character}
                 </p>
               )}

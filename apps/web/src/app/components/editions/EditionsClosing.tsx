@@ -36,18 +36,18 @@ export function EditionsClosing({ page }: { page?: PageData }) {
       )}
 
       <div className="relative z-10 w-full max-w-[800px] flex flex-col items-center">
-        <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">
+        <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-12">
           {eyebrow}
         </p>
 
         {page?.closingHeading && (
-          <h2 className="font-['Radley'] font-light text-[32px] md:text-[48px] leading-[1.05] tracking-tight mb-8">
+          <h2 className="font-['Fraunces'] font-light text-display-l tracking-tight mb-8">
             {page.closingHeading}
           </h2>
         )}
 
         {page?.closingBody && (
-          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-[17px] leading-relaxed max-w-[60ch] mb-8 md:mb-16">
+          <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-relaxed max-w-[60ch] mb-8 md:mb-16">
             {page.closingBody}
           </p>
         )}
@@ -55,13 +55,13 @@ export function EditionsClosing({ page }: { page?: PageData }) {
         <div className="mb-8 md:mb-16">
           <Link
             to="/consultation"
-            className="inline-flex items-center justify-center px-16 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-white text-white hover:bg-white hover:text-[#2E353C]"
+            className="inline-flex items-center justify-center px-16 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] transition-colors border border-white text-white hover:bg-white hover:text-[#2E353C]"
           >
             ENQUIRE
           </Link>
         </div>
 
-        <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] opacity-80">
+        <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] opacity-80">
           {footnote}
         </p>
       </div>

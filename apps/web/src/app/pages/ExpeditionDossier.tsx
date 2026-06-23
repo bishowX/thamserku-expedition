@@ -78,7 +78,7 @@ export default function ExpeditionDossier() {
   if (!expedition) return null;
 
   return (
-    <div className="bg-[#1A1A1A] min-h-screen text-white font-['Lexend'] selection:bg-[#2E353C] selection:text-white">
+    <div className="bg-[#1A1A1A] min-h-screen text-white font-['DM_Sans'] selection:bg-[#2E353C] selection:text-white">
       <main>
         <ExpeditionHero
           name={expedition.name}

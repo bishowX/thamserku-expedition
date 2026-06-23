@@ -27,22 +27,22 @@ export function NewsletterSection({
       className="w-full bg-[#F4F2EC] py-16 md:py-24 px-6 md:px-16"
     >
       <div className="flex flex-col items-center text-center gap-6">
-        <p className="font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#5A6673]">
+        <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#5A6673]">
           {data?.newsletterEyebrow ?? "07 — FIELD NOTES — NEWSLETTER"}
         </p>
 
-        <h2 className="font-['Radley'] text-[40px] leading-[1.1] text-[#1A1A1A] max-w-[480px]">
+        <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A] max-w-[480px]">
           {data?.newsletterHeading ??
             "Receive Field Notes from the expedition desk."}
         </h2>
 
-        <p className="font-['Lexend'] font-light text-[16px] leading-[1.1] text-[#5A6673] max-w-[540px]">
+        <p className="font-['DM_Sans'] font-light text-body leading-[1.1] text-[#5A6673] max-w-[540px]">
           {data?.newsletterBody ??
             "A quiet quarterly letter of field reports, route judgment and Himalayan readings."}
         </p>
 
         {subscribed ? (
-          <p className="font-['JetBrains_Mono'] text-[12px] tracking-[2px] text-[#0A3A77] uppercase mt-2">
+          <p className="font-['DM_Mono'] text-[13px] tracking-[2px] text-[#0A3A77] uppercase mt-2">
             {actionData?.alreadySubscribed
               ? "You are already on the list."
               : "You are now on the list. Expect your first field notes soon."}
@@ -60,10 +60,10 @@ export function NewsletterSection({
                 autoComplete="email"
                 placeholder="Your email address"
                 required
-                className="w-full bg-transparent border-b border-[#C8CDD2] pb-2 font-['Radley'] italic text-[14px] tracking-[2.4px] text-[#1A1A1A] placeholder:text-[#5A6673]/70 focus:outline-none focus:border-[#1A1A1A] transition-colors"
+                className="w-full bg-transparent border-b border-[#C8CDD2] pb-2 font-['Fraunces'] italic text-body tracking-[2.4px] text-[#1A1A1A] placeholder:text-[#5A6673]/70 focus:outline-none focus:border-[#1A1A1A] transition-colors"
               />
               {actionData?.success === false && (
-                <p className="font-['JetBrains_Mono'] text-[11px] text-red-600 tracking-[1px]">
+                <p className="font-['DM_Mono'] text-[11px] text-red-600 tracking-[1px]">
                   {actionData.error}
                 </p>
               )}
@@ -71,7 +71,7 @@ export function NewsletterSection({
             <button
               type="submit"
               disabled={submitting}
-              className="w-full md:w-auto border border-[rgba(10,58,119,0.35)] px-8 py-[14px] font-['JetBrains_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#0A3A77] hover:border-[#0A3A77] transition-colors whitespace-nowrap disabled:opacity-50"
+              className="w-full md:w-auto border border-[rgba(10,58,119,0.35)] px-8 py-[14px] font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#0A3A77] hover:border-[#0A3A77] transition-colors whitespace-nowrap disabled:opacity-50"
             >
               {submitting
                 ? "SENDING..."
@@ -80,7 +80,7 @@ export function NewsletterSection({
           </Form>
         )}
 
-        <p className="font-['JetBrains_Mono'] font-light text-[12px] text-[#5A6673] leading-[1.1] uppercase tracking-[1px]">
+        <p className="font-['DM_Mono'] font-light text-[13px] text-[#5A6673] leading-[1.1] uppercase tracking-[1px]">
           {data?.newsletterPrivacyNote ??
             "BY SUBSCRIBING YOU AGREE TO OUR PRIVACY TERMS. WE WILL NEVER SHARE YOUR DETAILS."}
         </p>

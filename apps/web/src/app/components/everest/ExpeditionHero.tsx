@@ -37,13 +37,13 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       </div>
 
       <div className="relative z-20 w-full flex flex-col items-start justify-end h-full">
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[700px]">
+        <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch]">
           {heroTagline || `${name} Expedition`}
         </h1>
 
         <div className="flex flex-col gap-2 mb-12">
           {heroSubtext && (
-            <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-relaxed max-w-[60ch]">
+            <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-relaxed max-w-[60ch]">
               {heroSubtext}
             </p>
           )}
@@ -52,13 +52,13 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
         <div className="flex flex-col sm:flex-row gap-6">
           <Link
             to={`/design-your-expedition?expedition=${slug}`}
-            className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:bg-transparent hover:text-white transition-colors flex items-center justify-center gap-3"
+            className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] hover:bg-transparent hover:text-white transition-colors flex items-center justify-center gap-3"
           >
             Design Your Expedition <ArrowRight className="w-4 h-4" strokeWidth={1} />
           </Link>
           <a
             href="#dossier-facts"
-            className="border border-white/30 text-white px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3"
+            className="border border-white/30 text-white px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3"
           >
             Expedition Details <ArrowDown className="w-4 h-4" strokeWidth={1} />
           </a>

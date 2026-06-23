@@ -27,7 +27,7 @@ export function QuickFacts({
   return (
     <section id="dossier-facts" className="bg-[#1A1A1A] w-full text-white border-b border-white/10 scroll-mt-24">
       <div className="max-w-[1440px] mx-auto px-8 pt-6 pb-4">
-        <h2 className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+        <h2 className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           01 — DOSSIER FACTS
         </h2>
       </div>
@@ -66,10 +66,10 @@ function Fact({
         ${borderRight ? "border-r border-white/20" : ""}
         ${borderBottom ? "border-b border-white/20" : ""}`}
     >
-      <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10px] md:text-[11px] text-[#C8CDD2] whitespace-nowrap">
+      <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] whitespace-nowrap">
         {title}
       </span>
-      <span className="font-['Radley'] text-[22px] md:text-[28px] text-white font-normal leading-[1.375] whitespace-nowrap">
+      <span className="font-['Fraunces'] text-display-m text-white font-normal whitespace-nowrap">
         {value}
       </span>
     </div>

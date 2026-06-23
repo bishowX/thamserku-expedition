@@ -371,17 +371,17 @@ export default function DesignPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.22em] text-[#5A6673] mb-6">
+            <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.22em] text-[#5A6673] mb-6">
               Configuration Received
             </p>
-            <h1 className="font-['Cormorant_Garamond'] font-light text-4xl text-white mb-6">
+            <h1 className="font-['Fraunces'] font-light text-display-m text-white mb-6">
               Your expedition is taking shape.
             </h1>
-            <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg leading-relaxed">
+            <p className="font-['Fraunces'] italic text-[#5A6673] text-body">
               We have your configuration and will build the right proposal. You will hear from our desk within 48 hours.
             </p>
             <div className="h-px w-16 bg-[#2A2A2A] mx-auto mt-10 mb-6" />
-            <p className="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.18em] text-[#3A3A3A]">
+            <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#3A3A3A]">
               Thamserku Expeditions · Desk
             </p>
           </div>
@@ -407,10 +407,10 @@ export default function DesignPage() {
           <div className="flex-1 min-w-0">
             {/* Persistent title */}
             <header className="mb-14">
-              <h1 className="font-['Cormorant_Garamond'] font-light text-4xl md:text-5xl text-white mb-3">
+              <h1 className="font-['Fraunces'] font-light text-display-l text-white mb-3">
                 {heroHeadline}
               </h1>
-              <p className="font-['Cormorant_Garamond'] italic text-[#5A6673] text-lg">
+              <p className="font-['Fraunces'] italic text-[#5A6673] text-body">
                 {heroSubheading}
               </p>
             </header>
@@ -456,7 +456,7 @@ export default function DesignPage() {
                   type="button"
                   onClick={() => syncToUrl(step - 1)}
                   disabled={step === 0}
-                  className="w-full sm:w-auto whitespace-nowrap font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-6 sm:px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-full sm:w-auto whitespace-nowrap font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-6 sm:px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   Previous ←
                 </button>
@@ -464,7 +464,7 @@ export default function DesignPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto whitespace-nowrap font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#1A1A1A] bg-white border border-white px-6 sm:px-10 md:px-16 py-4 rounded hover:bg-[#C8CDD2] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto whitespace-nowrap font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#1A1A1A] bg-white border border-white px-6 sm:px-10 md:px-16 py-4 rounded hover:bg-[#C8CDD2] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Submitting…' : 'Submit Your Expedition →'}
                   </button>
@@ -473,7 +473,7 @@ export default function DesignPage() {
                     type="button"
                     onClick={() => syncToUrl(step + 1)}
                     disabled={nextDisabled}
-                    className="w-full sm:w-auto whitespace-nowrap font-['JetBrains_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-6 sm:px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto whitespace-nowrap font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2] border border-[#2E2E2E] px-6 sm:px-10 md:px-16 py-4 rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Next →
                   </button>

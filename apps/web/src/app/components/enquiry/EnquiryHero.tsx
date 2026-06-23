@@ -24,13 +24,13 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
       <Nav />
 
       <div className="relative z-20 w-full flex flex-col justify-end flex-grow">
-        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-6">
+        <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-6">
           THE EXPEDITION DESK — SCHEDULE A CONSULTATION
         </span>
-        <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[22ch] text-white">
+        <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] text-white">
           {headline}
         </h1>
-        <p className="font-['Lexend'] text-[#C8CDD2] font-light text-fluid-body leading-relaxed max-w-[60ch]">
+        <p className="font-['DM_Sans'] text-[#C8CDD2] font-light text-body leading-relaxed max-w-[60ch]">
           {subheading}
         </p>
       </div>

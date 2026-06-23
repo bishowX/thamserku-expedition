@@ -16,7 +16,7 @@ function InclusionCategoryRow({ category, items }: InclusionCategory) {
         aria-expanded={open}
         className="flex items-center justify-between gap-4 text-left cursor-pointer"
       >
-        <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A] capitalize">
+        <h3 className="font-['Fraunces'] text-display-m text-[#1A1A1A] capitalize">
           {category.toLowerCase()}
         </h3>
         <ChevronDown
@@ -38,7 +38,7 @@ function InclusionCategoryRow({ category, items }: InclusionCategory) {
               {items.map((item, j) => (
                 <p
                   key={j}
-                  className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
+                  className="font-['DM_Sans'] font-light text-body leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
                 >
                   {item}
                 </p>
@@ -88,10 +88,10 @@ export function Inclusions({
         {categories.length > 0 && (
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
-              <span className="font-['JetBrains_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+              <span className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
                 05 — Crafted Edition Standard
               </span>
-              <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.28] text-[#1A1A1A]">
+              <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
                 What's Included
               </h2>
             </div>
@@ -117,7 +117,7 @@ export function Inclusions({
         {/* Not Included */}
         {notIncluded.length > 0 && (
           <div className="flex flex-col gap-6">
-            <h2 className="font-['Radley'] text-[32px] md:text-[44px] lg:text-[48px] leading-[1.28] text-[#1A1A1A]">
+            <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
               Not Included
             </h2>
 
@@ -126,7 +126,7 @@ export function Inclusions({
                 {notIncluded.map((item, i) => (
                   <p
                     key={i}
-                    className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
+                    className="font-['DM_Sans'] font-light text-body leading-[24px] text-[#5A6673] pt-[14px] pb-[15px] border-b border-[rgba(90,102,115,0.3)]"
                   >
                     {item}
                   </p>
@@ -150,10 +150,10 @@ export function Inclusions({
         {/* Mandatory Prerequisite */}
         {mandatoryPrerequisite && (
           <div className="flex flex-col gap-3">
-            <h3 className="font-['Radley'] text-[24px] leading-[1.3] text-[#1A1A1A]">
+            <h3 className="font-['Fraunces'] text-display-m text-[#1A1A1A]">
               Mandatory Prerequisite
             </h3>
-            <p className="font-['Lexend'] font-light text-[15px] leading-[24px] text-[#5A6673] whitespace-pre-line">
+            <p className="font-['DM_Sans'] font-light text-body leading-[24px] text-[#5A6673] whitespace-pre-line">
               {mandatoryPrerequisite}
             </p>
           </div>

@@ -40,7 +40,7 @@ export const FAQList = ({
     <section className="relative w-full bg-[#1A1A1A] section-padding overflow-hidden">
       <div className="relative z-10 w-full max-w-[880px] mx-auto flex flex-col items-center">
         <div className="w-full flex justify-center mb-16 md:mb-24">
-          <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+          <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
             {page?.listEyebrow ?? "FIFTEEN QUIET ANSWERS"}
           </span>
         </div>
@@ -54,13 +54,13 @@ export const FAQList = ({
             {/* Category section header */}
             <div className="w-full flex flex-col mb-[50px]">
               <div className="h-[1px] w-full bg-[#C8CDD2]/30 mb-8" />
-              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
+              <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-6">
                 {category.numLabel} — {category.label}
               </span>
-              <h3 className="font-['Radley'] font-light text-[32px] md:text-[40px] text-white leading-[1.1] max-w-[24ch] mb-4">
+              <h3 className="font-['Fraunces'] font-light text-display-l text-white max-w-[24ch] mb-4">
                 {category.title}
               </h3>
-              <p className="font-['Cormorant_Garamond'] italic text-[#C8CDD2] text-[18px] max-w-[56ch]">
+              <p className="font-['Fraunces'] italic text-[#C8CDD2] text-body max-w-[56ch]">
                 {category.subtitle}
               </p>
             </div>
@@ -84,15 +84,15 @@ export const FAQList = ({
                     >
                       {/* Top row */}
                       <div className="flex flex-col md:flex-row items-start md:items-baseline gap-4 md:gap-8 flex-1 pr-8">
-                        <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] shrink-0 mt-2">
+                        <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] shrink-0 mt-2">
                           {item.qNum}
                         </span>
-                        <h4 className="font-['Radley'] font-light text-[22px] md:text-[26px] text-white leading-[1.3] group-hover:text-white transition-colors max-w-[60ch]">
+                        <h4 className="font-['Fraunces'] font-light text-display-m text-white group-hover:text-white transition-colors max-w-[60ch]">
                           {item.question}
                         </h4>
                       </div>
                       <span
-                        className={`font-['JetBrains_Mono'] text-[14px] text-[#C8CDD2] group-hover:text-white transition-all duration-[250ms] ease-out transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                        className={`font-['DM_Mono'] text-[14px] text-[#C8CDD2] group-hover:text-white transition-all duration-[250ms] ease-out transform ${isOpen ? "rotate-180" : "rotate-0"}`}
                       >
                         ▾
                       </span>
@@ -108,12 +108,12 @@ export const FAQList = ({
                     >
                       <div className="overflow-hidden">
                         <div className="flex flex-col md:flex-row items-start md:items-baseline gap-4 md:gap-8 pb-[32px] md:pb-[40px]">
-                          <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] shrink-0 mt-1 hidden md:block">
+                          <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] shrink-0 mt-1 hidden md:block">
                             {item.aNum}
                           </span>
                           <div className="flex flex-col max-w-[60ch]">
-                            <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65] mb-8">
-                              <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mr-4 md:hidden">
+                            <p className="font-['DM_Sans'] font-light text-body text-[#C8CDD2] leading-[1.65] mb-8">
+                              <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mr-4 md:hidden">
                                 {item.aNum}
                               </span>
                               {item.answer}
@@ -122,7 +122,7 @@ export const FAQList = ({
                             <div className="flex">
                               <Link
                                 to={item.linkTo}
-                                className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[10.5px] text-[#0A3A77] hover:text-white transition-colors"
+                                className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] hover:text-white transition-colors"
                               >
                                 {item.linkText}
                               </Link>

@@ -126,14 +126,14 @@ export function Closing({ data, encodeDataAttribute }: { data?: ClosingData; enc
       <div className="relative z-10 w-full max-w-[880px] mx-auto flex flex-col items-center gap-8">
         <span
           ref={eyebrowRef}
-          className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]"
+          className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]"
         >
           {eyebrow}
         </span>
 
         <h2
           ref={headingRef}
-          className="font-['Radley'] font-light text-[32px] md:text-[48px] leading-[1.1] mb-2"
+          className="font-['Fraunces'] font-light text-display-l mb-2"
           data-sanity={encodeDataAttribute?.(['homePage', 'closingHeading'])}
         >
           <TextReveal text={heading} />
@@ -141,7 +141,7 @@ export function Closing({ data, encodeDataAttribute }: { data?: ClosingData; enc
 
         <p
           ref={bodyRef}
-          className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body leading-[1.8] max-w-[48ch] mb-4"
+          className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.8] max-w-[48ch] mb-4"
         >
           {body}
         </p>
@@ -149,14 +149,14 @@ export function Closing({ data, encodeDataAttribute }: { data?: ClosingData; enc
         <div ref={ctaRef} className="flex flex-wrap justify-center gap-4 mt-8">
           <Link
             to="/design-your-expedition"
-            className="btn-cta btn-cta-primary border border-white bg-white text-[#0A3A77] px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
+            className="btn-cta btn-cta-primary border border-white bg-white text-[#0A3A77] px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
             <span>Design Your Expedition</span>
             <MoveRight className="w-3 h-3 arrow-shift" />
           </Link>
           <Link
             to="/consultation"
-            className="btn-cta btn-cta-secondary border border-white/30 px-8 py-4 font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
+            className="btn-cta btn-cta-secondary border border-white/30 px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] flex items-center gap-3"
           >
             <span>Enquire</span>
             <MoveRight className="w-3 h-3 arrow-shift" />

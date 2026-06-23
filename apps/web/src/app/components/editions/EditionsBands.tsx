@@ -62,48 +62,48 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
             <div className="relative z-10 w-full max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
               <div className="col-span-1 md:col-span-5 relative flex flex-col md:pt-8">
                 {/*<p
-                  className={`font-['JetBrains_Mono'] uppercase hidden md:block tracking-[0.22em] text-[11px] mb-8 ${isDark ? "text-[#C8CDD2]" : "text-[#0A3A77]"}`}
+                  className={`font-['DM_Mono'] uppercase hidden md:block tracking-[0.22em] text-[11px] mb-8 ${isDark ? "text-[#C8CDD2]" : "text-[#0A3A77]"}`}
                 >
                   EDITION {ed.letter}
                 </p>*/}
                 <div
-                  className={`font-['Radley'] font-light leading-none text-[200px] md:text-[320px] -ml-4 ${letterColor}`}
+                  className={`font-['Fraunces'] font-light leading-none text-[200px] md:text-[320px] -ml-4 ${letterColor}`}
                 >
                   {ed.letter}
                 </div>
                 {ed.tag && (
-                  <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mt-4 md:mt-8 max-w-[20ch] leading-relaxed text-[#5A6673]">
+                  <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] mt-4 md:mt-8 max-w-[20ch] leading-relaxed text-[#5A6673]">
                     {ed.tag}
                   </p>
                 )}
                 {ed.isStandard && (
-                  <span className="inline-flex items-center justify-center self-start bg-[#c8cdd2] border border-white/30 px-[33px] py-[17px] mt-10 font-['JetBrains_Mono'] font-normal uppercase tracking-[2.42px] text-[11px] leading-[16.5px] text-[#25292c] whitespace-nowrap">
+                  <span className="inline-flex items-center justify-center self-start bg-[#c8cdd2] border border-white/30 px-[33px] py-[17px] mt-10 font-['DM_Mono'] font-normal uppercase tracking-[2.42px] text-[11px] leading-[16.5px] text-[#25292c] whitespace-nowrap">
                     Standard Edition
                   </span>
                 )}
               </div>
 
               <div className="col-span-1 md:col-span-7 flex flex-col">
-                <p className="font-['JetBrains_Mono'] uppercase hidden md:block tracking-[0.22em] text-[11px] mb-12 text-[#5A6673]">
+                <p className="font-['DM_Mono'] uppercase hidden md:block tracking-[0.22em] text-[11px] mb-12 text-[#5A6673]">
                   03{ed.letter} — EDITION {ed.letter}
                 </p>
 
                 <h3
-                  className={`font-['Radley'] font-light text-5xl md:text-[64px] mb-6 ${isDark ? "text-white" : "text-[#1A1A1A]"}`}
+                  className={`font-['Fraunces'] font-light text-display-xl mb-6 ${isDark ? "text-white" : "text-[#1A1A1A]"}`}
                 >
                   {ed.name}
                 </h3>
 
                 {ed.subtitle && (
                   <p
-                    className={`font-['Radley'] italic text-[24px] md:text-[28px] mb-6 md:mb-12 ${sigColor}`}
+                    className={`font-['Fraunces'] italic text-display-m mb-6 md:mb-12 ${sigColor}`}
                   >
                     {ed.subtitle}
                   </p>
                 )}
 
                 <div
-                  className={`font-['Lexend'] font-light text-[16px] leading-relaxed max-w-[56ch] mb-8 md:mb-16 ${copyColor}`}
+                  className={`font-['DM_Sans'] font-light text-body leading-relaxed max-w-[56ch] mb-8 md:mb-16 ${copyColor}`}
                 >
                   {ed.body1 && <p className="mb-6">{ed.body1}</p>}
                   {ed.body2 && <p>{ed.body2}</p>}
@@ -113,12 +113,12 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
                   {ed.targetAudience && (
                     <div>
                       <p
-                        className={`font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] mb-4 ${isDark ? "text-white" : "text-[#1A1A1A]"}`}
+                        className={`font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] mb-4 ${isDark ? "text-white" : "text-[#1A1A1A]"}`}
                       >
                         WHO IT IS FOR
                       </p>
                       <p
-                        className={`font-['Lexend'] font-light italic text-[15px] leading-relaxed ${copyColor}`}
+                        className={`font-['DM_Sans'] font-light italic text-body leading-relaxed ${copyColor}`}
                       >
                         {ed.targetAudience}
                       </p>

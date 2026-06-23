@@ -12,10 +12,10 @@ export function ManifestoStats({ stats }: { stats?: Stat[] | null }) {
             key={stat.label}
             className="flex flex-col items-center gap-1 min-w-[80px]"
           >
-            <span className="font-['Radley'] text-white text-[28px] leading-[1.33] md:text-[42px]">
+            <span className="font-['Fraunces'] font-[250] text-white text-stat">
               {stat.value}
             </span>
-            <span className="font-['Lexend'] font-light text-[#C8CDD2] text-[12px] leading-[1.95] md:text-[16px]">
+            <span className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.95]">
               {stat.label}
             </span>
           </div>

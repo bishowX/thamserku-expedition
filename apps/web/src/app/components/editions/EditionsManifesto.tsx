@@ -27,7 +27,7 @@ export function EditionsManifesto({
     <section className="w-full bg-[#F4F2EC] text-[#1A1A1A] py-8 px-5 md:py-16 md:px-8">
       <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
         <div className="col-span-1 md:col-span-4 lg:col-span-5">
-          <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+          <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
             {eyebrow}
           </p>
         </div>
@@ -35,7 +35,7 @@ export function EditionsManifesto({
         <div className="col-span-1 md:col-span-8 lg:col-span-7 flex flex-col gap-12">
           {page?.manifestoHeading && (
             <h2
-              className="font-['Cormorant Garamond' font-light text-4xl md:text-[52px] leading-[1.1] max-w-[30ch] tracking-tight text-[#1A1A1A]"
+              className="font-['Fraunces'] font-light text-display-l max-w-[30ch] tracking-tight text-[#1A1A1A]"
               data-sanity={encodeDataAttribute?.([
                 "editionsPage",
                 "manifestoHeading",
@@ -52,7 +52,7 @@ export function EditionsManifesto({
           )}
 
           {page?.manifestoBody && (
-            <p className="font-['Lexend'] font-light text-[#5A6673] text-[16px] leading-relaxed max-w-[60ch]">
+            <p className="font-['DM_Sans'] font-light text-[#5A6673] text-body leading-relaxed max-w-[60ch]">
               {page.manifestoBody}
             </p>
           )}

@@ -33,13 +33,13 @@ export function EditionsHero({
 
       <div className="relative z-20 w-full flex flex-col">
         {page?.heroHeadline && (
-          <h1 className="font-['Cormorant_Garamond'] font-light text-fluid-heading tracking-tight leading-[1.1] mb-6 max-w-[18ch] text-white">
+          <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] text-white">
             {page.heroHeadline}
           </h1>
         )}
 
         {page?.heroSubheading && (
-          <p className="font-['Lexend'] font-light text-[#C8CDD2] text-fluid-body max-w-[60ch] leading-relaxed md:mb-20">
+          <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body max-w-[60ch] leading-relaxed md:mb-20">
             {page.heroSubheading}
           </p>
         )}

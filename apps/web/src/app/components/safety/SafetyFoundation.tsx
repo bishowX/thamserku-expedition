@@ -28,11 +28,11 @@ export const SafetyFoundation = ({ page }: Props) => {
       <div className="relative z-10 max-w-[1180px] mx-auto flex flex-col items-center gap-12 md:gap-24">
         <div className="flex flex-col items-center gap-6 md:gap-8 text-center">
           {page?.foundationEyebrow && (
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
               {page.foundationEyebrow}
             </span>
           )}
-          <h2 className="font-['Radley'] text-fluid-section text-white leading-[1.2] max-w-[20ch]">
+          <h2 className="font-['Fraunces'] text-display-l text-white max-w-[20ch]">
             {page?.foundationHeading}
           </h2>
         </div>
@@ -40,7 +40,7 @@ export const SafetyFoundation = ({ page }: Props) => {
         <div className="flex flex-col md:flex-row gap-12 md:gap-16 w-full">
           <div className="flex-1 flex flex-col gap-5">
             {body.map((para, i) => (
-              <p key={i} className="font-['Lexend'] text-[17px] md:text-[18px] text-[#C8CDD2] leading-[1.85]">
+              <p key={i} className="font-['DM_Sans'] text-body-lg text-[#C8CDD2] leading-[1.85]">
                 {para}
               </p>
             ))}
@@ -52,10 +52,10 @@ export const SafetyFoundation = ({ page }: Props) => {
                 key={i}
                 className="flex items-center justify-between gap-6 md:gap-8 py-5 md:py-6 border-b border-white/20"
               >
-                <p className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#8F8F8F] leading-[1.5]">
+                <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#8F8F8F] leading-[1.5]">
                   {spec.label}
                 </p>
-                <p className="font-['Radley'] text-[16px] text-white whitespace-nowrap">
+                <p className="font-['Fraunces'] text-body text-white whitespace-nowrap">
                   {spec.value}
                 </p>
               </div>

@@ -23,11 +23,11 @@ export const SafetyEvacuation = ({ page }: Props) => {
       <div className="relative z-10 max-w-[1376px] mx-auto flex flex-col items-center gap-10 md:gap-12">
         <div className="w-full flex flex-col gap-4">
           {page?.evacuationEyebrow && (
-            <span className="font-['JetBrains_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
               {page.evacuationEyebrow}
             </span>
           )}
-          <h2 className="font-['Radley'] text-fluid-heading text-white leading-[1.2]">
+          <h2 className="font-['Fraunces'] text-display-l text-white">
             {page?.evacuationHeading}
           </h2>
         </div>
@@ -38,10 +38,10 @@ export const SafetyEvacuation = ({ page }: Props) => {
               key={i}
               className="bg-[#202121]/50 backdrop-blur-sm flex flex-col gap-3 px-8 py-7 md:px-10 md:py-8"
             >
-              <h3 className="font-['Radley'] text-[24px] md:text-[28px] text-white leading-[1.2]">
+              <h3 className="font-['Fraunces'] text-display-m text-white">
                 {card.title}
               </h3>
-              <p className="font-['Lexend'] font-light text-[15px] text-[#C8CDD2] leading-[1.65]">
+              <p className="font-['DM_Sans'] font-light text-body text-[#C8CDD2] leading-[1.65]">
                 {card.body}
               </p>
             </div>
@@ -49,7 +49,7 @@ export const SafetyEvacuation = ({ page }: Props) => {
         </div>
 
         {page?.evacuationQuote && (
-          <p className="font-['Cormorant_Garamond'] italic text-[18px] md:text-[16px] text-[#C8CDD2] text-center max-w-[44ch]">
+          <p className="font-['Fraunces'] italic text-body text-[#C8CDD2] text-center max-w-[44ch]">
             {page.evacuationQuote}
           </p>
         )}
@@ -57,7 +57,7 @@ export const SafetyEvacuation = ({ page }: Props) => {
         {body.length > 0 && (
           <div className="flex flex-col gap-5 max-w-[1080px]">
             {body.map((para, i) => (
-              <p key={i} className="font-['Lexend'] font-light text-[16px] md:text-[17px] text-[#C8CDD2] leading-[1.65] text-center">
+              <p key={i} className="font-['DM_Sans'] font-light text-body text-[#C8CDD2] leading-[1.65] text-center">
                 {para}
               </p>
             ))}

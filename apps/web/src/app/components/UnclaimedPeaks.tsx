@@ -55,7 +55,7 @@ export function UnclaimedPeaks({ data }: { data?: UnclaimedPeaksData }) {
           {eyebrow && (
             <p
               data-reveal
-              className="shrink-0 md:w-[280px] font-['JetBrains_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#C8CDD2] whitespace-nowrap"
+              className="shrink-0 md:w-[280px] font-['DM_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#C8CDD2] whitespace-nowrap"
             >
               {eyebrow}
             </p>
@@ -63,7 +63,7 @@ export function UnclaimedPeaks({ data }: { data?: UnclaimedPeaksData }) {
           {heading && (
             <h2
               data-reveal
-              className="font-['Radley'] text-[clamp(2rem,4vw,48px)] leading-[1.1] tracking-[-0.5px] text-white max-w-[785px]"
+              className="font-['Fraunces'] text-display-l tracking-[-0.5px] text-white max-w-[785px]"
             >
               {heading}
             </h2>
@@ -74,7 +74,7 @@ export function UnclaimedPeaks({ data }: { data?: UnclaimedPeaksData }) {
         {body && (
           <p
             data-reveal
-            className="font-['Lexend'] font-light text-[16px] leading-[1.4] text-white max-w-[624px] md:ml-[344px]"
+            className="font-['DM_Sans'] font-light text-body leading-[1.4] text-white max-w-[624px] md:ml-[344px]"
           >
             {body}
           </p>
@@ -84,7 +84,7 @@ export function UnclaimedPeaks({ data }: { data?: UnclaimedPeaksData }) {
         <div data-reveal className="md:ml-[344px]">
           <Link
             to={CTA_HREF}
-            className="btn-cta inline-flex items-center gap-5 border border-white bg-white text-[#0A3A77] px-[22px] py-[17px] font-['JetBrains_Mono'] text-[11px] tracking-[2.42px] uppercase"
+            className="btn-cta inline-flex items-center gap-5 border border-white bg-white text-[#0A3A77] px-[22px] py-[17px] font-['DM_Mono'] text-[11px] tracking-[2.42px] uppercase"
           >
             <span>{CTA_LABEL}</span>
             <MoveRight className="w-4 h-4 arrow-shift" />

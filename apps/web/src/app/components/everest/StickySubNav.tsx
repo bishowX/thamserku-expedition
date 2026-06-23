@@ -75,13 +75,13 @@ export function StickySubNav() {
           {NAV_ITEMS.map((item, i) => (
             <div key={item.id} className="flex items-center h-full flex-shrink-0">
               {i > 0 && (
-                <span className="text-white/20 mx-4 font-['JetBrains_Mono'] text-[11px] select-none">
+                <span className="text-white/20 mx-4 font-['DM_Mono'] text-[11px] select-none">
                   |
                 </span>
               )}
               <button
                 onClick={() => handleClick(item.id)}
-                className={`font-['JetBrains_Mono'] uppercase tracking-[0.18em] text-[10px] whitespace-nowrap transition-colors duration-200 ${
+                className={`font-['DM_Mono'] uppercase tracking-[0.18em] text-[10px] whitespace-nowrap transition-colors duration-200 ${
                   activeId === item.id
                     ? "text-white"
                     : "text-[#5A6673] hover:text-[#C8CDD2]"
