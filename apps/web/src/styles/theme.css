@@ -2,6 +2,9 @@
   --font-size: 16px;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+  --serif: "Fraunces", Georgia, serif;
+  --sans:  "DM Sans", -apple-system, system-ui, sans-serif;
+  --mono:  "DM Mono", ui-monospace, monospace;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --border: rgba(0, 0, 0, 0.1);
@@ -25,6 +28,10 @@
      body-lg     Body Large          DM Sans 400 · 19 / 29
      body        Body Regular        DM Sans 400 · 16 / 26 */
 @theme {
+  --font-family-serif: var(--serif);
+  --font-family-sans:  var(--sans);
+  --font-family-mono:  var(--mono);
+
   --text-display-xl:               clamp(2.875rem, 2.215rem + 2.82vw, 4.75rem); /* 46px → 76px */
   --text-display-xl--line-height:  1.03;
   --text-display-l:                clamp(2rem, 1.648rem + 1.5vw, 3rem);         /* 32px → 48px */
@@ -56,6 +63,34 @@
   }
 }
 
+/* Fraunces variable-font axis tuning — outside any layer so these win over
+   Tailwind's generated utilities. Each tier matches the reference type scale.
+   opsz must be explicit when SOFT/WONK are also set (fvs replaces the whole prop). */
+.text-display-xl {
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0 !important;
+  letter-spacing: -0.025em;
+}
+.text-display-l {
+  font-variation-settings: "opsz" 100, "SOFT" 20, "WONK" 0 !important;
+  letter-spacing: -0.02em;
+}
+.text-display-m {
+  font-variation-settings: "opsz" 72, "SOFT" 30, "WONK" 0 !important;
+  letter-spacing: -0.015em;
+}
+.text-stat {
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0 !important;
+}
+/* DM Sans opsz */
+.text-body-lg {
+  font-variation-settings: "opsz" 32 !important;
+  letter-spacing: -0.01em;
+}
+.text-body {
+  font-variation-settings: "opsz" 14 !important;
+  letter-spacing: -0.005em;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -63,6 +98,10 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--sans);
+    font-feature-settings: "kern" 1, "liga" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   html {
@@ -143,45 +182,6 @@
   .group:hover .arrow-shift,
   .btn-cta:hover .arrow-shift {
     transform: translateX(4px);
-  }
-
-  /* ── Fraunces display optical-sizing ──────────────────────────────────
-     Fraunces is a variable font with an opsz axis (9–144). Its editorial
-     "display" character — high stroke contrast, fine hairlines — only shows
-     near the top of that range. `font-optical-sizing: auto` just maps
-     opsz ≈ font-size, so large headings still render in the sturdier text
-     master. We lock opsz per size tier to match the reference type scale. */
-  [class*="Fraunces"] {
-    font-optical-sizing: auto;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-  }
-  /* Display XL — hero → opsz 144, weight 300 */
-  [class*="Fraunces"][class*="text-display-xl"] {
-    font-variation-settings: "opsz" 144;
-    font-weight: 300;
-  }
-  /* Stats numeral → opsz 144, weight 250 */
-  [class*="Fraunces"][class*="text-stat"] {
-    font-variation-settings: "opsz" 144;
-    font-weight: 250;
-  }
-  /* Display L — section headlines → opsz 100, weight 350 */
-  [class*="Fraunces"][class*="text-display-l"] {
-    font-variation-settings: "opsz" 100;
-    font-weight: 350;
-  }
-  /* Display M — card titles + mid heads → opsz 72, weight 400 */
-  [class*="Fraunces"][class*="text-display-m"] {
-    font-variation-settings: "opsz" 72;
-    font-weight: 400;
-  }
-  /* Italic accent — Fraunces Italic with the WONK axis on (restate opsz,
-     since font-variation-settings replaces the whole property) */
-  [class*="Fraunces"].italic,
-  [class*="Fraunces"][class*="italic"] {
-    font-variation-settings: "WONK" 1;
-    font-weight: 350;
   }
 
   h1 {
