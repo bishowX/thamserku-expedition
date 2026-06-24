@@ -112,6 +112,12 @@ export function AtlasPreview({
 
   const items = expeditions.map(toPreviewData);
 
+  const getEditionLabel = (exp: ReturnType<typeof toPreviewData>) => {
+    const editionNames = exp.editions.map((e) => e.name[0]);
+    const editionsLabel = `${editionNames[0]}-${editionNames[editionNames.length - 1]}`;
+    return editionsLabel;
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -178,10 +184,10 @@ export function AtlasPreview({
 
                 <div className="relative z-10 mt-12 flex flex-col gap-4 font-['DM_Mono'] text-[11px] uppercase tracking-[0.1em] text-[#5A6673]">
                   <div className="grid grid-cols-2 gap-y-2 gap-x-4  transition-opacity duration-300">
-                    <div>ALT: {exp.altitude}</div>
-                    <div>REG: {exp.region}</div>
-                    <div>SEA: {exp.season}</div>
-                    <div>STY: {exp.style}</div>
+                    <div>ALTITUDE: {exp.altitude}</div>
+                    <div>REGION: {exp.region}</div>
+                    <div>SEASON: {exp.season}</div>
+                    <div>EDITION: {getEditionLabel(exp)}</div>
                   </div>
                 </div>
               </div>

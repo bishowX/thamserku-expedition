@@ -139,13 +139,17 @@ export function Manifesto({
               <TextReveal text={part2} />
             </em>
           </h2>
-          <p
+          <div
             ref={bodyRef}
-            className="font-['DM_Sans'] font-light text-[#5A6673] text-body max-w-3xl"
+            className="flex flex-col gap-4 font-['DM_Sans'] font-light text-[#5A6673] text-body max-w-3xl"
             data-sanity={encodeDataAttribute?.(["homePage", "manifestoBody"])}
           >
-            <TextReveal text={body} />
-          </p>
+            {body.split(/\n\n+/).map((para, i) => (
+              <p key={i}>
+                <TextReveal text={para.replace(/\n/g, " ")} />
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </section>
