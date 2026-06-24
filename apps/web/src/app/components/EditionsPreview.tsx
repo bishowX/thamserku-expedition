@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -95,6 +96,15 @@ export function EditionsPreview({
             </div>
           ))}
         </div>
+
+        <Link
+          to="/editions"
+          className="group inline-flex items-center self-end font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors"
+        >
+          <span className="border-b border-white/30 group-hover:border-[#C8CDD2] pb-1 transition-colors">
+            Understand the Editions →
+          </span>
+        </Link>
       </div>
     </section>
   );
