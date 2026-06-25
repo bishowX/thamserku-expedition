@@ -74,7 +74,7 @@ export function UnclaimedPeaks({ data }: { data?: UnclaimedPeaksData }) {
         {body && (
           <p
             data-reveal
-            className="font-['DM_Sans'] font-light text-body leading-[1.4] text-white max-w-[624px] md:ml-[344px]"
+            className="font-['DM_Sans'] font-light text-body leading-[1.4] text-white max-w-[624px] md:ml-[344px] whitespace-pre-line"
           >
             {body}
           </p>

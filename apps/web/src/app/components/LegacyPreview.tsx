@@ -44,8 +44,10 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
       const container = cardsRef.current!;
 
       const getScrollAmount = () => {
-        const visibleWidth =
-          Math.min(1440, window.innerWidth) - SECTION_H_PADDING;
+        const visibleWidth = Math.min(
+          1280,
+          window.innerWidth - SECTION_H_PADDING,
+        );
         return -(totalCardsWidth - visibleWidth);
       };
 
@@ -74,35 +76,38 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
   return (
     <section ref={sectionRef} id="legacy" className="w-full bg-[#C8CDD2] overflow-x-clip">
       {/* Header — 3-column row, scrolls normally (not pinned) */}
-      <div className="max-w-[1440px] mx-auto px-8 pt-24 pb-6 md:pt-28 md:pb-8 flex flex-col lg:flex-row lg:items-start gap-8 lg:gap-16">
-        {data?.legacyEyebrow && (
-          <p className="lg:w-[280px] shrink-0 font-['DM_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#1A1A1A]">
-            {data.legacyEyebrow}
-          </p>
-        )}
-        {(data?.legacyHeading || data?.legacyIntro) && (
-          <div className="flex flex-col gap-6 lg:max-w-[600px]">
-            {data?.legacyHeading && (
-              <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
-                {data.legacyHeading}
-              </h2>
-            )}
-            {data?.legacyIntro && (
-              <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[520px] whitespace-pre-line">
-                {stegaClean(data.legacyIntro)}
-              </p>
-            )}
-          </div>
-        )}
+      <div className="px-5 md:px-8 pt-24 pb-6 md:pt-28 md:pb-8">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-start gap-6 md:gap-16">
+          {data?.legacyEyebrow && (
+            <p className="md:w-[280px] shrink-0 font-['DM_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#1A1A1A]">
+              {data.legacyEyebrow}
+            </p>
+          )}
+          {(data?.legacyHeading || data?.legacyIntro) && (
+            <div className="flex flex-col gap-3 lg:max-w-[700px]">
+              {data?.legacyHeading && (
+                <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
+                  {data.legacyHeading}
+                </h2>
+              )}
+              {data?.legacyIntro && (
+                <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[700px] whitespace-pre-line">
+                  {stegaClean(data.legacyIntro)}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Timeline — ONLY this frame pins + scrolls horizontally */}
       {items && items.length > 0 && (
         <div
           ref={pinRef}
-          className="h-screen overflow-hidden bg-[#C8CDD2]"
+          className="h-screen overflow-hidden bg-[#C8CDD2] flex flex-col justify-center"
         >
-          <div className="h-full max-w-[1440px] mx-auto px-8 flex flex-col justify-center">
+          <div className="w-full px-5 md:px-8">
+            <div className="max-w-7xl mx-auto">
             <div
               ref={cardsRef}
               className="flex items-start relative w-max"
@@ -141,12 +146,13 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
                     <h3 className="font-['Fraunces'] text-display-m text-[#1A1A1A]">
                       {item.title}
                     </h3>
-                    <p className="font-['DM_Sans'] font-light text-body leading-[1.75] text-[#5A6673]">
+                    <p className="font-['DM_Sans'] font-light text-body leading-[1.75] text-[#5A6673] whitespace-pre-line">
                       {item.description}
                     </p>
                   </div>
                 </div>
               ))}
+            </div>
             </div>
           </div>
         </div>

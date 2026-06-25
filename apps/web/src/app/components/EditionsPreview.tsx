@@ -58,16 +58,14 @@ export function EditionsPreview({
               {data?.editionsEyebrow ?? "04 — EDITIONS"}
             </span>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex flex-col gap-3">
             {data?.editionsHeading && (
               <h2 className="font-['Fraunces'] text-display-l tracking-[-0.5px] text-white">
                 {data.editionsHeading}
               </h2>
             )}
-          </div>
-          <div className="shrink-0 flex items-center md:w-[253px]">
             {data?.editionsIntro && (
-              <p className="font-['DM_Sans'] font-light text-body leading-[1.2] tracking-[-0.5px] text-white">
+              <p className="font-['DM_Sans'] font-light text-body leading-[1.2] tracking-[-0.5px] text-white max-w-[700px] whitespace-pre-line">
                 {data.editionsIntro}
               </p>
             )}

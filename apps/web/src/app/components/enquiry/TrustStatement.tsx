@@ -13,7 +13,7 @@ export const TrustStatement = ({ data }: { data?: ConsultationPage }) => {
         <h2 className="font-['Fraunces'] font-light text-display-l text-white max-w-[28ch] mb-6">
           {quote}
         </h2>
-        <p className="font-['DM_Sans'] text-[#C8CDD2] text-body leading-[1.65] max-w-[60ch]">
+        <p className="font-['DM_Sans'] text-[#C8CDD2] text-body leading-[1.65] max-w-[60ch] whitespace-pre-line">
           {body}
         </p>
       </div>

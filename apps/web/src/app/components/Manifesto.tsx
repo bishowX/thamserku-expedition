@@ -107,8 +107,8 @@ export function Manifesto({
       ref={sectionRef}
       className="w-full bg-[#F4F2EC] text-[#1A1A1A] section-padding px-5 md:px-8"
     >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 md:gap-24">
-        <div className="md:w-1/4">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 md:gap-16">
+        <div className="shrink-0 md:w-[280px]">
           <div ref={eyebrowRef} className="flex items-center gap-4">
             <span
               ref={lineRef}
@@ -125,7 +125,7 @@ export function Manifesto({
             </span>
           </div>
         </div>
-        <div className="md:w-3/4 flex flex-col gap-4 md:gap-10">
+        <div className="flex-1 flex flex-col gap-4 md:gap-10">
           <h2
             ref={headingRef}
             className="font-['Fraunces'] font-light text-display-l max-w-3xl"
