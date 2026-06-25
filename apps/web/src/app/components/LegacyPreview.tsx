@@ -72,7 +72,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
   );
 
   return (
-    <section ref={sectionRef} id="legacy" className="w-full bg-[#C8CDD2]">
+    <section ref={sectionRef} id="legacy" className="w-full bg-[#C8CDD2] overflow-x-clip">
       {/* Header — 3-column row, scrolls normally (not pinned) */}
       <div className="max-w-[1440px] mx-auto px-8 pt-24 pb-12 md:pt-32 md:pb-16 flex flex-col lg:flex-row lg:items-start gap-8 lg:gap-16">
         {data?.legacyEyebrow && (
@@ -96,9 +96,9 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
       {items && items.length > 0 && (
         <div
           ref={pinRef}
-          className="h-screen flex items-center overflow-hidden bg-[#C8CDD2]"
+          className="h-screen overflow-hidden bg-[#C8CDD2]"
         >
-          <div className="w-full max-w-[1440px] mx-auto px-8">
+          <div className="h-full max-w-[1440px] mx-auto px-8 flex flex-col justify-center">
             <div
               ref={cardsRef}
               className="flex items-start relative w-max"
