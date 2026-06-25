@@ -120,15 +120,17 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
                   className="flex flex-col items-start shrink-0"
                   style={{ width: `${CARD_WIDTH}px` }}
                 >
-                  <div className="bg-[#2E353C] px-2 h-[15px] flex items-center mt-2 mb-4">
-                    <span className="font-['DM_Mono'] text-[11px] text-white tracking-[2.2px] uppercase whitespace-nowrap">
-                      {item.year}
-                    </span>
+                  <div className="w-full pr-10 flex flex-col items-center">
+                    <div className="bg-[#2E353C] px-2 h-[15px] flex items-center mt-2 mb-4">
+                      <span className="font-['DM_Mono'] text-[11px] text-white tracking-[2.2px] uppercase whitespace-nowrap">
+                        {item.year}
+                      </span>
+                    </div>
+                    <div className="w-4 h-4 rounded-full bg-[#2E353C] border border-white relative z-10 mb-16" />
                   </div>
-                  <div className="w-4 h-4 rounded-full bg-[#2E353C] border border-white relative z-10 mb-16" />
                   <div className="w-full flex flex-col gap-4 items-start text-left pr-10">
                     {item.image && (
-                      <div className="w-full aspect-[11/6] overflow-hidden">
+                      <div className="w-full aspect-[11/6] overflow-hidden shadow-[0px_3px_8px_rgba(0,0,0,0.24)]">
                         <img
                           src={urlFor(item.image).width(800).url()}
                           alt=""

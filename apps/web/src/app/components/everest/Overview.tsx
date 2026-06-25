@@ -61,12 +61,12 @@ export function Overview({
                 {specs.map((spec, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-5 md:py-6 border-b border-[rgba(26,26,26,0.2)]"
+                    className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-3 border-b border-[rgba(26,26,26,0.2)]"
                   >
-                    <p className="font-['DM_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] md:text-[16px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
+                    <p className="font-['DM_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
                       {spec.label}
                     </p>
-                    <p className="font-['Fraunces'] text-body text-[#1A1A1A]">
+                    <p className="font-['Fraunces'] text-body text-[#1A1A1A] text-[14px]">
                       {spec.value}
                     </p>
                   </div>
