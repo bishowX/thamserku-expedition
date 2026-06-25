@@ -65,7 +65,7 @@ export function EditionsPreview({
               </h2>
             )}
             {data?.editionsIntro && (
-              <p className="font-['DM_Sans'] font-light text-body leading-[1.2] tracking-[-0.5px] text-white max-w-[700px] whitespace-pre-line">
+              <p className="font-['DM_Sans'] font-light text-body leading-[1.2] tracking-[-0.5px] text-white whitespace-pre-line">
                 {data.editionsIntro}
               </p>
             )}

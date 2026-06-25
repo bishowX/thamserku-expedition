@@ -141,7 +141,7 @@ export function AtlasPreview({
               </h2>
             )}
             {data?.atlasIntro && (
-              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.6] max-w-[700px] whitespace-pre-line">
+              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.6] whitespace-pre-line">
                 {data.atlasIntro}
               </p>
             )}
@@ -162,7 +162,7 @@ export function AtlasPreview({
                     <ImageWithFallback
                       src={exp.image}
                       alt={exp.name}
-                      className="w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-40 transition-opacity duration-700 will-change-transform"
+                      className="w-full h-full object-cover opacity-20 mix-blend-luminosity group-hover:opacity-70 transition-opacity duration-700 will-change-transform"
                     />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent opacity-80" />
