@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { stegaClean } from "@sanity/client/stega";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -86,8 +87,8 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
             </h2>
           )}
           {data?.legacyIntro && (
-            <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[540px] mx-auto">
-              {data.legacyIntro}
+            <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[540px] mx-auto whitespace-pre-line">
+              {stegaClean(data.legacyIntro)}
             </p>
           )}
         </div>

@@ -78,9 +78,14 @@ export type YetiPageData = {
     definitionHeading?: string;
     definitionTagline?: string;
     definitionBody?: string;
+    closingEyebrow?: string;
     closingHeading?: string;
     closingBody?: string;
     closingImage?: { asset: { _ref: string } } | null;
+    closingPrimaryCtaLabel?: string;
+    closingPrimaryCtaPath?: string;
+    closingSecondaryCtaLabel?: string;
+    closingSecondaryCtaPath?: string;
   } | null;
 };
 
@@ -128,6 +133,7 @@ export type EditionsPageData = {
     manifestoEyebrow?: string;
     manifestoHeading?: string;
     manifestoBody?: string;
+    manifestoImage?: { asset: { _ref: string } } | null;
     comparisonEyebrow?: string;
     comparisonHeadline?: string;
     comparisonNote?: string;
@@ -176,7 +182,9 @@ export const YETI_QUERY = `{
     heroHeadline, heroSubheading,
     heroPartners[] { _key, name, logo, label, href },
     definitionHeading, definitionTagline, definitionBody,
-    closingHeading, closingBody, closingImage
+    closingEyebrow, closingHeading, closingBody, closingImage,
+    closingPrimaryCtaLabel, closingPrimaryCtaPath,
+    closingSecondaryCtaLabel, closingSecondaryCtaPath
   }
 }`;
 
@@ -211,7 +219,7 @@ export const LEGACY_QUERY = `{
 
 export const EDITIONS_QUERY = `{
   "editionsPage": *[_type == "editionsPage"][0] {
-    heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody,
+    heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoImage,
     comparisonEyebrow, comparisonHeadline, comparisonNote,
     availabilityEyebrow, availabilityHeadline, availabilityNote,
     closingEyebrow, closingHeading, closingBody, closingFootnote, closingImage

@@ -36,7 +36,7 @@ export default function YetiInfrastructure() {
       <Nav />
       <YetiHero page={page} encodeDataAttribute={encodeDataAttribute} />
       <YetiDefinition page={page} encodeDataAttribute={encodeDataAttribute} />
-      <YetiClosing page={page} />
+      <YetiClosing page={page} encodeDataAttribute={encodeDataAttribute} />
       <Footer />
     </main>
   );

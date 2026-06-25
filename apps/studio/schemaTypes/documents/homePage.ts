@@ -63,7 +63,7 @@ export default defineType({
     // Legacy
     defineField({ name: 'legacyEyebrow', title: 'Eyebrow', type: 'string', group: 'legacy', description: 'e.g. 05 — LEGACY' }),
     defineField({ name: 'legacyHeading', title: 'Heading', type: 'text', rows: 2, group: 'legacy' }),
-    defineField({ name: 'legacyIntro', title: 'Intro', type: 'text', rows: 3, group: 'legacy', description: 'Intro paragraph shown below the heading.' }),
+    defineField({ name: 'legacyIntro', title: 'Intro', type: 'text', rows: 3, group: 'legacy', description: 'Intro paragraph shown below the heading. Blank lines are preserved.' }),
     defineField({
       name: 'legacyTimelineItems',
       title: 'Timeline Items',

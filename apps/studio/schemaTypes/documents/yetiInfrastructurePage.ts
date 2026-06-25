@@ -38,9 +38,14 @@ export default defineType({
     defineField({ name: 'definitionBody', title: 'Body', type: 'text', rows: 6, group: 'definition' }),
 
     // Closing
+    defineField({ name: 'closingEyebrow', title: 'Eyebrow', type: 'string', group: 'closing', description: 'e.g. YETI GROUP' }),
     defineField({ name: 'closingHeading', title: 'Closing Heading', type: 'text', rows: 2, group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Closing Body', type: 'text', rows: 3, group: 'closing' }),
     defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
+    defineField({ name: 'closingPrimaryCtaLabel', title: 'Primary Button Label', type: 'string', group: 'closing', description: 'e.g. DESIGN YOUR EXPEDITION →' }),
+    defineField({ name: 'closingPrimaryCtaPath', title: 'Primary Button Link', type: 'string', group: 'closing', description: 'Internal path, e.g. /design-your-expedition' }),
+    defineField({ name: 'closingSecondaryCtaLabel', title: 'Secondary Button Label', type: 'string', group: 'closing', description: 'e.g. EXPLORE EDITIONS →' }),
+    defineField({ name: 'closingSecondaryCtaPath', title: 'Secondary Button Link', type: 'string', group: 'closing', description: 'Internal path, e.g. /editions' }),
   ],
   preview: { prepare: () => ({ title: 'Yeti Infrastructure Page' }) },
 })

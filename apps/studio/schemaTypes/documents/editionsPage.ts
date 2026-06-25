@@ -28,6 +28,14 @@ export default defineType({
       description: 'The last sentence will render in italic blue.',
     }),
     defineField({ name: 'manifestoBody', title: 'Body', type: 'text', rows: 4, group: 'manifesto' }),
+    defineField({
+      name: 'manifestoImage',
+      title: 'Image',
+      type: 'image',
+      group: 'manifesto',
+      options: { hotspot: true },
+      description: 'Shown in the left column beside the manifesto copy.',
+    }),
 
     // Comparison
     defineField({ name: 'comparisonEyebrow', title: 'Eyebrow', type: 'string', group: 'comparison', description: 'e.g. 04 — AT A GLANCE' }),
