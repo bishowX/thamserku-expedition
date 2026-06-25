@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -39,7 +38,6 @@ export function Hero({
   const overlayRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -47,14 +45,12 @@ export function Hero({
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         if (headlineRef.current) gsap.set(headlineRef.current, { opacity: 1 });
         if (subRef.current) gsap.set(subRef.current, { opacity: 1 });
-        if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 1 });
         return;
       }
 
       // Reveal containers (FOUC prevention — they start with opacity-0 via CSS)
       if (headlineRef.current) gsap.set(headlineRef.current, { opacity: 1 });
       if (subRef.current) gsap.set(subRef.current, { opacity: 1 });
-      if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 1 });
 
       const tl = gsap.timeline();
 
@@ -112,23 +108,6 @@ export function Hero({
             ease: "power3.out",
           },
           1.0,
-        );
-      }
-
-      // CTA buttons stagger
-      if (ctaRef.current) {
-        const buttons = Array.from(ctaRef.current.children);
-        gsap.set(buttons, { opacity: 0, y: 15 });
-        tl.to(
-          buttons,
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.08,
-            duration: 0.5,
-            ease: "power3.out",
-          },
-          1.2,
         );
       }
 
@@ -223,14 +202,7 @@ export function Hero({
           </p>
         </div>
 
-        <div ref={ctaRef} className="flex mt-4 opacity-0">
-          <Link
-            to="/design-your-expedition"
-            className="bg-white text-[#0A3A77] px-8 py-4 font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px]"
-          >
-            DESIGN YOUR EXPEDITION
-          </Link>
-        </div>
+       
       </div>
     </section>
   );

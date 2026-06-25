@@ -49,7 +49,7 @@ export function EditionsComparison({
         <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-6">
           {eyebrow}
         </p>
-        <h2 className="font-['Fraunces'] font-light text-display-l mb-10 md:mb-24 max-w-[20ch]">
+        <h2 className="font-['Fraunces'] font-light text-display-l mb-4 md:mb-6 max-w-[20ch]">
           {headline}
         </h2>
 
@@ -57,13 +57,13 @@ export function EditionsComparison({
           <table className="w-full min-w-[1024px] text-left border-collapse">
             <thead>
               <tr className="border-b border-[#1A1A1A]/10">
-                <th className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-[#5A6673] py-8 w-1/6">
+                <th className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] font-normal text-[#5A6673] py-3 md:py-4 w-1/6">
                   EDITION
                 </th>
                 {editions.map((ed) => (
                   <th
                     key={ed._id}
-                    className="font-['Fraunces'] font-light text-display-m text-[#1A1A1A] py-8 w-[16.66%]"
+                    className="font-['Fraunces'] font-light text-display-m text-[#1A1A1A] py-3 md:py-4 w-[16.66%]"
                   >
                     {ed.name.replace(" Edition", "")}
                   </th>

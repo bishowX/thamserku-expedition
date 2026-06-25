@@ -8,7 +8,7 @@ export const SafetyNumbersMeaning = ({ page }: Props) => {
   return (
     <section className="bg-[#F4F2EC] section-padding">
       <div className="max-w-[1320px] mx-auto flex flex-col items-center gap-12 md:gap-16">
-        <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A] text-center max-w-[20ch]">
+        <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A] text-center">
           {page?.numbersHeading}
         </h2>
 

@@ -1,11 +1,11 @@
 import { urlFor } from '../../../lib/sanity';
 import type { SanityImageSource } from '@sanity/image-url';
 import type { SafetyPageData } from '../../../lib/queries';
+import { PortableTextBody } from '../PortableTextBody';
 
 type Props = { page: SafetyPageData['safetyPage'] };
 
 export const SafetyFoundation = ({ page }: Props) => {
-  const body = page?.foundationBody ?? [];
   const specs = page?.foundationSpecs ?? [];
   const imageSrc = page?.foundationBgImage
     ? urlFor(page.foundationBgImage as SanityImageSource).width(1920).url()
@@ -38,12 +38,14 @@ export const SafetyFoundation = ({ page }: Props) => {
         </div>
 
         <div className="flex flex-col md:flex-row gap-12 md:gap-16 w-full">
-          <div className="flex-1 flex flex-col gap-5">
-            {body.map((para, i) => (
-              <p key={i} className="font-['DM_Sans'] text-body-lg text-[#C8CDD2] leading-[1.85]">
-                {para}
-              </p>
-            ))}
+          <div className="flex-1">
+            {page?.foundationBody?.length ? (
+              <PortableTextBody
+                value={page.foundationBody}
+                theme="dark"
+                size="lg"
+              />
+            ) : null}
           </div>
 
           <div className="md:w-[613px] md:shrink-0 border-t border-white/20">

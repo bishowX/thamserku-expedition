@@ -87,9 +87,9 @@ export default defineType({
     defineField({ name: 'foundationBgImage', title: 'Background Image', type: 'image', group: 'foundation', options: { hotspot: true } }),
     defineField({
       name: 'foundationBody',
-      title: 'Body Paragraphs',
-      type: 'array',
-      of: [{ type: 'text', rows: 3 }],
+      title: 'Body',
+      type: 'blockContent',
+      description: 'Press Enter for a new paragraph.',
       group: 'foundation',
     }),
     defineField({

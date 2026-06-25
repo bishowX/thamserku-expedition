@@ -29,7 +29,12 @@ export default defineType({
           defineField({ name: 'roman', title: 'Roman Numeral', type: 'string', description: 'e.g. I, II, III' }),
           defineField({ name: 'years', title: 'Year Range', type: 'string', description: 'e.g. 1988, 1987 — 1995' }),
           defineField({ name: 'title', title: 'Chapter Title', type: 'string' }),
-          defineField({ name: 'description', title: 'Description', type: 'text', rows: 4 }),
+          defineField({
+            name: 'description',
+            title: 'Description',
+            type: 'blockContent',
+            description: 'Paragraphs and bullet lists.',
+          }),
           defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
         ],
         preview: { select: { title: 'title', subtitle: 'years', media: 'image' } },

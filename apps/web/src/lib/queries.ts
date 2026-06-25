@@ -2,6 +2,7 @@
 // Both loaders (loadQuery) and page components (useQuery) import from here, so it
 // must NOT pull in server-only code. The serverClient-backed fetchers live in
 // queries.server.ts.
+import type { PortableTextBlock } from "@portabletext/types";
 import type { ConfigMatrix, BasePrices, DesignConfig } from "./configMatrix";
 import { normalizeDesignConfig } from "./configMatrix";
 
@@ -184,7 +185,7 @@ export type LegacyTimelineChapter = {
   roman: string;
   years: string;
   title: string;
-  description: string;
+  description: string | PortableTextBlock[];
   image?: { asset: { _ref: string } } | null;
 };
 
@@ -308,9 +309,11 @@ export type SanityExpeditionDossier = {
   highlightsImage?: { asset: { _ref: string } } | null;
   audienceTiles?: SanityAudienceTile[];
   itineraryHeading?: string;
+  itineraryLegend?: string;
   itinerary?: Array<{ days: string; activity: string; accommodation: string; meals: string }>;
   routeWaypoints?: SanityRouteWaypoint[];
   routeHeadline?: string;
+  routeHeadlineSuffix?: string;
   routePhilosophy?: string;
   acclimatisationNote?: string;
   summitWindowNote?: string;
@@ -442,7 +445,7 @@ export type SafetyPageData = {
     foundationEyebrow?: string;
     foundationHeading?: string;
     foundationBgImage?: { asset: { _ref: string } } | null;
-    foundationBody?: string[];
+    foundationBody?: PortableTextBlock[];
     foundationSpecs?: SafetySpec[];
     communicationEyebrow?: string;
     communicationHeading?: string;
@@ -550,9 +553,9 @@ export const EXPEDITION_BY_SLUG_QUERY = `*[_type == "expedition" && slug.current
   overviewSpecsHeading, overviewSpecs[]{ label, value },
   whoItIsForHeadline, highlightsImage,
   audienceTiles[]{ label, subline, description },
-  itineraryHeading, itinerary[]{ days, activity, accommodation, meals },
+  itineraryHeading, itineraryLegend, itinerary[]{ days, activity, accommodation, meals },
   routeWaypoints[]{ name, altitude },
-  routeHeadline, routePhilosophy, acclimatisationNote, summitWindowNote,
+  routeHeadline, routeHeadlineSuffix, routePhilosophy, acclimatisationNote, summitWindowNote,
   editions[]->{ letter, name, subtitle, positioning, targetAudience, character, isStandard },
   inclusionCategories[]{ category, items },
   exclusions,

@@ -1,10 +1,15 @@
+import { stegaClean } from "@sanity/client/stega";
 import type { AchievementsPageData } from "../../../lib/queries";
 import { urlFor } from "../../../lib/sanity";
 
 type PageData = AchievementsPageData['achievementsPage'];
 
+const DEFAULT_SUBHEADING =
+  'A structured record of the Himalayan expeditions our house has been part of — across nearly four decades of seasons, summits, and quiet days on the mountain.';
+
 export function AchievementsHero({ page }: { page?: PageData }) {
   const bgSrc = page?.heroImage ? urlFor(page.heroImage).width(1920).url() : null;
+  const subheading = stegaClean(page?.heroSubheading ?? DEFAULT_SUBHEADING);
 
   return (
     <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col overflow-hidden">
@@ -37,9 +42,8 @@ export function AchievementsHero({ page }: { page?: PageData }) {
           <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance text-left md:text-center text-white max-w-[18ch] mx-auto">
             {page?.heroHeadline ?? 'A history written in altitude.'}
           </h1>
-          <p className="font-['DM_Sans'] font-light text-body leading-relaxed text-left md:text-center text-[#C8CDD2] max-w-[705px]">
-            {page?.heroSubheading ??
-              'A structured record of the Himalayan expeditions our house has been part of — across nearly four decades of seasons, summits, and quiet days on the mountain.'}
+          <p className="font-['DM_Sans'] font-light text-body leading-relaxed text-left md:text-center text-[#C8CDD2] max-w-[705px] whitespace-pre-line">
+            {subheading}
           </p>
         </div>
       </div>

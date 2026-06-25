@@ -30,6 +30,7 @@ import editionConfig from './objects/editionConfig'
 import designConfig from './objects/designConfig'
 import statItem from './objects/statItem'
 import legacyTimelineItem from './objects/legacyTimelineItem'
+import blockContent from './objects/blockContent'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
@@ -66,4 +67,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   designConfig,
   statItem,
   legacyTimelineItem,
+  blockContent,
 ]

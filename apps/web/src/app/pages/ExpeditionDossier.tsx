@@ -110,6 +110,7 @@ export default function ExpeditionDossier() {
         />
         <Itinerary
           itineraryHeading={expedition.itineraryHeading}
+          itineraryLegend={expedition.itineraryLegend}
           itinerary={expedition.itinerary}
         />
         <Inclusions
@@ -127,6 +128,7 @@ export default function ExpeditionDossier() {
         <RouteMap
           waypoints={expedition.routeWaypoints}
           routeHeadline={expedition.routeHeadline}
+          routeHeadlineSuffix={expedition.routeHeadlineSuffix}
           routePhilosophy={expedition.routePhilosophy}
           acclimatisationNote={expedition.acclimatisationNote}
           summitWindowNote={expedition.summitWindowNote}

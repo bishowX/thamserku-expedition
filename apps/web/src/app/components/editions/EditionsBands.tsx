@@ -85,7 +85,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
 
               <div className="col-span-1 md:col-span-7 flex flex-col">
                 <p className="font-['DM_Mono'] uppercase hidden md:block tracking-[0.22em] text-[11px] mb-12 text-[#5A6673]">
-                  03{ed.letter} — EDITION {ed.letter}
+                  01{ed.letter} — EDITION {ed.letter}
                 </p>
 
                 <h3
@@ -103,7 +103,7 @@ export function EditionsBands({ editions }: { editions: SanityEditionFull[] }) {
                 )}
 
                 <div
-                  className={`font-['DM_Sans'] font-light text-body leading-relaxed max-w-[56ch] mb-8 md:mb-16 ${copyColor}`}
+                  className={`font-['DM_Sans'] font-light text-body leading-relaxed max-w-[56ch] mb-2 md:mb-4 ${copyColor}`}
                 >
                   {ed.body1 && <p className="mb-6">{ed.body1}</p>}
                   {ed.body2 && <p>{ed.body2}</p>}

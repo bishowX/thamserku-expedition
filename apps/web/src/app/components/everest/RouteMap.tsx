@@ -11,6 +11,7 @@ type Waypoint = { name: string; altitude: string };
 type Props = {
   waypoints?: Waypoint[];
   routeHeadline?: string;
+  routeHeadlineSuffix?: string;
   routePhilosophy?: string;
   acclimatisationNote?: string;
   summitWindowNote?: string;
@@ -42,6 +43,7 @@ function smoothPath(pts: { x: number; y: number }[]): string {
 export function RouteMap({
   waypoints,
   routeHeadline,
+  routeHeadlineSuffix,
   routePhilosophy,
   acclimatisationNote,
   summitWindowNote,
@@ -54,6 +56,15 @@ export function RouteMap({
   const chartW = SVG_W - PAD_X * 2;
   const chartH = SVG_H - PAD_Y_TOP - PAD_Y_BOT;
   const n = points.length;
+
+  const headline =
+    routeHeadline?.trim() ||
+    (n > 0
+      ? [
+          `From ${points[0].name} to the summit.`,
+          routeHeadlineSuffix?.trim() || `${n} points on the line.`,
+        ].join(" ")
+      : "The route.");
 
   const coords = points.map((wp, idx) => {
     const x = PAD_X + (n > 1 ? (idx / (n - 1)) * chartW : chartW / 2);
@@ -68,7 +79,6 @@ export function RouteMap({
   });
 
   const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -97,28 +107,25 @@ export function RouteMap({
         },
       );
 
-      // Desktop: the chart is "pinned" by native CSS position:sticky (the
-      // track/stage wrappers in the markup), NOT by ScrollTrigger. Sticky is a
-      // browser primitive that Lenis drives natively, so there's no pin-spacer
-      // and no fixed↔relative toggle at the boundaries — that toggle, fighting
-      // Lenis momentum, was the shift on unpin. This ScrollTrigger only scrubs
-      // the line-draw against scroll progress through the track; it never
-      // touches layout, so there is nothing left to jank.
+      const prepChart = () => {
+        const path = pathRef.current;
+        const svg = svgRef.current;
+        if (!path || !svg) return null;
+        const len = path.getTotalLength();
+        const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
+        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.set(pointGroups, { opacity: 0, y: 10 });
+        return { path, len, pointGroups };
+      };
+
+      // Desktop: ScrollTrigger pin + scrubbed line draw.
       mm.add(
-        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        "(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)",
         () => {
-          const path = pathRef.current;
-          const svg = svgRef.current;
-          const track = trackRef.current;
-          if (!path || !svg || !track) return;
-          const len = path.getTotalLength();
-          const pointGroups = gsap.utils.toArray<SVGGElement>(".rm-point", svg);
+          const chart = prepChart();
+          if (!chart) return;
+          const { path, len, pointGroups } = chart;
 
-          gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-          gsap.set(pointGroups, { opacity: 0, y: 10 });
-
-          // x is monotonic along the path, so binary-search the arc length
-          // where the line reaches each waypoint's x
           const lengthAtX = (x: number) => {
             let lo = 0;
             let hi = len;
@@ -130,22 +137,19 @@ export function RouteMap({
             return (lo + hi) / 2;
           };
 
-          // progress runs from the moment the stage sticks (track top hits the
-          // viewport top) to the moment it releases (track bottom hits the
-          // viewport bottom) — exactly matching the sticky lock window
           const tl = gsap.timeline({
             scrollTrigger: {
-              trigger: track,
+              trigger: stage,
               start: "top top",
-              end: "bottom bottom",
+              end: "+=110%",
+              pin: true,
+              anticipatePin: 1,
               scrub: 0.6,
             },
           });
 
-          // dwell before drawing starts and after it finishes, so neither the
-          // stick nor the release coincides with visible motion
           const LEAD = 0.08;
-          const TAIL = 0.22;
+          const TAIL = 0.25;
 
           tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, LEAD);
           pointGroups.forEach((g, idx) => {
@@ -158,12 +162,36 @@ export function RouteMap({
           tl.to({}, { duration: TAIL });
         },
       );
+
+      const drawOnce = () => {
+        const chart = prepChart();
+        if (!chart) return;
+        const { path, pointGroups } = chart;
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: stage, start: "top 75%", once: true },
+        });
+        tl.to(path, {
+          strokeDashoffset: 0,
+          ease: "power1.inOut",
+          duration: 1.4,
+        });
+        tl.to(
+          pointGroups,
+          { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" },
+          "<0.4",
+        );
+      };
+      mm.add(
+        "(min-width: 768px) and (max-width: 1023px) and (prefers-reduced-motion: no-preference)",
+        drawOnce,
+      );
+      mm.add(
+        "(min-width: 1024px) and (max-height: 699px) and (prefers-reduced-motion: no-preference)",
+        drawOnce,
+      );
     },
     {
       scope: sectionRef,
-      // key on the actual waypoint data (not just the count) and fully
-      // revert the old context — otherwise client-side navigation between
-      // peaks leaves stale pins/tweens measured against the previous page
       dependencies: [points.map((p) => `${p.name}@${p.altitude}`).join("|")],
       revertOnUpdate: true,
     },
@@ -175,12 +203,9 @@ export function RouteMap({
       id="route"
       className="scroll-mt-28 bg-[#191919] w-full text-white relative"
     >
-      {/* Desktop: tall track gives the sticky stage room to lock while the line
-          draws. Mobile: no height, so the ladder just flows normally. */}
-      <div ref={trackRef} className="md:h-[200svh]">
       <div
         ref={stageRef}
-        className="relative md:sticky md:top-0 md:h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
+        className="relative md:min-h-[100svh] overflow-hidden flex flex-col justify-center gap-8 md:gap-12 py-16"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
@@ -195,9 +220,7 @@ export function RouteMap({
             07 — ROUTE
           </p>
           <h2 className="font-['Fraunces'] font-light text-display-l max-w-[32ch] text-white">
-            {routeHeadline || (n > 0
-              ? `From ${points[0].name} to the summit. ${n - 1} points on the line.`
-              : "The route.")}
+            {headline}
           </h2>
         </div>
 
@@ -298,7 +321,6 @@ export function RouteMap({
             </div>
           </div>
         )}
-      </div>
       </div>
 
       <div className="relative max-w-[1440px] mx-auto px-8 pb-16 md:pb-24">

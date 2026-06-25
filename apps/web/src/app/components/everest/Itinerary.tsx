@@ -5,13 +5,18 @@ type ItineraryDay = {
   meals: string;
 };
 
+const DEFAULT_ITINERARY_LEGEND =
+  "MLN — Mountain Lodges of Nepal · B — Breakfast · L — Lunch · D — Dinner";
+
 type Props = {
   itineraryHeading?: string;
+  itineraryLegend?: string;
   itinerary?: ItineraryDay[];
 };
 
-export function Itinerary({ itineraryHeading, itinerary }: Props) {
+export function Itinerary({ itineraryHeading, itineraryLegend, itinerary }: Props) {
   const rows = itinerary ?? [];
+  const legend = itineraryLegend?.trim() || DEFAULT_ITINERARY_LEGEND;
 
   if (rows.length === 0 && !itineraryHeading) return null;
 
@@ -34,12 +39,12 @@ export function Itinerary({ itineraryHeading, itinerary }: Props) {
             {rows.map((row, i) => (
               <div
                 key={i}
-                className="grid grid-cols-[40px_minmax(0,1fr)] md:grid-cols-[56px_minmax(0,1fr)_150px_72px] gap-x-5 md:gap-x-12 items-baseline md:items-center border-b border-white/20 py-5 md:py-4 md:min-h-[63px]"
+                className="grid grid-cols-[4.5rem_minmax(0,1fr)] md:grid-cols-[4.5rem_minmax(0,1fr)_150px_72px] gap-x-5 md:gap-x-12 items-baseline md:items-center border-b border-white/20 py-5 md:py-4 md:min-h-[63px]"
               >
-                <span className="font-['Fraunces'] text-display-m text-[#C8CDD2]">
+                <span className="font-['Fraunces'] font-light text-body text-[#C8CDD2] whitespace-nowrap shrink-0 tabular-nums">
                   {row.days}
                 </span>
-                <span className="font-['Fraunces'] text-display-m text-white">
+                <span className="font-['Fraunces'] font-light text-body text-white">
                   {row.activity}
                 </span>
                 {row.accommodation && (
@@ -54,6 +59,9 @@ export function Itinerary({ itineraryHeading, itinerary }: Props) {
                 )}
               </div>
             ))}
+            <p className="border-t border-white/20 py-5 md:py-4 font-['DM_Sans'] font-light text-body leading-[1.6] text-white/60">
+              {legend}
+            </p>
           </div>
         )}
       </div>

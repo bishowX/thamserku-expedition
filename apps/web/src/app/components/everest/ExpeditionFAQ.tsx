@@ -25,7 +25,7 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
       <div className="relative z-10 w-full max-w-[880px] mx-auto px-8 flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-10 md:mb-32">
           <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
-            FREQUENTLY ASKED
+            08 — FREQUENTLY ASKED
             {expeditionName ? ` — ${expeditionName.toUpperCase()}` : ""}
           </span>
           <h2 className="font-['Fraunces'] font-light text-display-l text-white max-w-[22ch] mb-8">
