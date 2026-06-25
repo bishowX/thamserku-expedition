@@ -116,7 +116,7 @@ export type HomePageData = {
     legacyEyebrow: string;
     legacyHeading: string;
     legacyIntro?: string;
-    legacyTimelineItems?: Array<{ year: string; title: string; description: string }>;
+    legacyTimelineItems?: Array<{ year: string; title: string; description: string; image?: { asset: { _ref: string } } | null }>;
     unclaimedPeaksEyebrow?: string;
     unclaimedPeaksHeading?: string;
     unclaimedPeaksBody?: string;
@@ -156,7 +156,7 @@ export const HOME_QUERY = `{
     newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
     closingEyebrow, closingHeading, closingBody, closingImage,
     legacyEyebrow, legacyHeading, legacyIntro,
-    legacyTimelineItems[]{ year, title, description },
+    legacyTimelineItems[]{ year, title, description, image },
     unclaimedPeaksEyebrow, unclaimedPeaksHeading, unclaimedPeaksBody,
     "featuredExpeditions": featuredExpeditions[]->{ _id, number, code, name, slug, altitude, region, season, style, positioning, image, editions[]->{ _id, letter, name, slug } }
   },

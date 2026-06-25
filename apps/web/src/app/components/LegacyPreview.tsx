@@ -5,10 +5,16 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { stegaClean } from "@sanity/client/stega";
+import { urlFor } from "../../lib/sanity";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type TimelineItem = { year: string; title: string; description: string };
+type TimelineItem = {
+  year: string;
+  title: string;
+  description: string;
+  image?: { asset: { _ref: string } } | null;
+};
 
 type LegacyData = {
   legacyEyebrow?: string;
@@ -74,20 +80,20 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
       className="w-full bg-[#C8CDD2] min-h-screen flex flex-col justify-center overflow-hidden"
     >
       <div className="max-w-[1440px] mx-auto px-8 md:py-16 w-full flex flex-col gap-12">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
+        {/* Header — 3-column row: eyebrow · heading · intro */}
+        <div className="flex flex-col lg:flex-row lg:items-start gap-8 lg:gap-16 lg:py-24">
           {data?.legacyEyebrow && (
-            <p className="font-['DM_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#1A1A1A]">
+            <p className="lg:w-[280px] shrink-0 font-['DM_Mono'] text-[11px] tracking-[2.4px] uppercase text-[#1A1A1A]">
               {data.legacyEyebrow}
             </p>
           )}
           {data?.legacyHeading && (
-            <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
+            <h2 className="lg:w-[531px] shrink-0 font-['Fraunces'] text-display-l text-[#1A1A1A]">
               {data.legacyHeading}
             </h2>
           )}
           {data?.legacyIntro && (
-            <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[540px] mx-auto whitespace-pre-line">
+            <p className="flex-1 lg:pl-16 font-['DM_Sans'] font-light text-body leading-[1.4] text-[#202121] max-w-[373px] whitespace-pre-line">
               {stegaClean(data.legacyIntro)}
             </p>
           )}
@@ -119,6 +125,15 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
                 </div>
                 <div className="w-4 h-4 rounded-full bg-[#2E353C] border border-white relative z-10 mb-16" />
                 <div className="flex flex-col gap-4 items-center text-center px-8">
+                  {item.image && (
+                    <div className="w-[220px] h-[120px] overflow-hidden">
+                      <img
+                        src={urlFor(item.image).width(440).height(240).url()}
+                        alt=""
+                        className="w-full h-full object-cover mix-blend-darken pointer-events-none"
+                      />
+                    </div>
+                  )}
                   <h3 className="font-['Fraunces'] text-display-m text-[#1A1A1A]">
                     {item.title}
                   </h3>
