@@ -189,14 +189,14 @@ export function Hero({
         <div>
           <h1
             ref={headlineRef}
-            className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 opacity-0 max-w-[26ch]"
+            className="font-['Fraunces'] font-light text-display-xl leading-[0.85] tracking-tight text-balance mb-6 opacity-0 max-w-[26ch]"
             data-sanity={encodeDataAttribute?.(["homePage", "heroHeadline"])}
           >
             <TextReveal text={headline} />
           </h1>
           <p
             ref={subRef}
-            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body max-w-[60ch] leading-relaxed opacity-0"
+            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body max-w-[60ch] leading-tight opacity-0"
           >
             {subheading}
           </p>

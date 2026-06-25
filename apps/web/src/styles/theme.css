@@ -33,17 +33,17 @@
   --font-family-mono:  var(--mono);
 
   --text-display-xl:               clamp(2.875rem, 2.215rem + 2.82vw, 4.75rem); /* 46px → 76px */
-  --text-display-xl--line-height:  1.03;
+  --text-display-xl--line-height:  1;
   --text-display-l:                clamp(2rem, 1.648rem + 1.5vw, 3rem);         /* 32px → 48px */
-  --text-display-l--line-height:   1.08;
+  --text-display-l--line-height:   1;
   --text-display-m:                clamp(1.5rem, 1.368rem + 0.56vw, 1.875rem);  /* 24px → 30px */
-  --text-display-m--line-height:   1.17;
+  --text-display-m--line-height:   1.08;
   --text-stat:                     clamp(2.125rem, 1.729rem + 1.69vw, 3.25rem); /* 34px → 52px */
   --text-stat--line-height:        1;
   --text-body-lg:                  clamp(1.0625rem, 1.019rem + 0.19vw, 1.1875rem); /* 17px → 19px */
-  --text-body-lg--line-height:     1.526;
+  --text-body-lg--line-height:     1.4;
   --text-body:                     clamp(0.9375rem, 0.916rem + 0.09vw, 1rem);   /* 15px → 16px */
-  --text-body--line-height:        1.625;
+  --text-body--line-height:        1.45;
 
   /* Legacy fluid tokens — retained so any un-migrated class keeps working */
   --text-fluid-display:  clamp(2.875rem, 2.215rem + 2.82vw, 4.75rem);  /* → display-xl */
@@ -187,19 +187,19 @@
   h1 {
     font-size: var(--text-display-xl);
     font-weight: 300;
-    line-height: 1.03;
+    line-height: 1;
   }
 
   h2 {
     font-size: var(--text-display-l);
     font-weight: 350;
-    line-height: 1.08;
+    line-height: 1;
   }
 
   h3 {
     font-size: var(--text-display-m);
     font-weight: 400;
-    line-height: 1.17;
+    line-height: 1.08;
   }
 
   h4 {
