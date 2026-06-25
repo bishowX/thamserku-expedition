@@ -74,26 +74,14 @@ export function AchievementsDecades({
   const pinRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const leadingSpacerRef = useRef<HTMLDivElement>(null);
-  const trailingSpacerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       const pin = pinRef.current!;
       const viewport = viewportRef.current!;
       const track = trackRef.current!;
-      const leadingSpacer = leadingSpacerRef.current!;
-      const trailingSpacer = trailingSpacerRef.current!;
 
       const syncLayout = () => {
-        const viewportWidth = viewport.clientWidth;
-        const firstCard = track.querySelector<HTMLElement>(".timeline-card");
-        const cardWidth = firstCard?.offsetWidth ?? 380;
-        const spacerWidth = Math.max(0, (viewportWidth - cardWidth) / 2);
-
-        leadingSpacer.style.width = `${spacerWidth}px`;
-        trailingSpacer.style.width = `${spacerWidth}px`;
-
         const cards = track.querySelectorAll<HTMLElement>(".timeline-card");
         let maxCardHeight = 0;
         cards.forEach((card) => {
@@ -174,14 +162,8 @@ export function AchievementsDecades({
         >
           <div
             ref={trackRef}
-            className="flex w-max items-stretch gap-10 md:gap-24 will-change-transform"
+            className="flex w-max items-stretch gap-10 md:gap-24 md:px-12 will-change-transform"
           >
-            <div
-              ref={leadingSpacerRef}
-              className="hidden md:block shrink-0"
-              aria-hidden
-            />
-
             {decades.map((decade, idx) => {
               const paragraphs = stegaClean(decade.body ?? "")
                 .split(/\n\s*\n/)
@@ -245,12 +227,6 @@ export function AchievementsDecades({
                 </div>
               );
             })}
-
-            <div
-              ref={trailingSpacerRef}
-              className="hidden md:block shrink-0"
-              aria-hidden
-            />
           </div>
         </div>
       </div>
