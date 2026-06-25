@@ -102,7 +102,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
           ref={pinRef}
           className="h-screen overflow-hidden bg-[#C8CDD2]"
         >
-          <div className="h-full max-w-[1440px] mx-auto px-8 flex flex-col justify-start pt-12 md:pt-16">
+          <div className="h-full max-w-[1440px] mx-auto px-8 flex flex-col justify-center">
             <div
               ref={cardsRef}
               className="flex items-start relative w-max"
@@ -126,11 +126,11 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
                     </span>
                   </div>
                   <div className="w-4 h-4 rounded-full bg-[#2E353C] border border-white relative z-10 mb-16" />
-                  <div className="flex flex-col gap-4 items-start text-left pr-10">
+                  <div className="w-full flex flex-col gap-4 items-start text-left pr-10">
                     {item.image && (
-                      <div className="w-[220px] h-[120px] overflow-hidden">
+                      <div className="w-full aspect-[11/6] overflow-hidden">
                         <img
-                          src={urlFor(item.image).width(440).height(240).url()}
+                          src={urlFor(item.image).width(800).url()}
                           alt=""
                           className="w-full h-full object-cover mix-blend-darken pointer-events-none"
                         />

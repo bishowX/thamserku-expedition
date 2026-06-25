@@ -86,9 +86,13 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
   }, [hideOnScrollDown]);
 
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "auto";
+    // Lock scroll while the mobile menu is open. On close, CLEAR the inline
+    // style (don't set "auto") — "auto" makes <body> a scroll container in both
+    // axes, which surfaces a spurious horizontal scrollbar (and overrides the
+    // body's overflow-x-clip). Clearing restores the default + the CSS clip.
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
 
