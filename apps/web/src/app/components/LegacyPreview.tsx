@@ -80,15 +80,19 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
             {data.legacyEyebrow}
           </p>
         )}
-        {data?.legacyHeading && (
-          <h2 className="lg:w-[531px] shrink-0 font-['Fraunces'] text-display-l text-[#1A1A1A]">
-            {data.legacyHeading}
-          </h2>
-        )}
-        {data?.legacyIntro && (
-          <p className="flex-1 lg:pl-16 font-['DM_Sans'] font-light text-body leading-[1.4] text-[#202121] max-w-[373px] whitespace-pre-line">
-            {stegaClean(data.legacyIntro)}
-          </p>
+        {(data?.legacyHeading || data?.legacyIntro) && (
+          <div className="flex flex-col gap-6 lg:max-w-[600px]">
+            {data?.legacyHeading && (
+              <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
+                {data.legacyHeading}
+              </h2>
+            )}
+            {data?.legacyIntro && (
+              <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[520px] whitespace-pre-line">
+                {stegaClean(data.legacyIntro)}
+              </p>
+            )}
+          </div>
         )}
       </div>
 
@@ -113,7 +117,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
               {items.map((item) => (
                 <div
                   key={item.year}
-                  className="flex flex-col items-center shrink-0"
+                  className="flex flex-col items-start shrink-0"
                   style={{ width: `${CARD_WIDTH}px` }}
                 >
                   <div className="bg-[#2E353C] px-2 h-[15px] flex items-center mt-2 mb-4">
@@ -122,7 +126,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
                     </span>
                   </div>
                   <div className="w-4 h-4 rounded-full bg-[#2E353C] border border-white relative z-10 mb-16" />
-                  <div className="flex flex-col gap-4 items-center text-center px-8">
+                  <div className="flex flex-col gap-4 items-start text-left pr-10">
                     {item.image && (
                       <div className="w-[220px] h-[120px] overflow-hidden">
                         <img
