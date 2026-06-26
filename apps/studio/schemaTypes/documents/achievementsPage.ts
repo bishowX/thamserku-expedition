@@ -26,6 +26,8 @@ export default defineType({
     }),
 
     // 03 — Decades
+    defineField({ name: 'decadesHeading', title: 'Section Heading', type: 'string', group: 'decades', description: 'e.g. Four decades on the mountains.' }),
+    defineField({ name: 'decadesSubtitle', title: 'Section Subtitle', type: 'text', rows: 3, group: 'decades' }),
     defineField({
       name: 'decades',
       title: 'Decades',

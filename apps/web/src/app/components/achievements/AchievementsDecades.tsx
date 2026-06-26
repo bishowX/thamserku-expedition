@@ -88,9 +88,11 @@ export function AchievementsDecades({
           maxCardHeight = Math.max(maxCardHeight, card.offsetHeight);
         });
 
-        const navOffset = getNavOffset();
-        const availableHeight = window.innerHeight - navOffset;
-        pin.style.minHeight = `${Math.max(maxCardHeight, availableHeight)}px`;
+        // Keep the container only as tall as the cards so they sit flush under
+        // the heading (no dead gap in normal flow). Vertical centering during
+        // the pin is achieved by pinning at viewport-centre, not by inflating
+        // this container.
+        pin.style.minHeight = `${maxCardHeight}px`;
       };
 
       const getScrollAmount = () => {
@@ -123,7 +125,7 @@ export function AchievementsDecades({
           ease: "none",
           scrollTrigger: {
             trigger: pin,
-            start: () => `top ${getNavOffset()}`,
+            start: "center center",
             end: () => `+=${scrollDistance}`,
             pin: true,
             pinSpacing: true,
@@ -152,17 +154,32 @@ export function AchievementsDecades({
       ref={sectionRef}
       className="w-full overflow-hidden bg-[#1A1A1A] text-white py-24"
     >
+      {(page?.decadesHeading || page?.decadesSubtitle) && (
+        <header className="w-full max-w-[1440px] mx-auto px-5 md:px-12 mb-16 md:mb-24 text-center">
+          {page?.decadesHeading && (
+            <h2 className="font-['Fraunces'] font-light text-display-l text-white max-w-[20ch] mx-auto">
+              {page.decadesHeading}
+            </h2>
+          )}
+          {page?.decadesSubtitle && (
+            <p className="mt-4 font-['DM_Sans'] font-light text-body leading-[24.375px] text-[#C8CDD2] max-w-[60ch] mx-auto">
+              {page.decadesSubtitle}
+            </p>
+          )}
+        </header>
+      )}
+
       <div
         ref={pinRef}
-        className="relative w-full min-w-0 overflow-hidden md:flex md:items-center"
+        className="relative w-full min-w-0 overflow-hidden"
       >
         <div
           ref={viewportRef}
-          className="w-full min-w-0 overflow-x-auto overflow-y-hidden md:overflow-x-hidden max-md:snap-x max-md:snap-mandatory max-md:px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="w-full min-w-0 md:overflow-x-hidden max-md:px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           <div
             ref={trackRef}
-            className="flex w-max items-stretch gap-10 md:gap-24 md:px-12 will-change-transform"
+            className="flex flex-col w-full gap-10 md:flex-row md:w-max md:items-stretch md:gap-24 md:px-12 will-change-transform"
           >
             {decades.map((decade, idx) => {
               const paragraphs = stegaClean(decade.body ?? "")
@@ -176,7 +193,7 @@ export function AchievementsDecades({
               return (
                 <div
                   key={decade._key}
-                  className="timeline-card flex flex-col gap-6 shrink-0 w-[min(320px,82vw)] md:w-[380px] max-md:snap-start bg-[#1A1A1A]"
+                  className="timeline-card flex flex-col gap-6 w-full md:shrink-0 md:w-[380px] bg-[#1A1A1A]"
                 >
                   <div className="group h-[200px] md:h-[clamp(190px,26vh,255px)] w-full shrink-0 overflow-hidden bg-[#2A2A2A]">
                     {imageSrc ? (

@@ -432,7 +432,6 @@ export const FAQ_QUERY = `{
 // ─── Safety Page ─────────────────────────────────────────────────────────────
 
 export type SafetyStat = { value: string; label: string };
-export type SafetyNumberCard = { title: string; body: string };
 export type SafetyProtocol = { label: string; description: string };
 export type SafetySpec = { label: string; value: string };
 export type SafetyCommunicationItem = { title: string; body: string };
@@ -445,8 +444,6 @@ export type SafetyPageData = {
     heroBgImage?: { asset: { _ref: string } } | null;
     statsLabel?: string;
     stats?: SafetyStat[];
-    numbersHeading?: string;
-    numbersCards?: SafetyNumberCard[];
     architectureEyebrow?: string;
     architectureHeading?: string;
     protocols?: SafetyProtocol[];
@@ -474,7 +471,6 @@ export const SAFETY_QUERY = `{
   "safetyPage": *[_type == "safetyPage"][0] {
     heroHeadline, heroSubline, heroBgImage,
     statsLabel, stats[] { value, label },
-    numbersHeading, numbersCards[] { title, body },
     architectureEyebrow, architectureHeading, protocols[] { label, description },
     foundationEyebrow, foundationHeading, foundationBgImage, foundationBody, foundationSpecs[] { label, value },
     communicationEyebrow, communicationHeading, communicationItems[] { title, body },
@@ -503,6 +499,8 @@ export type AchievementsPageData = {
     heroSubheading?: string;
     heroImage?: { asset: { _ref: string } } | null;
     stats?: AchievementStat[];
+    decadesHeading?: string;
+    decadesSubtitle?: string;
     decades?: AchievementDecade[];
   } | null;
 };
@@ -511,6 +509,7 @@ export const ACHIEVEMENTS_QUERY = `{
   "achievementsPage": *[_type == "achievementsPage"][0] {
     heroHeadline, heroSubheading, heroImage,
     stats[] { _key, value, label },
+    decadesHeading, decadesSubtitle,
     decades[] { _key, years, title, body, meta, image }
   }
 }`;
