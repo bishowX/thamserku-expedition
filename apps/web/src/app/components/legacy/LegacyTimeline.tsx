@@ -74,7 +74,6 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
           const imageSrc = chapter.image
             ? urlFor(chapter.image).width(600).url()
             : null;
-          const isImageLeft = idx % 2 === 0;
           const eyebrow = chapter.roman
             ? `CHAPTER ${chapter.roman} · ${chapter.years}`
             : chapter.years;
@@ -83,16 +82,14 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
             return (
               <article
                 key={chapter._key}
-                className={`flex w-full max-w-[1100px] flex-col gap-8 md:gap-12 md:items-start ${
-                  isImageLeft ? "md:flex-row" : "md:flex-row-reverse"
-                }`}
+                className="flex w-full max-w-[1100px] flex-col gap-8 md:flex-row md:gap-12 md:items-start"
               >
                 <div className="w-full md:w-[360px] shrink-0">
                   <img
                     src={imageSrc}
                     alt={chapter.title}
                     loading="lazy"
-                    className="w-full aspect-[3/2] object-cover"
+                    className="w-full aspect-[3/2] object-cover shadow-[0_14px_34px_-12px_rgba(26,26,26,0.28)]"
                   />
                 </div>
 
