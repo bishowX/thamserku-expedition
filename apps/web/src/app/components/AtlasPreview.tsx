@@ -141,7 +141,7 @@ export function AtlasPreview({
               </h2>
             )}
             {data?.atlasIntro && (
-              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.6] whitespace-pre-line">
+              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.6] max-w-[70%] whitespace-pre-line">
                 {data.atlasIntro}
               </p>
             )}

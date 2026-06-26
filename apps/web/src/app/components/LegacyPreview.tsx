@@ -91,7 +91,7 @@ export function LegacyPreview({ data }: { data?: LegacyData }) {
                 </h2>
               )}
               {data?.legacyIntro && (
-                <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] whitespace-pre-line">
+                <p className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#202121] max-w-[70%] whitespace-pre-line">
                   {stegaClean(data.legacyIntro)}
                 </p>
               )}
