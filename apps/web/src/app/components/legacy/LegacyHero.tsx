@@ -40,7 +40,7 @@ export function LegacyHero({ page }: { page?: PageData }) {
           <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance text-left md:text-center text-white max-w-[30ch] mx-auto">
             {page?.heroHeadline ?? 'Born in the high Himalaya. Built for the hard way up.'}
           </h1>
-          <p className="font-['DM_Sans'] font-light text-body leading-relaxed text-left md:text-center text-[#C8CDD2] max-w-[705px]">
+          <p className="font-['DM_Sans'] font-light text-body-lg text-left md:text-center text-[#C8CDD2] max-w-[705px]">
             {page?.heroSubheading ??
               "From its first years in Kathmandu to landmark ascents across Nepal, Thamserku's story is written in altitude, speed, risk, judgement, and the teams who kept moving when the route got serious."}
           </p>

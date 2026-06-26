@@ -496,7 +496,7 @@ export const YetiHero = ({
         </h1>
         <p
           ref={subRef}
-          className="font-['DM_Sans'] font-light text-body text-[#9CA3AF] leading-[1.75] max-w-[50ch] text-center opacity-0"
+          className="font-['DM_Sans'] font-light text-body-lg text-[#9CA3AF] max-w-[50ch] text-center opacity-0"
         >
           {subtext}
         </p>

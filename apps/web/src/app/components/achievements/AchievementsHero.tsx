@@ -42,7 +42,7 @@ export function AchievementsHero({ page }: { page?: PageData }) {
           <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance text-left md:text-center text-white max-w-[18ch] mx-auto">
             {page?.heroHeadline ?? 'A history written in altitude.'}
           </h1>
-          <p className="font-['DM_Sans'] font-light text-body leading-relaxed text-left md:text-center text-[#C8CDD2] max-w-[705px] whitespace-pre-line">
+          <p className="font-['DM_Sans'] font-light text-body-lg text-left md:text-center text-[#C8CDD2] max-w-[705px] whitespace-pre-line">
             {subheading}
           </p>
         </div>

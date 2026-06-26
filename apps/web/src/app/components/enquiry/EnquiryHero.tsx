@@ -9,7 +9,7 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
   const subheading = data?.heroSubheading;
 
   return (
-    <section className="relative min-h-screen bg-[#1A1A1A] flex flex-col overflow-hidden p-5 pb-16 md:p-12 xl:p-40">
+    <section className="relative min-h-screen bg-[#1A1A1A] flex flex-col overflow-hidden p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12">
       <div className="absolute inset-0 z-0 pointer-events-none">
         {heroImgSrc && (
           <ImageWithFallback
@@ -30,7 +30,7 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
         <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] text-white">
           {headline}
         </h1>
-        <p className="font-['DM_Sans'] text-[#C8CDD2] font-light text-body leading-relaxed max-w-[60ch] whitespace-pre-line">
+        <p className="font-['DM_Sans'] text-[#C8CDD2] font-light text-body-lg max-w-[60ch] whitespace-pre-line">
           {subheading}
         </p>
       </div>

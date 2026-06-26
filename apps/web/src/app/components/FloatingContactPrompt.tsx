@@ -50,7 +50,7 @@ export function FloatingContactPrompt() {
       href={`https://wa.me/${WHATSAPP_NUMBER}`}
       target="_blank"
       rel="noopener noreferrer"
-      className={`fixed z-50 bottom-6 right-6 w-14 h-14 bg-[#25D366] flex items-center justify-center shadow-lg transition-all ease-out hover:bg-[#1ebe5d] hover:scale-105 ${
+      className={`fixed z-50 bottom-6 right-6 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg transition-all ease-out hover:bg-[#1ebe5d] hover:scale-105 ${
         isVisible ? "opacity-100 pointer-events-auto duration-[250ms] delay-[50ms]" : "opacity-0 pointer-events-none duration-[200ms]"
       }`}
       aria-label="Chat with the expedition desk on WhatsApp"

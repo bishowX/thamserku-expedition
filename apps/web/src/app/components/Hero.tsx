@@ -163,7 +163,7 @@ export function Hero({
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen flex flex-col justify-end text-white p-5 pb-16 md:p-12 xl:p-40 overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col justify-end text-white p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12 overflow-hidden"
     >
       <div className="absolute inset-0 z-0">
         {bgImage && (
@@ -196,7 +196,7 @@ export function Hero({
           </h1>
           <p
             ref={subRef}
-            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body max-w-[60ch] leading-tight opacity-0"
+            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0"
           >
             {subheading}
           </p>

@@ -40,7 +40,7 @@ export const SafetyHero = ({ page }: Props) => {
           {page?.heroHeadline}
         </h1>
 
-        <p className="font-['DM_Sans'] font-light text-body text-[#C8CDD2] leading-relaxed max-w-[58ch] text-left md:text-center">
+        <p className="font-['DM_Sans'] font-light text-body-lg text-[#C8CDD2] max-w-[58ch] text-left md:text-center">
           {page?.heroSubline}
         </p>
       </div>

@@ -42,7 +42,7 @@ export const FAQHero = ({ page }: { page?: PageData }) => {
           <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance text-left md:text-center text-white max-w-[14ch] mx-auto">
             {page?.heroHeadline ?? "Fifteen quiet answers."}
           </h1>
-          <p className="font-['DM_Sans'] font-light text-body leading-relaxed text-left md:text-center text-[#C8CDD2] max-w-[705px]">
+          <p className="font-['DM_Sans'] font-light text-body-lg text-left md:text-center text-[#C8CDD2] max-w-[705px]">
             {page?.heroSubline ??
               "The questions our expedition desk is asked most often. Short, considered answers from our senior staff."}
           </p>
