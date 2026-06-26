@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { MoveRight } from "lucide-react";
+import { TextReveal } from "../TextReveal";
+import { useSectionReveal } from "../../hooks/useSectionReveal";
 
 type FaqItem = { question: string; answer: string };
 
@@ -12,6 +14,8 @@ type Props = {
 export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
   const items = faqs ?? [];
   const [openStates, setOpenStates] = useState<Record<number, boolean>>({});
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
 
   const toggleFaq = (idx: number) => {
     setOpenStates((prev) => ({ ...prev, [idx]: !prev[idx] }));
@@ -19,22 +23,32 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
 
   return (
     <section
+      ref={sectionRef}
       id="faq"
       className="relative w-full bg-[#1A1A1A] py-16 md:py-24 overflow-hidden scroll-mt-28"
     >
       <div className="relative z-10 w-full max-w-[880px] mx-auto px-8 flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-4 md:mb-10">
-          <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8">
+          <span
+            data-reveal
+            className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] mb-8"
+          >
             08 — FREQUENTLY ASKED
             {expeditionName ? ` — ${expeditionName.toUpperCase()}` : ""}
           </span>
-          <h2 className="font-['Fraunces'] font-light text-display-l text-white max-w-[40ch] mb-2">
-            "Quiet answers, before you write to us."
+          <h2
+            data-reveal-words
+            className="font-['Fraunces'] font-light text-display-l text-white max-w-[40ch] mb-2"
+          >
+            <TextReveal text={'"Quiet answers, before you write to us."'} />
           </h2>
         </div>
 
         {items.length > 0 && (
-          <div className="w-full flex flex-col mb-10 md:mb-24 border-b border-[#C8CDD2]/30">
+          <div
+            data-reveal
+            className="w-full flex flex-col mb-10 md:mb-24 border-b border-[#C8CDD2]/30"
+          >
             {items.map((faq, idx) => {
               const isOpen = !!openStates[idx];
               const qLabel = `Q.${String(idx + 1).padStart(2, "0")}`;
@@ -86,6 +100,7 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
 
         <Link
           to="/faq"
+          data-reveal
           className="group flex items-center justify-center gap-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors"
         >
           <span className="border-b border-white/30 group-hover:border-[#C8CDD2] pb-1 transition-colors">

@@ -1,3 +1,8 @@
+import { useRef } from "react";
+import { stegaClean } from "@sanity/client/stega";
+import { TextReveal } from "../TextReveal";
+import { useSectionReveal } from "../../hooks/useSectionReveal";
+
 type Props = {
   overviewHeadline?: string;
   overviewHeadlineEmphasis?: string;
@@ -14,50 +19,70 @@ export function Overview({
   overviewSpecs,
 }: Props) {
   const specs = overviewSpecs ?? [];
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
 
   return (
     <section
+      ref={sectionRef}
       id="overview"
       className="bg-[#F4F2EC] w-full text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
     >
       <div className="max-w-[1320px] mx-auto flex flex-col gap-8">
-        <span className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+        <span
+          data-reveal
+          className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]"
+        >
           02 — Overview
         </span>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-start">
-          {/* Left — narrative */}
-          <div className="flex flex-col gap-8 md:gap-12 lg:pr-[100px]">
+          {/* Left — narrative (Manifesto-style word brightening across heading + body) */}
+          <div
+            data-reveal-prose
+            className="flex flex-col gap-8 md:gap-12 lg:pr-[100px]"
+          >
             {(overviewHeadline || overviewHeadlineEmphasis) && (
               <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
-                {overviewHeadline}
+                {overviewHeadline && (
+                  <TextReveal text={stegaClean(overviewHeadline)} />
+                )}
                 {overviewHeadlineEmphasis && (
                   <>
                     {overviewHeadline && " "}
                     <span className="font-['Fraunces'] italic text-[#0A3A77]">
-                      {overviewHeadlineEmphasis}
+                      <TextReveal text={stegaClean(overviewHeadlineEmphasis)} />
                     </span>
                   </>
                 )}
               </h2>
             )}
             {overviewBody && (
-              <p className="font-['DM_Sans'] font-light text-body leading-[1.8] text-[#5A6673]">
-                {overviewBody}
-              </p>
+              <div className="flex flex-col gap-4 font-['DM_Sans'] font-light text-body leading-[1.8] text-[#5A6673]">
+                {stegaClean(overviewBody)
+                  .split(/\n\n+/)
+                  .map((para, i) => (
+                    <p key={i}>
+                      <TextReveal text={para.replace(/\n/g, " ")} />
+                    </p>
+                  ))}
+              </div>
             )}
           </div>
 
           {/* Right — spec table */}
           <div className="flex flex-col">
             {overviewSpecsHeading && (
-              <p className="font-['DM_Mono'] text-[20px] md:text-[23px] leading-[1.25] text-[#5A6673] mb-6 md:mb-8">
+              <p
+                data-reveal
+                className="font-['DM_Mono'] text-[20px] md:text-[23px] leading-[1.25] text-[#5A6673] mb-6 md:mb-8"
+              >
                 {overviewSpecsHeading}
               </p>
             )}
 
             {specs.length > 0 && (
-              <div className="border-t border-[rgba(26,26,26,0.2)]">
+              <div data-reveal className="border-t border-[rgba(26,26,26,0.2)]">
                 {specs.map((spec, i) => (
                   <div
                     key={i}

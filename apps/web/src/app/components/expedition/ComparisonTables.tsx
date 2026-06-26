@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   tableRows,
   EDITION_LETTERS,
   type ConfigMatrix,
 } from "../../../lib/configMatrix";
+import { useSectionReveal } from "../../hooks/useSectionReveal";
 
 const VISIBLE_ROWS = 5;
 
@@ -30,6 +31,8 @@ export function ComparisonTables({
     core.length ? "core" : "addon",
   );
   const [expanded, setExpanded] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
 
   if (core.length === 0 && addons.length === 0) return null;
 
@@ -56,10 +59,10 @@ export function ComparisonTables({
   };
 
   return (
-    <section className="bg-[#2E353C] text-white px-5 md:px-8 pb-16 md:pb-24">
+    <section ref={sectionRef} className="bg-[#2E353C] text-white px-5 md:px-8 pb-16 md:pb-24">
       <div className="max-w-[1376px] mx-auto flex flex-col gap-10 md:gap-12">
         {/* Tabs */}
-        <div className="flex gap-8 md:gap-12 items-start justify-center">
+        <div data-reveal className="flex gap-8 md:gap-12 items-start justify-center">
           {core.length > 0 && (
             <Tab active={tab === "core"} onClick={() => selectTab("core")}>
               Services
@@ -80,7 +83,7 @@ export function ComparisonTables({
         </div>
 
         {/* Table */}
-        <div className="flex flex-col gap-4 items-center">
+        <div data-reveal className="flex flex-col gap-4 items-center">
           <div className="w-full overflow-x-auto">
             <table className="w-full table-fixed border-collapse min-w-[760px]">
               <thead>

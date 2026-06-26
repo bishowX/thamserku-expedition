@@ -8,6 +8,11 @@ type Edition = {
   isStandard?: boolean;
 };
 
+import { useRef } from "react";
+import { stegaClean } from "@sanity/client/stega";
+import { TextReveal } from "../TextReveal";
+import { useSectionReveal } from "../../hooks/useSectionReveal";
+
 type Props = {
   name?: string;
   editions?: Edition[];
@@ -15,9 +20,11 @@ type Props = {
 
 export function ExpeditionEditions({ name, editions }: Props) {
   const items = editions ?? [];
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
   if (items.length === 0) return null;
 
-  const expeditionName = name ?? "This Mountain";
+  const expeditionName = stegaClean(name ?? "This Mountain");
   const standard = items.find((ed) => ed.isStandard);
   const intro = `The details above describe the ${
     standard?.name ?? "Crafted Edition"
@@ -25,6 +32,7 @@ export function ExpeditionEditions({ name, editions }: Props) {
 
   return (
     <section
+      ref={sectionRef}
       id="expedition-type"
       className="bg-[#2E353C] w-full text-white py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
     >
@@ -32,24 +40,36 @@ export function ExpeditionEditions({ name, editions }: Props) {
         {/* Header */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
           <div className="shrink-0 md:w-[280px]">
-            <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
+            <span
+              data-reveal
+              className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]"
+            >
               06 — Choose Your Philosophy
             </span>
           </div>
           <div className="flex-1">
-            <h2 className="font-['Fraunces'] text-display-l tracking-[-0.5px] text-white">
-              {expeditionName} in Every Edition
+            <h2
+              data-reveal-words
+              className="font-['Fraunces'] text-display-l tracking-[-0.5px] text-white"
+            >
+              <TextReveal text={`${expeditionName} in Every Edition`} />
             </h2>
           </div>
           <div className="shrink-0 flex items-center md:w-[253px]">
-            <p className="font-['DM_Sans'] font-light text-body leading-[1.4] tracking-[-0.5px] text-[#C8CDD2]">
+            <p
+              data-reveal
+              className="font-['DM_Sans'] font-light text-body leading-[1.4] tracking-[-0.5px] text-[#C8CDD2]"
+            >
               {intro}
             </p>
           </div>
         </div>
 
         {/* Pillar grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-[rgba(200,205,210,0.3)]">
+        <div
+          data-reveal-group
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-[rgba(200,205,210,0.3)]"
+        >
           {items.map((ed, i) => (
             <div
               key={ed.letter ?? i}

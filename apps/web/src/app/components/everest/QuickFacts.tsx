@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { useSectionReveal } from "../../hooks/useSectionReveal";
+
 type Props = {
   altitude?: string;
   difficulty?: string;
@@ -15,6 +18,8 @@ export function QuickFacts({
   baseCamp,
   leadGuide,
 }: Props) {
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
   const facts = [
     { title: "ALTITUDE", value: altitude || "—" },
     { title: "DIFFICULTY", value: difficulty || "—" },
@@ -25,14 +30,14 @@ export function QuickFacts({
   ];
 
   return (
-    <section id="dossier-facts" className="bg-[#1A1A1A] w-full text-white border-b border-white/10 scroll-mt-24">
+    <section ref={sectionRef} id="dossier-facts" className="bg-[#1A1A1A] w-full text-white border-b border-white/10 scroll-mt-24">
       <div className="max-w-[1440px] mx-auto px-8 pt-6 pb-4">
-        <h2 className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+        <h2 data-reveal className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           01 — DOSSIER FACTS
         </h2>
       </div>
       <div className="w-full border-t border-white/20">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-3 md:flex md:items-center md:h-[117px] md:divide-x md:divide-white/20">
+        <div data-reveal-group className="max-w-[1440px] mx-auto grid grid-cols-3 md:flex md:items-center md:h-[117px] md:divide-x md:divide-white/20">
           {facts.map((fact, i) => (
             <Fact
               key={fact.title}

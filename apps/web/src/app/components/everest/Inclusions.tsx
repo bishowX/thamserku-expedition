@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { urlFor } from "../../../lib/sanity";
 import type { SanityImageSource } from "@sanity/image-url";
+import { TextReveal } from "../TextReveal";
+import { useSectionReveal } from "../../hooks/useSectionReveal";
 
 type InclusionCategory = { category: string; items: string[] };
 
@@ -69,6 +71,8 @@ export function Inclusions({
   const exclusionsImageSrc = exclusionsImage
     ? urlFor(exclusionsImage as SanityImageSource).width(900).url()
     : null;
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
 
   if (
     categories.length === 0 &&
@@ -80,6 +84,7 @@ export function Inclusions({
 
   return (
     <section
+      ref={sectionRef}
       id="include-exclude"
       className="w-full bg-white text-[#1A1A1A] py-16 md:py-24 px-5 md:px-8 scroll-mt-28"
     >
@@ -88,15 +93,24 @@ export function Inclusions({
         {categories.length > 0 && (
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
-              <span className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+              <span
+                data-reveal
+                className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673]"
+              >
                 05 — Crafted Edition Standard
               </span>
-              <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
-                What's Included
+              <h2
+                data-reveal-words
+                className="font-['Fraunces'] text-display-l text-[#1A1A1A]"
+              >
+                <TextReveal text="What's Included" />
               </h2>
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-9 lg:gap-x-[50px]">
+            <div
+              data-reveal
+              className="flex flex-col lg:flex-row gap-9 lg:gap-x-[50px]"
+            >
               {[0, 1].map((col) => (
                 <div key={col} className="flex-1 min-w-0 flex flex-col gap-9">
                   {categories
@@ -117,11 +131,17 @@ export function Inclusions({
         {/* Not Included */}
         {notIncluded.length > 0 && (
           <div className="flex flex-col gap-6">
-            <h2 className="font-['Fraunces'] text-display-l text-[#1A1A1A]">
-              Not Included
+            <h2
+              data-reveal-words
+              className="font-['Fraunces'] text-display-l text-[#1A1A1A]"
+            >
+              <TextReveal text="Not Included" />
             </h2>
 
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-x-[50px] items-start">
+            <div
+              data-reveal
+              className="flex flex-col lg:flex-row gap-10 lg:gap-x-[50px] items-start"
+            >
               <div className="w-full lg:flex-1 min-w-0 flex flex-col border-t border-[rgba(90,102,115,0.3)]">
                 {notIncluded.map((item, i) => (
                   <p
@@ -149,7 +169,7 @@ export function Inclusions({
 
         {/* Mandatory Prerequisite */}
         {mandatoryPrerequisite && (
-          <div className="flex flex-col gap-3">
+          <div data-reveal className="flex flex-col gap-3">
             <h3 className="font-['Fraunces'] text-display-m text-[#1A1A1A]">
               Mandatory Prerequisite
             </h3>
