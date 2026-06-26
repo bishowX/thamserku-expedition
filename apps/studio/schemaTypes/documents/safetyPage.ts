@@ -7,12 +7,11 @@ export default defineType({
   groups: [
     { name: 'hero', title: '01 — Hero' },
     { name: 'stats', title: '02 — Stats Bar' },
-    { name: 'numbers', title: '03 — Numbers Meaning' },
-    { name: 'architecture', title: '04 — Safety Architecture' },
-    { name: 'foundation', title: '05 — Sherpa Foundation' },
-    { name: 'communication', title: '06 — Communication' },
-    { name: 'evacuation', title: '07 — Evacuation' },
-    { name: 'closing', title: '08 — Closing' },
+    { name: 'architecture', title: '03 — Safety Architecture' },
+    { name: 'foundation', title: '04 — Sherpa Foundation' },
+    { name: 'communication', title: '05 — Communication' },
+    { name: 'evacuation', title: '06 — Evacuation' },
+    { name: 'closing', title: '07 — Closing' },
   ],
   fields: [
     // 01 — Hero
@@ -40,27 +39,7 @@ export default defineType({
       ],
     }),
 
-    // 03 — Numbers Meaning
-    defineField({ name: 'numbersHeading', title: 'Heading', type: 'string', group: 'numbers' }),
-    defineField({
-      name: 'numbersCards',
-      title: 'Cards',
-      type: 'array',
-      group: 'numbers',
-      of: [
-        {
-          type: 'object',
-          name: 'safetyNumberCard',
-          fields: [
-            defineField({ name: 'title', title: 'Title', type: 'string' }),
-            defineField({ name: 'body', title: 'Body', type: 'text', rows: 5 }),
-          ],
-          preview: { select: { title: 'title' } },
-        },
-      ],
-    }),
-
-    // 04 — Safety Architecture
+    // 03 — Safety Architecture
     defineField({ name: 'architectureEyebrow', title: 'Eyebrow', type: 'string', group: 'architecture' }),
     defineField({ name: 'architectureHeading', title: 'Heading', type: 'string', group: 'architecture' }),
     defineField({
@@ -81,7 +60,7 @@ export default defineType({
       ],
     }),
 
-    // 05 — Sherpa Foundation
+    // 04 — Sherpa Foundation
     defineField({ name: 'foundationEyebrow', title: 'Eyebrow', type: 'string', group: 'foundation' }),
     defineField({ name: 'foundationHeading', title: 'Heading', type: 'string', group: 'foundation' }),
     defineField({ name: 'foundationBgImage', title: 'Background Image', type: 'image', group: 'foundation', options: { hotspot: true } }),
@@ -110,7 +89,7 @@ export default defineType({
       ],
     }),
 
-    // 06 — Communication
+    // 05 — Communication
     defineField({ name: 'communicationEyebrow', title: 'Eyebrow', type: 'string', group: 'communication' }),
     defineField({ name: 'communicationHeading', title: 'Heading', type: 'string', group: 'communication' }),
     defineField({
@@ -131,7 +110,7 @@ export default defineType({
       ],
     }),
 
-    // 07 — Evacuation
+    // 06 — Evacuation
     defineField({ name: 'evacuationEyebrow', title: 'Eyebrow', type: 'string', group: 'evacuation' }),
     defineField({ name: 'evacuationHeading', title: 'Heading', type: 'string', group: 'evacuation' }),
     defineField({
@@ -160,7 +139,7 @@ export default defineType({
       group: 'evacuation',
     }),
 
-    // 08 — Closing
+    // 07 — Closing
     defineField({ name: 'closingEyebrow', title: 'Eyebrow', type: 'string', group: 'closing' }),
     defineField({ name: 'closingHeadline', title: 'Headline', type: 'string', group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 3, group: 'closing' }),

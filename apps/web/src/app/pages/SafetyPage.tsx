@@ -8,7 +8,6 @@ import { loadQuery } from "../../lib/loader.server";
 import { Nav } from "../components/Nav";
 import { SafetyHero } from "../components/safety/SafetyHero";
 import { SafetyStats } from "../components/safety/SafetyStats";
-import { SafetyNumbersMeaning } from "../components/safety/SafetyNumbersMeaning";
 import { SafetyArchitecture } from "../components/safety/SafetyArchitecture";
 import { SafetyFoundation } from "../components/safety/SafetyFoundation";
 import { SafetyCommunication } from "../components/safety/SafetyCommunication";
@@ -46,7 +45,6 @@ export default function SafetyPage() {
       <Nav />
       <SafetyHero page={page} />
       <SafetyStats page={page} />
-      <SafetyNumbersMeaning page={page} />
       <SafetyArchitecture page={page} />
       <SafetyFoundation page={page} />
       <SafetyCommunication page={page} />
