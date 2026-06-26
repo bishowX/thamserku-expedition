@@ -178,13 +178,13 @@ export function AchievementsDecades({
                   key={decade._key}
                   className="timeline-card flex flex-col gap-6 shrink-0 w-[min(320px,82vw)] md:w-[380px] max-md:snap-start bg-[#1A1A1A]"
                 >
-                  <div className="h-[200px] md:h-[clamp(190px,26vh,255px)] w-full shrink-0 overflow-hidden bg-[#2A2A2A]">
+                  <div className="group h-[200px] md:h-[clamp(190px,26vh,255px)] w-full shrink-0 overflow-hidden bg-[#2A2A2A]">
                     {imageSrc ? (
                       <ImageWithFallback
                         src={imageSrc}
                         alt={decade.title}
                         loading="lazy"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                       />
                     ) : null}
                   </div>
