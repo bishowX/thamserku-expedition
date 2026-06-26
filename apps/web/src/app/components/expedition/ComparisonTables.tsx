@@ -113,17 +113,18 @@ export function ComparisonTables({
                     </td>
                     {colMeta.map(({ letter, hasData }) => {
                       if (!hasData) {
-                        // Project-dependent column (A/E): every row keeps a real
-                        // cell so the column count stays constant across tab
-                        // switches; the note shows once, centred on the middle row.
-                        const isMiddle =
-                          ri === Math.floor((visibleRows.length - 1) / 2);
+                        // Project-dependent column (A/E): render ONE cell spanning
+                        // the whole column so the note clearly applies to the entire
+                        // edition rather than a single service row. Subsequent rows
+                        // are covered by the rowSpan (no per-row dividers drawn).
+                        if (ri !== 0) return null;
                         return (
                           <td
                             key={letter}
+                            rowSpan={visibleRows.length}
                             className="px-4 text-center align-middle bg-white/[0.02] font-['Fraunces'] italic text-body text-[#8A929B]"
                           >
-                            {isMiddle ? "Project dependent" : ""}
+                            Project dependent
                           </td>
                         );
                       }

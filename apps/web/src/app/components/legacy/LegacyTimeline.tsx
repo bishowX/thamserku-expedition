@@ -87,7 +87,7 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
                   isImageLeft ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
-                <div className="w-full md:w-[280px] shrink-0">
+                <div className="w-full md:w-[360px] shrink-0">
                   <img
                     src={imageSrc}
                     alt={chapter.title}
@@ -106,15 +106,17 @@ export function LegacyTimeline({ page }: { page?: PageData }) {
                     </h3>
                   </div>
 
-                  {Array.isArray(chapter.description) ? (
-                    <PortableTextBody value={chapter.description} spacing="compact" />
-                  ) : (
-                    chapter.description && (
-                      <p className="font-['DM_Sans'] font-light text-body leading-[24.375px] text-[#5A6673]">
-                        {chapter.description}
-                      </p>
-                    )
-                  )}
+                  <div className="text-justify">
+                    {Array.isArray(chapter.description) ? (
+                      <PortableTextBody value={chapter.description} spacing="compact" />
+                    ) : (
+                      chapter.description && (
+                        <p className="font-['DM_Sans'] font-light text-body leading-[24.375px] text-[#5A6673]">
+                          {chapter.description}
+                        </p>
+                      )
+                    )}
+                  </div>
                 </div>
               </article>
             );
