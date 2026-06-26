@@ -12,9 +12,9 @@ export const SafetyNumbersMeaning = ({ page }: Props) => {
           {page?.numbersHeading}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 w-full">
+        <div className="flex flex-col md:flex-row flex-wrap justify-center gap-10 md:gap-8 w-full">
           {cards.map((card, i) => (
-            <div key={i} className="flex flex-col items-start gap-6 md:gap-8">
+            <div key={i} className="flex flex-col items-center text-center gap-6 md:gap-8 w-full md:w-[calc((100%-4rem)/3)]">
               <h3 className="font-['Fraunces'] text-display-m text-[#1A1A1A] max-w-[16ch] md:min-h-[62px]">
                 {card.title}
               </h3>
