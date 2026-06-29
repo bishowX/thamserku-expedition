@@ -1,3 +1,4 @@
+import { getLenis } from '../../hooks/useLenis';
 import type { FAQPageCategory } from '../../../lib/queries';
 
 const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
@@ -6,7 +7,7 @@ type PageData = { categoryNavEyebrow?: string; categoryNavHeadline?: string };
 
 export const FAQCategoryNavigation = ({ page, categories: sanityCategories }: { page?: PageData; categories?: FAQPageCategory[] }) => {
   const items = (sanityCategories ?? []).map((cat, idx) => ({
-    id: `#${cat.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+    id: cat.label.toLowerCase().replace(/[^a-z0-9]/g, '-'),
     num: `CATEGORY ${ROMAN[idx] ?? String(idx + 1)}`,
     label: cat.label,
     title: cat.title,
@@ -33,7 +34,18 @@ export const FAQCategoryNavigation = ({ page, categories: sanityCategories }: { 
           {items.map((cat, idx) => (
             <a
               key={idx}
-              href={cat.id}
+              href={`#${cat.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById(cat.id);
+                if (!el) return;
+                const lenis = getLenis();
+                if (lenis) {
+                  lenis.scrollTo(el, { offset: -80 });
+                } else {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
               className="flex flex-col px-5 py-6 border-b border-r border-[#5A6673]/30 hover:bg-black/5 transition-colors cursor-pointer"
             >
               <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4 min-h-[3em]">
