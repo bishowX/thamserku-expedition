@@ -14,8 +14,13 @@ type Props = {
 export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
   const items = faqs ?? [];
   const [openStates, setOpenStates] = useState<Record<number, boolean>>({});
+  const [showAll, setShowAll] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
+
+  const INITIAL_COUNT = 5;
+  const visibleItems = showAll ? items : items.slice(0, INITIAL_COUNT);
+  const hasMore = items.length > INITIAL_COUNT;
 
   const toggleFaq = (idx: number) => {
     setOpenStates((prev) => ({ ...prev, [idx]: !prev[idx] }));
@@ -47,9 +52,9 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
         {items.length > 0 && (
           <div
             data-reveal
-            className="w-full flex flex-col mb-10 md:mb-24 border-b border-[#C8CDD2]/30"
+            className={`w-full flex flex-col border-b border-[#C8CDD2]/30 ${hasMore ? "mb-6 md:mb-8" : "mb-10 md:mb-24"}`}
           >
-            {items.map((faq, idx) => {
+            {visibleItems.map((faq, idx) => {
               const isOpen = !!openStates[idx];
               const qLabel = `Q.${String(idx + 1).padStart(2, "0")}`;
               const aLabel = `A.${String(idx + 1).padStart(2, "0")}`;
@@ -96,6 +101,22 @@ export function ExpeditionFAQ({ faqs, expeditionName }: Props) {
               );
             })}
           </div>
+        )}
+
+        {hasMore && (
+          <button
+            onClick={() => setShowAll((prev) => !prev)}
+            className="group flex items-center justify-center gap-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-white hover:text-[#C8CDD2] transition-colors mb-10 md:mb-14"
+          >
+            <span className="border-b border-white/30 group-hover:border-[#C8CDD2] pb-1 transition-colors">
+              {showAll ? "SHOW LESS" : `SEE ${items.length - INITIAL_COUNT} MORE QUESTIONS`}
+            </span>
+            <span
+              className={`font-['DM_Mono'] text-[14px] text-[#C8CDD2] transition-all duration-[250ms] ease-out transform ${showAll ? "rotate-180" : "rotate-0"}`}
+            >
+              ▾
+            </span>
+          </button>
         )}
 
         <Link
