@@ -284,7 +284,11 @@ export function RouteMap({
                   strokeLinejoin="round"
                 />
 
-                {coords.map((c, idx) => (
+                {coords.map((c, idx) => {
+                  const isLast = idx === n - 1;
+                  const anchor = isLast ? "end" : "middle";
+                  const labelX = isLast ? SVG_W - 16 : c.x;
+                  return (
                   <g key={idx} className="rm-point">
                     <circle
                       cx={c.x}
@@ -293,9 +297,9 @@ export function RouteMap({
                       fill="white"
                     />
                     <text
-                      x={c.x}
+                      x={labelX}
                       y={c.y - 66}
-                      textAnchor="middle"
+                      textAnchor={anchor}
                       fontFamily="'DM Mono', monospace"
                       fontSize="13"
                       fill="#C8CDD2"
@@ -305,9 +309,9 @@ export function RouteMap({
                       {c.name}
                     </text>
                     <text
-                      x={c.x}
+                      x={labelX}
                       y={c.y - 42}
-                      textAnchor="middle"
+                      textAnchor={anchor}
                       fontFamily="Fraunces, serif"
                       fontSize={c.isSummit ? "28" : "21"}
                       fill="white"
@@ -316,7 +320,8 @@ export function RouteMap({
                       {c.altitude}
                     </text>
                   </g>
-                ))}
+                  );
+                })}
               </svg>
             </div>
           </div>
