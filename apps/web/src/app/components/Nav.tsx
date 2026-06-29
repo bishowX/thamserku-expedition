@@ -291,7 +291,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                       : "text-white hover:text-[#C8CDD2]"
                   }`}
                 >
-                  {Number(tab).toLocaleString()}<span className="normal-case"> ers</span>
+                  <span className="normal-case">{Number(tab).toLocaleString()}ers</span>
                 </button>
               ))}
             </div>
@@ -420,7 +420,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                           : "text-white hover:text-[#C8CDD2]"
                       }`}
                     >
-                      {Number(tab).toLocaleString()}<span className="normal-case"> ers</span>
+                      <span className="normal-case">{Number(tab).toLocaleString()}ers</span>
                     </button>
                   ))}
                 </div>
