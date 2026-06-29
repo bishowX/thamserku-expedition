@@ -22,7 +22,7 @@ const ABOUT_LINKS = [
 ];
 
 function parseAltitudeM(alt: string): number {
-  return parseInt(alt.replace(/[^0-9]/g, ""), 10) || 0;
+  return parseFloat(alt.replace(/[^\d.]/g, "")) || 0;
 }
 
 interface NavProps {
@@ -291,7 +291,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                       : "text-white hover:text-[#C8CDD2]"
                   }`}
                 >
-                  {tab}ers
+                  {Number(tab).toLocaleString()}<span className="normal-case"> ers</span>
                 </button>
               ))}
             </div>
@@ -316,7 +316,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                       )}
                     </div>
                     <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-white text-center w-full group-hover:text-[#C8CDD2] transition-colors">
-                      {exp.name} Expedition
+                      {exp.name}
                     </p>
                   </Link>
                 ))}
@@ -420,7 +420,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
                           : "text-white hover:text-[#C8CDD2]"
                       }`}
                     >
-                      {tab}ers
+                      {Number(tab).toLocaleString()}<span className="normal-case"> ers</span>
                     </button>
                   ))}
                 </div>
