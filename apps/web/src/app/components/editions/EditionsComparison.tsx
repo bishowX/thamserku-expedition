@@ -6,7 +6,6 @@ import type {
 type PageData = {
   comparisonEyebrow?: string;
   comparisonHeadline?: string;
-  comparisonNote?: string;
 };
 
 type Row = {
@@ -37,10 +36,6 @@ export function EditionsComparison({
   const eyebrow = page?.comparisonEyebrow ?? "04 — AT A GLANCE";
   const headline =
     page?.comparisonHeadline ?? "Five editions, read side by side.";
-  const note =
-    page?.comparisonNote ??
-    "Note · Editions are not ranked. They are different ways of reading the same mountain. Speak with the expedition desk to find which edition fits your background and intent.";
-
   if (!editions.length) return null;
 
   return (
@@ -93,9 +88,7 @@ export function EditionsComparison({
           </table>
         </div>
 
-        <p className="font-['Fraunces'] italic text-[#5A6673] text-body mt-16 max-w-[80ch]">
-          {note}
-        </p>
+
       </div>
     </section>
   );

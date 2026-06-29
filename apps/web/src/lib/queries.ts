@@ -136,7 +136,6 @@ export type EditionsPageData = {
     manifestoImage?: { asset: { _ref: string } } | null;
     comparisonEyebrow?: string;
     comparisonHeadline?: string;
-    comparisonNote?: string;
     availabilityEyebrow?: string;
     availabilityHeadline?: string;
     availabilityNote?: string;
@@ -220,7 +219,7 @@ export const LEGACY_QUERY = `{
 export const EDITIONS_QUERY = `{
   "editionsPage": *[_type == "editionsPage"][0] {
     heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoImage,
-    comparisonEyebrow, comparisonHeadline, comparisonNote,
+    comparisonEyebrow, comparisonHeadline,
     availabilityEyebrow, availabilityHeadline, availabilityNote,
     closingEyebrow, closingHeading, closingBody, closingFootnote, closingImage
   },

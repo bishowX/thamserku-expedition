@@ -40,7 +40,6 @@ export default defineType({
     // Comparison
     defineField({ name: 'comparisonEyebrow', title: 'Eyebrow', type: 'string', group: 'comparison', description: 'e.g. 04 — AT A GLANCE' }),
     defineField({ name: 'comparisonHeadline', title: 'Headline', type: 'string', group: 'comparison' }),
-    defineField({ name: 'comparisonNote', title: 'Note', type: 'text', rows: 2, group: 'comparison', description: 'Italic note shown below the comparison table' }),
 
     // Availability
     defineField({ name: 'availabilityEyebrow', title: 'Eyebrow', type: 'string', group: 'availability', description: 'e.g. 05 — AVAILABILITY ATLAS' }),
