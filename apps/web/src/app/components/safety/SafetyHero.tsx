@@ -19,7 +19,15 @@ export const SafetyHero = ({ page }: Props) => {
             alt=""
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-black/55" />
+          {/* Text-anchored scrim — darkens behind the headline, keeps image edges vivid */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 95% 65% at 50% 52%, rgba(26,26,26,0.72) 0%, rgba(26,26,26,0.25) 58%, rgba(26,26,26,0) 100%)",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/25 via-transparent to-[#1A1A1A]/85" />
         </div>
       )}
 

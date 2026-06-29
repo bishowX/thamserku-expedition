@@ -24,6 +24,12 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
   const imageSrc = heroImage ? urlFor(heroImage as SanityImageSource).width(1920).url() : null;
   const headline = stegaClean(heroTagline || `${name} Expedition`);
 
+  // Blackish outline + soft shadow keeps white text legible over light imagery
+  const headlineOutline =
+    "-1px -1px 0 rgba(12,12,12,0.85), 1px -1px 0 rgba(12,12,12,0.85), -1px 1px 0 rgba(12,12,12,0.85), 1px 1px 0 rgba(12,12,12,0.85), 0 2px 18px rgba(0,0,0,0.5)";
+  const subOutline =
+    "0 1px 2px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.6)";
+
   const sectionRef = useRef<HTMLElement>(null);
   const bgWrapRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
@@ -190,6 +196,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
         <h1
           ref={headlineRef}
           className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] opacity-0"
+          style={{ textShadow: headlineOutline }}
         >
           <TextReveal text={headline} />
         </h1>
@@ -199,6 +206,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
             <p
               ref={subRef}
               className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0"
+              style={{ textShadow: subOutline }}
             >
               {heroSubtext}
             </p>

@@ -284,37 +284,52 @@ export function buildClimberHtml(data: BookingEmailData): string {
             ${section('Configuration', configRows)}
             ${section('Estimate', pricingRows)}
             ${messageRows ? section('Your Message', messageRows) : ''}
-            <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
               <tr>
-                <td style="padding:4px 24px 4px 0;">
-                  <a href="mailto:info@thamserkuexpedition.com" style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.08em;color:#1A1A1A;text-decoration:none;">info@thamserkuexpedition.com</a>
-                </td>
-                <td style="padding:4px 0;">
-                  <a href="https://wa.me/97797052216623" style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.08em;color:#1A1A1A;text-decoration:none;">+977 9705221662 (WhatsApp)</a>
+                <td style="padding-top:4px;">
+                  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#9CA3AF;margin:0 0 14px;">REACH OUR DESK</p>
+                  <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;">
+                    <tr>
+                      <td style="width:50%;padding-right:24px;vertical-align:top;">
+                        <a href="mailto:info@thamserkuexpedition.com" style="font-family:Georgia,serif;font-size:13px;color:#1A1A1A;text-decoration:none;">info@thamserkuexpedition.com</a>
+                      </td>
+                      <td style="width:50%;padding-left:24px;border-left:1px solid #E5E7EB;vertical-align:top;">
+                        <a href="https://wa.me/97797052216623" style="font-family:Georgia,serif;font-size:13px;color:#1A1A1A;text-decoration:none;">+977 9705221662</a>
+                        <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.08em;color:#9CA3AF;display:block;margin-top:3px;">(WhatsApp)</span>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
             </table>
           </td>
         </tr>
         <tr>
-          <td style="background:#F4F2EC;padding:24px 48px;border-top:1px solid #E5E7EB;">
-            <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#5A6673;margin:0 0 16px;">THAMSERKU EXPEDITIONS · YETI GROUP · KATHMANDU · NEPAL</p>
-            <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+          <td style="background:#F4F2EC;padding:36px 48px 32px;border-top:3px solid #1A1A1A;">
+            <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.26em;text-transform:uppercase;color:#1A1A1A;margin:0 0 20px;text-align:center;">THAMSERKU EXPEDITIONS · YETI GROUP · KATHMANDU · NEPAL</p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin-bottom:20px;"><tr><td style="border-top:1px solid #C8C2B5;font-size:0;line-height:0;">&nbsp;</td></tr></table>
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
               <tr>
-                <td style="padding-right:20px;white-space:nowrap;">
-                  <a href="https://www.instagram.com/thamserkuexpedition/" style="text-decoration:none;">
-                    <img src="${EMAIL_IMG_BASE}/email-icon-ig.svg" width="14" height="14" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">@thamserkuexpedition</span>
-                  </a>
-                </td>
-                <td style="padding-right:20px;white-space:nowrap;">
-                  <a href="https://www.facebook.com/thamserkuexpedition" style="text-decoration:none;">
-                    <img src="${EMAIL_IMG_BASE}/email-icon-fb.svg" width="14" height="14" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">thamserkuexpedition</span>
-                  </a>
-                </td>
-                <td style="white-space:nowrap;">
-                  <a href="https://www.youtube.com/channel/UCBUOrivyxfYEeKC5qSKrK5Q/featured" style="text-decoration:none;">
-                    <img src="${EMAIL_IMG_BASE}/email-icon-yt.svg" width="14" height="14" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">Thamserku Expedition</span>
-                  </a>
+                <td align="center">
+                  <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+                    <tr>
+                      <td style="padding:0 16px 0 0;border-right:1px solid #C8C2B5;white-space:nowrap;">
+                        <a href="https://www.instagram.com/thamserkuexpedition/" style="text-decoration:none;">
+                          <img src="${EMAIL_IMG_BASE}/email-icon-ig.svg" width="13" height="13" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">@thamserkuexpedition</span>
+                        </a>
+                      </td>
+                      <td style="padding:0 16px;border-right:1px solid #C8C2B5;white-space:nowrap;">
+                        <a href="https://www.facebook.com/thamserkuexpedition" style="text-decoration:none;">
+                          <img src="${EMAIL_IMG_BASE}/email-icon-fb.svg" width="13" height="13" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">thamserkuexpedition</span>
+                        </a>
+                      </td>
+                      <td style="padding:0 0 0 16px;white-space:nowrap;">
+                        <a href="https://www.youtube.com/channel/UCBUOrivyxfYEeKC5qSKrK5Q/featured" style="text-decoration:none;">
+                          <img src="${EMAIL_IMG_BASE}/email-icon-yt.svg" width="13" height="13" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">Thamserku Expedition</span>
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
             </table>

@@ -13,10 +13,18 @@ export function LegacyHero({ page }: { page?: PageData }) {
         {bgSrc ? (
           <>
             <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80"
               style={{ backgroundImage: `url('${bgSrc}')` }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1A1A1A]/60 to-[#1A1A1A]" />
+            {/* Text-anchored scrim — darkens behind the headline, keeps image edges vivid */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 95% 65% at 50% 52%, rgba(26,26,26,0.72) 0%, rgba(26,26,26,0.25) 58%, rgba(26,26,26,0) 100%)",
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/25 via-transparent to-[#1A1A1A]/85" />
           </>
         ) : (
           /* Faint cartographic grid fallback */

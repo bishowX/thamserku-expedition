@@ -178,7 +178,7 @@ export function Hero({
         )}
         <div
           ref={overlayRef}
-          className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/60 via-transparent to-[#1A1A1A]/90 mix-blend-multiply"
+          className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/45 via-[#1A1A1A]/30 to-[#1A1A1A]/95"
         />
       </div>
 
