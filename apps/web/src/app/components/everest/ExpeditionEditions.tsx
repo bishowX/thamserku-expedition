@@ -47,18 +47,16 @@ export function ExpeditionEditions({ name, editions }: Props) {
               06 — Choose Your Philosophy
             </span>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex flex-col gap-3">
             <h2
               data-reveal-words
               className="font-['Fraunces'] text-display-l tracking-[-0.5px] text-white"
             >
               <TextReveal text={`${expeditionName} in Every Edition`} />
             </h2>
-          </div>
-          <div className="shrink-0 flex items-center md:w-[253px]">
             <p
               data-reveal
-              className="font-['DM_Sans'] font-light text-body leading-[1.4] tracking-[-0.5px] text-[#C8CDD2]"
+              className="font-['DM_Sans'] font-light text-body leading-[1.6] text-[#C8CDD2] max-w-[70%]"
             >
               {intro}
             </p>
