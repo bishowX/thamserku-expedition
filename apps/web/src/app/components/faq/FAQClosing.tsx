@@ -32,7 +32,7 @@ return (
 
       <div className="relative z-10 max-w-[880px] mx-auto flex flex-col items-center">
         <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] text-center mb-10">
-          BEGIN PRIVATELY — § III
+          04 — BEGIN PRIVATELY
         </span>
 
         <h2 className="font-['Fraunces'] font-light text-display-l text-white text-center max-w-[26ch] mb-8">
