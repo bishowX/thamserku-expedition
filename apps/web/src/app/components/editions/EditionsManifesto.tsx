@@ -42,14 +42,14 @@ export function EditionsManifesto({
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
+        <div className="flex flex-col md:flex-row md:items-stretch gap-8 md:gap-12">
           {imageUrl && (
-            <div className="w-full md:w-[320px] shrink-0">
+            <div className="w-full md:w-[320px] shrink-0 self-stretch">
               <img
                 src={imageUrl}
                 alt=""
                 loading="lazy"
-                className="w-full aspect-[3/2] object-cover"
+                className="w-full h-full object-cover"
                 data-sanity={encodeDataAttribute?.([
                   "editionsPage",
                   "manifestoImage",

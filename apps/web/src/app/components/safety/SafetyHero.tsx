@@ -19,7 +19,7 @@ export const SafetyHero = ({ page }: Props) => {
             alt=""
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-black/35" />
         </div>
       )}
 
