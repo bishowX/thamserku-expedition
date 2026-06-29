@@ -42,8 +42,6 @@ export function ComparisonTables({
   const present = EDITION_LETTERS.filter((l) => nameByLetter.has(l));
   const cols = present.length ? present : EDITION_LETTERS;
 
-  const addonCount = countAddonOptions(matrix);
-
   const rows = tab === "core" ? core : addons;
   // A column with no data across the whole category (A/E) → project-dependent note.
   const colMeta = cols.map((letter) => ({
@@ -70,14 +68,7 @@ export function ComparisonTables({
           )}
           {addons.length > 0 && (
             <Tab active={tab === "addon"} onClick={() => selectTab("addon")}>
-              <span className="flex items-center gap-2">
-                Add-on
-                {addonCount > 0 && (
-                  <span className="bg-white text-[#5A6673] px-[3px] py-px font-['DM_Sans'] text-[11px] leading-none uppercase tracking-normal">
-                    {addonCount} available
-                  </span>
-                )}
-              </span>
+              Add-on
             </Tab>
           )}
         </div>
@@ -188,13 +179,3 @@ function Tab({
   );
 }
 
-/** Count of distinct selectable add-on options across the matrix (for the tab badge). */
-function countAddonOptions(matrix: ConfigMatrix): number {
-  const seen = new Set<string>();
-  for (const f of matrix) {
-    if (f.category !== "addon") continue;
-    for (const c of f.editions ?? [])
-      for (const o of c.options ?? []) seen.add(`${f.key}:${o.value}`);
-  }
-  return seen.size;
-}
