@@ -38,7 +38,7 @@ export const EnquiryClosing = ({ data }: { data?: ConsultationPage }) => {
         </p>
 
         <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
-          THAMSERKU EXPEDITIONS <span className="mx-2">·</span> YETI GROUP <span className="mx-2">·</span> KATHMANDU <span className="mx-2">·</span> NEPAL HIMALAYA
+          THAMSERKU EXPEDITIONS <span className="mx-2">·</span> YETI GROUP <span className="mx-2">·</span> KATHMANDU <span className="mx-2">·</span> NEPAL
         </p>
       </div>
     </section>

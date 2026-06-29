@@ -56,7 +56,7 @@ export function ExpeditionClosing({ name, closingImage, slug }: Props) {
           Design Your Expedition <ArrowRight className="w-4 h-4" strokeWidth={1} />
         </Link>
 
-        <span data-reveal className="mt-2 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+        <span data-reveal className="mt-2 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2]">
           Response within 48 hours · Handled by senior expedition staff
         </span>
       </div>
