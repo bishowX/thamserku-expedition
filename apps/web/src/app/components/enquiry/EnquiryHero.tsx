@@ -27,10 +27,10 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
         <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] block mb-6">
           THE EXPEDITION DESK — SCHEDULE A CONSULTATION
         </span>
-        <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] text-white">
+        <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]">
           {headline}
         </h1>
-        <p className="font-['DM_Sans'] text-[#C8CDD2] font-light text-body-lg max-w-[60ch] whitespace-pre-line">
+        <p className="font-['DM_Sans'] text-[#C8CDD2] font-light text-body-lg max-w-[60ch] whitespace-pre-line [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
           {subheading}
         </p>
       </div>

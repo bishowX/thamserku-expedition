@@ -189,7 +189,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       >
         <h1
           ref={headlineRef}
-          className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] opacity-0"
+          className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] opacity-0 [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]"
         >
           <TextReveal text={headline} />
         </h1>
@@ -198,7 +198,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
           {heroSubtext && (
             <p
               ref={subRef}
-              className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0"
+              className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
             >
               {heroSubtext}
             </p>

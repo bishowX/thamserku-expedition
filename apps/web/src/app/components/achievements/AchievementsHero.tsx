@@ -39,10 +39,10 @@ export function AchievementsHero({ page }: { page?: PageData }) {
 
       <div className="relative z-10 flex flex-grow flex-col items-start justify-end md:items-center md:justify-center section-padding pb-16 md:pb-24">
         <div className="flex w-full max-w-[1138px] flex-col items-start md:items-center gap-5 md:gap-[30px]">
-          <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance text-left md:text-center text-white max-w-[18ch] mx-auto">
+          <h1 className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance text-left md:text-center text-white max-w-[18ch] mx-auto [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]">
             {page?.heroHeadline ?? 'A history written in altitude.'}
           </h1>
-          <p className="font-['DM_Sans'] font-light text-body-lg text-left md:text-center text-[#C8CDD2] max-w-[705px] whitespace-pre-line">
+          <p className="font-['DM_Sans'] font-light text-body-lg text-left md:text-center text-[#C8CDD2] max-w-[705px] whitespace-pre-line [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
             {subheading}
           </p>
         </div>
