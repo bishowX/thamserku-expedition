@@ -15,11 +15,10 @@ export const EnquiryHero = ({ data }: { data?: ConsultationPage }) => {
           <ImageWithFallback
             src={heroImgSrc}
             alt="Expedition landscape"
-            className="w-full h-full object-cover opacity-70 saturate-[0.8] contrast-110"
+            className="w-full h-full object-cover opacity-30 mix-blend-overlay saturate-[0.8] contrast-110"
           />
         )}
-        {/* Bottom-anchored scrim — text sits at the bottom; keeps the upper image vivid */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/60 to-[#1A1A1A]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/40 to-transparent" />
       </div>
 
       <Nav />
