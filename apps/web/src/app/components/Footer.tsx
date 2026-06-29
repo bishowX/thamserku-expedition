@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Instagram, Facebook, Youtube } from "lucide-react";
+import { Instagram, Facebook } from "lucide-react";
 import ThamserkuLogo from "./logo/ThamserkuLogo";
 
 export function Footer() {
@@ -30,15 +30,6 @@ export function Footer() {
                 className="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/20 text-white hover:text-[#5A6673] hover:bg-white/5 hover:border-white/10 transition-all"
               >
                 <Facebook size={16} />
-              </a>
-              <a
-                href="https://www.youtube.com/channel/UCBUOrivyxfYEeKC5qSKrK5Q/featured"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube"
-                className="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/20 text-white hover:text-[#5A6673] hover:bg-white/5 hover:border-white/10 transition-all"
-              >
-                <Youtube size={16} />
               </a>
             </div>
           </div>
