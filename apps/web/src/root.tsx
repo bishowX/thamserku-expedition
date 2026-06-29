@@ -5,10 +5,12 @@ import { FloatingContactPrompt } from './app/components/FloatingContactPrompt'
 import { SanityVisualEditing } from './app/components/SanityVisualEditing'
 import { useLenis } from './app/hooks/useLenis'
 import { getPreviewData } from './lib/preview.server'
+import { getSiteSettings } from './lib/queries.server'
 
 export async function loader({ request }: { request: Request }) {
   const { preview } = await getPreviewData(request)
-  return { preview }
+  const settings = await getSiteSettings()
+  return { preview, settings }
 }
 
 export function meta() {

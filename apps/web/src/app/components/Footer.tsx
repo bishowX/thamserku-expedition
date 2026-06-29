@@ -1,8 +1,12 @@
-import { Link } from "react-router";
+import { Link, useRouteLoaderData } from "react-router";
 import { Instagram, Facebook } from "lucide-react";
 import ThamserkuLogo from "./logo/ThamserkuLogo";
+import type { loader } from "../../root";
 
 export function Footer() {
+  const root = useRouteLoaderData<typeof loader>("root");
+  const contactEmail = root?.settings?.contactEmail ?? "info@thamserkuexpedition.com";
+  const contactEmailKushal = root?.settings?.contactEmailKushal ?? "kushal@thamserkuexpedition.com";
   return (
     <footer className="w-full bg-[#2E353C] text-[#C8CDD2] pt-16 md:pt-24 pb-8 px-8">
       <div className="max-w-7xl mx-auto flex flex-col gap-12 md:gap-24">
@@ -129,17 +133,19 @@ export function Footer() {
           </div>
           <div className="flex flex-col gap-2 md:text-right">
             <a
-              href="mailto:info@thamserkuexpedition.com"
+              href={`mailto:${contactEmail}`}
               className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal"
             >
-              info@thamserkuexpedition.com
+              {contactEmail}
             </a>
-            <a
-              href="mailto:kushal@thamserkuexpedition.com"
-              className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal"
-            >
-              kushal@thamserkuexpedition.com
-            </a>
+            {contactEmailKushal && (
+              <a
+                href={`mailto:${contactEmailKushal}`}
+                className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal"
+              >
+                {contactEmailKushal}
+              </a>
+            )}
           </div>
         </div>
       </div>

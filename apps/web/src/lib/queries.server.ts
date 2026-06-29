@@ -16,6 +16,7 @@ import {
   SAFETY_QUERY,
   ACHIEVEMENTS_QUERY,
   DESIGN_QUERY,
+  SITE_SETTINGS_QUERY,
   DESIGN_CONFIG_PROJECTION,
   attachConfig,
   normalizeDesignPageData,
@@ -34,6 +35,7 @@ import {
   type SanityExpeditionDossier,
   type RawExpeditionDossier,
   type WithRawDesignConfig,
+  type SiteSettings,
 } from "./queries";
 
 export async function getHomePageData(): Promise<HomePageData> {
@@ -91,6 +93,11 @@ export async function getAchievementsPageData(): Promise<AchievementsPageData> {
 export async function getDesignPageData(): Promise<DesignPageData> {
   const raw = await serverClient.fetch<RawDesignPageData>(DESIGN_QUERY);
   return normalizeDesignPageData(raw);
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const data = await serverClient.fetch<SiteSettings | null>(SITE_SETTINGS_QUERY);
+  return data ?? {};
 }
 
 // Matrix for a single peak (used by the server action to price/snapshot a booking).

@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-
-const WHATSAPP_NUMBER = "97797052216623";
+import { useRouteLoaderData } from "react-router";
+import type { loader } from "../../root";
 
 export function FloatingContactPrompt() {
+  const root = useRouteLoaderData<typeof loader>("root");
+  const whatsappNumber = root?.settings?.contactWhatsApp ?? "97797052216623";
   const [isVisible, setIsVisible] = useState(false);
   const lastScrollY = useRef(0);
   const lastDirection = useRef<"up" | "down">("up");
@@ -47,7 +49,7 @@ export function FloatingContactPrompt() {
 
   return (
     <a
-      href={`https://wa.me/${WHATSAPP_NUMBER}`}
+      href={`https://wa.me/${whatsappNumber}`}
       target="_blank"
       rel="noopener noreferrer"
       className={`fixed z-50 bottom-6 right-6 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg transition-all ease-out hover:bg-[#1ebe5d] hover:scale-105 ${

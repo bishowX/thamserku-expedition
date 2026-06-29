@@ -513,6 +513,19 @@ export const ACHIEVEMENTS_QUERY = `{
   }
 }`;
 
+// ─── Site Settings ────────────────────────────────────────────────────────────
+
+export type SiteSettings = {
+  contactEmail?: string;
+  contactEmailKushal?: string;
+  contactWhatsApp?: string;
+  contactWhatsAppDisplay?: string;
+};
+
+export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
+  contactEmail, contactEmailKushal, contactWhatsApp, contactWhatsAppDisplay
+}`;
+
 // ── Design Your Expedition ─────────────────────────────────────────────────
 // Driven by the per-peak configuration matrix. See lib/configMatrix.ts.
 
