@@ -41,7 +41,7 @@ export function FAQQuickSection({ page }: { page?: PageData }) {
             {headline}
           </h2>
           {subheading && (
-            <p className="font-['Fraunces'] italic text-display-m text-[#C8CDD2] max-w-[56ch]">
+            <p className="font-['Fraunces'] italic text-display-m text-[#C8CDD2] max-w-[56ch] whitespace-pre-line">
               {subheading}
             </p>
           )}

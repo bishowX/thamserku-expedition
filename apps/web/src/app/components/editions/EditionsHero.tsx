@@ -39,7 +39,7 @@ export function EditionsHero({
         )}
 
         {page?.heroSubheading && (
-          <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] md:mb-20 [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
+          <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] md:mb-20 whitespace-pre-line [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
             {page.heroSubheading}
           </p>
         )}

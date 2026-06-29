@@ -196,7 +196,7 @@ export function Hero({
           </h1>
           <p
             ref={subRef}
-            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
+            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0 whitespace-pre-line [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
           >
             {subheading}
           </p>
