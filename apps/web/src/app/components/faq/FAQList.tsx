@@ -118,15 +118,16 @@ export const FAQList = ({
                               </span>
                               {item.answer}
                             </p>
-                            {/* Bottom row link */}
-                            <div className="flex">
-                              <Link
-                                to={item.linkTo}
-                                className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#0A3A77] hover:text-white transition-colors"
-                              >
-                                {item.linkText}
-                              </Link>
-                            </div>
+                            {item.linkTo && item.linkText && (
+                              <div className="flex">
+                                <Link
+                                  to={item.linkTo}
+                                  className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] hover:text-white transition-colors underline underline-offset-4"
+                                >
+                                  {item.linkText}
+                                </Link>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
