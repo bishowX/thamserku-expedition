@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router'
+import { useLoaderData, useSearchParams } from 'react-router'
 import { useQuery } from '@sanity/react-loader'
 import type { QueryResponseInitial } from '@sanity/react-loader'
 import { Nav } from '../components/Nav'
@@ -53,13 +53,20 @@ const navTopOffset = () => window.innerHeight;
 export default function Home() {
   const { initial } = useLoaderData() as { initial: QueryResponseInitial<HomePageData> }
   const { data, encodeDataAttribute } = useQuery<HomePageData>(HOME_QUERY, {}, { initial })
+  // Cinematic intro variants, composable: `/?hero=2` swaps the section-2
+  // photo, `/?center=1` centers the section-2 text.
+  const [searchParams] = useSearchParams()
+  const heroBg = searchParams.get('hero') === '2'
+    ? '/images/cinematic-hero-2-2.jpg'
+    : '/images/cinematic-hero-2.jpg'
+  const heroCentered = searchParams.get('center') === '1'
 
   return (
     <>
       <Nav topOffset={navTopOffset} cinematic />
       <main>
         <CinematicIntro>
-          <Hero data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
+          <Hero data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} bgImage={heroBg} centered={heroCentered} />
         </CinematicIntro>
         <Manifesto data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
         <ManifestoStats stats={data.homePage?.manifestoStats} />
