@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router'
 import { useQuery } from '@sanity/react-loader'
 import type { QueryResponseInitial } from '@sanity/react-loader'
 import { Nav } from '../components/Nav'
+import { CinematicIntro } from '../components/CinematicIntro'
 import { Hero } from '../components/Hero'
 import { Manifesto } from '../components/Manifesto'
 import { ManifestoStats } from '../components/ManifestoStats'
@@ -18,6 +19,18 @@ import { loadQuery } from '../../lib/loader.server'
 import type { Route } from "./+types/Home";
 import { pageMeta } from "../../lib/seo";
 
+export function links() {
+  // Scene 1 of the cinematic intro is the LCP element
+  return [
+    {
+      rel: "preload",
+      as: "image",
+      href: "/images/hero-cinematic-1.jpg",
+      fetchpriority: "high",
+    },
+  ];
+}
+
 export async function loader({ request }: { request: Request }) {
   const { options } = await getPreviewData(request)
   const initial = await loadQuery<HomePageData>(HOME_QUERY, {}, options)
@@ -33,15 +46,21 @@ export function meta({ data }: Route.MetaArgs) {
   });
 }
 
+// Home's "page top" for the Nav is the hero's rest position — one intro
+// viewport down (see CinematicIntro's scroll hand-off).
+const navTopOffset = () => window.innerHeight;
+
 export default function Home() {
   const { initial } = useLoaderData() as { initial: QueryResponseInitial<HomePageData> }
   const { data, encodeDataAttribute } = useQuery<HomePageData>(HOME_QUERY, {}, { initial })
 
   return (
     <>
-      <Nav />
+      <Nav topOffset={navTopOffset} cinematic />
       <main>
-        <Hero data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
+        <CinematicIntro>
+          <Hero data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
+        </CinematicIntro>
         <Manifesto data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
         <ManifestoStats stats={data.homePage?.manifestoStats} />
         <AtlasPreview expeditions={data.homePage?.featuredExpeditions?.length ? data.homePage.featuredExpeditions : undefined} data={data.homePage ?? undefined} />

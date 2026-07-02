@@ -27,9 +27,22 @@ function parseAltitudeM(alt: string): number {
 
 interface NavProps {
   hideOnScrollDown?: boolean;
+  /** Scroll offset treated as "page top" — e.g. the cinematic intro's height
+   *  on Home, where the hero rests one viewport down. Evaluated per scroll
+   *  event so it stays correct across resizes (and SSR-safe). */
+  topOffset?: () => number;
+  /** Home's cinematic intro choreographs the bar via [data-cinematic-nav]:
+   *  hidden over scene 1, fading in with the transition. Since it only ever
+   *  shows from the hero down, the dark bg is always on. Opacity is owned by
+   *  GSAP, so the CSS transition must not cover it. */
+  cinematic?: boolean;
 }
 
-export function Nav({ hideOnScrollDown = true }: NavProps) {
+export function Nav({
+  hideOnScrollDown = true,
+  topOffset,
+  cinematic = false,
+}: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -67,9 +80,13 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 50);
+      const offset = topOffset?.() ?? 0;
+      setScrolled(currentScrollY > offset + 50);
       if (hideOnScrollDown) {
-        if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        if (
+          currentScrollY > lastScrollY.current &&
+          currentScrollY > offset + 100
+        ) {
           setHidden(true);
           setOpenMenu(null);
         } else {
@@ -83,7 +100,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hideOnScrollDown]);
+  }, [hideOnScrollDown, topOffset]);
 
   useEffect(() => {
     // Lock scroll while the mobile menu is open. On close, CLEAR the inline
@@ -127,12 +144,17 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
     return alt >= 6000 && alt < 7000;
   });
 
-  const hasDarkBg = scrolled || mobileMenuOpen || openMenu !== null;
+  const hasDarkBg = cinematic || scrolled || mobileMenuOpen || openMenu !== null;
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 text-white ${
+        data-cinematic-nav={cinematic ? "" : undefined}
+        className={`fixed top-0 left-0 w-full z-50 ${
+          cinematic
+            ? "transition-[background-color,translate]" // v4 translate-y-* utilities set `translate`, not `transform`
+            : "transition-all"
+        } duration-500 text-white ${
           hasDarkBg
             ? "bg-[#1A1A1A]/95 backdrop-blur-md"
             : "bg-transparent"

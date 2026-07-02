@@ -4,7 +4,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { stegaClean } from "@sanity/client/stega";
 import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
-import { urlFor } from "../../lib/sanity";
 import { TextReveal } from "./TextReveal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -28,9 +27,9 @@ export function Hero({
 }) {
   const headline = stegaClean(data?.heroHeadline ?? DEFAULT_HEADLINE);
   const subheading = data?.heroSubheading ?? DEFAULT_SUBHEADING;
-  const bgImage = data?.heroImage
-    ? urlFor(data.heroImage).width(1920).url()
-    : undefined;
+  // Hardcoded for the cinematic intro treatment — the CMS heroImage is
+  // intentionally bypassed on this design.
+  const bgImage = "/images/cinematic-hero-2.jpg";
 
   const sectionRef = useRef<HTMLElement>(null);
   const bgWrapRef = useRef<HTMLDivElement>(null);
@@ -48,87 +47,29 @@ export function Hero({
         return;
       }
 
-      // Reveal containers (FOUC prevention — they start with opacity-0 via CSS)
+      // Reveal containers (FOUC prevention — they start with opacity-0 via CSS).
+      // The subheading's fade is choreographed by CinematicIntro (its effect
+      // runs first); only take over the sub when no intro exists.
       if (headlineRef.current) gsap.set(headlineRef.current, { opacity: 1 });
-      if (subRef.current) gsap.set(subRef.current, { opacity: 1 });
+      if (subRef.current && !document.querySelector(".cinematic-intro")) {
+        gsap.set(subRef.current, { opacity: 1 });
+      }
 
-      const tl = gsap.timeline();
-
-      // Background entrance
+      // Ambient ken-burns drift
       if (bgRef.current) {
-        tl.from(
-          bgRef.current,
-          {
-            scale: 1.15,
-            duration: 2.2,
-            ease: "power2.out",
-          },
-          0,
-        );
-      }
-
-      if (overlayRef.current) {
-        tl.from(
-          overlayRef.current,
-          {
-            opacity: 0,
-            duration: 1.2,
-            ease: "power2.out",
-          },
-          0,
-        );
-      }
-
-      // Word-by-word masked reveal
-      if (headlineRef.current) {
-        const words = headlineRef.current.querySelectorAll("[data-word]");
-        gsap.set(words, { yPercent: 110 });
-        tl.to(
-          words,
-          {
-            yPercent: 0,
-            duration: 0.8,
-            stagger: 0.04,
-            ease: "power4.out",
-          },
-          0.5,
-        );
-      }
-
-      // Subheading with blur clear
-      if (subRef.current) {
-        gsap.set(subRef.current, { opacity: 0, y: 20, filter: "blur(6px)" });
-        tl.to(
-          subRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: 0.7,
-            ease: "power3.out",
-          },
-          1.0,
-        );
-      }
-
-      // Ambient ken-burns drift after entrance
-      if (bgRef.current) {
-        tl.call(() => {
-          if (!bgRef.current) return;
-          gsap.to(bgRef.current, {
-            scale: 1.04,
-            xPercent: 1.5,
-            duration: 25,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
+        gsap.to(bgRef.current, {
+          scale: 1.04,
+          xPercent: 1.5,
+          duration: 25,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
         });
       }
 
       // Scroll parallax — background drifts down, content fades and drifts up.
-      // Targets the wrapper, NOT the img: the img is owned by the entrance +
-      // ken-burns tweens, and two tweens writing scale on one element flicker.
+      // Targets the outer wrapper, NOT the img: the img is owned by ken-burns
+      // and the middle wrapper by the cinematic intro zoom.
       if (bgWrapRef.current && sectionRef.current) {
         gsap.to(bgWrapRef.current, {
           yPercent: 35,
@@ -139,6 +80,7 @@ export function Hero({
             start: "top top",
             end: "bottom top",
             scrub: true,
+            invalidateOnRefresh: true,
           },
         });
       }
@@ -153,6 +95,7 @@ export function Hero({
             start: "top top",
             end: "bottom top",
             scrub: true,
+            invalidateOnRefresh: true,
           },
         });
       }
@@ -166,8 +109,13 @@ export function Hero({
       className="relative w-full min-h-screen flex flex-col justify-end text-white p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12 overflow-hidden"
     >
       <div className="absolute inset-0 z-0">
-        {bgImage && (
-          <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
+        {/* Transform ownership, outer → inner: parallax ST / cinematic intro zoom / ken-burns.
+            One writer per node — two tweens writing scale on one element flicker. */}
+        <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
+          <div
+            data-cinematic-zoom
+            className="absolute inset-0 will-change-transform"
+          >
             <img
               ref={bgRef}
               src={bgImage}
@@ -175,7 +123,7 @@ export function Hero({
               className="w-full h-full object-cover will-change-transform"
             />
           </div>
-        )}
+        </div>
         <div
           ref={overlayRef}
           className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/60 via-transparent to-[#1A1A1A]/90 mix-blend-multiply"
@@ -186,7 +134,9 @@ export function Hero({
         ref={contentRef}
         className="relative z-10 w-full flex flex-col items-start gap-8 will-change-transform"
       >
-        <div>
+        {/* Inner wrapper is owned by the cinematic intro (yPercent drift);
+            contentRef is owned by the scrubbed parallax — one writer each. */}
+        <div data-cinematic-content className="will-change-transform">
           <h1
             ref={headlineRef}
             className="font-['Fraunces'] font-light text-display-xl leading-[0.85] tracking-tight text-balance mb-6 opacity-0 max-w-[26ch] [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]"
@@ -196,13 +146,12 @@ export function Hero({
           </h1>
           <p
             ref={subRef}
+            data-cinematic-sub
             className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0 whitespace-pre-line [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
           >
             {subheading}
           </p>
         </div>
-
-       
       </div>
     </section>
   );

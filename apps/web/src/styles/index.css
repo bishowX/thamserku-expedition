@@ -1,3 +1,10 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* lenis.css sets overflow: hidden while Lenis is stopped (cinematic intro,
+   route scroll-locks) — keep the scrollbar gutter reserved so content does
+   not shift when the scrollbar reappears. */
+html {
+  scrollbar-gutter: stable;
+}
