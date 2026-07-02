@@ -15,6 +15,7 @@ import faqPage from './documents/faqPage'
 import safetyPage from './documents/safetyPage'
 import achievementsPage from './documents/achievementsPage'
 import designPage from './documents/designPage'
+import termsPage from './documents/termsPage'
 import timelineEra from './objects/timelineEra'
 import consultationMoment from './objects/consultationMoment'
 import consultationStep from './objects/consultationStep'
@@ -44,6 +45,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   safetyPage,
   achievementsPage,
   designPage,
+  termsPage,
   // Collections
   expedition,
   edition,

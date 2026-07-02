@@ -526,6 +526,25 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
   contactEmail, contactEmailKushal, contactWhatsApp, contactWhatsAppDisplay
 }`;
 
+// ─── Terms & Conditions Page ──────────────────────────────────────────────────
+
+export type TermsPageData = {
+  termsPage: {
+    heroEyebrow?: string;
+    heroTitle?: string;
+    heroIntro?: PortableTextBlock[];
+    heroNote?: string;
+    body?: PortableTextBlock[];
+  } | null;
+};
+
+export const TERMS_QUERY = `{
+  "termsPage": *[_type == "termsPage"][0] {
+    heroEyebrow, heroTitle, heroIntro, heroNote,
+    body
+  }
+}`;
+
 // ── Design Your Expedition ─────────────────────────────────────────────────
 // Driven by the per-peak configuration matrix. See lib/configMatrix.ts.
 

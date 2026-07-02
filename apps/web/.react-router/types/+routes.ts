@@ -61,6 +61,9 @@ type Pages = {
   "/safety": {
     params: {};
   };
+  "/terms-and-conditions": {
+    params: {};
+  };
   "/heritage-and-achievements": {
     params: {};
   };
@@ -69,7 +72,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/api/preview-mode/enable" | "/api/preview-mode/disable" | "/sitemap.xml" | "/robots.txt" | "/safety" | "/heritage-and-achievements";
+    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/api/preview-mode/enable" | "/api/preview-mode/disable" | "/sitemap.xml" | "/robots.txt" | "/safety" | "/terms-and-conditions" | "/heritage-and-achievements";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
@@ -135,6 +138,10 @@ type RouteFiles = {
     id: "app/pages/SafetyPage";
     page: "/safety";
   };
+  "./app/pages/TermsPage.tsx": {
+    id: "app/pages/TermsPage";
+    page: "/terms-and-conditions";
+  };
   "./app/pages/HeritageAndAchievementsPage.tsx": {
     id: "app/pages/HeritageAndAchievementsPage";
     page: "/heritage-and-achievements";
@@ -159,5 +166,6 @@ type RouteModules = {
   "app/api/sitemap.xml": typeof import("./src/./app/api/sitemap.xml.ts");
   "app/api/robots.txt": typeof import("./src/./app/api/robots.txt.ts");
   "app/pages/SafetyPage": typeof import("./src/./app/pages/SafetyPage.tsx");
+  "app/pages/TermsPage": typeof import("./src/./app/pages/TermsPage.tsx");
   "app/pages/HeritageAndAchievementsPage": typeof import("./src/./app/pages/HeritageAndAchievementsPage.tsx");
 };

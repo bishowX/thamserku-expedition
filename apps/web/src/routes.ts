@@ -17,6 +17,7 @@ export default [
   route("sitemap.xml", "./app/api/sitemap.xml.ts"),
   route("robots.txt", "./app/api/robots.txt.ts"),
   route("safety", "./app/pages/SafetyPage.tsx"),
+  route("terms-and-conditions", "./app/pages/TermsPage.tsx"),
   route(
     "heritage-and-achievements",
     "./app/pages/HeritageAndAchievementsPage.tsx",
