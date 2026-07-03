@@ -18,5 +18,8 @@ export const sanityClient = createClient({
 const builder = createImageUrlBuilder(sanityClient)
 
 export function urlFor(source: SanityImageSource) {
-  return builder.image(source)
+  // auto('format') lets Sanity's CDN negotiate AVIF/WebP by Accept header
+  // instead of always serving the original JPEG/PNG — a large sitewide byte
+  // saving on every CMS image. Callers still chain .width()/.height()/etc.
+  return builder.image(source).auto('format')
 }

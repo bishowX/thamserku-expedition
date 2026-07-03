@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, type CSSProperties } from "react";
 import { Link, useLocation } from "react-router";
 import { Menu, X, ChevronDown } from "lucide-react";
 import ThamserkuLogo from "./logo/ThamserkuLogo";
@@ -27,9 +27,22 @@ function parseAltitudeM(alt: string): number {
 
 interface NavProps {
   hideOnScrollDown?: boolean;
+  /** Scroll offset treated as "page top" — e.g. the cinematic intro's height
+   *  on Home, where the hero rests one viewport down. Evaluated per scroll
+   *  event so it stays correct across resizes (and SSR-safe). */
+  topOffset?: () => number;
+  /** Home's cinematic intro choreographs the bar via [data-cinematic-nav]:
+   *  hidden over scene 1, fading in with the transition. Since it only ever
+   *  shows from the hero down, the dark bg is always on. Opacity is owned by
+   *  GSAP, so the CSS transition must not cover it. */
+  cinematic?: boolean;
 }
 
-export function Nav({ hideOnScrollDown = true }: NavProps) {
+export function Nav({
+  hideOnScrollDown = true,
+  topOffset,
+  cinematic = false,
+}: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -67,9 +80,13 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 50);
+      const offset = topOffset?.() ?? 0;
+      setScrolled(currentScrollY > offset + 50);
       if (hideOnScrollDown) {
-        if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        if (
+          currentScrollY > lastScrollY.current &&
+          currentScrollY > offset + 100
+        ) {
           setHidden(true);
           setOpenMenu(null);
         } else {
@@ -83,7 +100,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hideOnScrollDown]);
+  }, [hideOnScrollDown, topOffset]);
 
   useEffect(() => {
     // Lock scroll while the mobile menu is open. On close, CLEAR the inline
@@ -127,16 +144,55 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
     return alt >= 6000 && alt < 7000;
   });
 
-  const hasDarkBg = scrolled || mobileMenuOpen || openMenu !== null;
+  // Scrolled past the Hero, or the mobile overlay is up — the bar is
+  // permanently in its dark, white-text state regardless of dropdowns.
+  const scrolledDark = scrolled || mobileMenuOpen;
+  // Home's Hero (cinematic scene 2) sits over a bright photo — while resting
+  // on it (not yet scrolled away) text/logo stay black instead of the
+  // white-on-dark used everywhere else. Independent of dropdown state, so
+  // opening About/Expedition doesn't flip the text color mid-hover.
+  const heroLight = cinematic && !scrolledDark;
+  // Whether the bar (and any open dropdown, which always matches the bar)
+  // renders a solid/tinted panel at all, vs. staying fully transparent.
+  const showBackdrop = scrolledDark || openMenu !== null;
+  // Single source of truth for the bar's panel so the bar and its dropdowns
+  // never show two different backgrounds stacked on top of each other.
+  // Opaque, not translucent: a translucent panel's rendered color depends on
+  // whatever photo content sits behind it, and the bar sits over different
+  // photo content than the taller dropdown beneath it — so even identical
+  // translucent classes visibly mismatched. Solid color is position-independent.
+  const barToneClass = showBackdrop
+    ? heroLight
+      ? "bg-white"
+      : "bg-[#1A1A1A]"
+    : "bg-transparent";
+  const navHoverClass = heroLight ? "hover:text-black/55" : "hover:text-[#C8CDD2]";
+  const navActiveClass = heroLight
+    ? "text-black/70 border-b border-black/70"
+    : "text-[#C8CDD2] border-b border-[#C8CDD2]";
+  const submenuAccentClass = heroLight ? "text-black/55" : "text-[#C8CDD2]";
+  const submenuCardHoverClass = heroLight
+    ? "group-hover:text-black/55"
+    : "group-hover:text-[#C8CDD2]";
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 text-white ${
-          hasDarkBg
-            ? "bg-[#1A1A1A]/95 backdrop-blur-md"
-            : "bg-transparent"
-        } ${hidden && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"}`}
+        data-cinematic-nav={cinematic ? "" : undefined}
+        // w-screen (100vw), not w-full: the cinematic intro stops Lenis, which
+        // toggles <html> between `overflow: clip` (no scrollbar) and `visible`
+        // (scrollbar) at the section-2 hand-off. With w-full the fixed bar
+        // reflows by the scrollbar width — the hamburger lurches ~15-20px right
+        // and settles a beat later. 100vw is measured against the scrollbar-
+        // inclusive viewport, so it stays put across the toggle. (body has
+        // overflow-x-clip, so 100vw never spawns a horizontal scrollbar.)
+        className={`fixed top-0 left-0 w-screen z-50 ${
+          cinematic
+            ? "transition-[translate,color]" // v4 translate-y-* utilities set `translate`, not `transform`; bg snaps instantly (below) so it never lags the dropdowns' instant bg
+            : "transition-all"
+        } duration-500 ${heroLight ? "text-black" : "text-white"} ${barToneClass} ${
+          hidden && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"
+        }`}
         onMouseLeave={handleNavLeave}
       >
         <nav>
@@ -146,6 +202,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
             <div
               className="shrink-0 w-auto lg:w-[196px] z-50"
               onMouseEnter={handleMenuClose}
+              style={{ "--fill-0": heroLight ? "#111111" : "#ffffff" } as CSSProperties}
             >
               <Link
                 to="/"
@@ -160,7 +217,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
             <div className="hidden lg:flex items-center gap-8 font-['DM_Mono'] uppercase tracking-[2.4px]">
               <Link
                 to="/"
-                className="text-[11px] nav-link-underline hover:text-[#C8CDD2] transition-colors"
+                className={`text-[11px] nav-link-underline ${navHoverClass} transition-colors`}
                 onMouseEnter={handleMenuClose}
               >
                 Home
@@ -168,9 +225,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
               <button
                 className={`text-[11px] flex items-center gap-[2px] transition-colors uppercase ${
-                  openMenu === "about"
-                    ? "text-[#C8CDD2] border-b border-[#C8CDD2]"
-                    : "hover:text-[#C8CDD2]"
+                  openMenu === "about" ? navActiveClass : navHoverClass
                 }`}
                 onMouseEnter={() => handleMenuEnter("about")}
               >
@@ -186,9 +241,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
               <button
                 className={`text-[11px] flex items-center gap-[2px] transition-colors uppercase ${
-                  openMenu === "expedition"
-                    ? "text-[#C8CDD2] border-b border-[#C8CDD2]"
-                    : "hover:text-[#C8CDD2]"
+                  openMenu === "expedition" ? navActiveClass : navHoverClass
                 }`}
                 onMouseEnter={() => handleMenuEnter("expedition")}
               >
@@ -204,7 +257,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
               <Link
                 to="/editions"
-                className="text-[11px] nav-link-underline hover:text-[#C8CDD2] transition-colors"
+                className={`text-[11px] nav-link-underline ${navHoverClass} transition-colors`}
                 onMouseEnter={handleMenuClose}
               >
                 Editions
@@ -212,7 +265,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
               <Link
                 to="/safety"
-                className="text-[11px] nav-link-underline hover:text-[#C8CDD2] transition-colors"
+                className={`text-[11px] nav-link-underline ${navHoverClass} transition-colors`}
                 onMouseEnter={handleMenuClose}
               >
                 Safety
@@ -227,7 +280,11 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
               <Link
                 to={ctaLink}
                 className={`btn-cta btn-cta-secondary border ${
-                  hasDarkBg ? "border-white/50" : "border-white/30"
+                  heroLight
+                    ? "border-black/30"
+                    : showBackdrop
+                      ? "border-white/50"
+                      : "border-white/30"
                 } px-6 py-3.5 flex items-center justify-center font-['DM_Mono'] uppercase tracking-[2.4px] text-[10px] whitespace-nowrap`}
               >
                 <span>{ctaLabel}</span>
@@ -236,7 +293,7 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
 
             {/* Mobile Toggle */}
             <button
-              className="lg:hidden z-50 p-2 -mr-2 text-white"
+              className="lg:hidden z-50 p-2 -mr-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"
             >
@@ -250,91 +307,103 @@ export function Nav({ hideOnScrollDown = true }: NavProps) {
           </div>
         </nav>
 
-        {/* About Submenu */}
+        {/* About Submenu — backdrop mirrors the bar's current light/dark
+            state so opening it doesn't have to flip the bar above it.
+            grid-template-rows 0fr/1fr (not max-height) so the reveal tracks
+            the content's actual height instead of animating toward an
+            arbitrary max-h guess. */}
         <div
-          className={`hidden lg:block overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
-            openMenu === "about" ? "max-h-24 opacity-100" : "max-h-0 opacity-0"
+          className={`hidden lg:grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out ${barToneClass} ${
+            openMenu === "about" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           }`}
         >
-          <div className="px-8 lg:px-48 pb-4 flex items-center justify-center gap-10 font-['DM_Mono'] uppercase tracking-[2.4px] text-white flex-wrap">
-            {ABOUT_LINKS.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                className="text-[11px] nav-link-underline hover:text-[#C8CDD2] transition-colors whitespace-nowrap"
-                onClick={() => setOpenMenu(null)}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <div className="min-h-0 overflow-hidden">
+            <div className="px-8 lg:px-48 pb-4 flex items-center justify-center gap-10 font-['DM_Mono'] uppercase tracking-[2.4px] flex-wrap">
+              {ABOUT_LINKS.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className={`text-[11px] nav-link-underline transition-colors whitespace-nowrap ${navHoverClass}`}
+                  onClick={() => setOpenMenu(null)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Expedition Submenu */}
+        {/* Expedition Submenu — same own-backdrop and grid-rows reasoning as About. */}
         <div
-          className={`hidden lg:block overflow-hidden pb-2 transition-[max-height,opacity] duration-300 ease-out ${
-            openMenu === "expedition"
-              ? "max-h-[500px] opacity-100"
-              : "max-h-0 opacity-0"
+          className={`hidden lg:grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out ${barToneClass} ${
+            openMenu === "expedition" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           }`}
         >
-          <div className="px-8 lg:px-48 pb-6 flex flex-col gap-5">
-            {/* Altitude Tabs */}
-            <div className="flex items-center justify-center gap-10 font-['DM_Mono'] uppercase tracking-[2.4px]">
-              {(["8000", "7000", "6000"] as ExpeditionTab[]).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setExpeditionTab(tab)}
-                  className={`text-[11px] transition-colors uppercase ${
-                    expeditionTab === tab
-                      ? "text-[#C8CDD2] underline underline-offset-[6px] decoration-[#C8CDD2]"
-                      : "text-white hover:text-[#C8CDD2]"
-                  }`}
-                >
-                  <span className="normal-case">{Number(tab).toLocaleString()}ers</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Expedition Cards */}
-            {expeditionsByTab.length > 0 ? (
-              <div className="flex justify-center gap-5 items-start w-full">
-                {expeditionsByTab.slice(0, 6).map((exp) => (
-                  <Link
-                    key={exp._id}
-                    to={`/expeditions/${exp.slug?.current}`}
-                    className="flex-[0_0_calc((100%-100px)/6)] flex flex-col gap-5 items-center min-w-0 group"
-                    onClick={() => setOpenMenu(null)}
+          {/* pb-8 (not pb-6 + pb-2 split across this div and the collapsing
+              wrapper) — fixed padding on the 0fr/1fr wrapper itself can't be
+              clipped by overflow-hidden, so it always renders even at 0fr and
+              stops the row from ever fully collapsing. */}
+          <div className="min-h-0 overflow-hidden">
+            <div className="px-8 lg:px-48 pb-8 flex flex-col gap-5">
+              {/* Altitude Tabs */}
+              <div className="flex items-center justify-center gap-10 font-['DM_Mono'] uppercase tracking-[2.4px]">
+                {(["8000", "7000", "6000"] as ExpeditionTab[]).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setExpeditionTab(tab)}
+                    className={`text-[11px] transition-colors uppercase ${
+                      expeditionTab === tab
+                        ? `${submenuAccentClass} underline underline-offset-[6px] ${heroLight ? "decoration-black/55" : "decoration-[#C8CDD2]"}`
+                        : navHoverClass
+                    }`}
                   >
-                    <div className="relative w-full aspect-[3/2] overflow-hidden bg-[#2A2A2A]">
-                      {exp.image && (
-                        <img
-                          src={urlFor(exp.image).width(400).height(267).url()}
-                          alt={exp.name}
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      )}
-                    </div>
-                    <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-white text-center w-full group-hover:text-[#C8CDD2] transition-colors">
-                      {exp.name}
-                    </p>
-                  </Link>
+                    <span className="normal-case">{Number(tab).toLocaleString()}ers</span>
+                  </button>
                 ))}
               </div>
-            ) : (
-              <p className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#C8CDD2] text-center py-4">
-                No expeditions in this category
-              </p>
-            )}
+
+              {/* Expedition Cards */}
+              {expeditionsByTab.length > 0 ? (
+                <div className="flex justify-center gap-5 items-start w-full">
+                  {expeditionsByTab.slice(0, 6).map((exp) => (
+                    <Link
+                      key={exp._id}
+                      to={`/expeditions/${exp.slug?.current}`}
+                      className="flex-[0_0_calc((100%-100px)/6)] flex flex-col gap-5 items-center min-w-0 group"
+                      onClick={() => setOpenMenu(null)}
+                    >
+                      <div className="relative w-full aspect-[3/2] overflow-hidden bg-[#2A2A2A]">
+                        {exp.image && (
+                          <img
+                            src={urlFor(exp.image).width(400).height(267).url()}
+                            alt={exp.name}
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        )}
+                      </div>
+                      <p className={`font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-center w-full transition-colors ${submenuCardHoverClass}`}>
+                        {exp.name}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className={`font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-center py-4 ${submenuAccentClass}`}>
+                  No expeditions in this category
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Scroll Progress */}
-        {hasDarkBg && (
+        {showBackdrop && (
           <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/5" />
         )}
         <div
-          className="absolute bottom-0 left-0 h-[1px] bg-white/40 transition-none"
+          className={`absolute bottom-0 left-0 h-[1px] transition-none ${
+            heroLight ? "bg-black/30" : "bg-white/40"
+          }`}
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
