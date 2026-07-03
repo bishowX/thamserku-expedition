@@ -1,4 +1,4 @@
-import { useLoaderData, useSearchParams } from 'react-router'
+import { useLoaderData } from 'react-router'
 import { useQuery } from '@sanity/react-loader'
 import type { QueryResponseInitial } from '@sanity/react-loader'
 import { Nav } from '../components/Nav'
@@ -18,14 +18,23 @@ import { getPreviewData } from '../../lib/preview.server'
 import { loadQuery } from '../../lib/loader.server'
 import type { Route } from "./+types/Home";
 import { pageMeta } from "../../lib/seo";
+import { heroSrcSet, HERO_SIZES } from "../../lib/heroImage";
 
 export function links() {
-  // Scene 1 of the cinematic intro is the LCP element
+  // Scene 1 of the cinematic intro is the LCP element. Preload the responsive
+  // AVIF set so the browser fetches the viewport-appropriate variant (13 KB on
+  // a phone, 84 KB on desktop) instead of the 1.3 MB source JPEG. Browsers
+  // without AVIF ignore this and load from the <picture> webp/jpg fallback.
   return [
     {
       rel: "preload",
       as: "image",
-      href: "/images/hero-cinematic-1.jpg",
+      type: "image/avif",
+      // lowercase attribute keys: React 18 has no special handling for these
+      // (they're React-19 props), so it passes them through verbatim as valid
+      // lowercase HTML attributes instead of warning about camelCase.
+      imagesrcset: heroSrcSet("/images/hero-cinematic-1.jpg", "avif"),
+      imagesizes: HERO_SIZES,
       fetchpriority: "high",
     },
   ];
@@ -53,20 +62,13 @@ const navTopOffset = () => window.innerHeight;
 export default function Home() {
   const { initial } = useLoaderData() as { initial: QueryResponseInitial<HomePageData> }
   const { data, encodeDataAttribute } = useQuery<HomePageData>(HOME_QUERY, {}, { initial })
-  // Cinematic intro variants, composable: `/?hero=2` swaps the section-2
-  // photo, `/?center=1` centers the section-2 text.
-  const [searchParams] = useSearchParams()
-  const heroBg = searchParams.get('hero') === '2'
-    ? '/images/cinematic-hero-2-2.jpg'
-    : '/images/cinematic-hero-2.jpg'
-  const heroCentered = searchParams.get('center') === '1'
 
   return (
     <>
       <Nav topOffset={navTopOffset} cinematic />
       <main>
         <CinematicIntro>
-          <Hero data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} bgImage={heroBg} centered={heroCentered} />
+          <Hero data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
         </CinematicIntro>
         <Manifesto data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
         <ManifestoStats stats={data.homePage?.manifestoStats} />

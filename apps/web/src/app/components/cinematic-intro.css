@@ -2,15 +2,47 @@
    Ported from the mountain transition reference (mountain.css); the seam core
    is denser than the reference so the crossover hits a near-total whiteout. */
 
+/* Tile width for the drifting fog layers. The drift is a transform of exactly
+   one tile, so it stays seamless when this changes per breakpoint. */
+.cinematic-intro {
+  --fog-tile: 1400px;
+}
+
+/* Ambient fog drift, composited on the GPU.
+   The layer element is a fixed clip box; a ::before sprite carries the
+   repeating texture, overhangs by one tile on each side, and translates by
+   exactly one tile on a linear loop — visually identical to the old
+   background-position tween, but transform-only (no per-frame repaint) and
+   auto-throttled by the browser once it scrolls off-screen. */
+
 /* drifting clouds behind the scene-1 logo */
 .ci-fog-back {
   position: absolute;
   inset: 0 -40% auto;
   height: 55%;
+  overflow: hidden;
+}
+.ci-fog-back::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--fog-tile));
+  width: calc(100% + 2 * var(--fog-tile));
   background: url("/images/fog.png") repeat-x;
-  background-size: 1400px 100%;
+  background-size: var(--fog-tile) 100%;
   opacity: 0.28;
   filter: blur(2px);
+  will-change: transform;
+  animation: ci-fog-drift-back 90s linear infinite;
+}
+@keyframes ci-fog-drift-back {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-1 * var(--fog-tile)), 0, 0);
+  }
 }
 
 /* soft haze on the hero's top edge — the white cloud sea dissolves into the
@@ -46,10 +78,30 @@
   position: absolute;
   inset: auto -40% -10%;
   height: 52%;
+  overflow: hidden;
+}
+.ci-fog-front::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--fog-tile));
+  width: calc(100% + 2 * var(--fog-tile));
   background: url("/images/fog-real.png") repeat-x;
-  background-size: 1400px 100%;
-  transform: scaleY(-1); /* dense edge down, wisps feathering up */
+  background-size: var(--fog-tile) 100%;
   filter: blur(1px);
+  will-change: transform;
+  animation: ci-fog-drift-front 90s linear infinite;
+}
+/* scaleY(-1) — dense edge down, wisps feathering up — baked into the keyframes
+   since the animated transform replaces the property wholesale */
+@keyframes ci-fog-drift-front {
+  from {
+    transform: translate3d(0, 0, 0) scaleY(-1);
+  }
+  to {
+    transform: translate3d(var(--fog-tile), 0, 0) scaleY(-1);
+  }
 }
 
 /* ---------- the cloud band riding the seam between the two scenes ---------- */
@@ -107,6 +159,29 @@
     rgba(255, 255, 255, 0) 100%
   );
   filter: blur(16px);
+}
+
+/* On narrow viewports the wide fog tiles stretch into a flat slice — shrink
+   the background tiles so the cloud texture repeats and still reads as a band,
+   and trim the heaviest blur to keep the committed timeline smooth on phones. */
+@media (max-width: 767px) {
+  /* smaller tile so the wide texture repeats and still reads as a band; the
+     drift stays seamless because it tracks --fog-tile */
+  .cinematic-intro {
+    --fog-tile: 800px;
+  }
+  .ci-puff-a {
+    background-size: 900px 100%;
+  }
+  .ci-puff-b {
+    background-size: 1100px 100%;
+  }
+  .ci-puff-c {
+    background-size: 950px 100%;
+  }
+  .ci-seam-core {
+    filter: blur(10px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

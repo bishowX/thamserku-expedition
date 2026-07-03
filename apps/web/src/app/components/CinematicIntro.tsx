@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { Observer } from "gsap/Observer";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getLenis } from "../hooks/useLenis";
+import { heroSrcSet, HERO_SIZES } from "../../lib/heroImage";
 import ThamserkuLogo from "./logo/ThamserkuLogo";
 import "./cinematic-intro.css";
 
@@ -41,6 +42,15 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
 
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Mobile keeps the same gesture-captured ceremony, tuned for touch:
+    // a committed swipe is snappier (shorter timeline) and the gesture
+    // thresholds are raised so a stray finger drag can't advance/reverse the
+    // scene the way a hair-trigger wheel tolerance would.
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const dur = isMobile ? 1.25 : DURATION;
+    const forwardTolerance = isMobile ? 35 : 10;
+    const returnTolerance = isMobile ? 24 : 1;
 
     const track = trackRef.current;
     const scene1 = scene1Ref.current;
@@ -126,19 +136,10 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
       if (nav) gsap.set(nav, { autoAlpha: 1, clearProps: NAV_CLEAR });
     }
 
-    // Ambient drift on the fog layers, independent of scroll (reference).
-    gsap.to(track.querySelectorAll(".ci-fog-back"), {
-      backgroundPositionX: "-=1400px",
-      duration: 90,
-      ease: "none",
-      repeat: -1,
-    });
-    gsap.to(track.querySelectorAll(".ci-fog-front"), {
-      backgroundPositionX: "+=1100px",
-      duration: 70,
-      ease: "none",
-      repeat: -1,
-    });
+    // Ambient fog drift now lives in CSS (transform keyframes on the fog
+    // layers' ::before sprites) — composited on the GPU and auto-throttled by
+    // the browser when the scene scrolls off-screen, instead of a JS tween
+    // repainting blurred layers every frame forever.
 
     // ---- committed transitions (fresh timeline per gesture, like the
     // reference's gotoScene — always built with the current viewport size)
@@ -147,7 +148,7 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
       if (state !== "intro" || tl?.isActive()) return;
       state = "transitioning";
       tl = gsap.timeline({
-        defaults: { duration: DURATION, ease: EASE },
+        defaults: { duration: dur, ease: EASE },
         onComplete: () => enterHeroState(true),
       });
       // the page itself slides one viewport
@@ -207,7 +208,7 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
       gsap.set(track, { y: -window.scrollY });
       scrollToImmediate(0);
       tl = gsap.timeline({
-        defaults: { duration: DURATION, ease: EASE },
+        defaults: { duration: dur, ease: EASE },
         onComplete: enterIntroState,
       });
       // .to() everywhere: the reverse continues from whatever state the
@@ -233,7 +234,7 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
       observer = Observer.create({
         type: "wheel,touch,pointer",
         wheelSpeed: -1,
-        tolerance: 10,
+        tolerance: forwardTolerance,
         preventDefault: true,
         onUp: goForward, // with wheelSpeed -1 this is scroll-down intent
       });
@@ -271,7 +272,7 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
       heroObserver = Observer.create({
         type: "touch", // swipes; wheel goes through onHeroWheel
         wheelSpeed: -1,
-        tolerance: 1,
+        tolerance: returnTolerance,
         preventDefault: false, // passive — Lenis keeps full control
         onDown: () => {
           if (state === "hero" && window.scrollY <= DIST() + 2) goBack();
@@ -350,18 +351,30 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
   });
 
   return (
-    <div ref={trackRef} className="relative will-change-transform">
+    <div ref={trackRef} className="relative overflow-x-clip will-change-transform">
       <section
         ref={scene1Ref}
         aria-hidden
         className="cinematic-intro relative h-screen overflow-hidden"
         onClick={() => advanceRef.current()}
       >
-        <img
-          src="/images/hero-cinematic-1.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover object-[50%_58%]"
-        />
+        <picture className="contents">
+          <source
+            type="image/avif"
+            srcSet={heroSrcSet("/images/hero-cinematic-1.jpg", "avif")}
+            sizes={HERO_SIZES}
+          />
+          <source
+            type="image/webp"
+            srcSet={heroSrcSet("/images/hero-cinematic-1.jpg", "webp")}
+            sizes={HERO_SIZES}
+          />
+          <img
+            src="/images/hero-cinematic-1.jpg"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-[50%_58%]"
+          />
+        </picture>
         <div className="ci-fog-back z-[2]" />
         <div
           ref={logoWrapRef}

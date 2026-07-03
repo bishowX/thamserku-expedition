@@ -1,5 +1,17 @@
 {
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm build",
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    }
+  ],
   "redirects": [
     { "source": "/thamserku_expedition_booking/mount-everest-expedition-8848m", "destination": "/expeditions/everest", "permanent": true },
     { "source": "/thamserku_expedition_booking/mount-everest-expedition-8848m/", "destination": "/expeditions/everest", "permanent": true },

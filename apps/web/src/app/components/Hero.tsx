@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { stegaClean } from "@sanity/client/stega";
 import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
+import { heroSrcSet, HERO_SIZES } from "../../lib/heroImage";
 import { TextReveal } from "./TextReveal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,20 +19,16 @@ const DEFAULT_HEADLINE = "The Himalayas, understood through generations.";
 const DEFAULT_SUBHEADING =
   "Private expeditions shaped by Sherpa wisdom, Himalayan discipline and nearly four decades of legacy.";
 
+// Local image for the cinematic intro treatment — the CMS heroImage is
+// intentionally bypassed on this design.
+const HERO_IMAGE = "/images/cinematic-hero-2.jpg";
+
 export function Hero({
   data,
   encodeDataAttribute,
-  bgImage = "/images/cinematic-hero-2.jpg",
-  centered = false,
 }: {
   data?: HeroData;
   encodeDataAttribute?: EncodeDataAttributeCallback;
-  /** Local image for the cinematic intro treatment — the CMS heroImage is
-   *  intentionally bypassed on this design. `/?hero=2` swaps in the
-   *  daylight variant. */
-  bgImage?: string;
-  /** `/?center=1` variant: headline + sub centered instead of bottom-left. */
-  centered?: boolean;
 }) {
   const headline = stegaClean(data?.heroHeadline ?? DEFAULT_HEADLINE);
   const subheading = data?.heroSubheading ?? DEFAULT_SUBHEADING;
@@ -102,9 +99,7 @@ export function Hero({
   return (
     <section
       ref={sectionRef}
-      className={`relative w-full min-h-screen flex flex-col ${
-        centered ? "justify-center" : "justify-end"
-      } text-white p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12 overflow-hidden`}
+      className="relative w-full min-h-screen flex flex-col justify-end text-white p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12 overflow-hidden"
     >
       <div className="absolute inset-0 z-0">
         {/* Transform ownership, outer → inner: parallax ST / cinematic intro zoom.
@@ -114,12 +109,16 @@ export function Hero({
             data-cinematic-zoom
             className="absolute inset-0 will-change-transform"
           >
-            <img
-              ref={bgRef}
-              src={bgImage}
-              alt="Hero background"
-              className="w-full h-full object-cover"
-            />
+            <picture className="contents">
+              <source type="image/avif" srcSet={heroSrcSet(HERO_IMAGE, "avif")} sizes={HERO_SIZES} />
+              <source type="image/webp" srcSet={heroSrcSet(HERO_IMAGE, "webp")} sizes={HERO_SIZES} />
+              <img
+                ref={bgRef}
+                src={HERO_IMAGE}
+                alt="Hero background"
+                className="w-full h-full object-cover"
+              />
+            </picture>
           </div>
         </div>
         <div
@@ -130,16 +129,14 @@ export function Hero({
 
       <div
         ref={contentRef}
-        className={`relative z-10 w-full flex flex-col ${
-          centered ? "items-center text-center" : "items-start"
-        } gap-8 will-change-transform`}
+        className="relative z-10 w-full flex flex-col items-start gap-8 will-change-transform"
       >
         {/* Inner wrapper is owned by the cinematic intro (yPercent drift);
             contentRef is owned by the scrubbed parallax — one writer each. */}
         <div data-cinematic-content className="will-change-transform">
           <h1
             ref={headlineRef}
-            className={`font-['Fraunces'] font-light text-display-xl leading-[0.85] tracking-tight text-balance mb-6 opacity-0 max-w-[26ch] ${centered ? "mx-auto" : ""} [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]`}
+            className="font-['Fraunces'] font-light text-display-xl leading-[0.85] tracking-tight text-balance mb-6 opacity-0 max-w-[26ch] [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]"
             data-sanity={encodeDataAttribute?.(["homePage", "heroHeadline"])}
           >
             <TextReveal text={headline} />
@@ -147,7 +144,7 @@ export function Hero({
           <p
             ref={subRef}
             data-cinematic-sub
-            className={`font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] ${centered ? "mx-auto" : ""} opacity-0 whitespace-pre-line [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]`}
+            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0 whitespace-pre-line [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
           >
             {subheading}
           </p>
