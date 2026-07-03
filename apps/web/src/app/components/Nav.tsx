@@ -81,7 +81,25 @@ export function Nav({
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const offset = topOffset?.() ?? 0;
-      setScrolled(currentScrollY > offset + 50);
+      // On the cinematic Home, section 2 (the hero) is treated as the page's
+      // first screen, so the bar stays transparent/black-text until you've
+      // scrolled halfway through it — then it commits to the dark state. Other
+      // pages flip almost immediately (50px past their top).
+      const darkThreshold = cinematic
+        ? offset + window.innerHeight * 0.5
+        : offset + 50;
+      // Hysteresis: flip to dark only past the threshold, back to transparent
+      // only once BELOW it by the same band. Without this dead band, Lenis's
+      // momentum settling right on the boundary toggles the state every frame —
+      // read on screen as the bar flickering between its two themes.
+      const band = 60;
+      setScrolled((prev) =>
+        currentScrollY > darkThreshold + band
+          ? true
+          : currentScrollY < darkThreshold - band
+            ? false
+            : prev,
+      );
       if (hideOnScrollDown) {
         if (
           currentScrollY > lastScrollY.current &&
@@ -94,13 +112,17 @@ export function Nav({
         }
         lastScrollY.current = currentScrollY;
       }
+      // Progress is measured from the nav's "page top" (the cinematic hero's
+      // rest position on Home), not absolute scroll 0 — so section 2 reads as
+      // 0% instead of already showing a sliver of fill one viewport down.
+      const progressed = Math.max(0, currentScrollY - offset);
       const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(docHeight > 0 ? (currentScrollY / docHeight) * 100 : 0);
+        document.documentElement.scrollHeight - window.innerHeight - offset;
+      setScrollProgress(docHeight > 0 ? (progressed / docHeight) * 100 : 0);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hideOnScrollDown, topOffset]);
+  }, [hideOnScrollDown, topOffset, cinematic]);
 
   useEffect(() => {
     // Lock scroll while the mobile menu is open. On close, CLEAR the inline
@@ -167,6 +189,12 @@ export function Nav({
       : "bg-[#1A1A1A]"
     : "bg-transparent";
   const navHoverClass = heroLight ? "hover:text-black/55" : "hover:text-[#C8CDD2]";
+  // On the cinematic nav the light↔dark theme flip must be instant (see the
+  // bar's transition note): a link's own `transition-colors` would otherwise
+  // animate its inherited black↔white through grey and reintroduce the flicker.
+  // Elsewhere text is always white, so the flip never fires — keep the smooth
+  // hover fade there.
+  const navColorTransition = cinematic ? "" : "transition-colors";
   const navActiveClass = heroLight
     ? "text-black/70 border-b border-black/70"
     : "text-[#C8CDD2] border-b border-[#C8CDD2]";
@@ -188,7 +216,7 @@ export function Nav({
         // overflow-x-clip, so 100vw never spawns a horizontal scrollbar.)
         className={`fixed top-0 left-0 w-screen z-50 ${
           cinematic
-            ? "transition-[translate,color]" // v4 translate-y-* utilities set `translate`, not `transform`; bg snaps instantly (below) so it never lags the dropdowns' instant bg
+            ? "transition-[translate,background-color]" // The BACKGROUND fades smoothly (browsers interpolate transparent↔solid via premultiplied alpha, so it's a clean panel fade-in, no mud). `color` is deliberately EXCLUDED so the text snaps black↔white instead of passing through grey — that grey midpoint over the half-formed bar was the section-2 flicker. Links snap their color too (see navColorTransition).
             : "transition-all"
         } duration-500 ${heroLight ? "text-black" : "text-white"} ${barToneClass} ${
           hidden && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"
@@ -217,14 +245,14 @@ export function Nav({
             <div className="hidden lg:flex items-center gap-8 font-['DM_Mono'] uppercase tracking-[2.4px]">
               <Link
                 to="/"
-                className={`text-[11px] nav-link-underline ${navHoverClass} transition-colors`}
+                className={`text-[11px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
                 onMouseEnter={handleMenuClose}
               >
                 Home
               </Link>
 
               <button
-                className={`text-[11px] flex items-center gap-[2px] transition-colors uppercase ${
+                className={`text-[11px] flex items-center gap-[2px] ${navColorTransition} uppercase ${
                   openMenu === "about" ? navActiveClass : navHoverClass
                 }`}
                 onMouseEnter={() => handleMenuEnter("about")}
@@ -240,7 +268,7 @@ export function Nav({
               </button>
 
               <button
-                className={`text-[11px] flex items-center gap-[2px] transition-colors uppercase ${
+                className={`text-[11px] flex items-center gap-[2px] ${navColorTransition} uppercase ${
                   openMenu === "expedition" ? navActiveClass : navHoverClass
                 }`}
                 onMouseEnter={() => handleMenuEnter("expedition")}
@@ -257,7 +285,7 @@ export function Nav({
 
               <Link
                 to="/editions"
-                className={`text-[11px] nav-link-underline ${navHoverClass} transition-colors`}
+                className={`text-[11px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
                 onMouseEnter={handleMenuClose}
               >
                 Editions
@@ -265,7 +293,7 @@ export function Nav({
 
               <Link
                 to="/safety"
-                className={`text-[11px] nav-link-underline ${navHoverClass} transition-colors`}
+                className={`text-[11px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
                 onMouseEnter={handleMenuClose}
               >
                 Safety
