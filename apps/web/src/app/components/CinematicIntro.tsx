@@ -367,7 +367,7 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
           ref={logoWrapRef}
           className="absolute inset-0 z-[3] grid place-items-center will-change-transform"
         >
-          <div className="w-[clamp(260px,64vw,1000px)] aspect-[1115.63/208] -translate-y-[8vh] [filter:drop-shadow(0_4px_40px_rgba(0,30,60,0.35))]">
+          <div className="w-[clamp(260px,64vw,1000px)] aspect-[1115.63/208] -translate-y-[8vh] [filter:drop-shadow(0_4px_16px_rgba(0,0,0,0.35))]">
             <ThamserkuLogo />
           </div>
         </div>
