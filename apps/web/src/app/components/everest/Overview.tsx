@@ -82,11 +82,11 @@ export function Overview({
             )}
 
             {specs.length > 0 && (
-              <div data-reveal className="border-t border-[rgba(26,26,26,0.2)]">
+              <div data-reveal>
                 {specs.map((spec, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-3 border-b border-[rgba(26,26,26,0.2)]"
+                    className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-3 border-b border-dashed border-[rgba(26,26,26,0.22)]"
                   >
                     <p className="font-['DM_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
                       {spec.label}
