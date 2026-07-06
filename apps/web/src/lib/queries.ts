@@ -555,6 +555,7 @@ const EDITION_CONFIG_PROJECTION = `{
   acclimatisation[]{ label, included, priceDelta },
   accommodation[]{ name, options[]{ label, included, priceDelta } },
   guiding[]{ name, options[]{ label, included, priceDelta } },
+  support[]{ name, options[]{ label, included, priceDelta } },
   oxygen,
   helicopter[]{ label, included, priceDelta }
 }`;

@@ -270,6 +270,7 @@ export type RawEditionConfig = {
   acclimatisation?: RawOption[]
   accommodation?: RawItem[]
   guiding?: RawItem[]
+  support?: RawItem[]
   oxygen?: RawOxygenEdition
   helicopter?: RawOption[]
 }
@@ -284,6 +285,7 @@ export type DesignConfig = {
 const GROUP_ACCLIMATISATION = 'Acclimatisation & Additional Climb'
 const GROUP_ACCOMMODATION = 'Accommodation Preferences'
 const GROUP_GUIDING = 'Guiding Configurations'
+const GROUP_SUPPORT = 'Support & Safety'
 const GROUP_OXYGEN = 'Oxygen Preferences'
 const GROUP_HELICOPTER = 'Helicopter Inclusion'
 
@@ -379,7 +381,7 @@ function oxygenFeature(dc: DesignConfig): ConfigFeature | null {
 
 // Build pick-one features for a category (accommodation/guiding) by unioning
 // item names across editions and collecting each edition's matching item.
-function itemFeatures(dc: DesignConfig, section: 'accommodation' | 'guiding', group: string): ConfigFeature[] {
+function itemFeatures(dc: DesignConfig, section: 'accommodation' | 'guiding' | 'support', group: string): ConfigFeature[] {
   const names = orderedUnion(BCD.map((ed) => (editionOf(dc, ed)?.[section] ?? []).map((i) => i?.name)))
   return names.map((name) => {
     const byEdition = new Map<EditionLetter, RawItem>()
@@ -413,6 +415,7 @@ export function normalizeDesignConfig(dc: DesignConfig | undefined | null): {
 
   matrix.push(...itemFeatures(dc, 'accommodation', GROUP_ACCOMMODATION))
   matrix.push(...itemFeatures(dc, 'guiding', GROUP_GUIDING))
+  matrix.push(...itemFeatures(dc, 'support', GROUP_SUPPORT))
 
   const oxy = oxygenFeature(dc)
   if (oxy) matrix.push(oxy)
