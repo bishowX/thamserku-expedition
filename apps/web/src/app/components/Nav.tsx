@@ -81,22 +81,20 @@ export function Nav({
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const offset = topOffset?.() ?? 0;
-      // On the cinematic Home, section 2 (the hero) is treated as the page's
-      // first screen, so the bar stays transparent/black-text until you've
-      // scrolled halfway through it — then it commits to the dark state. Other
-      // pages flip almost immediately (50px past their top).
-      const darkThreshold = cinematic
-        ? offset + window.innerHeight * 0.5
-        : offset + 50;
-      // Hysteresis: flip to dark only past the threshold, back to transparent
-      // only once BELOW it by the same band. Without this dead band, Lenis's
-      // momentum settling right on the boundary toggles the state every frame —
-      // read on screen as the bar flickering between its two themes.
+      // Same feel as Home everywhere: the bar stays transparent over the top of
+      // the page, then commits to dark past a threshold, and clears back to
+      // transparent as you scroll up past it. Home keeps its tuned half-viewport
+      // threshold (the hero is a full screen and rests one viewport down past
+      // the intro — hence `offset`); ordinary pages (offset 0) darken 300px down
+      // from their top. The ±60 band is the flicker-proof dead band: dark only
+      // past threshold + 60, transparent again only once back below
+      // threshold - 60, so Lenis momentum can't toggle it per frame.
+      const threshold = offset + (cinematic ? window.innerHeight * 0.5 : 300);
       const band = 60;
       setScrolled((prev) =>
-        currentScrollY > darkThreshold + band
+        currentScrollY > threshold + band
           ? true
-          : currentScrollY < darkThreshold - band
+          : currentScrollY < threshold - band
             ? false
             : prev,
       );
@@ -216,9 +214,9 @@ export function Nav({
         // overflow-x-clip, so 100vw never spawns a horizontal scrollbar.)
         className={`fixed top-0 left-0 w-screen z-50 ${
           cinematic
-            ? "transition-[translate,background-color]" // The BACKGROUND fades smoothly (browsers interpolate transparent↔solid via premultiplied alpha, so it's a clean panel fade-in, no mud). `color` is deliberately EXCLUDED so the text snaps black↔white instead of passing through grey — that grey midpoint over the half-formed bar was the section-2 flicker. Links snap their color too (see navColorTransition).
-            : "transition-all"
-        } duration-500 ${heroLight ? "text-black" : "text-white"} ${barToneClass} ${
+            ? "transition-[translate,background-color] duration-500" // The BACKGROUND fades smoothly (browsers interpolate transparent↔solid via premultiplied alpha, so it's a clean panel fade-in, no mud). `color` is deliberately EXCLUDED so the text snaps black↔white instead of passing through grey — that grey midpoint over the half-formed bar was the section-2 flicker. Links snap their color too (see navColorTransition). Kept at 500ms to stay in sync with the intro's transition choreography.
+            : "transition-all duration-300"
+        } ${heroLight ? "text-black" : "text-white"} ${barToneClass} ${
           hidden && !mobileMenuOpen ? "-translate-y-full" : "translate-y-0"
         }`}
         onMouseLeave={handleNavLeave}
