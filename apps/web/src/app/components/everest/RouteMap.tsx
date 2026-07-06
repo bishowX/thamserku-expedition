@@ -145,6 +145,7 @@ export function RouteMap({
               pin: true,
               anticipatePin: 1,
               scrub: 0.6,
+              invalidateOnRefresh: true,
             },
           });
 

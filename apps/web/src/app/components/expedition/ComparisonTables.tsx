@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   tableRows,
   EDITION_LETTERS,
@@ -33,6 +34,20 @@ export function ComparisonTables({
   const [expanded, setExpanded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
+
+  // Toggling rows changes this section's height, which shifts the pinned
+  // RouteMap below it. Recompute ScrollTrigger start/end after the DOM
+  // reflows so the pin doesn't fire at stale offsets (overlap/jank).
+  useEffect(() => {
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [expanded, tab]);
 
   if (core.length === 0 && addons.length === 0) return null;
 
