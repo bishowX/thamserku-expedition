@@ -17,6 +17,7 @@ export default defineType({
     { name: 'faqs',            title: 'FAQs' },
     { name: 'closing',         title: 'Closing' },
     { name: 'designConfig',    title: 'Design Config' },
+    { name: 'servicesConfig',  title: 'Services & Add-ons' },
   ],
   fields: [
     // ── Identity ─────────────────────────────────────────────────────────────
@@ -205,6 +206,17 @@ export default defineType({
       name: 'designConfig',
       title: 'Design Configuration',
       type: 'designConfig',
+    }),
+
+    // ── Services & Add-ons ───────────────────────────────────────────────────
+    // Display-only content for the dossier page's Services tab (appended after
+    // the designConfig core rows). Deliberately separate from designConfig —
+    // never read by the configurator. See lib/servicesConfig.ts.
+    defineField({
+      group: 'servicesConfig',
+      name: 'servicesConfig',
+      title: 'Services & Add-ons',
+      type: 'servicesConfig',
     }),
   ],
   orderings: [

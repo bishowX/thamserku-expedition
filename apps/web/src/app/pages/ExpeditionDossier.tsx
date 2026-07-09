@@ -122,7 +122,7 @@ export default function ExpeditionDossier() {
         <ExpeditionEditions name={expedition.name} editions={expedition.editions} />
         <ComparisonTables
           name={expedition.name}
-          matrix={expedition.configMatrix}
+          servicesConfig={expedition.servicesConfig}
           editions={expedition.editions}
         />
         <RouteMap

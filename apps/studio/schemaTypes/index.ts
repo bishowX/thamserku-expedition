@@ -29,6 +29,8 @@ import configItem from './objects/configItem'
 import oxygenEdition from './objects/oxygenEdition'
 import editionConfig from './objects/editionConfig'
 import designConfig from './objects/designConfig'
+import servicesConfigRow from './objects/servicesConfigRow'
+import servicesConfig from './objects/servicesConfig'
 import statItem from './objects/statItem'
 import legacyTimelineItem from './objects/legacyTimelineItem'
 import blockContent from './objects/blockContent'
@@ -67,6 +69,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   oxygenEdition,
   editionConfig,
   designConfig,
+  servicesConfigRow,
+  servicesConfig,
   statItem,
   legacyTimelineItem,
   blockContent,

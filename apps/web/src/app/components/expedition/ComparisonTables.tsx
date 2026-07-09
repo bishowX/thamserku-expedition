@@ -1,32 +1,31 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  tableRows,
-  EDITION_LETTERS,
-  type ConfigMatrix,
-} from "../../../lib/configMatrix";
+import { EDITION_LETTERS } from "../../../lib/configMatrix";
+import { servicesRows, type RawServicesConfig } from "../../../lib/servicesConfig";
 import { useSectionReveal } from "../../hooks/useSectionReveal";
 
 const VISIBLE_ROWS = 5;
 
 interface ComparisonTablesProps {
   name: string;
-  matrix?: ConfigMatrix;
+  servicesConfig?: RawServicesConfig | null;
   editions?: Array<{ letter: string; name: string }>;
 }
 
 /**
  * Tabbed per-peak comparison table (Services / Add-on), all five editions as
- * columns. Display-only — same `configMatrix` that drives the Design configurator.
- * Alpine (A) & Explorer (E) carry no matrix data (contact-only), so their columns
- * render a single "project dependent" note spanning the body.
+ * columns. Display-only, driven ENTIRELY by servicesConfig (split by each
+ * row's `category`) — designConfig/configMatrix never feeds this component,
+ * only the Design configurator. Alpine (A) & Explorer (E) carry no
+ * servicesConfig data (contact-only), so their columns render a single
+ * "project dependent" note spanning the body.
  */
 export function ComparisonTables({
-  matrix = [],
+  servicesConfig,
   editions,
 }: ComparisonTablesProps) {
-  const core = tableRows(matrix, "core");
-  const addons = tableRows(matrix, "addon");
+  const core = servicesRows(servicesConfig, "service");
+  const addons = servicesRows(servicesConfig, "addon");
 
   const [tab, setTab] = useState<"core" | "addon">(
     core.length ? "core" : "addon",

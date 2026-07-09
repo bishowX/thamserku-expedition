@@ -5,6 +5,7 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import type { ConfigMatrix, BasePrices, DesignConfig } from "./configMatrix";
 import { normalizeDesignConfig } from "./configMatrix";
+import type { RawServicesConfig } from "./servicesConfig";
 
 export type SanityEditionRef = {
   _id: string;
@@ -334,6 +335,7 @@ export type SanityExpeditionDossier = {
   closingStatement?: string;
   configMatrix?: ConfigMatrix;
   basePrices?: BasePrices;
+  servicesConfig?: RawServicesConfig | null;
 };
 
 export type RawExpeditionDossier =
@@ -555,7 +557,6 @@ const EDITION_CONFIG_PROJECTION = `{
   acclimatisation[]{ label, included, priceDelta },
   accommodation[]{ name, options[]{ label, included, priceDelta } },
   guiding[]{ name, options[]{ label, included, priceDelta } },
-  support[]{ name, options[]{ label, included, priceDelta } },
   oxygen,
   helicopter[]{ label, included, priceDelta }
 }`;
@@ -565,6 +566,20 @@ export const DESIGN_CONFIG_PROJECTION = `
     b${EDITION_CONFIG_PROJECTION},
     c${EDITION_CONFIG_PROJECTION},
     d${EDITION_CONFIG_PROJECTION}
+  }
+`;
+
+// Services & Add-ons — separate pipeline from designConfig (see
+// lib/servicesConfig.ts). This is the SOLE source for both ComparisonTables
+// tabs (Services + Add-on, split by each row's `category`); designConfig only
+// feeds the configurator. Passed through raw; ComparisonTables normalizes it
+// itself via `servicesRows()`.
+const SERVICES_CONFIG_ROW_PROJECTION = `{ name, text, category }`;
+export const SERVICES_CONFIG_PROJECTION = `
+  servicesConfig{
+    b[]${SERVICES_CONFIG_ROW_PROJECTION},
+    c[]${SERVICES_CONFIG_ROW_PROJECTION},
+    d[]${SERVICES_CONFIG_ROW_PROJECTION}
   }
 `;
 
@@ -602,7 +617,8 @@ export const EXPEDITION_BY_SLUG_QUERY = `*[_type == "expedition" && slug.current
   mandatoryPrerequisite,
   faqs[]{ question, answer },
   closingImage, closingStatement,
-  ${DESIGN_CONFIG_PROJECTION}
+  ${DESIGN_CONFIG_PROJECTION},
+  ${SERVICES_CONFIG_PROJECTION}
 }`;
 
 export type SanityExpeditionForDesign = {
