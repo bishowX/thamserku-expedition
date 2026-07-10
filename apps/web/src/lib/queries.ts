@@ -572,14 +572,16 @@ export const DESIGN_CONFIG_PROJECTION = `
 // Services & Add-ons — separate pipeline from designConfig (see
 // lib/servicesConfig.ts). This is the SOLE source for both ComparisonTables
 // tabs (Services + Add-on, split by each row's `category`); designConfig only
-// feeds the configurator. Passed through raw; ComparisonTables normalizes it
-// itself via `servicesRows()`.
+// feeds the configurator (which stays B/C/D-only). Passed through raw;
+// ComparisonTables normalizes it itself via `servicesRows()`.
 const SERVICES_CONFIG_ROW_PROJECTION = `{ name, text, category }`;
 export const SERVICES_CONFIG_PROJECTION = `
   servicesConfig{
+    a[]${SERVICES_CONFIG_ROW_PROJECTION},
     b[]${SERVICES_CONFIG_ROW_PROJECTION},
     c[]${SERVICES_CONFIG_ROW_PROJECTION},
-    d[]${SERVICES_CONFIG_ROW_PROJECTION}
+    d[]${SERVICES_CONFIG_ROW_PROJECTION},
+    e[]${SERVICES_CONFIG_ROW_PROJECTION}
   }
 `;
 

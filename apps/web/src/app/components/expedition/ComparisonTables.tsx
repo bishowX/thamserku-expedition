@@ -16,9 +16,9 @@ interface ComparisonTablesProps {
  * Tabbed per-peak comparison table (Services / Add-on), all five editions as
  * columns. Display-only, driven ENTIRELY by servicesConfig (split by each
  * row's `category`) — designConfig/configMatrix never feeds this component,
- * only the Design configurator. Alpine (A) & Explorer (E) carry no
- * servicesConfig data (contact-only), so their columns render a single
- * "project dependent" note spanning the body.
+ * only the Design configurator (which stays B/C/D-only). Any edition with no
+ * servicesConfig rows for the current tab (e.g. Alpine/Explorer left empty)
+ * still falls back to a "project dependent" note spanning that column.
  */
 export function ComparisonTables({
   servicesConfig,
