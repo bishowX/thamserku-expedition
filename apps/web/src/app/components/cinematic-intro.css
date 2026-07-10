@@ -190,3 +190,23 @@
     display: none;
   }
 }
+
+/* The nav is hidden purely by GSAP's introPose() (autoAlpha: 0), which only
+   runs once CinematicIntro's client-side effect fires. On first paint —
+   server-rendered HTML, before hydration catches up — nothing hides it,
+   so it flashes visible over scene 1. Match GSAP's autoAlpha:0 here so it's
+   hidden from the very first frame; GSAP's inline styles (higher specificity)
+   take over the instant the effect runs, so there's no visible handoff. */
+[data-cinematic-nav] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* introPose() never runs under reduced motion (useGSAP bails out early), so
+   without this the rule above would hide the nav permanently. */
+@media (prefers-reduced-motion: reduce) {
+  [data-cinematic-nav] {
+    opacity: 1;
+    visibility: visible;
+  }
+}
