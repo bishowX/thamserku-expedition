@@ -20,13 +20,13 @@ const IMAGES = resolve(__dirname, '../public/images')
 // Full-bleed heroes: cover common DPR×viewport combinations without shipping a
 // 2560px file to a 390px phone. The largest step matches the source's useful
 // resolution (retina desktop / 4K).
-const WIDTHS = [640, 960, 1280, 1600, 1920, 2560]
+const WIDTHS = [640, 960, 1280, 1600, 1920, 2560, 3840]
 
 // Quality tuned per format — AVIF holds up far lower than WebP at equal bytes.
-const AVIF = { quality: 50, effort: 5 }
-const WEBP = { quality: 72 }
+const AVIF = { quality: 60, effort: 5 }
+const WEBP = { quality: 82 }
 
-const SOURCES = ['hero-cinematic-1.jpg', 'cinematic-hero-2.jpg']
+const SOURCES = ['hero-cinematic-1.jpg', 'home-hero-2.jpg']
 
 const kb = (p) => (statSync(p).size / 1024).toFixed(0)
 

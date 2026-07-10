@@ -21,7 +21,7 @@ const DEFAULT_SUBHEADING =
 
 // Local image for the cinematic intro treatment — the CMS heroImage is
 // intentionally bypassed on this design.
-const HERO_IMAGE = "/images/cinematic-hero-2.jpg";
+const HERO_IMAGE = "/images/home-hero-2.jpg";
 
 export function Hero({
   data,
@@ -116,7 +116,7 @@ export function Hero({
                 ref={bgRef}
                 src={HERO_IMAGE}
                 alt="Hero background"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-[center_35%]"
               />
             </picture>
           </div>

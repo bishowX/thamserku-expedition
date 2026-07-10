@@ -6,7 +6,7 @@
 
 const HERO_WIDTHS: Record<string, number[]> = {
   'hero-cinematic-1': [640, 960, 1280, 1600, 1920, 2560],
-  'cinematic-hero-2': [640, 960, 1280, 1600, 1920],
+  'home-hero-2': [640, 960, 1280, 1600, 1920, 2560, 3840],
 }
 
 // The heroes are full-bleed, so the intrinsic display width is the viewport.
