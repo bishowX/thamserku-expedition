@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EDITION_LETTERS } from "../../../lib/configMatrix";
 import { servicesRows, type RawServicesConfig } from "../../../lib/servicesConfig";
@@ -132,7 +133,12 @@ export function ComparisonTables({
                             rowSpan={visibleRows.length}
                             className="px-4 text-center align-middle bg-white/[0.02] font-['Fraunces'] italic text-body text-[#8A929B]"
                           >
-                            Project dependent
+                            <Link
+                              to="/consultation"
+                              className="underline underline-offset-4 decoration-[#8A929B]/50 hover:text-white hover:decoration-white transition-colors"
+                            >
+                              Project dependent
+                            </Link>
                           </td>
                         );
                       }
