@@ -32,7 +32,7 @@ export function meta({ data }: Route.MetaArgs) {
   });
 }
 
-type ActionErrors = { fullName?: string; email?: string };
+type ActionErrors = { fullName?: string; email?: string; agreedToTerms?: string };
 
 export async function action({ request }: { request: Request }): Promise<
   | { success: true }
@@ -42,10 +42,12 @@ export async function action({ request }: { request: Request }): Promise<
 
   const fullName = (formData.get('fullName') as string | null)?.trim() ?? '';
   const email = (formData.get('email') as string | null)?.trim() ?? '';
+  const agreedToTerms = formData.get('agreedToTerms') === 'on';
 
   const errors: ActionErrors = {};
   if (!fullName) errors.fullName = 'Please enter your name.';
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = 'Please enter a valid email address.';
+  if (!agreedToTerms) errors.agreedToTerms = 'You must agree to the Terms & Conditions to continue.';
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };

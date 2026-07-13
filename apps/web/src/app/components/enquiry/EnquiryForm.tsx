@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ChevronDown, CheckCircle } from "lucide-react";
-import { useNavigation, Form } from "react-router";
+import { useNavigation, Form, Link } from "react-router";
 import type { ConsultationPage } from "../../../lib/queries";
 
-type Errors = { fullName?: string; email?: string };
+type Errors = { fullName?: string; email?: string; agreedToTerms?: string };
 
 const appointmentUrl = import.meta.env.VITE_GOOGLE_CALENDAR_URL as
   | string
@@ -23,6 +23,7 @@ export const EnquiryForm = ({
 
   const [contactMethod, setContactMethod] = useState<string>("");
   const [country, setCountry] = useState<string>("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const alternativeLabel = data?.formAlternativeLabel;
   const alternativeSubheading = data?.formAlternativeSubheading;
@@ -198,12 +199,36 @@ export const EnquiryForm = ({
 
           {/* Submission Row */}
           <div className="pt-4 border-t border-[#E5E7EB]">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 py-4">
-              <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] max-w-[60ch]">
-                BY SUBMITTING, YOU AGREE TO OUR PRIVACY TERMS{" "}
-                <span className="mx-2">·</span> WE WILL NEVER SHARE YOUR
-                DETAILS.
-              </p>
+            <div className="flex flex-col gap-3">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="agreedToTerms"
+                  required
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="w-4 h-4 shrink-0 accent-[#2E353C] cursor-pointer"
+                />
+                <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+                  I've read the{" "}
+                  <Link
+                    to="/terms-and-conditions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-[#1A1A1A] transition-colors"
+                  >
+                    Terms &amp; Conditions
+                  </Link>{" "}
+                  <span className="ml-1">·</span>
+                </span>
+              </label>
+              {errors?.agreedToTerms && !agreedToTerms && (
+                <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-red-500">
+                  {errors.agreedToTerms}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-end gap-8 py-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
