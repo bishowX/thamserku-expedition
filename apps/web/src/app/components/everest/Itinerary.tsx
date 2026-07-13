@@ -5,8 +5,10 @@ type ItineraryDay = {
   meals: string;
 };
 
-const DEFAULT_ITINERARY_LEGEND =
-  "MLN — Mountain Lodges of Nepal · B — Breakfast · L — Lunch · D — Dinner";
+// Manaslu doesn't use Mountain Lodges of Nepal, so its legend omits that
+// mention. Every other expedition links the phrase to the operator's site.
+const MANASLU_SLUG = "manaslu";
+const MLN_WEBSITE_URL = "https://mountainlodgesofnepal.com/";
 
 import { useRef } from "react";
 import { stegaClean } from "@sanity/client/stega";
@@ -14,14 +16,14 @@ import { TextReveal } from "../TextReveal";
 import { useSectionReveal } from "../../hooks/useSectionReveal";
 
 type Props = {
+  slug?: string;
   itineraryHeading?: string;
-  itineraryLegend?: string;
   itinerary?: ItineraryDay[];
 };
 
-export function Itinerary({ itineraryHeading, itineraryLegend, itinerary }: Props) {
+export function Itinerary({ slug, itineraryHeading, itinerary }: Props) {
   const rows = itinerary ?? [];
-  const legend = itineraryLegend?.trim() || DEFAULT_ITINERARY_LEGEND;
+  const isManaslu = slug === MANASLU_SLUG;
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
 
@@ -74,7 +76,21 @@ export function Itinerary({ itineraryHeading, itineraryLegend, itinerary }: Prop
               </div>
             ))}
             <p data-reveal-row className="border-t border-white/20 py-5 md:py-4 font-['DM_Sans'] font-light text-body leading-[1.6] text-white/60">
-              {legend}
+              {isManaslu ? (
+                "B — Breakfast · L — Lunch · D — Dinner"
+              ) : (
+                <>
+                  <a
+                    href={MLN_WEBSITE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-white transition-colors"
+                  >
+                    MLN — Mountain Lodges of Nepal
+                  </a>
+                  {" "}· B — Breakfast · L — Lunch · D — Dinner
+                </>
+              )}
             </p>
           </div>
         )}

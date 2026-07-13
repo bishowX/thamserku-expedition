@@ -106,14 +106,6 @@ export default defineType({
     defineField({ group: 'itinerary', name: 'itineraryHeading', title: 'Itinerary — Heading', type: 'string', description: 'e.g. "Standard Itinerary"' }),
     defineField({
       group: 'itinerary',
-      name: 'itineraryLegend',
-      title: 'Abbreviation Legend',
-      type: 'text',
-      rows: 3,
-      description: 'Shown below the itinerary table. e.g. "MLN — Mountain Lodges of Nepal · B — Breakfast · L — Lunch · D — Dinner"',
-    }),
-    defineField({
-      group: 'itinerary',
       name: 'itinerary',
       title: 'Itinerary Days',
       type: 'array',

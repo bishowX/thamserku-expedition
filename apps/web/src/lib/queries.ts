@@ -317,7 +317,6 @@ export type SanityExpeditionDossier = {
   highlightsImage?: { asset: { _ref: string } } | null;
   audienceTiles?: SanityAudienceTile[];
   itineraryHeading?: string;
-  itineraryLegend?: string;
   itinerary?: Array<{ days: string; activity: string; accommodation: string; meals: string }>;
   routeWaypoints?: SanityRouteWaypoint[];
   routeHeadline?: string;
@@ -609,7 +608,7 @@ export const EXPEDITION_BY_SLUG_QUERY = `*[_type == "expedition" && slug.current
   overviewSpecsHeading, overviewSpecs[]{ label, value },
   whoItIsForHeadline, highlightsImage,
   audienceTiles[]{ label, subline, description },
-  itineraryHeading, itineraryLegend, itinerary[]{ days, activity, accommodation, meals },
+  itineraryHeading, itinerary[]{ days, activity, accommodation, meals },
   routeWaypoints[]{ name, altitude },
   routeHeadline, routeHeadlineSuffix, routePhilosophy, acclimatisationNote, summitWindowNote,
   editions[]->{ letter, name, subtitle, positioning, targetAudience, character, isStandard },

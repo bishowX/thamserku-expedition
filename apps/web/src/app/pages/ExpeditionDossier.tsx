@@ -109,8 +109,8 @@ export default function ExpeditionDossier() {
           audienceTiles={expedition.audienceTiles}
         />
         <Itinerary
+          slug={expedition.slug.current}
           itineraryHeading={expedition.itineraryHeading}
-          itineraryLegend={expedition.itineraryLegend}
           itinerary={expedition.itinerary}
         />
         <Inclusions
