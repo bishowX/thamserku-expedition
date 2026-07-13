@@ -533,6 +533,7 @@ export type TermsPageData = {
   termsPage: {
     heroEyebrow?: string;
     heroTitle?: string;
+    heroImage?: { asset: { _ref: string } } | null;
     heroIntro?: PortableTextBlock[];
     heroNote?: string;
     body?: PortableTextBlock[];
@@ -541,7 +542,7 @@ export type TermsPageData = {
 
 export const TERMS_QUERY = `{
   "termsPage": *[_type == "termsPage"][0] {
-    heroEyebrow, heroTitle, heroIntro, heroNote,
+    heroEyebrow, heroTitle, heroImage, heroIntro, heroNote,
     body
   }
 }`;

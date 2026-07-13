@@ -8,6 +8,7 @@ import { loadQuery } from "../../lib/loader.server";
 import { pageMeta } from "../../lib/seo";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
+import { TermsHero } from "../components/terms/TermsHero";
 import { PortableTextBody } from "../components/PortableTextBody";
 import type { Route } from "./+types/TermsPage";
 
@@ -39,38 +40,24 @@ export default function TermsPage() {
     <main className="min-h-screen bg-[#1A1A1A]">
       <Nav />
 
-      {/* Hero */}
-      <section className="pt-32 pb-16 px-5 md:px-8">
+      <TermsHero page={page} />
+
+      {/* Body */}
+      <section className="bg-[#F5F1EA] py-16 md:py-24 px-5 md:px-8">
         <div className="max-w-4xl mx-auto">
-          {page?.heroEyebrow && (
-            <p className="font-['DM_Mono'] text-[#C8CDD2] text-[11px] uppercase tracking-[0.22em] mb-4">
-              {page.heroEyebrow}
-            </p>
-          )}
-          {page?.heroTitle && (
-            <h1 className="font-['Fraunces'] text-display-l text-white font-light mb-6">
-              {page.heroTitle}
-            </h1>
-          )}
           {page?.heroIntro?.length ? (
-            <div className="max-w-2xl">
-              <PortableTextBody value={page.heroIntro} theme="dark" size="lg" />
+            <div className="max-w-2xl mb-10">
+              <PortableTextBody value={page.heroIntro} theme="light" size="lg" />
             </div>
           ) : null}
           {page?.heroNote && (
-            <p className="text-body text-[#5A6673] mt-4">{page.heroNote}</p>
+            <p className="text-body text-[#5A6673] mb-10">{page.heroNote}</p>
           )}
+          {page?.body?.length ? (
+            <PortableTextBody value={page.body} theme="light" />
+          ) : null}
         </div>
       </section>
-
-      {/* Body */}
-      {page?.body?.length ? (
-        <section className="pb-16 md:pb-24 px-5 md:px-8">
-          <div className="max-w-4xl mx-auto">
-            <PortableTextBody value={page.body} theme="dark" />
-          </div>
-        </section>
-      ) : null}
 
       <Footer />
     </main>
