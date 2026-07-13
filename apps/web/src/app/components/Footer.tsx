@@ -129,6 +129,31 @@ export function Footer() {
             >
               Enquire
             </Link>
+
+            <div className="flex flex-col items-start gap-5 pt-4 md:pt-10">
+              <h4 className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+                WE ACCEPT
+              </h4>
+              <div className="flex items-center gap-5">
+                <img src="/images/payments/visa.svg" alt="Visa" className="size-9" />
+                <img
+                  src="/images/payments/mastercard.svg"
+                  alt="Mastercard"
+                  className="size-9"
+                />
+                <img
+                  src="/images/payments/amex.svg"
+                  alt="American Express"
+                  className="size-9"
+                />
+                <img src="/images/payments/jcb.svg" alt="JCB" className="size-9" />
+                <img
+                  src="/images/payments/paypal.svg"
+                  alt="PayPal"
+                  className="size-9"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
