@@ -96,12 +96,6 @@ export function Footer() {
             >
               Yeti Infrastructure
             </Link>
-            <Link
-              to="/terms-and-conditions"
-              className="hover:text-white transition-colors"
-            >
-              Terms & Conditions
-            </Link>
           </div>
 
           <div className="w-full md:w-2/12 flex flex-col gap-6 font-['DM_Sans'] font-light text-body">
