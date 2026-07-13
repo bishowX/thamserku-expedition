@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, CheckCircle } from "lucide-react";
+import { ChevronDown, CheckCircle, Check } from "lucide-react";
 import { useNavigation, Form, Link } from "react-router";
 import type { ConsultationPage } from "../../../lib/queries";
 
@@ -34,7 +34,7 @@ export const EnquiryForm = ({
   if (submitted) {
     return (
       <section id="letter-path" className="bg-white py-24">
-        <div className="max-w-[880px] mx-auto px-8 flex flex-col items-center text-center">
+        <div className="max-w-[880px] mx-auto px-4 md:px-8 flex flex-col items-center text-center">
           <div className="w-12 h-12 rounded-full border border-[#C8CDD2] flex items-center justify-center mb-12">
             <CheckCircle className="w-5 h-5 text-[#2E353C]" strokeWidth={1.5} />
           </div>
@@ -59,7 +59,7 @@ export const EnquiryForm = ({
 
   return (
     <section id="letter-path" className="bg-white py-24">
-      <div className="max-w-[880px] mx-auto px-8">
+      <div className="max-w-[880px] mx-auto px-4 md:px-8">
         {/* Alternative Path Header */}
         <div className="mb-8 flex flex-col items-center text-center gap-4">
           <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
@@ -200,16 +200,22 @@ export const EnquiryForm = ({
           {/* Submission Row */}
           <div className="pt-4 border-t border-[#E5E7EB]">
             <div className="flex flex-col gap-3">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="agreedToTerms"
-                  required
-                  checked={agreedToTerms}
-                  onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  className="w-4 h-4 shrink-0 accent-[#2E353C] cursor-pointer"
-                />
-                <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <span className="relative shrink-0 w-4 h-4">
+                  <input
+                    type="checkbox"
+                    name="agreedToTerms"
+                    required
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    className="peer appearance-none w-4 h-4 border border-[#5A6673] cursor-pointer checked:bg-[#2E353C] checked:border-[#2E353C]"
+                  />
+                  <Check
+                    className="pointer-events-none absolute inset-0 m-auto w-3 h-3 text-white opacity-0 peer-checked:opacity-100"
+                    strokeWidth={3}
+                  />
+                </span>
+                <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] leading-4 text-[#5A6673]">
                   I've read the{" "}
                   <Link
                     to="/terms-and-conditions"
@@ -218,7 +224,8 @@ export const EnquiryForm = ({
                     className="underline hover:text-[#1A1A1A] transition-colors"
                   >
                     Terms &amp; Conditions
-                  </Link>{" "}
+                  </Link>
+                  {" "}
                   <span className="ml-1">·</span>
                 </span>
               </label>
@@ -232,7 +239,7 @@ export const EnquiryForm = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="shrink-0 self-center md:self-auto font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[13px] text-[#2E353C] border border-[#2E353C] px-8 py-4 hover:bg-[#2E353C] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full md:w-auto shrink-0 self-center md:self-auto font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[13px] text-[#2E353C] border border-[#2E353C] px-8 py-4 hover:bg-[#2E353C] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "SENDING…" : "SEND THE FORM →"}
               </button>
@@ -250,12 +257,12 @@ export const EnquiryForm = ({
               href={appointmentUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[13px] text-[#2E353C] border border-[#2E353C] px-8 py-4 hover:bg-[#2E353C] hover:text-white transition-colors"
+              className="w-full md:w-auto text-center font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[13px] text-[#2E353C] border border-[#2E353C] px-8 py-4 hover:bg-[#2E353C] hover:text-white transition-colors"
             >
               Book a Virtual Call
             </a>
           ) : (
-            <span className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[13px] text-[#2E353C] border border-[#2E353C] px-8 py-4 opacity-50 cursor-default">
+            <span className="w-full md:w-auto text-center font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[13px] text-[#2E353C] border border-[#2E353C] px-8 py-4 opacity-50 cursor-default">
               Book a Virtual Call
             </span>
           )}
