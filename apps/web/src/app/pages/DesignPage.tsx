@@ -101,7 +101,7 @@ export async function action({ request }: { request: Request }): Promise<
   const config = expeditionId ? await getExpeditionConfig(expeditionId) : null
   const estimate = config
     ? computeEstimate(config.configMatrix, editionLetter, config.basePrices, rawSelections)
-    : { basePrice: null, total: null, low: null, high: null, currency: 'USD', lineItems: [] }
+    : { basePrice: null, total: null, low: null, currency: 'USD', lineItems: [] }
 
   const submittedAt = new Date().toISOString()
 
@@ -133,7 +133,6 @@ export async function action({ request }: { request: Request }): Promise<
     basePrice: estimate.basePrice ?? undefined,
     estimatedTotal: estimate.total ?? undefined,
     estimatedLow: estimate.low ?? undefined,
-    estimatedHigh: estimate.high ?? undefined,
     currency: estimate.currency,
   })
 
@@ -156,7 +155,6 @@ export async function action({ request }: { request: Request }): Promise<
     basePrice: estimate.basePrice ?? undefined,
     estimatedTotal: estimate.total ?? undefined,
     estimatedLow: estimate.low ?? undefined,
-    estimatedHigh: estimate.high ?? undefined,
     currency: estimate.currency,
     submittedAt,
   }

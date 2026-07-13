@@ -126,7 +126,6 @@ export interface BookingEmailData {
   basePrice?: number
   estimatedTotal?: number
   estimatedLow?: number
-  estimatedHigh?: number
   currency?: string
   message?: string
   submittedAt: string
@@ -163,16 +162,13 @@ function bookingRowGroups(data: BookingEmailData) {
         return row(li.label, `${cap(li.chosenLabel)}${delta}`)
       })
       .join(''),
-    // Indicative estimate shown as a ±10% range of the calculated total. Null
-    // total → price on request (A/E or no base price set).
+    // Indicative floor = calculated total ∓10%. Null total → price on request
+    // (A/E or no base price set).
     pricingRows:
       data.estimatedTotal != null
         ? row(
-            'Estimated Range',
-            `${money(data.estimatedLow ?? Math.round(data.estimatedTotal * 0.9), currency)} – ${money(
-              data.estimatedHigh ?? Math.round(data.estimatedTotal * 1.1),
-              currency,
-            )} — final quote on confirmation`,
+            'Starting From',
+            `${money(data.estimatedLow ?? Math.round(data.estimatedTotal * 0.9), currency)} — final quote on confirmation`,
           )
         : row('Estimate', 'Price on request — our desk will prepare a custom quote'),
     messageRows: row('Message', data.message),

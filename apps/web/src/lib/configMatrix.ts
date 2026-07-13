@@ -203,9 +203,8 @@ export type LineItem = { key: string; label: string; group: string; chosenLabel:
 export type Estimate = {
   basePrice: number | null
   total: number | null
-  /** Indicative range = calculated total ∓10%, rounded to the nearest 100. */
+  /** "Starting from" floor = calculated total ∓10%, rounded to the nearest 100. */
   low: number | null
-  high: number | null
   currency: string
   lineItems: LineItem[]
 }
@@ -245,7 +244,6 @@ export function computeEstimate(
     basePrice,
     total,
     low: total == null ? null : round100(total * 0.9),
-    high: total == null ? null : round100(total * 1.1),
     currency: 'USD',
     lineItems,
   }
