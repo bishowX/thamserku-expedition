@@ -96,6 +96,12 @@ export function Footer() {
             >
               Yeti Infrastructure
             </Link>
+            <Link
+              to="/terms-and-conditions"
+              className="hover:text-white transition-colors"
+            >
+              Terms & Conditions
+            </Link>
           </div>
 
           <div className="w-full md:w-2/12 flex flex-col gap-6 font-['DM_Sans'] font-light text-body">
@@ -130,6 +136,12 @@ export function Footer() {
           <div className="flex flex-col gap-2">
             <div>© THAMSERKU EXPEDITION · YETI GROUP</div>
             <div>KATHMANDU - NEPAL</div>
+            <Link
+              to="/terms-and-conditions"
+              className="hover:text-[#C8CDD2] transition-colors"
+            >
+              TERMS & CONDITIONS
+            </Link>
           </div>
           <div className="flex flex-col gap-2 md:text-right">
             <a
