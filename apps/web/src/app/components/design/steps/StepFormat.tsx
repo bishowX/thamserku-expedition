@@ -89,12 +89,12 @@ export function StepFormat({
             <div className="shrink-0">
               <FieldLabel>1.2 Expedition Type</FieldLabel>
               <ChipRow>
-                <Chip label="Private Expedition" selected={isPrivate} onClick={() => onFormatChange({ expeditionType: 'private' })} />
                 <Chip
                   label="Shared Expedition (Individual)"
                   selected={format.expeditionType === 'shared'}
                   onClick={() => onFormatChange({ expeditionType: 'shared', numberOfClimbers: '' })}
                 />
+                <Chip label="Private Expedition" selected={isPrivate} onClick={() => onFormatChange({ expeditionType: 'private' })} />
               </ChipRow>
             </div>
             {isPrivate && (
