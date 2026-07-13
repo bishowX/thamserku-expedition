@@ -30,12 +30,9 @@ export function links() {
       rel: "preload",
       as: "image",
       type: "image/avif",
-      // lowercase attribute keys: React 18 has no special handling for these
-      // (they're React-19 props), so it passes them through verbatim as valid
-      // lowercase HTML attributes instead of warning about camelCase.
-      imagesrcset: heroSrcSet("/images/hero-cinematic-1.jpg", "avif"),
-      imagesizes: HERO_SIZES,
-      fetchpriority: "high",
+      imageSrcSet: heroSrcSet("/images/hero-cinematic-1.jpg", "avif"),
+      imageSizes: HERO_SIZES,
+      fetchPriority: "high",
     },
   ];
 }

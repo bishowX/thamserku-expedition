@@ -162,14 +162,10 @@ function bookingRowGroups(data: BookingEmailData) {
         return row(li.label, `${cap(li.chosenLabel)}${delta}`)
       })
       .join(''),
-    // Indicative floor = calculated total ∓10%. Null total → price on request
-    // (A/E or no base price set).
+    // Null total → price on request (A/E or no base price set).
     pricingRows:
       data.estimatedTotal != null
-        ? row(
-            'Starting From',
-            `${money(data.estimatedLow ?? Math.round(data.estimatedTotal * 0.9), currency)} — final quote on confirmation`,
-          )
+        ? row('Estimated Total', `${money(data.estimatedTotal, currency)} — final quote on confirmation`)
         : row('Estimate', 'Price on request — our desk will prepare a custom quote'),
     messageRows: row('Message', data.message),
   }
