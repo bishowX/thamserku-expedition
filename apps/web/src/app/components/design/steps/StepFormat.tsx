@@ -1,14 +1,36 @@
+import { stegaClean } from '@sanity/client/stega'
 import { Chip, ChipRow } from '../Chip'
+import { Stepper } from '../Stepper'
 import type { SanityEditionForDesign, SanityExpeditionForDesign } from '../../../../lib/queries'
 
 export const CUSTOM_PEAK = '__custom__'
 
+export const MIN_CLIMBERS = 2
+export const MAX_CLIMBERS = 15
+
+export type SeasonValue = 'spring' | 'autumn' | 'winter' | 'summer'
+
+export const SEASONS: { value: SeasonValue; label: string }[] = [
+  { value: 'spring', label: 'Spring (Mar–May)' },
+  { value: 'autumn', label: 'Autumn (Sep–Nov)' },
+  { value: 'winter', label: 'Winter (Dec–Feb)' },
+  { value: 'summer', label: 'Summer (Jun–Aug)' },
+]
+
+/**
+ * Coerce a Sanity `defaultSeason` into a season chip value. The raw string may
+ * carry stega hidden characters in live preview, and is unset on most peaks, so
+ * anything unrecognised falls back to '' (no preselection).
+ */
+export function toSeasonValue(raw: string | undefined | null): SeasonValue | '' {
+  const clean = stegaClean(raw ?? '')
+  return SEASONS.some((s) => s.value === clean) ? (clean as SeasonValue) : ''
+}
+
 export interface FormatValue {
   expeditionType: 'private' | 'shared' | ''
   numberOfClimbers: string
-  season: 'spring' | 'autumn' | 'custom' | ''
-  startDate: string
-  endDate: string
+  season: SeasonValue | ''
   customPeakName: string
 }
 
@@ -49,8 +71,13 @@ export function StepFormat({
   onFormatChange,
 }: StepFormatProps) {
   const isCustomPeak = selectedPeak === CUSTOM_PEAK
-  const isCustomSeason = format.season === 'custom'
   const isPrivate = format.expeditionType === 'private'
+  // numberOfClimbers stays a string end-to-end (booking doc + email). Older
+  // free-text values ("e.g. 1–12") won't parse, so fall back to the minimum.
+  const parsedClimbers = parseInt(format.numberOfClimbers, 10)
+  const climberCount = Number.isNaN(parsedClimbers)
+    ? MIN_CLIMBERS
+    : Math.max(MIN_CLIMBERS, Math.min(MAX_CLIMBERS, parsedClimbers))
 
   return (
     <div className="space-y-16">
@@ -90,22 +117,32 @@ export function StepFormat({
               <FieldLabel>1.2 Expedition Type</FieldLabel>
               <ChipRow>
                 <Chip
-                  label="Shared Expedition (Individual)"
+                  label="Individual (Shared Expedition)"
                   selected={format.expeditionType === 'shared'}
                   onClick={() => onFormatChange({ expeditionType: 'shared', numberOfClimbers: '' })}
                 />
-                <Chip label="Private Expedition" selected={isPrivate} onClick={() => onFormatChange({ expeditionType: 'private' })} />
+                {/* Seed the count so what the stepper shows is what gets submitted. */}
+                <Chip
+                  label="Private Expedition"
+                  selected={isPrivate}
+                  onClick={() =>
+                    onFormatChange({
+                      expeditionType: 'private',
+                      numberOfClimbers: format.numberOfClimbers || String(MIN_CLIMBERS),
+                    })
+                  }
+                />
               </ChipRow>
             </div>
             {isPrivate && (
               <div className="flex-1 min-w-[12rem]">
                 <FieldLabel>Number of Climbers</FieldLabel>
-                <input
-                  type="text"
-                  value={format.numberOfClimbers}
-                  onChange={(e) => onFormatChange({ numberOfClimbers: e.target.value })}
-                  placeholder="e.g. 1–12"
-                  className={lineInput}
+                <Stepper
+                  value={climberCount}
+                  min={MIN_CLIMBERS}
+                  max={MAX_CLIMBERS}
+                  display={`${climberCount} Climbers`}
+                  onChange={(n) => onFormatChange({ numberOfClimbers: String(n) })}
                 />
               </div>
             )}
@@ -122,33 +159,16 @@ export function StepFormat({
           <div>
             <FieldLabel>2.1 Preferred Season</FieldLabel>
             <ChipRow>
-              <Chip label="Spring" selected={format.season === 'spring'} onClick={() => onFormatChange({ season: 'spring' })} />
-              <Chip label="Autumn" selected={format.season === 'autumn'} onClick={() => onFormatChange({ season: 'autumn' })} />
-              <Chip label="Custom" selected={isCustomSeason} onClick={() => onFormatChange({ season: 'custom' })} />
+              {SEASONS.map((s) => (
+                <Chip
+                  key={s.value}
+                  label={s.label}
+                  selected={format.season === s.value}
+                  onClick={() => onFormatChange({ season: s.value })}
+                />
+              ))}
             </ChipRow>
           </div>
-          {isCustomSeason && (
-            <div className="grid md:grid-cols-2 gap-x-12 gap-y-9">
-              <div>
-                <FieldLabel>Preferred Start Date</FieldLabel>
-                <input
-                  type="date"
-                  value={format.startDate}
-                  onChange={(e) => onFormatChange({ startDate: e.target.value })}
-                  className={lineInput}
-                />
-              </div>
-              <div>
-                <FieldLabel>Preferred End Date</FieldLabel>
-                <input
-                  type="date"
-                  value={format.endDate}
-                  onChange={(e) => onFormatChange({ endDate: e.target.value })}
-                  className={lineInput}
-                />
-              </div>
-            </div>
-          )}
         </div>
       </section>
 

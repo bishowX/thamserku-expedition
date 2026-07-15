@@ -24,7 +24,7 @@ import {
   type EditionLetter,
   type SelectionValue,
 } from '../../lib/configMatrix'
-import { StepFormat, CUSTOM_PEAK, type FormatValue } from '../components/design/steps/StepFormat'
+import { StepFormat, CUSTOM_PEAK, toSeasonValue, type FormatValue } from '../components/design/steps/StepFormat'
 import { StepCustomContact } from '../components/design/steps/StepCustomContact'
 import { ConfiguratorStep, type NumberedGroup } from '../components/design/ConfiguratorStep'
 import { ConfigSummary, MobileConfigBar, type SummaryItem } from '../components/design/ConfigSummary'
@@ -85,8 +85,6 @@ export async function action({ request }: { request: Request }): Promise<
   const expeditionType = str('expeditionType')
   const numberOfClimbers = str('numberOfClimbers')
   const season = str('season')
-  const startDate = str('startDate')
-  const endDate = str('endDate')
   const specialObjectives = str('specialObjectives')
 
   // Parse the raw selection map, then price it server-side from the live matrix
@@ -115,8 +113,6 @@ export async function action({ request }: { request: Request }): Promise<
     expeditionType,
     numberOfClimbers,
     season,
-    startDate,
-    endDate,
     specialObjectives,
     message,
     expedition: expeditionId ? { _type: 'reference', _ref: expeditionId } : undefined,
@@ -146,8 +142,6 @@ export async function action({ request }: { request: Request }): Promise<
     expeditionType,
     numberOfClimbers,
     season,
-    startDate,
-    endDate,
     specialObjectives,
     editionLetter: editionLetter || undefined,
     editionName,
@@ -190,8 +184,6 @@ const EMPTY_FORMAT: FormatValue = {
   expeditionType: '',
   numberOfClimbers: '',
   season: '',
-  startDate: '',
-  endDate: '',
   customPeakName: '',
 }
 
@@ -213,7 +205,13 @@ export default function DesignPage() {
   const [edition, setEdition] = useState<SanityEditionForDesign | null>(
     () => editions.find((e) => e.letter === searchParams.get('edition')) ?? null,
   )
-  const [format, setFormat] = useState<FormatValue>(EMPTY_FORMAT)
+  // Deep links (?expedition=slug) skip handlePeakChange, so seed the peak's
+  // default season here too.
+  const [format, setFormat] = useState<FormatValue>(() => {
+    const exp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
+    const season = toSeasonValue(exp?.defaultSeason)
+    return season ? { ...EMPTY_FORMAT, season } : EMPTY_FORMAT
+  })
   const [objectives, setObjectives] = useState<string[]>([])
   const [objectivesNote, setObjectivesNote] = useState('')
 
@@ -280,6 +278,11 @@ export default function DesignPage() {
   function handlePeakChange(slug: string) {
     setSelectedPeak(slug)
     reseed(slug, edition)
+    // Apply the new peak's default season. A peak with no default leaves the
+    // current choice alone rather than clearing it.
+    const exp = slug && slug !== CUSTOM_PEAK ? expeditions.find((e) => e.slug === slug) ?? null : null
+    const season = toSeasonValue(exp?.defaultSeason)
+    if (season) setFormat((prev) => ({ ...prev, season }))
   }
 
   function handleEditionChange(letter: string) {
@@ -345,8 +348,6 @@ export default function DesignPage() {
     expeditionType: format.expeditionType,
     numberOfClimbers: format.numberOfClimbers,
     season: format.season,
-    startDate: format.startDate,
-    endDate: format.endDate,
     specialObjectives: combinedObjectives,
     selectionsJson: JSON.stringify(
       Object.fromEntries(Object.entries(selections).filter(([k]) => interactiveKeys.has(k))),

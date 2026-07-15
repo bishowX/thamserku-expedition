@@ -18,6 +18,21 @@ export default defineType({
   type: 'object',
   fields: [
     defineField({
+      name: 'defaultSeason',
+      title: 'Default Season',
+      type: 'string',
+      description:
+        'Preselected in the configurator when a climber picks this peak. They can still change it. Leave blank for no preselection. Separate from the free-text "Season" on the Identity tab, which is the Atlas card label.',
+      options: {
+        list: [
+          { title: 'Spring (Mar–May)', value: 'spring' },
+          { title: 'Autumn (Sep–Nov)', value: 'autumn' },
+          { title: 'Winter (Dec–Feb)', value: 'winter' },
+          { title: 'Summer (Jun–Aug)', value: 'summer' },
+        ],
+      },
+    }),
+    defineField({
       name: 'basePrices',
       title: 'Base Prices (USD)',
       type: 'object',

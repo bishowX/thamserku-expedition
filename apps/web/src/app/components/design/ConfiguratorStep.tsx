@@ -1,4 +1,5 @@
 import { Chip, ChipRow } from './Chip'
+import { Stepper } from './Stepper'
 import {
   formatRange,
   type ConfiguratorGroup,
@@ -107,22 +108,9 @@ function FeatureField({
     const max = r.max ?? 16
     const step = r.step ?? 1
     const n = typeof value === 'number' ? value : r.defaultValue ?? min
-    const set = (next: number) => onChange(Math.max(min, Math.min(max, next)))
-    const btn =
-      'w-11 h-11 flex items-center justify-center text-lg text-[#C8CDD2] border border-[#2E2E2E] rounded hover:border-[#5A6673] transition-colors disabled:opacity-30 disabled:cursor-not-allowed'
     return (
       <FieldShell label={label} helpText={feature.helpText}>
-        <div className="inline-flex items-center gap-4">
-          <button type="button" aria-label="Decrease" onClick={() => set(n - step)} disabled={n <= min} className={btn}>
-            −
-          </button>
-          <span className="font-['DM_Mono'] text-[13px] uppercase tracking-[0.14em] text-white min-w-[120px] text-center">
-            {formatRange(cell, n)}
-          </span>
-          <button type="button" aria-label="Increase" onClick={() => set(n + step)} disabled={n >= max} className={btn}>
-            +
-          </button>
-        </div>
+        <Stepper value={n} min={min} max={max} step={step} display={formatRange(cell, n)} onChange={onChange} />
       </FieldShell>
     )
   }

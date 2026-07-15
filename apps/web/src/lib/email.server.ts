@@ -117,8 +117,6 @@ export interface BookingEmailData {
   expeditionType?: string
   numberOfClimbers?: string
   season?: string
-  startDate?: string
-  endDate?: string
   specialObjectives?: string
   editionLetter?: string
   editionName?: string
@@ -141,7 +139,6 @@ function money(n: number, currency = 'USD'): string {
 // rows is dropped by `section`, so neither email ever shows a blank field.
 function bookingRowGroups(data: BookingEmailData) {
   const currency = data.currency ?? 'USD'
-  const dateRange = data.startDate || data.endDate ? [data.startDate, data.endDate].filter(Boolean).join(' → ') : undefined
   return {
     contactRows: [row('Email', data.email), row('Phone / WhatsApp', data.phone)].join(''),
     formatRows: [
@@ -150,23 +147,29 @@ function bookingRowGroups(data: BookingEmailData) {
       row('Expedition Type', cap(data.expeditionType)),
       row('Climbers', data.numberOfClimbers),
       row('Season', cap(data.season)),
-      row('Dates', dateRange),
       row('Special Objectives', data.specialObjectives),
     ].join(''),
     configRows: (data.lineItems ?? [])
       .map((li) => {
+        // PRICING HIDDEN — restore the delta below to show per-option surcharges/credits again.
         // Positive delta → surcharge "+$X"; negative → credit "− $X".
-        const delta = li.priceDelta
-          ? `  ·  ${li.priceDelta < 0 ? '−' : '+'}${money(Math.abs(li.priceDelta), currency)}${li.priceDelta < 0 ? ' credit' : ''}`
-          : ''
+        // const delta = li.priceDelta
+        //   ? `  ·  ${li.priceDelta < 0 ? '−' : '+'}${money(Math.abs(li.priceDelta), currency)}${li.priceDelta < 0 ? ' credit' : ''}`
+        //   : ''
+        const delta = ''
         return row(li.label, `${cap(li.chosenLabel)}${delta}`)
       })
       .join(''),
+    // PRICING HIDDEN — the Estimate section still renders, but never the figure:
+    // every enquiry gets the "price on request" line that used to appear only
+    // when no base price was set. To show the number again, restore the
+    // estimatedTotal branch below.
     // Null total → price on request (A/E or no base price set).
-    pricingRows:
-      data.estimatedTotal != null
-        ? row('Estimated Total', `${money(data.estimatedTotal, currency)} — final quote on confirmation`)
-        : row('Estimate', 'Price on request — our desk will prepare a custom quote'),
+    // pricingRows:
+    //   data.estimatedTotal != null
+    //     ? row('Estimated Total', `${money(data.estimatedTotal, currency)} — final quote on confirmation`)
+    //     : row('Estimate', 'Price on request — our desk will prepare a custom quote'),
+    pricingRows: row('Estimate', 'Price on request — our desk will prepare a custom quote'),
     messageRows: row('Message', data.message),
   }
 }
