@@ -47,14 +47,14 @@ export default function TermsPage() {
         <div className="max-w-4xl mx-auto">
           {page?.heroIntro?.length ? (
             <div className="max-w-2xl mb-10">
-              <PortableTextBody value={page.heroIntro} theme="light" size="lg" />
+              <PortableTextBody value={page.heroIntro} theme="light" />
             </div>
           ) : null}
           {page?.heroNote && (
             <p className="text-body text-[#5A6673] mb-10">{page.heroNote}</p>
           )}
           {page?.body?.length ? (
-            <PortableTextBody value={page.body} theme="light" />
+            <PortableTextBody value={page.body} theme="light" variant="document" />
           ) : null}
         </div>
       </section>
