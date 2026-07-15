@@ -144,7 +144,7 @@ export function Footer() {
                 <img
                   src="/images/payments/paypal.svg"
                   alt="PayPal"
-                  className="size-9"
+                  className="size-7"
                 />
               </div>
             </div>
@@ -153,8 +153,7 @@ export function Footer() {
 
         <div className="border-t border-[#5A6673]/30 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673]">
           <div className="flex flex-col gap-2">
-            <div>© THAMSERKU EXPEDITION · YETI GROUP</div>
-            <div>KATHMANDU - NEPAL</div>
+            <div>© THAMSERKU EXPEDITION · YETI GROUP · KATHMANDU - NEPAL</div>
             <Link
               to="/terms-and-conditions"
               className="hover:text-[#C8CDD2] transition-colors"
@@ -165,14 +164,14 @@ export function Footer() {
           <div className="flex flex-col gap-2 md:text-right">
             <a
               href={`mailto:${contactEmail}`}
-              className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal"
+              className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal text-[13px]"
             >
               {contactEmail}
             </a>
             {contactEmailKushal && (
               <a
                 href={`mailto:${contactEmailKushal}`}
-                className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal"
+                className="hover:text-[#C8CDD2] transition-colors normal-case tracking-normal text-[13px]"
               >
                 {contactEmailKushal}
               </a>
