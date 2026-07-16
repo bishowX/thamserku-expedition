@@ -129,22 +129,26 @@ export function Footer() {
                 WE ACCEPT
               </h4>
               <div className="flex items-center gap-5">
-                <img src="/images/payments/visa.svg" alt="Visa" className="size-9" />
+                <img src="/images/payments/visa.png" alt="Visa" className="size-8" />
                 <img
-                  src="/images/payments/mastercard.svg"
+                  src="/images/payments/mastercard.png"
                   alt="Mastercard"
-                  className="size-9"
+                  className="size-8"
                 />
                 <img
-                  src="/images/payments/amex.svg"
+                  src="/images/payments/amex.png"
                   alt="American Express"
-                  className="size-9"
+                  className="size-8"
                 />
-                <img src="/images/payments/jcb.svg" alt="JCB" className="size-9" />
                 <img
-                  src="/images/payments/paypal.svg"
+                  src="/images/payments/jcb.png"
+                  alt="JCB"
+                  className="size-8 bg-white"
+                />
+                <img
+                  src="/images/payments/paypal.png"
                   alt="PayPal"
-                  className="size-7"
+                  className="size-8"
                 />
               </div>
             </div>
