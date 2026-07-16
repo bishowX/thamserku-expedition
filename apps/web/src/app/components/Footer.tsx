@@ -141,14 +141,9 @@ export function Footer() {
                   className="size-8"
                 />
                 <img
-                  src="/images/payments/jcb.png"
-                  alt="JCB"
-                  className="size-8 bg-white"
-                />
-                <img
-                  src="/images/payments/paypal.png"
-                  alt="PayPal"
-                  className="size-8"
+                  src="/images/payments/unionpay.png"
+                  alt="UnionPay"
+                  className="h-8 w-auto"
                 />
               </div>
             </div>
