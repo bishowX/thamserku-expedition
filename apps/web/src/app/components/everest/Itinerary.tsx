@@ -5,14 +5,15 @@ type ItineraryDay = {
   meals: string;
 };
 
-// Only these expeditions use Mountain Lodges of Nepal, so only their legend
-// links the phrase to the operator's site. Every other expedition omits it.
-const MLN_SLUGS = new Set([
+// These expeditions don't use Mountain Lodges of Nepal, so their legend omits
+// the link. Every other expedition links the phrase to the operator's site.
+const NON_MLN_SLUGS = new Set([
   "putha-hiunchuli",
   "himlung",
   "baruntse",
   "saribung",
   "chulu-far-east",
+  "manaslu",
 ]);
 const MLN_WEBSITE_URL = "https://mountainlodgesofnepal.com/";
 
@@ -30,7 +31,7 @@ type Props = {
 
 export function Itinerary({ slug, itineraryHeading, itinerary, overviewSpecs }: Props) {
   const rows = itinerary ?? [];
-  const showMln = slug ? MLN_SLUGS.has(slug) : false;
+  const showMln = slug ? !NON_MLN_SLUGS.has(slug) : true;
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
 
