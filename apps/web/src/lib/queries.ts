@@ -577,6 +577,7 @@ export const DESIGN_CONFIG_PROJECTION = `
 const SERVICES_CONFIG_ROW_PROJECTION = `{ name, text, category }`;
 export const SERVICES_CONFIG_PROJECTION = `
   servicesConfig{
+    unavailableEditions,
     a[]${SERVICES_CONFIG_ROW_PROJECTION},
     b[]${SERVICES_CONFIG_ROW_PROJECTION},
     c[]${SERVICES_CONFIG_ROW_PROJECTION},

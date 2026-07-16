@@ -14,6 +14,24 @@ export default defineType({
   type: 'object',
   fields: [
     defineField({
+      name: 'unavailableEditions',
+      title: 'Unavailable Editions',
+      description:
+        'Editions not offered for this peak. Their comparison-table column shows "Unavailable" instead of the "Project dependent" consultation note. Display-only — does NOT affect the Design configurator.',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'grid',
+        list: [
+          { title: 'Alpine (A)', value: 'A' },
+          { title: 'Bespoke (B)', value: 'B' },
+          { title: 'Crafted (C)', value: 'C' },
+          { title: 'Definitive (D)', value: 'D' },
+          { title: 'Explorer (E)', value: 'E' },
+        ],
+      },
+    }),
+    defineField({
       name: 'a',
       title: 'Alpine (A)',
       type: 'array',

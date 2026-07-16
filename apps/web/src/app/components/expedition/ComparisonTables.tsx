@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
+import { stegaClean } from "@sanity/client/stega";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EDITION_LETTERS } from "../../../lib/configMatrix";
 import { servicesRows, type RawServicesConfig } from "../../../lib/servicesConfig";
@@ -58,6 +59,13 @@ export function ComparisonTables({
   const cols = present.length ? present : EDITION_LETTERS;
 
   const rows = tab === "core" ? core : addons;
+  // Editions explicitly marked not-offered for this peak read "Unavailable"
+  // instead of the "Project dependent" consultation note.
+  const unavailable = new Set(
+    (servicesConfig?.unavailableEditions ?? []).map((e) =>
+      stegaClean(e).trim().toUpperCase(),
+    ),
+  );
   // A column with no data across the whole category (A/E) → project-dependent note.
   const colMeta = cols.map((letter) => ({
     letter,
@@ -133,12 +141,16 @@ export function ComparisonTables({
                             rowSpan={visibleRows.length}
                             className="px-4 text-center align-middle bg-white/[0.02] font-['Fraunces'] italic text-body text-[#8A929B]"
                           >
-                            <Link
-                              to="/consultation"
-                              className="underline underline-offset-4 decoration-[#8A929B]/50 hover:text-white hover:decoration-white transition-colors"
-                            >
-                              Project dependent
-                            </Link>
+                            {unavailable.has(letter) ? (
+                              "Unavailable"
+                            ) : (
+                              <Link
+                                to="/consultation"
+                                className="underline underline-offset-4 decoration-[#8A929B]/50 hover:text-white hover:decoration-white transition-colors"
+                              >
+                                Project dependent
+                              </Link>
+                            )}
                           </td>
                         );
                       }

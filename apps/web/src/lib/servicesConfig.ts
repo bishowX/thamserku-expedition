@@ -14,6 +14,9 @@ export type RawServicesRow = {
 };
 
 export type RawServicesConfig = {
+  /** Editions (A–E) not offered for this peak; their comparison-table column
+   *  reads "Unavailable" instead of the "Project dependent" note. */
+  unavailableEditions?: string[];
   a?: RawServicesRow[];
   b?: RawServicesRow[];
   c?: RawServicesRow[];
