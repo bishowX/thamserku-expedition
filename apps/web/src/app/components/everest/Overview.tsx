@@ -83,19 +83,38 @@ export function Overview({
 
             {specs.length > 0 && (
               <div data-reveal>
-                {specs.map((spec, i) => (
-                  <div
-                    key={i}
-                    className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-3 border-b border-dashed border-[rgba(26,26,26,0.22)]"
-                  >
-                    <p className="font-['DM_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
-                      {spec.label}
-                    </p>
-                    <p className="font-['Fraunces'] text-body text-[#1A1A1A] text-[14px]">
-                      {spec.value}
-                    </p>
-                  </div>
-                ))}
+                {specs.map((spec, i) => {
+                  // A value may hold several `|`-separated entries (e.g. the
+                  // fixed-departure windows). Render those as a two-per-row
+                  // grid so they read cleanly instead of wrapping mid-line.
+                  const parts = stegaClean(spec.value)
+                    .split("|")
+                    .map((p) => p.trim())
+                    .filter(Boolean);
+                  return (
+                    <div
+                      key={i}
+                      className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-4 md:gap-6 py-3 border-b border-dashed border-[rgba(26,26,26,0.22)]"
+                    >
+                      <p className="font-['DM_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
+                        {spec.label}
+                      </p>
+                      {parts.length > 1 ? (
+                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 font-['Fraunces'] text-body text-[#1A1A1A] text-[14px]">
+                          {parts.map((part, j) => (
+                            <span key={j} className="whitespace-nowrap">
+                              {part}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="font-['Fraunces'] text-body text-[#1A1A1A] text-[14px]">
+                          {spec.value}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

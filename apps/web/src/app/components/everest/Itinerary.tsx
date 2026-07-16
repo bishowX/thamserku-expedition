@@ -5,9 +5,15 @@ type ItineraryDay = {
   meals: string;
 };
 
-// Manaslu doesn't use Mountain Lodges of Nepal, so its legend omits that
-// mention. Every other expedition links the phrase to the operator's site.
-const MANASLU_SLUG = "manaslu";
+// Only these expeditions use Mountain Lodges of Nepal, so only their legend
+// links the phrase to the operator's site. Every other expedition omits it.
+const MLN_SLUGS = new Set([
+  "putha-hiunchuli",
+  "himlung",
+  "baruntse",
+  "saribung",
+  "chulu-far-east",
+]);
 const MLN_WEBSITE_URL = "https://mountainlodgesofnepal.com/";
 
 import { useRef } from "react";
@@ -23,7 +29,7 @@ type Props = {
 
 export function Itinerary({ slug, itineraryHeading, itinerary }: Props) {
   const rows = itinerary ?? [];
-  const isManaslu = slug === MANASLU_SLUG;
+  const showMln = slug ? MLN_SLUGS.has(slug) : false;
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
 
@@ -76,9 +82,7 @@ export function Itinerary({ slug, itineraryHeading, itinerary }: Props) {
               </div>
             ))}
             <p data-reveal-row className="border-t border-white/20 py-5 md:py-4 font-['DM_Sans'] font-light text-body leading-[1.6] text-white/60">
-              {isManaslu ? (
-                "B — Breakfast · L — Lunch · D — Dinner"
-              ) : (
+              {showMln ? (
                 <>
                   <a
                     href={MLN_WEBSITE_URL}
@@ -90,6 +94,8 @@ export function Itinerary({ slug, itineraryHeading, itinerary }: Props) {
                   </a>
                   {" "}· B — Breakfast · L — Lunch · D — Dinner
                 </>
+              ) : (
+                "B — Breakfast · L — Lunch · D — Dinner"
               )}
             </p>
           </div>
