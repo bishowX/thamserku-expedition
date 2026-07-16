@@ -112,6 +112,7 @@ export default function ExpeditionDossier() {
           slug={expedition.slug.current}
           itineraryHeading={expedition.itineraryHeading}
           itinerary={expedition.itinerary}
+          overviewSpecs={expedition.overviewSpecs}
         />
         <Inclusions
           inclusionCategories={expedition.inclusionCategories}

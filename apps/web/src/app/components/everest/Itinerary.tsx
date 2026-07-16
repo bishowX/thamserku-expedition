@@ -25,13 +25,23 @@ type Props = {
   slug?: string;
   itineraryHeading?: string;
   itinerary?: ItineraryDay[];
+  overviewSpecs?: Array<{ label: string; value: string }>;
 };
 
-export function Itinerary({ slug, itineraryHeading, itinerary }: Props) {
+export function Itinerary({ slug, itineraryHeading, itinerary, overviewSpecs }: Props) {
   const rows = itinerary ?? [];
   const showMln = slug ? MLN_SLUGS.has(slug) : false;
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
+
+  // Surface the fixed-departure windows (authored as one `|`-separated spec
+  // in the overview) below the itinerary too, as a tidy two-per-row grid.
+  const departureWindows = (overviewSpecs ?? [])
+    .find((s) => stegaClean(s.label).trim().toLowerCase() === "fixed departure")
+    ?.value;
+  const departures = departureWindows
+    ? stegaClean(departureWindows).split("|").map((p) => p.trim()).filter(Boolean)
+    : [];
 
   if (rows.length === 0 && !itineraryHeading) return null;
 
@@ -81,6 +91,23 @@ export function Itinerary({ slug, itineraryHeading, itinerary }: Props) {
                 )}
               </div>
             ))}
+            {departures.length > 0 && (
+              <div
+                data-reveal-row
+                className="border-t border-white/20 py-6 md:py-7 flex flex-col gap-4 md:flex-row md:items-baseline md:gap-12"
+              >
+                <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#C8CDD2] shrink-0 md:w-[180px] pt-[2px]">
+                  Fixed Departures
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-2 font-['Fraunces'] font-light text-body text-white">
+                  {departures.map((window, i) => (
+                    <span key={i} className="whitespace-nowrap">
+                      {window}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             <p data-reveal-row className="border-t border-white/20 py-5 md:py-4 font-['DM_Sans'] font-light text-body leading-[1.6] text-white/60">
               {showMln ? (
                 <>
