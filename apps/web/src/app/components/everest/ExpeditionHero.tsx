@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,17 +12,56 @@ import { TextReveal } from "../TextReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type ImageCrop = { top?: number; bottom?: number; left?: number; right?: number };
+
 type Props = {
   name: string;
-  heroImage?: { asset: { _ref: string } } | null;
+  heroImage?: { asset: { _ref: string }; crop?: ImageCrop | null } | null;
   heroTagline?: string;
   heroSubtext?: string;
   slug: string;
 };
 
+// Aspect ratio of the image Sanity will actually serve, so the mobile band can
+// match it exactly (object-cover then shows the WHOLE peak — no side crop, no
+// letterbox). Source pixel dims live in the asset ref (…-2544x1456-jpg); the
+// editor crop is applied on delivery, so fold its rect into the ratio.
+function deliveredAspect(img?: Props["heroImage"]): number | null {
+  const m = img?.asset?._ref?.match(/-(\d+)x(\d+)-\w+$/);
+  if (!m) return null;
+  const w = Number(m[1]);
+  const h = Number(m[2]);
+  if (!w || !h) return null;
+  const c = img?.crop;
+  const cw = c ? Math.max(0.01, 1 - (c.left ?? 0) - (c.right ?? 0)) : 1;
+  const ch = c ? Math.max(0.01, 1 - (c.top ?? 0) - (c.bottom ?? 0)) : 1;
+  const ar = (w * cw) / (h * ch);
+  return Number.isFinite(ar) && ar > 0 ? ar : null;
+}
+
 export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug }: Props) {
   const imageSrc = heroImage ? urlFor(heroImage as SanityImageSource).width(1920).url() : null;
   const headline = stegaClean(heroTagline || `${name} Expedition`);
+  // Mobile band height = the peak photo's own aspect (fallback 1.6 landscape).
+  const heroAspect = deliveredAspect(heroImage) ?? 1.6;
+
+  // TEMP preview switch (?hero=band|portrait) so the two mobile treatments can
+  // be compared on real peaks. Default "band": stacked, whole-peak landscape
+  // band. "portrait": keep the full-screen hero but serve a Sanity focal-point
+  // portrait crop on mobile so the summit is framed (sky above, base below).
+  //
+  // TO COLLAPSE TO ONE VARIANT once we decide: delete the losing `return`
+  // branch below, then delete this switch (hard-code `variant`), the
+  // `useSearchParams` import, and whichever of `portraitSrc` (portrait) or
+  // `deliveredAspect`/`heroAspect` (band) the losing branch used. `fullbleedFx`
+  // then simplifies to `desktop` (band) or `true` (portrait).
+  const [params] = useSearchParams();
+  const variant = params.get("hero") === "portrait" ? "portrait" : "band";
+  // 9:16 crop around the editor's hotspot — Sanity picks the window centred on
+  // the summit, so mobile gets a framed vertical composition, not a mid strip.
+  const portraitSrc = heroImage
+    ? urlFor(heroImage as SanityImageSource).width(1080).height(1920).fit("crop").url()
+    : null;
 
   const sectionRef = useRef<HTMLElement>(null);
   const bgWrapRef = useRef<HTMLDivElement>(null);
@@ -46,6 +85,13 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       if (headlineRef.current) gsap.set(headlineRef.current, { opacity: 1 });
       if (subRef.current) gsap.set(subRef.current, { opacity: 1 });
       if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 1 });
+
+      // The "band" variant stacks the hero on mobile (image band + text below),
+      // so the full-screen ambient ken-burns and scroll parallax don't apply —
+      // they'd re-crop the band and hide the peak edges we show whole. The
+      // "portrait" variant keeps the full-screen hero, so it keeps those FX.
+      const desktop = window.matchMedia("(min-width: 768px)").matches;
+      const fullbleedFx = variant === "portrait" || desktop;
 
       const tl = gsap.timeline();
 
@@ -103,7 +149,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       }
 
       // Ambient ken-burns drift after entrance
-      if (bgRef.current) {
+      if (bgRef.current && fullbleedFx) {
         tl.call(() => {
           if (!bgRef.current) return;
           gsap.to(bgRef.current, {
@@ -118,7 +164,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       }
 
       // Scroll parallax — background drifts down, content fades and drifts up.
-      if (bgWrapRef.current && sectionRef.current) {
+      if (bgWrapRef.current && sectionRef.current && fullbleedFx) {
         gsap.to(bgWrapRef.current, {
           yPercent: 35,
           scale: 1.1,
@@ -132,7 +178,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
         });
       }
 
-      if (contentRef.current && sectionRef.current) {
+      if (contentRef.current && sectionRef.current && fullbleedFx) {
         gsap.to(contentRef.current, {
           yPercent: -15,
           opacity: 0,
@@ -149,12 +195,110 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
     { scope: sectionRef },
   );
 
+  // Shared overlaid text (headline + subtext + CTAs); each variant wraps it in
+  // its own positioned container.
+  const heroText = (
+    <>
+      <h1
+        ref={headlineRef}
+        className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] opacity-0 [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]"
+      >
+        <TextReveal text={headline} />
+      </h1>
+
+      <div className="flex flex-col gap-2 mb-12">
+        {heroSubtext && (
+          <p
+            ref={subRef}
+            className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
+          >
+            {heroSubtext}
+          </p>
+        )}
+      </div>
+
+      <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6 opacity-0">
+        <Link
+          to={`/design-your-expedition?expedition=${slug}`}
+          className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] hover:bg-transparent hover:text-white transition-colors flex items-center justify-center gap-3"
+        >
+          Design Your Expedition <ArrowRight className="w-4 h-4" strokeWidth={1} />
+        </Link>
+        <a
+          href="#dossier-facts"
+          className="border border-white/30 text-white px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3"
+        >
+          Expedition Details <ArrowDown className="w-4 h-4" strokeWidth={1} />
+        </a>
+      </div>
+    </>
+  );
+
+  // ---- Variant "portrait": full-screen hero kept; on mobile the photo is a
+  //      Sanity focal-point 9:16 crop so the summit is framed, not a mid strip.
+  if (variant === "portrait") {
+    return (
+      <section
+        ref={sectionRef}
+        className="relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12"
+      >
+        <div className="absolute inset-0 z-0">
+          <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
+            {imageSrc ? (
+              <picture className="contents">
+                <source media="(max-width: 767px)" srcSet={portraitSrc ?? undefined} />
+                <img
+                  ref={bgRef}
+                  src={imageSrc}
+                  alt={`${name} hero`}
+                  className="w-full h-full object-cover object-center will-change-transform"
+                />
+              </picture>
+            ) : (
+              <div className="w-full h-full bg-[#2E353C]" />
+            )}
+          </div>
+          <div
+            ref={overlayRef}
+            className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-transparent to-[#1A1A1A]/90"
+          />
+        </div>
+
+        <Nav />
+
+        <div className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay opacity-20">
+          <div className="w-full h-full border-l border-r border-[#C8CDD2]/30 max-w-[1440px] mx-auto relative grid grid-cols-4 md:grid-cols-12 gap-5 px-8">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="h-full border-r border-[#C8CDD2]/20 hidden md:block" />
+            ))}
+          </div>
+        </div>
+
+        <div
+          ref={contentRef}
+          className="relative z-20 w-full flex flex-col items-start justify-end h-full will-change-transform"
+        >
+          {heroText}
+        </div>
+      </section>
+    );
+  }
+
+  // ---- Variant "band" (default): whole-peak landscape band on mobile, text
+  //      stacked below; full-screen background with overlaid text on desktop.
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12"
+      className="relative w-full bg-[#1A1A1A] flex flex-col text-white overflow-hidden md:h-screen md:justify-end md:p-12 xl:px-24 xl:pb-24 xl:pt-12"
     >
-      <div className="absolute inset-0 z-0">
+      {/* Peak photo: a full-bleed landscape band on mobile (whole peak visible,
+          text stacked below); the full-screen background on desktop (text
+          overlaid). The band's aspect matches the delivered image so nothing is
+          cropped. */}
+      <div
+        className="relative w-full shrink-0 aspect-[var(--hero-ar)] overflow-hidden z-0 md:absolute md:inset-0 md:aspect-auto"
+        style={{ "--hero-ar": String(heroAspect) } as CSSProperties}
+      >
         <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
           {imageSrc ? (
             <img
@@ -167,15 +311,18 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
             <div className="w-full h-full bg-[#2E353C]" />
           )}
         </div>
+        {/* Mobile: soft fade into the page bg at the band's foot. Desktop: full
+            darkening so the overlaid headline stays legible. */}
         <div
           ref={overlayRef}
-          className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-transparent to-[#1A1A1A]/90"
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1A1A1A] md:from-[#1A1A1A]/70 md:via-transparent md:to-[#1A1A1A]/90"
         />
       </div>
 
       <Nav />
 
-      <div className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay opacity-20">
+      {/* Decorative column grid — desktop overlay only. */}
+      <div className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay opacity-20 hidden md:block">
         <div className="w-full h-full border-l border-r border-[#C8CDD2]/30 max-w-[1440px] mx-auto relative grid grid-cols-4 md:grid-cols-12 gap-5 px-8">
           {Array.from({ length: 12 }).map((_, i) => (
             <div key={i} className="h-full border-r border-[#C8CDD2]/20 hidden md:block" />
@@ -185,40 +332,9 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
 
       <div
         ref={contentRef}
-        className="relative z-20 w-full flex flex-col items-start justify-end h-full will-change-transform"
+        className="relative z-20 w-full flex flex-col items-start will-change-transform p-5 pt-8 pb-16 md:p-0 md:h-full md:justify-end"
       >
-        <h1
-          ref={headlineRef}
-          className="font-['Fraunces'] font-light text-display-xl tracking-tight text-balance mb-6 max-w-[22ch] opacity-0 [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]"
-        >
-          <TextReveal text={headline} />
-        </h1>
-
-        <div className="flex flex-col gap-2 mb-12">
-          {heroSubtext && (
-            <p
-              ref={subRef}
-              className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body-lg max-w-[60ch] opacity-0 [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
-            >
-              {heroSubtext}
-            </p>
-          )}
-        </div>
-
-        <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6 opacity-0">
-          <Link
-            to={`/design-your-expedition?expedition=${slug}`}
-            className="border border-white bg-white text-[#0A3A77] px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] hover:bg-transparent hover:text-white transition-colors flex items-center justify-center gap-3"
-          >
-            Design Your Expedition <ArrowRight className="w-4 h-4" strokeWidth={1} />
-          </Link>
-          <a
-            href="#dossier-facts"
-            className="border border-white/30 text-white px-8 py-4 font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] hover:border-white transition-colors flex items-center justify-center gap-3"
-          >
-            Expedition Details <ArrowDown className="w-4 h-4" strokeWidth={1} />
-          </a>
-        </div>
+        {heroText}
       </div>
     </section>
   );
