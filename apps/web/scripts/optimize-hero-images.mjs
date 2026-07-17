@@ -30,9 +30,12 @@ const SOURCES = ['hero-cinematic-1.jpg', 'home-hero-2.jpg']
 
 const kb = (p) => (statSync(p).size / 1024).toFixed(0)
 
-// This runs on every build (see package.json). Skip a variant that already
-// exists and is newer than its source so unchanged images aren't reprocessed —
-// swap a source photo and only that one regenerates.
+// Run manually (`pnpm optimize:images`) after adding or swapping a hero photo,
+// then commit the generated variants — they ship straight from the repo and are
+// NOT regenerated at build time. Skip a variant that already exists and is newer
+// than its source so unchanged images aren't reprocessed.
+// (Note: this mtime check is unreliable on a fresh git clone, which is one
+// reason this belongs in a local manual step rather than CI.)
 const isFresh = (out, srcPath) =>
   existsSync(out) && statSync(out).mtimeMs >= statSync(srcPath).mtimeMs
 
