@@ -46,9 +46,9 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
   const heroAspect = deliveredAspect(heroImage) ?? 1.6;
 
   // TEMP preview switch (?hero=band|portrait) so the two mobile treatments can
-  // be compared on real peaks. Default "band": stacked, whole-peak landscape
-  // band. "portrait": keep the full-screen hero but serve a Sanity focal-point
-  // portrait crop on mobile so the summit is framed (sky above, base below).
+  // be compared on real peaks. Default "portrait": keep the full-screen hero
+  // but serve a Sanity focal-point portrait crop on mobile so the summit is
+  // framed (sky above, base below). "band": stacked, whole-peak landscape band.
   //
   // TO COLLAPSE TO ONE VARIANT once we decide: delete the losing `return`
   // branch below, then delete this switch (hard-code `variant`), the
@@ -56,7 +56,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
   // `deliveredAspect`/`heroAspect` (band) the losing branch used. `fullbleedFx`
   // then simplifies to `desktop` (band) or `true` (portrait).
   const [params] = useSearchParams();
-  const variant = params.get("hero") === "portrait" ? "portrait" : "band";
+  const variant = params.get("hero") === "band" ? "band" : "portrait";
   // 9:16 crop around the editor's hotspot — Sanity picks the window centred on
   // the summit, so mobile gets a framed vertical composition, not a mid strip.
   const portraitSrc = heroImage
