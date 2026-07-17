@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "react-router build",
+    "build": "react-router build && node scripts/embed-server-secrets.mjs",
     "optimize:images": "node scripts/optimize-hero-images.mjs",
     "dev": "react-router dev --host"
   },
