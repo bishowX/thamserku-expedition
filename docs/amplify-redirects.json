@@ -1,0 +1,412 @@
+[
+  {
+    "source": "/thamserku_expedition_booking/mount-everest-expedition-8848m",
+    "target": "/expeditions/everest",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/mount-everest-expedition-8848m/",
+    "target": "/expeditions/everest",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/lhotse-expedition-8516m-27940ft-nepal",
+    "target": "/expeditions/lhotse",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/lhotse-expedition-8516m-27940ft-nepal/",
+    "target": "/expeditions/lhotse",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/makalu-8463m-27765ft-nepal",
+    "target": "/atlas",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/makalu-8463m-27765ft-nepal/",
+    "target": "/atlas",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/manaslu-8163m-26781ft-nepal",
+    "target": "/expeditions/manaslu",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/manaslu-8163m-26781ft-nepal/",
+    "target": "/expeditions/manaslu",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/himlung-7126m-nepal",
+    "target": "/expeditions/himlung-himal",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/himlung-7126m-nepal/",
+    "target": "/expeditions/himlung-himal",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/baruntse-expedition-with-mera-peak",
+    "target": "/expeditions/baruntse",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/baruntse-expedition-with-mera-peak/",
+    "target": "/expeditions/baruntse",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/amadablam-6812m-nepal",
+    "target": "/expeditions/ama-dablam",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/amadablam-6812m-nepal/",
+    "target": "/expeditions/ama-dablam",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/lobuche-peak-nepal",
+    "target": "/expeditions/lobuche-peak",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/lobuche-peak-nepal/",
+    "target": "/expeditions/lobuche-peak",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku_expedition_booking/<*>",
+    "target": "/atlas",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/our-team",
+    "target": "/team",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/our-team/",
+    "target": "/team",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/our-team/<*>",
+    "target": "/team",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/making-a-difference",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/making-a-difference/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/testimonials",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/testimonials/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/about-us",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/about-us/<*>",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/contact-us",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/contact-us/",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku-expeditions-search",
+    "target": "/atlas",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku-expeditions-search/",
+    "target": "/atlas",
+    "status": "301"
+  },
+  {
+    "source": "/bespoke-tailor-made-expeditions",
+    "target": "/private",
+    "status": "301"
+  },
+  {
+    "source": "/bespoke-tailor-made-expeditions/",
+    "target": "/private",
+    "status": "301"
+  },
+  {
+    "source": "/our-patrons",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/our-patrons/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/our-equipment-partners",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/our-equipment-partners/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/our-sister-companies",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/our-sister-companies/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/blog",
+    "target": "/news-and-blogs",
+    "status": "301"
+  },
+  {
+    "source": "/blog/",
+    "target": "/news-and-blogs",
+    "status": "301"
+  },
+  {
+    "source": "/blog/<*>",
+    "target": "/news-and-blogs",
+    "status": "301"
+  },
+  {
+    "source": "/news-and-updates",
+    "target": "/news-and-blogs",
+    "status": "301"
+  },
+  {
+    "source": "/news-and-updates/",
+    "target": "/news-and-blogs",
+    "status": "301"
+  },
+  {
+    "source": "/news-and-updates/<*>",
+    "target": "/news-and-blogs",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku-expeditions-booking-form",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/thamserku-expeditions-booking-form/",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/book-now",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/book-now/",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/make-payment",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/make-payment/",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/payment-invoice",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/payment-invoice/",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/payment-status",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/payment-status/",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/confirmation",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/confirmation/",
+    "target": "/consultation",
+    "status": "301"
+  },
+  {
+    "source": "/my-account",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/my-account/",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/my-account/<*>",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/accueil",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/accueil/",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/a-propos-de-nous",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/a-propos-de-nous/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/a-propos-de-nous/<*>",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/heim",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/heim/",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/ueber-uns",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/ueber-uns/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/ueber-uns/<*>",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/chi-siamo",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/chi-siamo/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/chi-siamo/<*>",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/sobre-nosotros",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/sobre-nosotros/",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/sobre-nosotros/<*>",
+    "target": "/legacy",
+    "status": "301"
+  },
+  {
+    "source": "/wp-login.php",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/wp-admin",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/wp-admin/",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/wp-admin/<*>",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/studio/<*>",
+    "target": "https://REPLACE_WITH_STUDIO_AMPLIFY_DOMAIN/studio/<*>",
+    "status": "200"
+  },
+  {
+    "source": "/static/<*>",
+    "target": "https://REPLACE_WITH_STUDIO_AMPLIFY_DOMAIN/static/<*>",
+    "status": "200"
+  }
+]

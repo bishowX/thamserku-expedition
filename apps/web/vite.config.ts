@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 import { reactRouter } from "@react-router/dev/vite";
+import { amplifyHosting } from "vite-plugin-react-router-amplify-hosting";
 
 function figmaAssetResolver() {
   return {
@@ -16,7 +17,7 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
-  plugins: [figmaAssetResolver(), reactRouter(), tailwindcss()],
+  plugins: [figmaAssetResolver(), reactRouter(), tailwindcss(), amplifyHosting()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

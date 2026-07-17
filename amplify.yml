@@ -1,0 +1,57 @@
+version: 1
+# Monorepo build spec for two AWS Amplify apps that share this repo.
+# Create TWO Amplify Hosting apps from this repo; in each, set the app root:
+#   - Website (SSR):  apps/web      -> deploys as WEB_COMPUTE (Node 20 Lambda)
+#   - Studio (static): apps/studio  -> deploys as static SPA
+# Amplify picks the matching block below via the app root you select.
+applications:
+  # ---------------------------------------------------------------------------
+  # Website — React Router 7 SSR. The vite-plugin-react-router-amplify-hosting
+  # plugin emits .amplify-hosting/ (server.mjs + static/ + deploy-manifest.json).
+  # ---------------------------------------------------------------------------
+  - appRoot: apps/web
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm use 20 || nvm install 20
+            - corepack enable
+            - corepack prepare pnpm@10.33.0 --activate
+            # Install the whole workspace from the repo root.
+            - cd ../.. && pnpm install --frozen-lockfile
+        build:
+          commands:
+            # cwd resets to the app root for each phase.
+            - pnpm build
+      artifacts:
+        baseDirectory: .amplify-hosting
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - ../../node_modules/**/*
+          - node_modules/**/*
+
+  # ---------------------------------------------------------------------------
+  # Studio — Sanity Studio, static SPA (sanity build -> dist/).
+  # ---------------------------------------------------------------------------
+  - appRoot: apps/studio
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm use 20 || nvm install 20
+            - corepack enable
+            - corepack prepare pnpm@10.33.0 --activate
+            - cd ../.. && pnpm install --frozen-lockfile
+        build:
+          commands:
+            - pnpm build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - ../../node_modules/**/*
+          - node_modules/**/*

@@ -2,4 +2,5 @@ node_modules
 apps/web/dist
 .turbo
 apps/web/build
+apps/web/.amplify-hosting
 .env
