@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { stegaClean } from "@sanity/client/stega";
 import type { EncodeDataAttributeCallback } from "@sanity/react-loader";
-import { heroSrcSet, HERO_SIZES } from "../../lib/heroImage";
+import { heroSrcSet, HERO_SIZES_HOME } from "../../lib/heroImage";
 import { TextReveal } from "./TextReveal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -110,13 +110,13 @@ export function Hero({
             className="absolute inset-0 will-change-transform"
           >
             <picture className="contents">
-              <source type="image/avif" srcSet={heroSrcSet(HERO_IMAGE, "avif")} sizes={HERO_SIZES} />
-              <source type="image/webp" srcSet={heroSrcSet(HERO_IMAGE, "webp")} sizes={HERO_SIZES} />
+              <source type="image/avif" srcSet={heroSrcSet(HERO_IMAGE, "avif")} sizes={HERO_SIZES_HOME} />
+              <source type="image/webp" srcSet={heroSrcSet(HERO_IMAGE, "webp")} sizes={HERO_SIZES_HOME} />
               <img
                 ref={bgRef}
                 src={HERO_IMAGE}
                 alt="Hero background"
-                className="w-full h-full object-cover object-[center_35%]"
+                className="w-full h-full object-cover object-[30%_35%] md:object-[center_35%]"
               />
             </picture>
           </div>

@@ -20,6 +20,10 @@ const IMAGES = resolve(__dirname, '../public/images')
 // Full-bleed heroes: cover common DPR×viewport combinations without shipping a
 // 2560px file to a 390px phone. The largest step matches the source's useful
 // resolution (retina desktop / 4K).
+// 5120 is intentionally excluded: the AVIF weighs ~3MB, too heavy to ever ship
+// as an LCP. The cinematic master is a 5120 upscale so its DOWNSCALED 2560/3840
+// variants carry real detail (a soft 2560 master produced mush under the intro's
+// 1.65x zoom + mobile crop); 3840 is the largest we serve.
 const WIDTHS = [640, 960, 1280, 1600, 1920, 2560, 3840]
 
 // Quality tuned per format — AVIF holds up far lower than WebP at equal bytes.

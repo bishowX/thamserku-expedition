@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { Observer } from "gsap/Observer";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getLenis } from "../hooks/useLenis";
-import { heroSrcSet, HERO_SIZES } from "../../lib/heroImage";
+import { heroSrcSet, HERO_SIZES_INTRO } from "../../lib/heroImage";
 import ThamserkuLogo from "./logo/ThamserkuLogo";
 import "./cinematic-intro.css";
 
@@ -362,17 +362,17 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
           <source
             type="image/avif"
             srcSet={heroSrcSet("/images/hero-cinematic-1.jpg", "avif")}
-            sizes={HERO_SIZES}
+            sizes={HERO_SIZES_INTRO}
           />
           <source
             type="image/webp"
             srcSet={heroSrcSet("/images/hero-cinematic-1.jpg", "webp")}
-            sizes={HERO_SIZES}
+            sizes={HERO_SIZES_INTRO}
           />
           <img
             src="/images/hero-cinematic-1.jpg"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover object-[50%_58%]"
+            className="absolute inset-0 w-full h-full object-cover object-[32%_46%] md:object-[50%_58%]"
           />
         </picture>
         <div className="ci-fog-back z-[2]" />
@@ -380,7 +380,7 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
           ref={logoWrapRef}
           className="absolute inset-0 z-[3] grid place-items-center will-change-transform"
         >
-          <div className="w-[clamp(260px,64vw,1000px)] aspect-[1115.63/208] -translate-y-[8vh] [filter:drop-shadow(0_4px_16px_rgba(0,0,0,0.35))]">
+          <div className="w-[clamp(340px,90vw,860px)] md:w-[clamp(260px,64vw,1000px)] aspect-[1115.63/208] -translate-y-[8vh] [filter:drop-shadow(0_4px_16px_rgba(0,0,0,0.35))]">
             <ThamserkuLogo />
           </div>
         </div>

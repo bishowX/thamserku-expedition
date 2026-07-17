@@ -18,7 +18,7 @@ import { getPreviewData } from '../../lib/preview.server'
 import { loadQuery } from '../../lib/loader.server'
 import type { Route } from "./+types/Home";
 import { pageMeta } from "../../lib/seo";
-import { heroSrcSet, HERO_SIZES } from "../../lib/heroImage";
+import { heroSrcSet, HERO_SIZES_INTRO } from "../../lib/heroImage";
 
 export function links() {
   // Scene 1 of the cinematic intro is the LCP element. Preload the responsive
@@ -31,7 +31,7 @@ export function links() {
       as: "image",
       type: "image/avif",
       imageSrcSet: heroSrcSet("/images/hero-cinematic-1.jpg", "avif"),
-      imageSizes: HERO_SIZES,
+      imageSizes: HERO_SIZES_INTRO,
       fetchPriority: "high",
     },
   ];
