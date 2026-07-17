@@ -141,7 +141,7 @@ export function AtlasPreview({
               </h2>
             )}
             {data?.atlasIntro && (
-              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.6] max-w-[70%] whitespace-pre-line">
+              <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.6] md:max-w-[70%] whitespace-pre-line">
                 {data.atlasIntro}
               </p>
             )}
@@ -175,7 +175,7 @@ export function AtlasPreview({
                   <h3 className="font-['Fraunces'] font-light text-display-l mb-4">
                     {exp.name}
                   </h3>
-                  <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-relaxed max-w-[40ch]">
+                  <p className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-relaxed max-w-none md:max-w-[40ch]">
                     {exp.positioning}
                   </p>
                 </div>

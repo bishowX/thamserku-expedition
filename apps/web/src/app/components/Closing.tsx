@@ -141,7 +141,7 @@ export function Closing({ data, encodeDataAttribute }: { data?: ClosingData; enc
 
         <p
           ref={bodyRef}
-          className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.8] max-w-[48ch] mb-4 whitespace-pre-line"
+          className="font-['DM_Sans'] font-light text-[#C8CDD2] text-body leading-[1.8] max-w-none md:max-w-[48ch] mb-4 whitespace-pre-line"
         >
           {body}
         </p>
