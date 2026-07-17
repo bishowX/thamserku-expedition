@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useLoaderData, useSearchParams, useActionData, useNavigation, Form } from 'react-router'
+import { useLoaderData, useSearchParams, useActionData, useNavigation, useRouteError, Form } from 'react-router'
 import type { ShouldRevalidateFunction } from 'react-router'
 import { useQuery } from '@sanity/react-loader'
 import type { QueryResponseInitial } from '@sanity/react-loader'
@@ -103,34 +103,41 @@ export async function action({ request }: { request: Request }): Promise<
 
   const submittedAt = new Date().toISOString()
 
-  await writeClient.create({
-    _type: 'booking',
-    submittedAt,
-    fullName,
-    email: email || undefined,
-    phone: phone || undefined,
-    customPeakName,
-    expeditionType,
-    numberOfClimbers,
-    season,
-    specialObjectives,
-    message,
-    expedition: expeditionId ? { _type: 'reference', _ref: expeditionId } : undefined,
-    edition: editionId ? { _type: 'reference', _ref: editionId } : undefined,
-    selections: estimate.lineItems.map((li) => ({
-      _key: li.key,
-      _type: 'bookingSelection',
-      key: li.key,
-      label: li.label,
-      group: li.group,
-      chosenLabel: li.chosenLabel,
-      priceDelta: li.priceDelta,
-    })),
-    basePrice: estimate.basePrice ?? undefined,
-    estimatedTotal: estimate.total ?? undefined,
-    estimatedLow: estimate.low ?? undefined,
-    currency: estimate.currency,
-  })
+  // Snapshot to Sanity — best-effort. A misconfigured/expired write token must
+  // not crash the whole page for the climber; still fall through to the email
+  // notifications below so the desk doesn't lose the lead.
+  try {
+    await writeClient.create({
+      _type: 'booking',
+      submittedAt,
+      fullName,
+      email: email || undefined,
+      phone: phone || undefined,
+      customPeakName,
+      expeditionType,
+      numberOfClimbers,
+      season,
+      specialObjectives,
+      message,
+      expedition: expeditionId ? { _type: 'reference', _ref: expeditionId } : undefined,
+      edition: editionId ? { _type: 'reference', _ref: editionId } : undefined,
+      selections: estimate.lineItems.map((li) => ({
+        _key: li.key,
+        _type: 'bookingSelection',
+        key: li.key,
+        label: li.label,
+        group: li.group,
+        chosenLabel: li.chosenLabel,
+        priceDelta: li.priceDelta,
+      })),
+      basePrice: estimate.basePrice ?? undefined,
+      estimatedTotal: estimate.total ?? undefined,
+      estimatedLow: estimate.low ?? undefined,
+      currency: estimate.currency,
+    })
+  } catch (err) {
+    console.error('[booking] writeClient.create failed:', err)
+  }
 
   const emailData = {
     fullName,
@@ -486,6 +493,46 @@ export default function DesignPage() {
       </div>
 
       <MobileConfigBar {...summaryProps} />
+    </main>
+  )
+}
+
+// Route-level fallback — an unhandled loader/action error (e.g. a misconfigured
+// server env var) would otherwise fall through to React Router's generic
+// "Unexpected Application Error!" page. This keeps the crash on-brand and
+// gives the climber a way forward instead of a dead end.
+export function ErrorBoundary() {
+  const error = useRouteError()
+  console.error('[design-your-expedition] route error:', error)
+
+  return (
+    <main className="min-h-screen bg-[#1A1A1A]">
+      <Nav />
+      <div className="flex items-center justify-center px-6 py-40">
+        <div className="text-center max-w-[48ch]">
+          <div className="w-12 h-12 rounded-full border border-[#3A3A3A] flex items-center justify-center mx-auto mb-10">
+            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.22em] text-[#5A6673] mb-6">
+            Something Went Wrong
+          </p>
+          <h1 className="font-['Fraunces'] font-light text-display-m text-white mb-6">
+            We couldn&apos;t process your configuration.
+          </h1>
+          <p className="font-['Fraunces'] italic text-[#5A6673] text-body mb-10">
+            Nothing was lost — please try submitting again. If this keeps happening, reach out to
+            our desk directly and we&apos;ll take it from there.
+          </p>
+          <a
+            href="/design-your-expedition"
+            className="inline-block font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#1A1A1A] bg-white border border-white px-10 py-4 rounded hover:bg-[#C8CDD2] transition-colors"
+          >
+            Start Over →
+          </a>
+        </div>
+      </div>
     </main>
   )
 }
