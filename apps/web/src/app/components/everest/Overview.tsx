@@ -100,7 +100,7 @@ export function Overview({
                         {spec.label}
                       </p>
                       {parts.length > 1 ? (
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 font-['Fraunces'] text-body text-[#1A1A1A] text-[14px]">
+                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 font-['DM_Mono'] text-body text-[#1A1A1A] text-[14px]">
                           {parts.map((part, j) => (
                             <span key={j} className="whitespace-nowrap">
                               {part}
@@ -108,7 +108,7 @@ export function Overview({
                           ))}
                         </div>
                       ) : (
-                        <p className="font-['Fraunces'] text-body text-[#1A1A1A] text-[14px]">
+                        <p className="font-['DM_Mono'] text-body text-[#1A1A1A] text-[14px]">
                           {spec.value}
                         </p>
                       )}
