@@ -12,10 +12,14 @@ const NON_MLN_SLUGS = new Set([
   "himlung",
   "baruntse",
   "saribung",
-  "chulu-far-east",
+  "api-himal",
   "manaslu",
 ]);
 const MLN_WEBSITE_URL = "https://mountainlodgesofnepal.com/";
+
+// Chulu Far East uses Kasara Resort instead of/alongside MLN lodges.
+const KASARA_SLUGS = new Set(["chulu-far-east"]);
+const KASARA_WEBSITE_URL = "https://kasararesort.com/";
 
 import { useRef } from "react";
 import { stegaClean } from "@sanity/client/stega";
@@ -32,6 +36,7 @@ type Props = {
 export function Itinerary({ slug, itineraryHeading, itinerary, overviewSpecs }: Props) {
   const rows = itinerary ?? [];
   const showMln = slug ? !NON_MLN_SLUGS.has(slug) : true;
+  const showKasara = slug ? KASARA_SLUGS.has(slug) : false;
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
 
@@ -110,7 +115,7 @@ export function Itinerary({ slug, itineraryHeading, itinerary, overviewSpecs }: 
               </div>
             )}
             <p data-reveal-row className="border-t border-white/20 py-5 md:py-4 font-['DM_Sans'] font-light text-body leading-[1.6] text-white/60">
-              {showMln ? (
+              {showMln && (
                 <>
                   <a
                     href={MLN_WEBSITE_URL}
@@ -120,11 +125,23 @@ export function Itinerary({ slug, itineraryHeading, itinerary, overviewSpecs }: 
                   >
                     MLN — Mountain Lodges of Nepal
                   </a>
-                  {" "}· B — Breakfast · L — Lunch · D — Dinner
+                  {" "}·{" "}
                 </>
-              ) : (
-                "B — Breakfast · L — Lunch · D — Dinner"
               )}
+              {showKasara && (
+                <>
+                  <a
+                    href={KASARA_WEBSITE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-white transition-colors"
+                  >
+                    Kasara Resort
+                  </a>
+                  {" "}·{" "}
+                </>
+              )}
+              B — Breakfast · L — Lunch · D — Dinner
             </p>
           </div>
         )}

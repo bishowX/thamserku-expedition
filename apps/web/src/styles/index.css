@@ -4,7 +4,12 @@
 
 /* lenis.css sets overflow: hidden while Lenis is stopped (cinematic intro,
    route scroll-locks) — keep the scrollbar gutter reserved so content does
-   not shift when the scrollbar reappears. */
-html {
-  scrollbar-gutter: stable;
+   not shift when the scrollbar reappears. Only do this where a classic
+   (non-overlay) scrollbar actually exists — on touch/mobile the reserved
+   gutter has nothing to hold and just renders as a stray bar down the
+   right edge. */
+@media (pointer: fine) {
+  html {
+    scrollbar-gutter: stable;
+  }
 }
