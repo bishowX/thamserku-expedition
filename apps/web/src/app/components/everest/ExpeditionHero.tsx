@@ -1,6 +1,6 @@
 import { useRef, type CSSProperties } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
-import { Link, useSearchParams } from "react-router";
+import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -45,24 +45,6 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
   // Mobile band height = the peak photo's own aspect (fallback 1.6 landscape).
   const heroAspect = deliveredAspect(heroImage) ?? 1.6;
 
-  // TEMP preview switch (?hero=band|portrait) so the two mobile treatments can
-  // be compared on real peaks. Default "portrait": keep the full-screen hero
-  // but serve a Sanity focal-point portrait crop on mobile so the summit is
-  // framed (sky above, base below). "band": stacked, whole-peak landscape band.
-  //
-  // TO COLLAPSE TO ONE VARIANT once we decide: delete the losing `return`
-  // branch below, then delete this switch (hard-code `variant`), the
-  // `useSearchParams` import, and whichever of `portraitSrc` (portrait) or
-  // `deliveredAspect`/`heroAspect` (band) the losing branch used. `fullbleedFx`
-  // then simplifies to `desktop` (band) or `true` (portrait).
-  const [params] = useSearchParams();
-  const variant = params.get("hero") === "band" ? "band" : "portrait";
-  // 9:16 crop around the editor's hotspot — Sanity picks the window centred on
-  // the summit, so mobile gets a framed vertical composition, not a mid strip.
-  const portraitSrc = heroImage
-    ? urlFor(heroImage as SanityImageSource).width(1080).height(1920).fit("crop").url()
-    : null;
-
   const sectionRef = useRef<HTMLElement>(null);
   const bgWrapRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
@@ -86,12 +68,10 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       if (subRef.current) gsap.set(subRef.current, { opacity: 1 });
       if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 1 });
 
-      // The "band" variant stacks the hero on mobile (image band + text below),
-      // so the full-screen ambient ken-burns and scroll parallax don't apply —
-      // they'd re-crop the band and hide the peak edges we show whole. The
-      // "portrait" variant keeps the full-screen hero, so it keeps those FX.
+      // Mobile stacks the hero (image band + text below), so the full-screen
+      // ambient ken-burns and scroll parallax are desktop-only — on mobile
+      // they'd re-crop the band and hide the peak edges we show whole.
       const desktop = window.matchMedia("(min-width: 768px)").matches;
-      const fullbleedFx = variant === "portrait" || desktop;
 
       const tl = gsap.timeline();
 
@@ -149,7 +129,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       }
 
       // Ambient ken-burns drift after entrance
-      if (bgRef.current && fullbleedFx) {
+      if (bgRef.current && desktop) {
         tl.call(() => {
           if (!bgRef.current) return;
           gsap.to(bgRef.current, {
@@ -164,7 +144,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
       }
 
       // Scroll parallax — background drifts down, content fades and drifts up.
-      if (bgWrapRef.current && sectionRef.current && fullbleedFx) {
+      if (bgWrapRef.current && sectionRef.current && desktop) {
         gsap.to(bgWrapRef.current, {
           yPercent: 35,
           scale: 1.1,
@@ -178,7 +158,7 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
         });
       }
 
-      if (contentRef.current && sectionRef.current && fullbleedFx) {
+      if (contentRef.current && sectionRef.current && desktop) {
         gsap.to(contentRef.current, {
           yPercent: -15,
           opacity: 0,
@@ -195,8 +175,8 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
     { scope: sectionRef },
   );
 
-  // Shared overlaid text (headline + subtext + CTAs); each variant wraps it in
-  // its own positioned container.
+  // Shared overlaid text (headline + subtext + CTAs); wrapped by the
+  // positioned content container below.
   const heroText = (
     <>
       <h1
@@ -234,58 +214,8 @@ export function ExpeditionHero({ name, heroImage, heroTagline, heroSubtext, slug
     </>
   );
 
-  // ---- Variant "portrait": full-screen hero kept; on mobile the photo is a
-  //      Sanity focal-point 9:16 crop so the summit is framed, not a mid strip.
-  if (variant === "portrait") {
-    return (
-      <section
-        ref={sectionRef}
-        className="relative w-full h-screen bg-[#1A1A1A] flex flex-col justify-end text-white overflow-hidden p-5 pb-16 md:p-12 xl:px-24 xl:pb-24 xl:pt-12"
-      >
-        <div className="absolute inset-0 z-0">
-          <div ref={bgWrapRef} className="absolute inset-0 will-change-transform">
-            {imageSrc ? (
-              <picture className="contents">
-                <source media="(max-width: 767px)" srcSet={portraitSrc ?? undefined} />
-                <img
-                  ref={bgRef}
-                  src={imageSrc}
-                  alt={`${name} hero`}
-                  className="w-full h-full object-cover object-center will-change-transform"
-                />
-              </picture>
-            ) : (
-              <div className="w-full h-full bg-[#2E353C]" />
-            )}
-          </div>
-          <div
-            ref={overlayRef}
-            className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-transparent to-[#1A1A1A]/90"
-          />
-        </div>
-
-        <Nav />
-
-        <div className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay opacity-20">
-          <div className="w-full h-full border-l border-r border-[#C8CDD2]/30 max-w-[1440px] mx-auto relative grid grid-cols-4 md:grid-cols-12 gap-5 px-8">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="h-full border-r border-[#C8CDD2]/20 hidden md:block" />
-            ))}
-          </div>
-        </div>
-
-        <div
-          ref={contentRef}
-          className="relative z-20 w-full flex flex-col items-start justify-end h-full will-change-transform"
-        >
-          {heroText}
-        </div>
-      </section>
-    );
-  }
-
-  // ---- Variant "band" (default): whole-peak landscape band on mobile, text
-  //      stacked below; full-screen background with overlaid text on desktop.
+  // Whole-peak landscape band on mobile, text stacked below; full-screen
+  // background with overlaid text on desktop.
   return (
     <section
       ref={sectionRef}
