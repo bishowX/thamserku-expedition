@@ -3,6 +3,20 @@ import { Instagram, Facebook } from "lucide-react";
 import ThamserkuLogo from "./logo/ThamserkuLogo";
 import type { loader } from "../../root";
 
+function XIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={Math.round((size * 1227) / 1200)}
+      viewBox="0 0 1200 1227"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z" />
+    </svg>
+  );
+}
+
 export function Footer() {
   const root = useRouteLoaderData<typeof loader>("root");
   const contactEmail = root?.settings?.contactEmail ?? "info@thamserkuexpedition.com";
@@ -34,6 +48,15 @@ export function Footer() {
                 className="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/20 text-white hover:text-[#5A6673] hover:bg-white/5 hover:border-white/10 transition-all"
               >
                 <Facebook size={16} />
+              </a>
+              <a
+                href="https://x.com/Thamserku_Exped"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/20 text-white hover:text-[#5A6673] hover:bg-white/5 hover:border-white/10 transition-all"
+              >
+                <XIcon size={14} />
               </a>
             </div>
           </div>

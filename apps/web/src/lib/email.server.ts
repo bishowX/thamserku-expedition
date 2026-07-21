@@ -328,6 +328,11 @@ export function buildClimberHtml(data: BookingEmailData, contact: ContactInfo = 
                           <img src="${EMAIL_IMG_BASE}/email-icon-fb.svg" width="13" height="13" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">thamserkuexpedition</span>
                         </a>
                       </td>
+                      <td style="padding:0 16px;border-right:1px solid #C8C2B5;white-space:nowrap;">
+                        <a href="https://x.com/Thamserku_Exped" style="text-decoration:none;">
+                          <img src="${EMAIL_IMG_BASE}/email-icon-x.svg" width="13" height="13" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">Thamserku_Exped</span>
+                        </a>
+                      </td>
                       <td style="padding:0 0 0 16px;white-space:nowrap;">
                         <a href="https://www.youtube.com/channel/UCBUOrivyxfYEeKC5qSKrK5Q/featured" style="text-decoration:none;">
                           <img src="${EMAIL_IMG_BASE}/email-icon-yt.svg" width="13" height="13" alt="" style="display:inline-block;vertical-align:middle;border:0;"><span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.08em;color:#5A6673;margin-left:5px;vertical-align:middle;">Thamserku Expedition</span>
