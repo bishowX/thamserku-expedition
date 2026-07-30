@@ -12,6 +12,10 @@ const { getSession, commitSession, destroySession } = createCookieSessionStorage
     // Presentation embeds the app in an iframe, so the cookie must be cross-site
     // in production; lax keeps local dev working without HTTPS.
     sameSite: !import.meta.env.DEV ? 'none' : 'lax',
+    // The Studio is on a different origin, so browsers that block unpartitioned
+    // third-party cookies drop this one and preview mode silently never turns on.
+    // CHIPS keys it to the Studio's top-level site instead (requires Secure).
+    partitioned: !import.meta.env.DEV,
     secrets: [process.env.SESSION_SECRET ?? 'sanity-preview-session-secret'],
     secure: !import.meta.env.DEV,
   },
