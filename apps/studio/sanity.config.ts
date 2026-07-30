@@ -5,7 +5,7 @@ import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
 
 // Origin of the React Router app to preview. Override via SANITY_STUDIO_PREVIEW_ORIGIN.
-const previewOrigin = process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:5173'
+const previewOrigin = process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'https://thamserkuexpedition.com'
 
 // Static-location helper for the singleton page documents.
 const pageLocation = (title: string, href: string) =>
