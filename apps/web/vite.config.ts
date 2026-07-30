@@ -26,6 +26,14 @@ export default defineConfig({
   ssr: {
     noExternal: ["gsap", "@gsap/react"],
   },
+  optimizeDeps: {
+    // SanityVisualEditing is lazy-loaded (only mounts in preview mode), so Vite's
+    // dep crawler can miss it at cold start and re-optimize it later mid-session
+    // in a separate chunk generation from the rest of the app — that gives the
+    // page two live React copies and VisualEditing crashes with "Cannot read
+    // properties of null (reading 'useMemo')". Force it into the initial scan.
+    include: ["@sanity/visual-editing/react-router"],
+  },
   assetsInclude: ["**/*.svg", "**/*.csv"],
   server: {
     allowedHosts: true,
