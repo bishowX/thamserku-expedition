@@ -85,8 +85,7 @@ export function Overview({
               <div data-reveal>
                 {specs.map((spec, i) => {
                   // A value may hold several `|`-separated entries (e.g. the
-                  // fixed-departure windows). Render those as a two-per-row
-                  // grid so they read cleanly instead of wrapping mid-line.
+                  // fixed-departure windows). Each gets its own line.
                   const parts = stegaClean(spec.value)
                     .split("|")
                     .map((p) => p.trim())
@@ -99,19 +98,11 @@ export function Overview({
                       <p className="font-['DM_Mono'] uppercase tracking-[0.18em] md:tracking-[0.22em] text-[11px] leading-[1.5] text-[#5A6673] pt-[3px] break-words">
                         {spec.label}
                       </p>
-                      {parts.length > 1 ? (
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-2 font-['DM_Mono'] text-body text-[#1A1A1A] text-[14px]">
-                          {parts.map((part, j) => (
-                            <span key={j} className="whitespace-nowrap">
-                              {part}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="font-['DM_Mono'] text-body text-[#1A1A1A] text-[14px]">
-                          {spec.value}
-                        </p>
-                      )}
+                      <div className="flex flex-col gap-2 font-['DM_Mono'] text-body text-[#1A1A1A] text-[14px]">
+                        {parts.map((part, j) => (
+                          <span key={j}>{part}</span>
+                        ))}
+                      </div>
                     </div>
                   );
                 })}
