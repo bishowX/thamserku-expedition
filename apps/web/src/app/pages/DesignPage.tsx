@@ -187,6 +187,8 @@ export async function action({ request }: { request: Request }): Promise<
 // them before using the letter as an EditionLetter key in the config matrix.
 const cleanLetter = (letter: string): EditionLetter => stegaClean(letter) as EditionLetter
 
+const DEFAULT_EDITION: EditionLetter = 'B'
+
 const EMPTY_FORMAT: FormatValue = {
   expeditionType: '',
   numberOfClimbers: '',
@@ -208,9 +210,14 @@ export default function DesignPage() {
   const heroSubheading = page?.heroSubheading || 'Select your Edition first — it pre-configures the standards. Then personalise every detail. We do not believe in quoting a number before understanding your climb.'
   const bgImageSrc = page?.heroBgImage ? urlFor(page.heroBgImage).width(1920).url() : undefined
 
+  // Bespoke is the default edition for every peak — the flow opens pre-configured
+  // at B unless the URL asks for another tier.
+  const findEdition = (letter: string | null) =>
+    editions.find((e) => cleanLetter(e.letter) === (letter ?? DEFAULT_EDITION)) ?? null
+
   const [selectedPeak, setSelectedPeak] = useState<string>(() => searchParams.get('expedition') ?? '')
-  const [edition, setEdition] = useState<SanityEditionForDesign | null>(
-    () => editions.find((e) => e.letter === searchParams.get('edition')) ?? null,
+  const [edition, setEdition] = useState<SanityEditionForDesign | null>(() =>
+    findEdition(searchParams.get('edition')),
   )
   // Deep links (?expedition=slug) skip handlePeakChange, so seed the peak's
   // default season here too.
@@ -228,7 +235,7 @@ export default function DesignPage() {
 
   const [selections, setSelections] = useState<Record<string, SelectionValue>>(() => {
     const exp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
-    const ed = editions.find((e) => e.letter === searchParams.get('edition')) ?? null
+    const ed = findEdition(searchParams.get('edition'))
     return exp && ed ? defaultSelections(exp.configMatrix, cleanLetter(ed.letter)) : {}
   })
 
