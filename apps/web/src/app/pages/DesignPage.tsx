@@ -226,7 +226,6 @@ export default function DesignPage() {
     const season = toSeasonValue(exp?.defaultSeason)
     return season ? { ...EMPTY_FORMAT, season } : EMPTY_FORMAT
   })
-  const [objectives, setObjectives] = useState<string[]>([])
   const [objectivesNote, setObjectivesNote] = useState('')
 
   const expedition: SanityExpeditionForDesign | null =
@@ -309,10 +308,6 @@ export default function DesignPage() {
     setSelections((prev) => ({ ...prev, [key]: value }))
   }
 
-  function toggleObjective(value: string) {
-    setObjectives((prev) => (prev.includes(value) ? prev.filter((x) => x !== value) : [...prev, value]))
-  }
-
   const submitted = actionData?.success === true
   const actionErrors = actionData && !actionData.success ? actionData.errors : undefined
   const isSubmitting = navigation.state === 'submitting'
@@ -351,7 +346,6 @@ export default function DesignPage() {
     return () => observer.disconnect()
   }, [])
 
-  const combinedObjectives = [...objectives, objectivesNote.trim()].filter(Boolean).join('; ')
   const interactiveKeys = new Set(allGroups.flatMap((g) => g.features.map((f) => f.feature.key)))
   const hiddenFields: Record<string, string> = {
     expeditionId: expedition?._id ?? '',
@@ -362,7 +356,7 @@ export default function DesignPage() {
     expeditionType: format.expeditionType,
     numberOfClimbers: format.numberOfClimbers,
     season: format.season,
-    specialObjectives: combinedObjectives,
+    specialObjectives: objectivesNote.trim(),
     selectionsJson: JSON.stringify(
       Object.fromEntries(Object.entries(selections).filter(([k]) => interactiveKeys.has(k))),
     ),
@@ -370,7 +364,7 @@ export default function DesignPage() {
 
   // Can advance past the format step?
   const peakChosen = Boolean(expedition) || (isCustomPeak && format.customPeakName.trim().length > 0)
-  const canAdvanceFormat = peakChosen && Boolean(edition)
+  const canAdvanceFormat = peakChosen && Boolean(edition) && Boolean(format.expeditionType)
   const nextDisabled = step === 0 && !canAdvanceFormat
 
   if (submitted) {
@@ -455,9 +449,7 @@ export default function DesignPage() {
                 <StepCustomContact
                   errors={actionErrors}
                   hiddenFields={hiddenFields}
-                  objectives={objectives}
                   objectivesNote={objectivesNote}
-                  onToggleObjective={toggleObjective}
                   onNoteChange={setObjectivesNote}
                   isProject={isProject}
                 />

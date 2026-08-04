@@ -1,25 +1,10 @@
-import { Chip, ChipRow } from '../Chip'
-
 type ContactErrors = { fullName?: string; email?: string }
-
-export const OBJECTIVE_OPTIONS = [
-  'Ski / Snowboard Descent',
-  'Parapente / Speed Fly',
-  'Traverse / Link-up',
-  'Scientific Research',
-  'Speed Record Attempt',
-  'Winter Ascent',
-  'Media / Documentation',
-  'New Route / New Ascent',
-]
 
 interface StepCustomContactProps {
   errors?: ContactErrors
   /** Hidden fields submitted with the form (ids, edition, format, selections JSON). */
   hiddenFields: Record<string, string>
-  objectives: string[]
   objectivesNote: string
-  onToggleObjective: (value: string) => void
   onNoteChange: (value: string) => void
   /** 'project' = A/E or custom peak (no configuration). */
   isProject: boolean
@@ -46,9 +31,7 @@ const lineInput =
 export function StepCustomContact({
   errors,
   hiddenFields,
-  objectives,
   objectivesNote,
-  onToggleObjective,
   onNoteChange,
   isProject,
 }: StepCustomContactProps) {
@@ -62,24 +45,24 @@ export function StepCustomContact({
       <section>
         <SectionTitle>Custom Fields</SectionTitle>
         {isProject && (
-          <p className="font-['Fraunces'] italic text-[#8C97A3] text-body -mt-6 mb-8">
+          <p className="font-['Fraunces'] italic text-[#8C97A3] text-body mb-8">
             This edition is shaped entirely around your objective — tell us what you have in mind and our desk will design it with you.
           </p>
         )}
         <div className="space-y-9">
           <div>
             <FieldLabel>Special Objectives</FieldLabel>
-            <ChipRow>
-              {OBJECTIVE_OPTIONS.map((opt) => (
-                <Chip key={opt} label={opt} selected={objectives.includes(opt)} onClick={() => onToggleObjective(opt)} />
-              ))}
-            </ChipRow>
+            <p className="font-['Fraunces'] italic text-[#8C97A3] text-body mb-6">
+              Ski or snowboard descent, parapente / speed fly, traverse or link-up, scientific
+              research, speed record attempt, winter ascent, media and documentation, a new route
+              or new ascent — whatever shapes the climb.
+            </p>
             <input
               type="text"
               value={objectivesNote}
               onChange={(e) => onNoteChange(e.target.value)}
               placeholder="Anything else — route, style, aerial activity, traverse…"
-              className={`${lineInput} mt-6`}
+              className={lineInput}
             />
           </div>
 
