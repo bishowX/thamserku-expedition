@@ -61,7 +61,7 @@ export function StepCustomContact({
               type="text"
               value={objectivesNote}
               onChange={(e) => onNoteChange(e.target.value)}
-              placeholder="Anything else — route, style, aerial activity, traverse…"
+              placeholder="Special objectives"
               className={lineInput}
             />
           </div>
