@@ -10,20 +10,39 @@ import {
 
 export type NumberedGroup = { number: number; group: ConfiguratorGroup }
 
+// Parenthetical note after the Oxygen heading — shown on 7000ers only.
+// Placeholder copy; move to Sanity if editors need it per expedition.
+const OXYGEN_GROUP = 'Oxygen Preferences'
+const OXYGEN_NOTE = 'only if necessary'
+
+/** "8,848.86 m" → 8848.86. A 7000er is 7000–7999 m. */
+const isSevenThousander = (altitude?: string) => {
+  const m = parseFloat((altitude ?? '').replace(/[^\d.]/g, '')) || 0
+  return m >= 7000 && m < 8000
+}
+
 interface ConfiguratorStepProps {
   groups: NumberedGroup[]
   selections: Record<string, SelectionValue>
   onChange: (key: string, value: SelectionValue) => void
+  /** Peak altitude as authored (e.g. "7,161 m") — gates the oxygen note. */
+  altitude?: string
 }
 
 /** One wizard step: a run of numbered matrix sections rendered as chip rows. */
-export function ConfiguratorStep({ groups, selections, onChange }: ConfiguratorStepProps) {
+export function ConfiguratorStep({ groups, selections, onChange, altitude }: ConfiguratorStepProps) {
+  const showOxygenNote = isSevenThousander(altitude)
   return (
     <div className="space-y-16">
       {groups.map(({ number, group }) => (
         <section key={group.group}>
           <h2 className="font-['Fraunces'] font-light text-display-m text-white mb-4">
             {number}. {group.group}
+            {group.group === OXYGEN_GROUP && showOxygenNote && (
+              <span className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.12em] text-[#5A6673] ml-3 align-middle">
+                ({OXYGEN_NOTE})
+              </span>
+            )}
           </h2>
           <div className="space-y-9">
             {group.features.map(({ feature, cell }, i) => (

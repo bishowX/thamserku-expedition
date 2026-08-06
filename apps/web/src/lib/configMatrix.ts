@@ -354,6 +354,8 @@ function oxygenFeature(dc: DesignConfig): ConfigFeature | null {
   for (const ed of BCD) {
     const o = editionOf(dc, ed)?.oxygen
     if (!o || typeof o.defaultBottles !== 'number') continue
+    const max = o.max ?? 16
+    if (max <= 0) continue // max 0 = no oxygen for this edition → no field, no table cell
     const dflt = o.defaultBottles
     editions.push({
       edition: ed,
@@ -361,7 +363,7 @@ function oxygenFeature(dc: DesignConfig): ConfigFeature | null {
       summary: o.unlimitedThreshold != null && dflt >= o.unlimitedThreshold ? 'Unlimited' : `${dflt} × 4L`,
       range: {
         min: o.min ?? 0,
-        max: o.max ?? 16,
+        max,
         step: 1,
         defaultValue: dflt,
         unit: '× 4L',

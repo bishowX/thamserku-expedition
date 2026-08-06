@@ -442,7 +442,12 @@ export default function DesignPage() {
               )}
 
               {step >= 1 && step <= configSteps.length && (
-                <ConfiguratorStep groups={configSteps[step - 1]} selections={selections} onChange={setSelection} />
+                <ConfiguratorStep
+                  groups={configSteps[step - 1]}
+                  selections={selections}
+                  onChange={setSelection}
+                  altitude={expedition?.altitude}
+                />
               )}
 
               {isLast && step !== 0 && (
