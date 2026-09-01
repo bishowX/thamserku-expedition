@@ -29,11 +29,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<AchievementsPageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.achievementsPage?.seo,
     title: d?.achievementsPage?.heroHeadline ?? "Heritage & Achievements",
     description: d?.achievementsPage?.heroSubheading,
+    image: d?.achievementsPage?.heroImage,
+    matches,
   });
 }
 

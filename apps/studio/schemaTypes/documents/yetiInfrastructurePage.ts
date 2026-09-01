@@ -8,6 +8,7 @@ export default defineType({
     { name: 'hero', title: 'Hero' },
     { name: 'definition', title: 'Definition §I' },
     { name: 'closing', title: 'Closing' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // Hero
@@ -46,6 +47,10 @@ export default defineType({
     defineField({ name: 'closingPrimaryCtaPath', title: 'Primary Button Link', type: 'string', group: 'closing', description: 'Internal path, e.g. /design-your-expedition' }),
     defineField({ name: 'closingSecondaryCtaLabel', title: 'Secondary Button Label', type: 'string', group: 'closing', description: 'e.g. EXPLORE EDITIONS →' }),
     defineField({ name: 'closingSecondaryCtaPath', title: 'Secondary Button Link', type: 'string', group: 'closing', description: 'Internal path, e.g. /editions' }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Yeti Infrastructure Page' }) },
 })

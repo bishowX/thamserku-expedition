@@ -12,6 +12,7 @@ export default defineType({
     { name: 'process', title: 'Process' },
     { name: 'alternative', title: 'Alternative Contact' },
     { name: 'closing', title: 'Closing' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // Hero
@@ -157,6 +158,10 @@ export default defineType({
     }),
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 3, group: 'closing' }),
     defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: {
     prepare: () => ({ title: 'Consultation Page' }),

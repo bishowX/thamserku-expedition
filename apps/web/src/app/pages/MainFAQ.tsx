@@ -15,6 +15,8 @@ import { FAQClosing } from "../components/faq/FAQClosing";
 import { Footer } from "../components/Footer";
 import type { Route } from "./+types/MainFAQ";
 import { pageMeta } from "../../lib/seo";
+import { faqJsonLd, jsonLdGraph } from "../../lib/jsonld";
+import { JsonLd } from "../components/JsonLd";
 
 export async function loader({ request }: { request: Request }) {
   const { options } = await getPreviewData(request);
@@ -22,11 +24,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<FAQPageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.faqPage?.seo,
     title: d?.faqPage?.heroHeadline ?? "Frequently Asked Questions",
     description: d?.faqPage?.heroSubline,
+    image: d?.faqPage?.heroImage,
+    matches,
   });
 }
 
@@ -38,8 +43,15 @@ export default function MainFAQ() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Every question on the page, across all categories plus the quick list.
+  const allFaqs = [
+    ...(data.faqPage?.categories ?? []).flatMap((c) => c.items ?? []),
+    ...(data.faqPage?.quickFaqs ?? []),
+  ];
+
   return (
     <main className="min-h-screen bg-[#1A1A1A]">
+      <JsonLd graph={jsonLdGraph([faqJsonLd(allFaqs)])} />
       <FAQHero page={data.faqPage ?? undefined} />
       <FAQCategoryNavigation
         page={data.faqPage ?? undefined}

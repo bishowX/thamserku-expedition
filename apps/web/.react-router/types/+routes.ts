@@ -67,12 +67,17 @@ type Pages = {
   "/heritage-and-achievements": {
     params: {};
   };
+  "/*": {
+    params: {
+      "*": string;
+    };
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/api/preview-mode/enable" | "/api/preview-mode/disable" | "/sitemap.xml" | "/robots.txt" | "/safety" | "/terms-and-conditions" | "/heritage-and-achievements";
+    page: "/" | "/expeditions/:slug" | "/editions" | "/legacy" | "/consultation" | "/yeti-infrastructure" | "/newsletter" | "/news-and-blogs" | "/faq" | "/design-your-expedition" | "/api/upload-cv" | "/api/preview-mode/enable" | "/api/preview-mode/disable" | "/sitemap.xml" | "/robots.txt" | "/safety" | "/terms-and-conditions" | "/heritage-and-achievements" | "/*";
   };
   "./app/pages/Home.tsx": {
     id: "app/pages/Home";
@@ -146,6 +151,10 @@ type RouteFiles = {
     id: "app/pages/HeritageAndAchievementsPage";
     page: "/heritage-and-achievements";
   };
+  "./app/pages/NotFound.tsx": {
+    id: "app/pages/NotFound";
+    page: "/*";
+  };
 };
 
 type RouteModules = {
@@ -168,4 +177,5 @@ type RouteModules = {
   "app/pages/SafetyPage": typeof import("./src/./app/pages/SafetyPage.tsx");
   "app/pages/TermsPage": typeof import("./src/./app/pages/TermsPage.tsx");
   "app/pages/HeritageAndAchievementsPage": typeof import("./src/./app/pages/HeritageAndAchievementsPage.tsx");
+  "app/pages/NotFound": typeof import("./src/./app/pages/NotFound.tsx");
 };

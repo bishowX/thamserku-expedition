@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router'
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useLoaderData, useLocation, useRouteError, useRouteLoaderData } from 'react-router'
 import './styles/index.css'
 import 'lenis/dist/lenis.css'
 import { FloatingContactPrompt } from './app/components/FloatingContactPrompt'
@@ -14,19 +14,53 @@ const SanityVisualEditing = lazy(() =>
   })),
 )
 import { getPreviewData } from './lib/preview.server'
-import { getSiteSettings } from './lib/queries.server'
+import { getRootData } from './lib/queries.server'
+import { pageMeta } from './lib/seo'
+import { siteJsonLd, breadcrumbJsonLd, jsonLdGraph } from './lib/jsonld'
+import { routeLabel } from './lib/siteRoutes'
+import { JsonLd } from './app/components/JsonLd'
+import { NotFound } from './app/pages/NotFound'
+import type { Route } from './+types/root'
 
 export async function loader({ request }: { request: Request }) {
   const { preview } = await getPreviewData(request)
-  const settings = await getSiteSettings()
-  return { preview, settings }
+  const { settings, expeditions } = await getRootData()
+  return { preview, settings, expeditions }
 }
 
-export function meta() {
-  return [
-    { title: "Thamserku Expedition | World-Leading Himalayan Expeditions" },
-    { name: "description", content: "World-leading high-altitude expeditions across Nepal, Tibet & Pakistan — guided by expert Sherpa teams." },
-  ];
+/**
+ * Fallback tags for routes that export no meta of their own. A route whose
+ * loader throws never runs its own meta, so the 404 and error screens land here
+ * — hence the error check. The HTTP status already keeps them out of the index;
+ * the noindex tag is belt and braces.
+ */
+export function meta({ matches, error }: Route.MetaArgs) {
+  const failed = error ?? matches?.some((m) => m && 'error' in m && m.error)
+  if (failed) {
+    return pageMeta({ seo: { noIndex: true }, title: 'Page not found', matches })
+  }
+  return pageMeta({ matches })
+}
+
+/**
+ * Organization, WebSite and the breadcrumb trail, emitted from the layout so
+ * every route carries them without touching thirteen page files. Routes that
+ * need richer markup (an expedition dossier, the FAQ) render their own graph on
+ * top of this one.
+ *
+ * Rendered inside Layout, which React Router also uses for the ErrorBoundary —
+ * so this must tolerate the root loader never having run.
+ */
+function SiteStructuredData() {
+  const root = useRouteLoaderData<typeof loader>('root')
+  const { pathname } = useLocation()
+  const label = routeLabel(pathname)
+  // The home page is the breadcrumb root, so it gets no trail of its own.
+  // Dynamic routes are skipped here and emit their own, with the real title.
+  const breadcrumb =
+    label && pathname !== '/' ? breadcrumbJsonLd([{ name: label, path: pathname }]) : undefined
+
+  return <JsonLd graph={jsonLdGraph([...siteJsonLd(root?.settings), breadcrumb])} />
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -54,6 +88,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-RMBQH3J4HV');var __gaLoaded=false;function __loadGA(){if(__gaLoaded)return;__gaLoaded=true;var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-RMBQH3J4HV';document.head.appendChild(s)}if('requestIdleCallback'in window){requestIdleCallback(__loadGA,{timeout:6000})}else{setTimeout(__loadGA,4000)}['pointerdown','keydown','scroll','touchstart'].forEach(function(e){window.addEventListener(e,__loadGA,{once:true,passive:true})});`,
           }}
         />
+        <SiteStructuredData />
       </head>
       <body className="bg-[#1A1A1A] min-h-screen text-white font-['DM_Sans'] selection:bg-[#2E353C] selection:text-white overflow-x-clip">
         {children}
@@ -77,5 +112,28 @@ export default function Root() {
         </Suspense>
       )}
     </>
+  )
+}
+
+/**
+ * Catches everything the app throws: the splat route's 404, an expedition slug
+ * that no longer exists, and unhandled loader errors. Without this React Router
+ * renders its own bare stack-trace screen. Layout still wraps this, so the page
+ * keeps its fonts, meta and structured data.
+ */
+export function ErrorBoundary() {
+  const error = useRouteError()
+
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFound />
+  }
+
+  console.error('[root] unhandled route error:', error)
+  return (
+    <NotFound
+      status={isRouteErrorResponse(error) ? String(error.status) : '500'}
+      title="Something went wrong at our end."
+      body="This one is on us, not you. Try again in a moment — if it keeps happening, our desk will pick it up directly."
+    />
   )
 }

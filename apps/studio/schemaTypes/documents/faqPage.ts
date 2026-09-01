@@ -11,6 +11,7 @@ export default defineType({
     { name: 'relatedPages', title: '04 — Related Pages' },
     { name: 'newsletter', title: '05 — Newsletter Banner' },
     { name: 'closing', title: '06 — Closing' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // 01 — Hero
@@ -105,6 +106,10 @@ export default defineType({
     defineField({ name: 'closingBody', title: 'Closing Body', type: 'text', rows: 3, group: 'closing' }),
     defineField({ name: 'closingDisclaimerLine', title: 'Disclaimer Line', type: 'string', group: 'closing', description: 'e.g. "ALL ENQUIRIES ARE HANDLED DISCREETLY BY SENIOR EXPEDITION STAFF."' }),
     defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'FAQ Page' }) },
 })

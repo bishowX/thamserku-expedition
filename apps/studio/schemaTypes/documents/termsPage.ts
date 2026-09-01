@@ -7,6 +7,7 @@ export default defineType({
   groups: [
     { name: 'hero', title: '01 — Hero' },
     { name: 'body', title: '02 — Body' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // 01 — Hero
@@ -31,6 +32,10 @@ export default defineType({
         'The entire document. Use Heading 2 for numbered sections (type the number, e.g. "1. Booking…"), Heading 3 for sub-sections, Subheading for small labels, plus bullet/numbered lists, bold, and links.',
       group: 'body',
     }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Terms & Conditions Page' }) },
 })

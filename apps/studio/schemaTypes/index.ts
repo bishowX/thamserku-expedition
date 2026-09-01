@@ -34,6 +34,8 @@ import servicesConfig from './objects/servicesConfig'
 import statItem from './objects/statItem'
 import legacyTimelineItem from './objects/legacyTimelineItem'
 import blockContent from './objects/blockContent'
+import seo from './objects/seo'
+import postalAddress from './objects/postalAddress'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
@@ -74,4 +76,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   statItem,
   legacyTimelineItem,
   blockContent,
+  seo,
+  postalAddress,
 ]

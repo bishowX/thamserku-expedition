@@ -17,6 +17,7 @@ import {
   ACHIEVEMENTS_QUERY,
   DESIGN_QUERY,
   SITE_SETTINGS_QUERY,
+  ROOT_QUERY,
   DESIGN_CONFIG_PROJECTION,
   attachConfig,
   normalizeDesignPageData,
@@ -36,6 +37,7 @@ import {
   type RawExpeditionDossier,
   type WithRawDesignConfig,
   type SiteSettings,
+  type RootData,
 } from "./queries";
 
 export async function getHomePageData(): Promise<HomePageData> {
@@ -93,6 +95,12 @@ export async function getAchievementsPageData(): Promise<AchievementsPageData> {
 export async function getDesignPageData(): Promise<DesignPageData> {
   const raw = await serverClient.fetch<RawDesignPageData>(DESIGN_QUERY);
   return normalizeDesignPageData(raw);
+}
+
+/** Site settings plus the expedition list the footer links, in one round trip. */
+export async function getRootData(): Promise<RootData> {
+  const data = await serverClient.fetch<RootData | null>(ROOT_QUERY);
+  return { settings: data?.settings ?? null, expeditions: data?.expeditions ?? [] };
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {

@@ -22,4 +22,7 @@ export default [
     "heritage-and-achievements",
     "./app/pages/HeritageAndAchievementsPage.tsx",
   ),
+  // Must stay last: matches anything no route above claimed, and returns a real
+  // 404 instead of falling through to React Router's generic error screen.
+  route("*", "./app/pages/NotFound.tsx"),
 ] satisfies RouteConfig;

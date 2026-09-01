@@ -43,12 +43,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial }
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<HomePageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.homePage?.seo,
     title: "Thamserku Expedition | World-Leading Himalayan Expeditions",
     description: d?.homePage?.heroSubheading,
     image: d?.homePage?.heroImage,
+    matches,
   });
 }
 

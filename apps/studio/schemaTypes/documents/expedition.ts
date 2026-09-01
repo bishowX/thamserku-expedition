@@ -18,6 +18,7 @@ export default defineType({
     { name: 'closing',         title: 'Closing' },
     { name: 'designConfig',    title: 'Design Config' },
     { name: 'servicesConfig',  title: 'Services & Add-ons' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // ── Identity ─────────────────────────────────────────────────────────────
@@ -210,6 +211,10 @@ export default defineType({
       title: 'Services & Add-ons',
       type: 'servicesConfig',
     }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   orderings: [
     { title: 'Number', name: 'numberAsc', by: [{ field: 'number', direction: 'asc' }] },

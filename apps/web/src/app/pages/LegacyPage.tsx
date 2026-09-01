@@ -17,11 +17,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<LegacyPageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.legacyPage?.seo,
     title: d?.legacyPage?.heroHeadline ?? "Our Legacy",
     description: d?.legacyPage?.heroSubheading,
+    image: d?.legacyPage?.heroImage,
+    matches,
   });
 }
 

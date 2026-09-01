@@ -7,6 +7,22 @@ import type { ConfigMatrix, BasePrices, DesignConfig } from "./configMatrix";
 import { normalizeDesignConfig } from "./configMatrix";
 import type { RawServicesConfig } from "./servicesConfig";
 
+// ─── SEO ─────────────────────────────────────────────────────────────────────
+// Every page document (and siteSettings) carries a `seo` object so editors own
+// the title, description and share image. Resolution order lives in lib/seo.ts.
+
+export type SanityImageRef = { asset: { _ref: string } };
+
+export type SeoFields = {
+  metaTitle?: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  ogImage?: SanityImageRef | null;
+};
+
+/** Drop into any page projection to pull its SEO overrides. */
+export const SEO_PROJECTION = `seo { metaTitle, metaDescription, noIndex, ogImage }`;
+
 export type SanityEditionRef = {
   _id: string;
   letter: string;
@@ -73,6 +89,7 @@ export type SanityPartner = {
 
 export type YetiPageData = {
   yetiPage: {
+    seo?: SeoFields | null;
     heroHeadline?: string;
     heroSubheading?: string;
     heroPartners?: SanityPartner[];
@@ -92,6 +109,7 @@ export type YetiPageData = {
 
 export type HomePageData = {
   homePage: {
+    seo?: SeoFields | null;
     heroHeadline: string;
     heroSubheading: string;
     heroImage?: { asset: { _ref: string } } | null;
@@ -128,6 +146,7 @@ export type HomePageData = {
 
 export type EditionsPageData = {
   editionsPage: {
+    seo?: SeoFields | null;
     heroHeadline?: string;
     heroSubheading?: string;
     heroImage?: { asset: { _ref: string } } | null;
@@ -152,6 +171,7 @@ export type EditionsPageData = {
 
 export const HOME_QUERY = `{
   "homePage": *[_type == "homePage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubheading, heroImage, atlasEyebrow, atlasHeading, atlasIntro, editionsEyebrow, editionsHeading, editionsIntro, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoStats,
     newsletterEyebrow, newsletterHeading, newsletterBody, newsletterCta, newsletterPrivacyNote,
     closingEyebrow, closingHeading, closingBody, closingImage,
@@ -179,6 +199,7 @@ export const NEWSLETTER_QUERY = `*[_type == "homePage"][0] {
 
 export const YETI_QUERY = `{
   "yetiPage": *[_type == "yetiInfrastructurePage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubheading,
     heroPartners[] { _key, name, logo, label, href },
     definitionHeading, definitionTagline, definitionBody,
@@ -199,6 +220,7 @@ export type LegacyTimelineChapter = {
 
 export type LegacyPageData = {
   legacyPage: {
+    seo?: SeoFields | null;
     heroHeadline?: string;
     heroSubheading?: string;
     heroImage?: { asset: { _ref: string } } | null;
@@ -211,6 +233,7 @@ export type LegacyPageData = {
 
 export const LEGACY_QUERY = `{
   "legacyPage": *[_type == "legacyPage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubheading, heroImage,
     timelineEyebrow, timelineHeading, timelineFooterNote,
     timelineChapters[] { _key, roman, years, title, description, image }
@@ -219,6 +242,7 @@ export const LEGACY_QUERY = `{
 
 export const EDITIONS_QUERY = `{
   "editionsPage": *[_type == "editionsPage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubheading, heroImage, manifestoEyebrow, manifestoHeading, manifestoBody, manifestoImage,
     comparisonEyebrow, comparisonHeadline,
     availabilityEyebrow, availabilityHeadline, availabilityNote,
@@ -252,6 +276,7 @@ export type ConsultationContactOption = {
 };
 
 export type ConsultationPage = {
+  seo?: SeoFields | null;
   heroHeadline?: string;
   heroSubheading?: string;
   heroImage?: { asset: { _ref: string } } | null;
@@ -287,6 +312,7 @@ export type SanityRouteWaypoint = { name: string; altitude: string };
 export type SanityFaqItem = { question: string; answer: string };
 export type SanityInclusionCategory = { category: string; items: string[] };
 export type SanityExpeditionDossier = {
+  seo?: SeoFields | null;
   _id: string;
   number: string;
   code: string;
@@ -342,6 +368,7 @@ export type RawExpeditionDossier =
 
 export const CONSULTATION_QUERY = `{
   "consultationPage": *[_type == "consultationPage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubheading, heroImage,
     heroMetaResponse, heroMetaHandledBy, heroMetaLanguages, heroMetaConfidentiality,
 trustQuote, trustBody,
@@ -388,6 +415,7 @@ export type FAQQuickItem = {
 
 export type FAQPageData = {
   faqPage: {
+    seo?: SeoFields | null;
     heroHeadline?: string;
     heroSubline?: string;
     heroImage?: { asset: { _ref: string } } | null;
@@ -416,6 +444,7 @@ export type FAQPageData = {
 
 export const FAQ_QUERY = `{
   "faqPage": *[_id == "faqPage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubline, heroImage,
     categoryNavEyebrow, categoryNavHeadline,
     listEyebrow,
@@ -439,6 +468,7 @@ export type SafetyEvacuationCard = { title: string; body: string };
 
 export type SafetyPageData = {
   safetyPage: {
+    seo?: SeoFields | null;
     heroHeadline?: string;
     heroSubline?: string;
     heroBgImage?: { asset: { _ref: string } } | null;
@@ -469,6 +499,7 @@ export type SafetyPageData = {
 
 export const SAFETY_QUERY = `{
   "safetyPage": *[_type == "safetyPage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubline, heroBgImage,
     statsLabel, stats[] { value, label },
     architectureEyebrow, architectureHeading, protocols[] { label, description },
@@ -495,6 +526,7 @@ export type AchievementDecade = {
 
 export type AchievementsPageData = {
   achievementsPage: {
+    seo?: SeoFields | null;
     heroHeadline?: string;
     heroSubheading?: string;
     heroImage?: { asset: { _ref: string } } | null;
@@ -507,6 +539,7 @@ export type AchievementsPageData = {
 
 export const ACHIEVEMENTS_QUERY = `{
   "achievementsPage": *[_type == "achievementsPage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubheading, heroImage,
     stats[] { _key, value, label },
     decadesHeading, decadesSubtitle,
@@ -517,6 +550,24 @@ export const ACHIEVEMENTS_QUERY = `{
 // ─── Site Settings ────────────────────────────────────────────────────────────
 
 export type SiteSettings = {
+  siteName?: string;
+  /** Postal address of the Kathmandu office, for Organization/LocalBusiness JSON-LD. */
+  address?: {
+    streetAddress?: string;
+    addressLocality?: string;
+    addressRegion?: string;
+    postalCode?: string;
+    addressCountry?: string;
+    latitude?: number;
+    longitude?: number;
+  } | null;
+  /** Profile URLs emitted as Organization.sameAs. */
+  socialProfiles?: string[];
+  foundingYear?: number;
+  seo?: SeoFields | null;
+  /** SEO for /newsletter and /news-and-blogs, which have no page document. */
+  newsletterSeo?: SeoFields | null;
+  newsAndBlogsSeo?: SeoFields | null;
   contactEmail?: string;
   contactEmailKushal?: string;
   contactWhatsApp?: string;
@@ -524,13 +575,42 @@ export type SiteSettings = {
 };
 
 export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
-  contactEmail, contactEmailKushal, contactWhatsApp, contactWhatsAppDisplay
+  contactEmail, contactEmailKushal, contactWhatsApp, contactWhatsAppDisplay,
+  siteName, address, socialProfiles, foundingYear,
+  ${SEO_PROJECTION},
+  newsletterSeo { metaTitle, metaDescription, noIndex, ogImage },
+  newsAndBlogsSeo { metaTitle, metaDescription, noIndex, ogImage }
+}`;
+
+/**
+ * Everything root.tsx needs, in one round trip: site settings plus the peak list
+ * the footer links. The footer used to hardcode five slugs and one of them
+ * (himlung-himal) had drifted out of sync with the CMS and 404'd on every page
+ * of the site. Reading the list from Sanity means it cannot drift again.
+ */
+export type RootData = {
+  settings: SiteSettings | null;
+  expeditions: Array<{ name: string; slug: string }>;
+};
+
+export const ROOT_QUERY = `{
+  "settings": *[_type == "siteSettings"][0] {
+    contactEmail, contactEmailKushal, contactWhatsApp, contactWhatsAppDisplay,
+    siteName, address, socialProfiles, foundingYear,
+    ${SEO_PROJECTION},
+    newsletterSeo { metaTitle, metaDescription, noIndex, ogImage },
+    newsAndBlogsSeo { metaTitle, metaDescription, noIndex, ogImage }
+  },
+  "expeditions": *[_type == "expedition" && defined(slug.current)] | order(number asc) {
+    name, "slug": slug.current
+  }
 }`;
 
 // ─── Terms & Conditions Page ──────────────────────────────────────────────────
 
 export type TermsPageData = {
   termsPage: {
+    seo?: SeoFields | null;
     heroEyebrow?: string;
     heroTitle?: string;
     heroImage?: { asset: { _ref: string } } | null;
@@ -542,6 +622,7 @@ export type TermsPageData = {
 
 export const TERMS_QUERY = `{
   "termsPage": *[_type == "termsPage"][0] {
+    ${SEO_PROJECTION},
     heroEyebrow, heroTitle, heroImage, heroIntro, heroNote,
     body
   }
@@ -601,6 +682,7 @@ export function attachConfig<T extends WithRawDesignConfig>(
 // re-runs the exact same query. Declared here because it interpolates the
 // DESIGN_CONFIG_PROJECTION above.
 export const EXPEDITION_BY_SLUG_QUERY = `*[_type == "expedition" && slug.current == $slug][0]{
+  ${SEO_PROJECTION},
   _id, number, code, name, slug,
   altitude, region, season, style, positioning, image,
   heroImage, heroTagline, heroSubtext,
@@ -654,6 +736,7 @@ export type RawDesignPageData = {
   expeditions: Array<Omit<SanityExpeditionForDesign, "configMatrix" | "basePrices"> & WithRawDesignConfig>;
   editions: SanityEditionForDesign[];
   page?: {
+    seo?: SeoFields | null;
     heroHeadline?: string;
     heroSubheading?: string;
     heroBgImage?: { asset: { _ref: string } } | null;
@@ -671,6 +754,7 @@ export const DESIGN_QUERY = `{
     _id, letter, name, positioning
   },
   "page": *[_type == "designPage"][0] {
+    ${SEO_PROJECTION},
     heroHeadline, heroSubheading, heroBgImage
   }
 }`;

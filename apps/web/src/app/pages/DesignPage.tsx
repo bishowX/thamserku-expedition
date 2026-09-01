@@ -13,6 +13,7 @@ import { getExpeditionConfig } from '../../lib/queries.server'
 import { getPreviewData } from '../../lib/preview.server'
 import { loadQuery } from '../../lib/loader.server'
 import { pageMeta } from "../../lib/seo";
+import type { Route } from "./+types/DesignPage";
 import type { RawDesignPageData, SanityExpeditionForDesign, SanityEditionForDesign } from '../../lib/queries'
 import { sendBookingEmail, sendBookingConfirmationEmail } from '../../lib/email.server'
 import {
@@ -37,10 +38,14 @@ export async function loader({ request }: { request: Request }) {
 }
 
 // Loader data never depends on search params — suppress revalidation on step navigation
-export function meta() {
+export function meta({ data, matches }: Route.MetaArgs) {
+  const d = (data as { initial: QueryResponseInitial<RawDesignPageData> } | undefined)?.initial.data;
   return pageMeta({
-    title: "Design Your Expedition",
-    description: "Configure your custom high-altitude expedition — choose your peak, edition, accommodation, guiding, and oxygen preferences.",
+    seo: d?.page?.seo,
+    title: d?.page?.heroHeadline ?? "Design Your Expedition",
+    description: d?.page?.heroSubheading,
+    image: d?.page?.heroBgImage,
+    matches,
   });
 }
 

@@ -10,6 +10,7 @@ export default defineType({
     { name: 'comparison', title: 'Comparison' },
     { name: 'availability', title: 'Availability' },
     { name: 'closing', title: 'Closing' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // Hero
@@ -52,6 +53,10 @@ export default defineType({
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 2, group: 'closing' }),
     defineField({ name: 'closingFootnote', title: 'Footnote', type: 'string', group: 'closing', description: 'e.g. RESPONSE WITHIN 48 HOURS · HANDLED BY SENIOR EXPEDITION STAFF' }),
     defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: {
     prepare: () => ({ title: 'Editions Page' }),

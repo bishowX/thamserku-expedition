@@ -23,11 +23,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<SafetyPageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.safetyPage?.seo,
     title: d?.safetyPage?.heroHeadline ?? "Safety Systems",
     description: d?.safetyPage?.heroSubline,
+    image: d?.safetyPage?.heroBgImage,
+    matches,
   });
 }
 

@@ -18,12 +18,15 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<TermsPageData> } | undefined)?.initial.data;
   const page = d?.termsPage;
   return pageMeta({
+    seo: page?.seo,
     title: page?.heroTitle ?? "Terms & Conditions",
     description: page?.heroNote,
+    image: page?.heroImage,
+    matches,
   });
 }
 

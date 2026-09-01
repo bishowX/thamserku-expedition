@@ -20,12 +20,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<EditionsPageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.editionsPage?.seo,
     title: d?.editionsPage?.heroHeadline ?? "Our Expedition Editions",
     description: d?.editionsPage?.heroSubheading,
     image: d?.editionsPage?.heroImage,
+    matches,
   });
 }
 

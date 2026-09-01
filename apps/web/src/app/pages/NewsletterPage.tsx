@@ -11,7 +11,7 @@ import { Nav } from "../components/Nav";
 import { NewsletterSection } from "../components/NewsletterSection";
 import { Footer } from "../components/Footer";
 import type { Route } from "./+types/NewsletterPage";
-import { pageMeta } from "../../lib/seo";
+import { pageMeta, rootSettings } from "../../lib/seo";
 
 export async function loader({ request }: { request: Request }) {
   const { options } = await getPreviewData(request);
@@ -19,11 +19,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<NewsletterData | null> } | undefined)?.initial.data;
   return pageMeta({
+    // No newsletterPage document exists — this route's SEO lives in Site Settings.
+    seo: rootSettings(matches)?.newsletterSeo,
     title: d?.newsletterHeading ?? "Field Notes Newsletter",
     description: d?.newsletterBody,
+    matches,
   });
 }
 

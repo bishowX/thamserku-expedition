@@ -8,6 +8,7 @@ export default defineType({
     { name: 'hero', title: '01 — Hero' },
     { name: 'stats', title: '02 — Stats Bar' },
     { name: 'decades', title: '03 — Decades' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // 01 — Hero
@@ -46,6 +47,10 @@ export default defineType({
         preview: { select: { title: 'title', subtitle: 'years' } },
       }],
     }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Achievements Page' }) },
 })

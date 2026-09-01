@@ -14,6 +14,7 @@ export default defineType({
     { name: 'unclaimedPeaks', title: 'Unclaimed Peaks' },
     { name: 'fieldNotes', title: 'Newsletter' },
     { name: 'closing', title: 'Closing' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // Hero
@@ -90,6 +91,10 @@ export default defineType({
     defineField({ name: 'closingHeading', title: 'Heading', type: 'string', group: 'closing' }),
     defineField({ name: 'closingBody', title: 'Body', type: 'text', rows: 2, group: 'closing' }),
     defineField({ name: 'closingImage', title: 'Background Image', type: 'image', group: 'closing', options: { hotspot: true } }),
+
+    // Search & social overrides. Blank fields fall back to this page's hero
+    // content, then to Site Settings → SEO.
+    defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: {
     select: { subtitle: 'heroHeadline' },

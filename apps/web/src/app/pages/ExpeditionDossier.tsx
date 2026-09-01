@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLoaderData, redirect } from "react-router";
+import { useLoaderData } from "react-router";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useQuery } from "@sanity/react-loader";
 import type { QueryResponseInitial } from "@sanity/react-loader";
@@ -12,6 +12,8 @@ import { getPreviewData } from "../../lib/preview.server";
 import { loadQuery } from "../../lib/loader.server";
 import type { Route } from "./+types/ExpeditionDossier";
 import { pageMeta } from "../../lib/seo";
+import { expeditionJsonLd, faqJsonLd, breadcrumbJsonLd, jsonLdGraph } from "../../lib/jsonld";
+import { JsonLd } from "../components/JsonLd";
 import { ExpeditionHero } from "../components/everest/ExpeditionHero";
 import { QuickFacts } from "../components/everest/QuickFacts";
 import { StickySubNav } from "../components/everest/StickySubNav";
@@ -34,17 +36,21 @@ export async function loader({ params, request }: { params: { slug: string }; re
     options,
   );
   if (!initial.data) {
-    throw redirect("/");
+    // A real 404. This used to redirect("/"), which returned HTTP 200 with the
+    // homepage — a soft 404, and Google suppresses the whole directory over it.
+    throw new Response("Expedition not found", { status: 404, statusText: "Not Found" });
   }
   return { initial, slug: params.slug };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const raw = (data as { initial: QueryResponseInitial<RawExpeditionDossier | null> } | undefined)?.initial.data;
   return pageMeta({
+    seo: raw?.seo,
     title: raw ? `${raw.name} Expedition` : "Expedition",
     description: raw?.positioning,
     image: raw?.heroImage ?? raw?.image,
+    matches,
   });
 }
 
@@ -79,6 +85,17 @@ export default function ExpeditionDossier() {
 
   return (
     <div className="bg-[#1A1A1A] min-h-screen text-white font-['DM_Sans'] selection:bg-[#2E353C] selection:text-white">
+      {/* TouristTrip + Mountain + every FAQ the document holds — not the five the
+          FAQ component renders. Machines read the markup, not the "show more". */}
+      <JsonLd
+        graph={jsonLdGraph([
+          ...expeditionJsonLd(expedition),
+          faqJsonLd(expedition.faqs),
+          breadcrumbJsonLd([
+            { name: `${expedition.name.trim()} Expedition`, path: `/expeditions/${expedition.slug.current}` },
+          ]),
+        ])}
+      />
       <main>
         <ExpeditionHero
           name={expedition.name}

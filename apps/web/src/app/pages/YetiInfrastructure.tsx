@@ -18,11 +18,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<YetiPageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.yetiPage?.seo,
     title: d?.yetiPage?.heroHeadline ?? "Yeti Infrastructure",
     description: d?.yetiPage?.heroSubheading,
+    image: d?.yetiPage?.closingImage,
+    matches,
   });
 }
 

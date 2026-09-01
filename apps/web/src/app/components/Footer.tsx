@@ -21,6 +21,11 @@ export function Footer() {
   const root = useRouteLoaderData<typeof loader>("root");
   const contactEmail = root?.settings?.contactEmail ?? "info@thamserkuexpedition.com";
   const contactEmailKushal = root?.settings?.contactEmailKushal ?? "kushal@thamserkuexpedition.com";
+  // Read from Sanity rather than hardcoded. The old static list had drifted:
+  // it linked /expeditions/himlung-himal, but the slug is `himlung`, so a 404
+  // sat in the footer of every page on the site. It also linked five of the
+  // thirteen peaks, leaving the other eight reachable only via the sitemap.
+  const expeditions = root?.expeditions ?? [];
   return (
     <footer className="w-full bg-[#2E353C] text-[#C8CDD2] pt-16 md:pt-24 pb-8 px-8">
       <div className="max-w-7xl mx-auto flex flex-col gap-12 md:gap-24">
@@ -65,36 +70,15 @@ export function Footer() {
             <h4 className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-2">
               EXPEDITIONS
             </h4>
-            <Link
-              to="/expeditions/everest"
-              className="hover:text-white transition-colors"
-            >
-              Everest
-            </Link>
-            <Link
-              to="/expeditions/ama-dablam"
-              className="hover:text-white transition-colors"
-            >
-              Ama Dablam
-            </Link>
-            <Link
-              to="/expeditions/manaslu"
-              className="hover:text-white transition-colors"
-            >
-              Manaslu
-            </Link>
-            <Link
-              to="/expeditions/api-himal"
-              className="hover:text-white transition-colors"
-            >
-              Api Himal
-            </Link>
-            <Link
-              to="/expeditions/himlung-himal"
-              className="hover:text-white transition-colors"
-            >
-              Himlung Himal
-            </Link>
+            {expeditions.map((e) => (
+              <Link
+                key={e.slug}
+                to={`/expeditions/${e.slug}`}
+                className="hover:text-white transition-colors"
+              >
+                {e.name}
+              </Link>
+            ))}
           </div>
 
           <div className="w-full md:w-3/12 flex flex-col gap-6 font-['DM_Sans'] font-light text-body">

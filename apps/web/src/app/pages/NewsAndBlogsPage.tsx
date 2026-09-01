@@ -9,7 +9,7 @@ import { Nav } from "../components/Nav";
 import { NewsletterSection } from "../components/NewsletterSection";
 import { Footer } from "../components/Footer";
 import type { Route } from "./+types/NewsAndBlogsPage";
-import { pageMeta } from "../../lib/seo";
+import { pageMeta, rootSettings } from "../../lib/seo";
 
 export async function loader({ request }: { request: Request }) {
   const { options } = await getPreviewData(request);
@@ -17,10 +17,13 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta(_: Route.MetaArgs) {
+export function meta({ matches }: Route.MetaArgs) {
   return pageMeta({
+    // No newsPage document exists — this route's SEO lives in Site Settings.
+    seo: rootSettings(matches)?.newsAndBlogsSeo,
     title: "News & Field Reports",
     description: "Dispatches, updates, and field notes from Thamserku Expedition's operations across the Himalayas.",
+    matches,
   });
 }
 

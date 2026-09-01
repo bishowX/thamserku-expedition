@@ -23,12 +23,14 @@ export async function loader({ request }: { request: Request }) {
   return { initial };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data, matches }: Route.MetaArgs) {
   const d = (data as { initial: QueryResponseInitial<ConsultationPageData> } | undefined)?.initial.data;
   return pageMeta({
+    seo: d?.consultationPage?.seo,
     title: d?.consultationPage?.heroHeadline ?? "Plan Your Expedition",
     description: d?.consultationPage?.heroSubheading,
     image: d?.consultationPage?.heroImage,
+    matches,
   });
 }
 
