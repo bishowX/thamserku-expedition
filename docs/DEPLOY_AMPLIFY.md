@@ -62,9 +62,10 @@ Presentation/preview) — set it to the website URL if you use visual editing, o
 
 ## 3. Redirects & rewrites (website app)
 
-The old `vercel.json` redirects/rewrites were converted to Amplify format in
-[`amplify-redirects.json`](./amplify-redirects.json) (regenerate with
-`node scripts/vercel-to-amplify-redirects.mjs`).
+Old WordPress URLs are 301'd in the website app itself (`apps/web/src/lib/legacyRedirects.ts`),
+so they work on deploy without a console paste. The same map is also in
+[`amplify-redirects.json`](./amplify-redirects.json) if you want the CDN to handle them
+before they reach the SSR Lambda (optional; the `vercel.json` generator is stale).
 
 In the **website** app → **App settings → Rewrites and redirects → Open text editor**, paste the
 contents of `amplify-redirects.json`.

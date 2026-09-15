@@ -1,14 +1,18 @@
-import { Link } from "react-router";
+import { Link, redirect } from "react-router";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { pageMeta } from "../../lib/seo";
+import { matchLegacyRedirect } from "../../lib/legacyRedirects";
 import type { Route } from "./+types/NotFound";
 
-// Splat route. Anything that matches no other route lands here and returns a
-// real 404 — previously unknown URLs either fell through to React Router's
-// generic error screen or, on /expeditions/*, redirected to the homepage with
-// HTTP 200.
-export function loader() {
+// Splat route. Anything that matches no other route lands here. Old WordPress
+// URLs 301 onto the nearest live page; everything else is a real 404 —
+// previously unknown URLs either fell through to React Router's generic error
+// screen or, on /expeditions/*, redirected to the homepage with HTTP 200.
+export function loader({ request }: Route.LoaderArgs) {
+  const pathname = new URL(request.url).pathname;
+  const destination = matchLegacyRedirect(pathname);
+  if (destination && destination !== pathname) throw redirect(destination, 301);
   throw new Response("Not Found", { status: 404, statusText: "Not Found" });
 }
 

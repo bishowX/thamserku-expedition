@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLoaderData } from "react-router";
+import { redirect, useLoaderData } from "react-router";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useQuery } from "@sanity/react-loader";
 import type { QueryResponseInitial } from "@sanity/react-loader";
@@ -12,6 +12,7 @@ import { getPreviewData } from "../../lib/preview.server";
 import { loadQuery } from "../../lib/loader.server";
 import type { Route } from "./+types/ExpeditionDossier";
 import { pageMeta } from "../../lib/seo";
+import { matchExpeditionSlugAlias } from "../../lib/legacyRedirects";
 import { expeditionJsonLd, faqJsonLd, breadcrumbJsonLd, jsonLdGraph } from "../../lib/jsonld";
 import { JsonLd } from "../components/JsonLd";
 import { ExpeditionHero } from "../components/everest/ExpeditionHero";
@@ -29,6 +30,9 @@ import { ComparisonTables } from "../components/expedition/ComparisonTables";
 import { Footer } from "../components/Footer";
 
 export async function loader({ params, request }: { params: { slug: string }; request: Request }) {
+  const alias = matchExpeditionSlugAlias(params.slug);
+  if (alias) throw redirect(`/expeditions/${alias}`, 301);
+
   const { options } = await getPreviewData(request);
   const initial = await loadQuery<RawExpeditionDossier | null>(
     EXPEDITION_BY_SLUG_QUERY,

@@ -21,12 +21,12 @@
   },
   {
     "source": "/thamserku_expedition_booking/makalu-8463m-27765ft-nepal",
-    "target": "/atlas",
+    "target": "/design-your-expedition",
     "status": "301"
   },
   {
     "source": "/thamserku_expedition_booking/makalu-8463m-27765ft-nepal/",
-    "target": "/atlas",
+    "target": "/design-your-expedition",
     "status": "301"
   },
   {
@@ -41,12 +41,12 @@
   },
   {
     "source": "/thamserku_expedition_booking/himlung-7126m-nepal",
-    "target": "/expeditions/himlung-himal",
+    "target": "/expeditions/himlung",
     "status": "301"
   },
   {
     "source": "/thamserku_expedition_booking/himlung-7126m-nepal/",
-    "target": "/expeditions/himlung-himal",
+    "target": "/expeditions/himlung",
     "status": "301"
   },
   {
@@ -81,22 +81,22 @@
   },
   {
     "source": "/thamserku_expedition_booking/<*>",
-    "target": "/atlas",
+    "target": "/design-your-expedition",
     "status": "301"
   },
   {
     "source": "/about-us/our-team",
-    "target": "/team",
+    "target": "/heritage-and-achievements",
     "status": "301"
   },
   {
     "source": "/about-us/our-team/",
-    "target": "/team",
+    "target": "/heritage-and-achievements",
     "status": "301"
   },
   {
     "source": "/about-us/our-team/<*>",
-    "target": "/team",
+    "target": "/heritage-and-achievements",
     "status": "301"
   },
   {
@@ -146,22 +146,22 @@
   },
   {
     "source": "/thamserku-expeditions-search",
-    "target": "/atlas",
+    "target": "/",
     "status": "301"
   },
   {
     "source": "/thamserku-expeditions-search/",
-    "target": "/atlas",
+    "target": "/",
     "status": "301"
   },
   {
     "source": "/bespoke-tailor-made-expeditions",
-    "target": "/private",
+    "target": "/design-your-expedition",
     "status": "301"
   },
   {
     "source": "/bespoke-tailor-made-expeditions/",
-    "target": "/private",
+    "target": "/design-your-expedition",
     "status": "301"
   },
   {
@@ -397,6 +397,36 @@
   {
     "source": "/wp-admin/<*>",
     "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/atlas",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/atlas/",
+    "target": "/",
+    "status": "301"
+  },
+  {
+    "source": "/team",
+    "target": "/heritage-and-achievements",
+    "status": "301"
+  },
+  {
+    "source": "/team/",
+    "target": "/heritage-and-achievements",
+    "status": "301"
+  },
+  {
+    "source": "/private",
+    "target": "/design-your-expedition",
+    "status": "301"
+  },
+  {
+    "source": "/private/",
+    "target": "/design-your-expedition",
     "status": "301"
   },
   {
