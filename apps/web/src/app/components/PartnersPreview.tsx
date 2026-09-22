@@ -39,7 +39,6 @@ const GROUPS: PartnerGroup[] = [
   {
     label: "Airplane partners",
     partners: [
-      { name: "Tara Air", logo: "/images/partners/tara-air.svg" },
       { name: "Yeti Airlines", logo: "/images/partners/yeti-airlines.svg" },
     ],
   },
@@ -67,10 +66,10 @@ const GROUPS: PartnerGroup[] = [
 
 function PartnerLogo({ partner }: { partner: Partner }) {
   const sizeClass = partner.tall
-    ? "h-24 w-auto max-w-full md:h-28"
+    ? "h-16 w-auto max-w-full md:h-20"
     : partner.wide
-      ? "h-auto w-full max-w-[20rem]"
-      : "h-[4.5rem] w-auto max-w-full md:h-20";
+      ? "h-auto w-full max-w-[12rem]"
+      : "h-12 w-auto max-w-full md:h-14";
 
   const img = (
     <img
@@ -84,7 +83,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
 
   if (partner.plate === "white") {
     return (
-      <div className="flex w-full max-w-[20rem] items-center justify-center bg-white p-4">
+      <div className="flex w-full max-w-[12rem] items-center justify-center bg-white p-3">
         {img}
       </div>
     );
@@ -171,7 +170,7 @@ export function PartnersPreview() {
               <p className="font-['DM_Mono'] text-[11px] tracking-[2.2px] uppercase text-[#C8CDD2]">
                 {group.label}
               </p>
-              <div className="flex min-h-[11rem] flex-1 flex-col items-center justify-center gap-8">
+              <div className="flex min-h-[8rem] flex-1 flex-col items-center justify-center gap-6">
                 {group.partners.map((partner) => (
                   <PartnerLogo key={partner.name} partner={partner} />
                 ))}
