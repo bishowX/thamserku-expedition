@@ -11,6 +11,7 @@ import { NewsletterSection } from '../components/NewsletterSection'
 import { EditionsPreview } from '../components/EditionsPreview'
 import { LegacyPreview } from '../components/LegacyPreview'
 import { UnclaimedPeaks } from '../components/UnclaimedPeaks'
+import { PartnersPreview } from '../components/PartnersPreview'
 import { Closing } from '../components/Closing'
 import { Footer } from '../components/Footer'
 import { HOME_QUERY, type HomePageData } from '../../lib/queries'
@@ -75,6 +76,7 @@ export default function Home() {
         <EditionsPreview editions={data.editions.length > 0 ? data.editions : undefined} data={data.homePage ?? undefined} />
         <LegacyPreview data={data.homePage ?? undefined} />
         <UnclaimedPeaks data={data.homePage ?? undefined} />
+        <PartnersPreview />
         <NewsletterSection data={data.homePage ?? undefined} />
         <Closing data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
       </main>
