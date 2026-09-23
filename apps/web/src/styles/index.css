@@ -13,3 +13,25 @@
     scrollbar-gutter: stable;
   }
 }
+
+/* Partners logo strip: the track holds the list twice, so sliding it by half
+   its width loops seamlessly. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

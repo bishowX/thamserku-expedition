@@ -14,6 +14,7 @@ import { loadQuery } from '../../lib/loader.server';
 import { serverClient } from '../../lib/sanity.server';
 import { writeClient } from '../../lib/sanity.write';
 import { sendEnquiryEmail } from '../../lib/email.server';
+import { withDialCode } from '../../lib/countries';
 import type { Route } from "./+types/EnquiryPage";
 import { pageMeta } from "../../lib/seo";
 
@@ -56,13 +57,17 @@ export async function action({ request }: { request: Request }): Promise<
   }
 
   const submittedAt = new Date().toISOString();
+  const phone = withDialCode(
+    (formData.get('phoneCountry') as string) || undefined,
+    (formData.get('phone') as string)?.trim() || undefined,
+  );
 
   await writeClient.create({
     _type: 'enquiry',
     submittedAt,
     fullName,
     email,
-    phone: (formData.get('phone') as string)?.trim() || undefined,
+    phone,
     nationality: (formData.get('nationality') as string) || undefined,
     preferredContact: (formData.get('preferredContact') as string) || undefined,
   });
@@ -75,7 +80,7 @@ export async function action({ request }: { request: Request }): Promise<
       await sendEnquiryEmail(enquiryEmail, {
         fullName,
         email,
-        phone: (formData.get('phone') as string)?.trim() || undefined,
+        phone,
         nationality: (formData.get('nationality') as string) || undefined,
         preferredContact: (formData.get('preferredContact') as string) || undefined,
         submittedAt,

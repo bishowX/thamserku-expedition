@@ -64,7 +64,7 @@ function buildHtml(data: EnquiryEmailData): string {
   const contactRows = [
     row('Email', data.email),
     row('Phone / WhatsApp', data.phone),
-    row('Nationality', data.nationality),
+    row('Country', data.nationality),
     row('Preferred Contact', cap(data.preferredContact)),
   ].join('')
 
@@ -143,7 +143,7 @@ function money(n: number, currency = 'USD'): string {
 function bookingRowGroups(data: BookingEmailData) {
   const currency = data.currency ?? 'USD'
   return {
-    contactRows: [row('Email', data.email), row('Phone / WhatsApp', data.phone), row('Nationality', data.nationality)].join(''),
+    contactRows: [row('Email', data.email), row('Phone / WhatsApp', data.phone), row('Country', data.nationality)].join(''),
     formatRows: [
       row('Peak', data.customPeakName ? `${data.customPeakName} (custom)` : data.expeditionName),
       row('Edition', data.editionLetter && data.editionName ? `${data.editionLetter} · ${data.editionName}` : undefined),

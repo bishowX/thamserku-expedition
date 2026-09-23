@@ -115,11 +115,11 @@ export function StepCustomContact({
           </div>
 
           <div>
-            <FieldLabel>Nationality</FieldLabel>
+            <FieldLabel>Country</FieldLabel>
             <SelectShell>
               <select name="nationality" defaultValue="" className={lineSelect}>
                 <option value="" className={optionClass}>
-                  Select nationality
+                  Select country
                 </option>
                 {COUNTRIES.map((c) => (
                   <option key={c.iso} value={c.name} className={optionClass}>

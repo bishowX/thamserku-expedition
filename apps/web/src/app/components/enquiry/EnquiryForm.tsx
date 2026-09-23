@@ -23,7 +23,8 @@ export const EnquiryForm = ({
   const isSubmitting = navigation.state === "submitting";
 
   const [contactMethod, setContactMethod] = useState<string>("");
-  const [nationality, setNationality] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [phoneCountry, setPhoneCountry] = useState<string>("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const alternativeLabel = data?.formAlternativeLabel;
@@ -128,13 +129,36 @@ export const EnquiryForm = ({
                 <label className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">
                   A.3 — PHONE / WHATSAPP
                 </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  autoComplete="tel"
-                  placeholder="Your number with country code"
-                  className="w-full bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Fraunces'] italic text-body focus:outline-none focus:border-[#2E353C] transition-colors placeholder:text-[#5A6673]/70"
-                />
+                <div className="flex gap-4">
+                  <div className="relative w-44 shrink-0 border-b border-[#5A6673] pb-3 group">
+                    <select
+                      name="phoneCountry"
+                      aria-label="Country code"
+                      value={phoneCountry}
+                      onChange={(e) => setPhoneCountry(e.target.value)}
+                      className={`w-full bg-transparent font-['Fraunces'] italic text-body appearance-none focus:outline-none cursor-pointer pr-7 ${phoneCountry ? "text-[#1A1A1A]" : "text-[#5A6673]/70"}`}
+                    >
+                      <option value="">Code</option>
+                      {COUNTRIES.map((c) => (
+                        <option
+                          key={c.iso}
+                          value={c.iso}
+                          className="not-italic font-sans text-base"
+                        >
+                          {c.name} (+{c.dial})
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-0 top-0.5 w-5 h-5 text-[#5A6673] group-hover:text-[#2E353C] pointer-events-none" />
+                  </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    autoComplete="tel-national"
+                    placeholder="Your number"
+                    className="min-w-0 flex-1 bg-transparent border-b border-[#5A6673] pb-3 text-[#1A1A1A] font-['Fraunces'] italic text-body focus:outline-none focus:border-[#2E353C] transition-colors placeholder:text-[#5A6673]/70"
+                  />
+                </div>
                 <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mt-3">
                   OPTIONAL · USED ONLY IF YOU PREFER VOICE OR WHATSAPP CONTACT.
                 </p>
@@ -142,17 +166,17 @@ export const EnquiryForm = ({
 
               <div className="flex flex-col relative">
                 <label className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">
-                  A.4 — NATIONALITY <span className="ml-1">·</span>
+                  A.4 — COUNTRY <span className="ml-1">·</span>
                 </label>
                 <div className="relative border-b border-[#5A6673] pb-3 cursor-pointer group">
                   <select
                     name="nationality"
-                    value={nationality}
-                    onChange={(e) => setNationality(e.target.value)}
-                    className={`w-full bg-transparent font-['Fraunces'] italic text-body-lg appearance-none focus:outline-none cursor-pointer transition-colors ${nationality ? "text-[#1A1A1A]" : "text-[#5A6673]/70"}`}
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className={`w-full bg-transparent font-['Fraunces'] italic text-body-lg appearance-none focus:outline-none cursor-pointer transition-colors ${country ? "text-[#1A1A1A]" : "text-[#5A6673]/70"}`}
                   >
                     <option value="" disabled>
-                      Select nationality
+                      Select country
                     </option>
                     {COUNTRIES.map((c) => (
                       <option
