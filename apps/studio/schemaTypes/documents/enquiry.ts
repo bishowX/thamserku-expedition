@@ -18,7 +18,9 @@ export default defineType({
     defineField({ name: 'fullName', title: 'Full Name', type: 'string', group: 'contact' }),
     defineField({ name: 'email', title: 'Email', type: 'string', group: 'contact' }),
     defineField({ name: 'phone', title: 'Phone / WhatsApp', type: 'string', group: 'contact' }),
-    defineField({ name: 'countryOfResidence', title: 'Country of Residence', type: 'string', group: 'contact' }),
+    defineField({ name: 'nationality', title: 'Nationality', type: 'string', group: 'contact' }),
+    // Legacy: replaced by nationality; kept so older enquiries still show it.
+    defineField({ name: 'countryOfResidence', title: 'Country of Residence (legacy)', type: 'string', group: 'contact', readOnly: true, hidden: ({ value }) => !value }),
     defineField({ name: 'preferredContact', title: 'Preferred Contact Method', type: 'string', group: 'contact' }),
     // Chapter B
     defineField({ name: 'expeditionInterest', title: 'Expedition Interest', type: 'array', of: [{ type: 'string' }], group: 'expedition' }),

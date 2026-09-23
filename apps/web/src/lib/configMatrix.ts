@@ -282,7 +282,7 @@ export type DesignConfig = {
 const GROUP_ACCLIMATISATION = 'Acclimatisation & Additional Climb'
 const GROUP_ACCOMMODATION = 'Accommodation Preferences'
 const GROUP_GUIDING = 'Guiding Configurations'
-const GROUP_OXYGEN = 'Oxygen Preferences'
+const GROUP_OXYGEN = 'Oxygen Preference'
 const GROUP_HELICOPTER = 'Helicopter Inclusion'
 
 const BCD: EditionLetter[] = ['B', 'C', 'D']

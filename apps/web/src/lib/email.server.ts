@@ -24,7 +24,7 @@ export interface EnquiryEmailData {
   fullName: string
   email: string
   phone?: string
-  countryOfResidence?: string
+  nationality?: string
   preferredContact?: string
   submittedAt: string
 }
@@ -64,7 +64,7 @@ function buildHtml(data: EnquiryEmailData): string {
   const contactRows = [
     row('Email', data.email),
     row('Phone / WhatsApp', data.phone),
-    row('Country', data.countryOfResidence),
+    row('Nationality', data.nationality),
     row('Preferred Contact', cap(data.preferredContact)),
   ].join('')
 
@@ -112,11 +112,14 @@ export interface BookingEmailData {
   fullName: string
   email?: string
   phone?: string
+  nationality?: string
   expeditionName?: string
   customPeakName?: string
   expeditionType?: string
   numberOfClimbers?: string
   season?: string
+  startDate?: string
+  endDate?: string
   specialObjectives?: string
   editionLetter?: string
   editionName?: string
@@ -140,13 +143,15 @@ function money(n: number, currency = 'USD'): string {
 function bookingRowGroups(data: BookingEmailData) {
   const currency = data.currency ?? 'USD'
   return {
-    contactRows: [row('Email', data.email), row('Phone / WhatsApp', data.phone)].join(''),
+    contactRows: [row('Email', data.email), row('Phone / WhatsApp', data.phone), row('Nationality', data.nationality)].join(''),
     formatRows: [
       row('Peak', data.customPeakName ? `${data.customPeakName} (custom)` : data.expeditionName),
       row('Edition', data.editionLetter && data.editionName ? `${data.editionLetter} · ${data.editionName}` : undefined),
       row('Expedition Type', cap(data.expeditionType)),
       row('Climbers', data.numberOfClimbers),
       row('Season', cap(data.season)),
+      row('Preferred Start Date', data.startDate),
+      row('Preferred End Date', data.endDate),
       row('Special Objectives', data.specialObjectives),
     ].join(''),
     configRows: (data.lineItems ?? [])

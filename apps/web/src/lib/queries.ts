@@ -712,9 +712,6 @@ export type SanityExpeditionForDesign = {
   code: string;
   altitude: string;
   slug: string;
-  /** Season chip preselected when this peak is picked. Raw Sanity string —
-   *  coerce with `toSeasonValue` (StepFormat) before use. */
-  defaultSeason?: string;
   configMatrix: ConfigMatrix;
   basePrices?: BasePrices;
 };
@@ -747,7 +744,6 @@ export const DESIGN_QUERY = `{
   "expeditions": *[_type == "expedition"] | order(name asc) {
     _id, name, code, altitude,
     "slug": slug.current,
-    "defaultSeason": designConfig.defaultSeason,
     ${DESIGN_CONFIG_PROJECTION}
   },
   "editions": *[_type == "edition"] | order(letter asc) {

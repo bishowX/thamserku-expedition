@@ -63,7 +63,7 @@ export async function action({ request }: { request: Request }): Promise<
     fullName,
     email,
     phone: (formData.get('phone') as string)?.trim() || undefined,
-    countryOfResidence: (formData.get('countryOfResidence') as string) || undefined,
+    nationality: (formData.get('nationality') as string) || undefined,
     preferredContact: (formData.get('preferredContact') as string) || undefined,
   });
 
@@ -76,7 +76,7 @@ export async function action({ request }: { request: Request }): Promise<
         fullName,
         email,
         phone: (formData.get('phone') as string)?.trim() || undefined,
-        countryOfResidence: (formData.get('countryOfResidence') as string) || undefined,
+        nationality: (formData.get('nationality') as string) || undefined,
         preferredContact: (formData.get('preferredContact') as string) || undefined,
         submittedAt,
       });

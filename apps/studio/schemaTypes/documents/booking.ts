@@ -16,6 +16,7 @@ export default defineType({
     defineField({ name: 'fullName', title: 'Full Name', type: 'string', group: 'contact' }),
     defineField({ name: 'email', title: 'Email', type: 'string', group: 'contact' }),
     defineField({ name: 'phone', title: 'Phone / WhatsApp', type: 'string', group: 'contact' }),
+    defineField({ name: 'nationality', title: 'Nationality', type: 'string', group: 'contact' }),
     // Expedition format (universal — same fields for every peak)
     defineField({ name: 'customPeakName', title: 'Custom Peak', type: 'string', group: 'format', description: 'Set when the climber asked for a peak not in our catalogue.' }),
     defineField({ name: 'expeditionType', title: 'Expedition Type', type: 'string', group: 'format', readOnly: true }),

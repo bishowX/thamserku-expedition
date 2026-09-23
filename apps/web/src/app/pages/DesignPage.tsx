@@ -25,7 +25,8 @@ import {
   type EditionLetter,
   type SelectionValue,
 } from '../../lib/configMatrix'
-import { StepFormat, CUSTOM_PEAK, toSeasonValue, type FormatValue } from '../components/design/steps/StepFormat'
+import { StepFormat, CUSTOM_PEAK, DATED_EDITIONS, altitudeMeters, toMDY, type FormatValue } from '../components/design/steps/StepFormat'
+import { withDialCode } from '../../lib/countries'
 import { StepCustomContact } from '../components/design/steps/StepCustomContact'
 import { ConfiguratorStep, type NumberedGroup } from '../components/design/ConfiguratorStep'
 import { ConfigSummary, MobileConfigBar, type SummaryItem } from '../components/design/ConfigSummary'
@@ -55,13 +56,15 @@ export const shouldRevalidate: ShouldRevalidateFunction = () => false
 // listed here are appended to the last configuration step, so the flow degrades
 // gracefully if a peak introduces a new section.
 const STEP_A_GROUPS = ['Acclimatisation & Additional Climb', 'Accommodation Preferences']
-const STEP_B_GROUPS = ['Guiding Configurations', 'Oxygen Preferences', 'Helicopter Inclusion']
+const OXYGEN_GROUP = 'Oxygen Preference'
+const STEP_B_GROUPS = ['Guiding Configurations', OXYGEN_GROUP, 'Helicopter Inclusion']
 
 const shortEdition = (name: string) => name.replace(/\s*Edition$/i, '')
 
 type ActionErrors = { fullName?: string; email?: string }
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
+const MDY_RE = /^\d{2}-\d{2}-\d{4}$/
 
 export async function action({ request }: { request: Request }): Promise<
   { success: true } | { success: false; errors: ActionErrors }
@@ -71,7 +74,8 @@ export async function action({ request }: { request: Request }): Promise<
 
   const fullName = str('fullName') ?? ''
   const email = str('email') ?? ''
-  const phone = str('phone') ?? ''
+  const phone = withDialCode(str('phoneCountry'), str('phone')) ?? ''
+  const nationality = str('nationality')
   const message = str('message')
 
   const errors: ActionErrors = {}
@@ -90,6 +94,14 @@ export async function action({ request }: { request: Request }): Promise<
   const expeditionType = str('expeditionType')
   const numberOfClimbers = str('numberOfClimbers')
   const season = str('season')
+  // Preferred dates are only offered on editions A and E.
+  const datedEdition = DATED_EDITIONS.includes(editionLetter)
+  const mdy = (k: string) => {
+    const v = str(k)
+    return datedEdition && v && MDY_RE.test(v) ? v : undefined
+  }
+  const startDate = mdy('startDate')
+  const endDate = mdy('endDate')
   const specialObjectives = str('specialObjectives')
 
   // Parse the raw selection map, then price it server-side from the live matrix
@@ -118,10 +130,13 @@ export async function action({ request }: { request: Request }): Promise<
       fullName,
       email: email || undefined,
       phone: phone || undefined,
+      nationality,
       customPeakName,
       expeditionType,
       numberOfClimbers,
       season,
+      startDate,
+      endDate,
       specialObjectives,
       message,
       expedition: expeditionId ? { _type: 'reference', _ref: expeditionId } : undefined,
@@ -148,12 +163,15 @@ export async function action({ request }: { request: Request }): Promise<
     fullName,
     email: email || undefined,
     phone: phone || undefined,
+    nationality,
     message,
     expeditionName: config?.name,
     customPeakName,
     expeditionType,
     numberOfClimbers,
     season,
+    startDate,
+    endDate,
     specialObjectives,
     editionLetter: editionLetter || undefined,
     editionName,
@@ -199,6 +217,8 @@ const EMPTY_FORMAT: FormatValue = {
   numberOfClimbers: '',
   season: '',
   customPeakName: '',
+  startDate: '',
+  endDate: '',
 }
 
 export default function DesignPage() {
@@ -224,13 +244,7 @@ export default function DesignPage() {
   const [edition, setEdition] = useState<SanityEditionForDesign | null>(() =>
     findEdition(searchParams.get('edition')),
   )
-  // Deep links (?expedition=slug) skip handlePeakChange, so seed the peak's
-  // default season here too.
-  const [format, setFormat] = useState<FormatValue>(() => {
-    const exp = expeditions.find((e) => e.slug === searchParams.get('expedition')) ?? null
-    const season = toSeasonValue(exp?.defaultSeason)
-    return season ? { ...EMPTY_FORMAT, season } : EMPTY_FORMAT
-  })
+  const [format, setFormat] = useState<FormatValue>(EMPTY_FORMAT)
   const [objectivesNote, setObjectivesNote] = useState('')
 
   const expedition: SanityExpeditionForDesign | null =
@@ -245,6 +259,16 @@ export default function DesignPage() {
 
   // ── Steps: format → (configure steps) → custom+contact ──────────────────────
   const allGroups = expedition && edition ? configuratorGroups(expedition.configMatrix, cleanLetter(edition.letter)) : []
+  // 7000ers carry no bottle field (max 0), which drops the oxygen section
+  // entirely. Keep the heading so the "available if required" notice shows,
+  // slotted in where the section would sit: after Guiding, before Helicopter.
+  const isSevenThousander = Math.floor(altitudeMeters(expedition?.altitude) / 1000) === 7
+  if (isSevenThousander && allGroups.length > 0 && !allGroups.some((g) => g.group === OXYGEN_GROUP)) {
+    const guiding = allGroups.findIndex((g) => g.group === 'Guiding Configurations')
+    const heli = allGroups.findIndex((g) => g.group === 'Helicopter Inclusion')
+    const at = guiding >= 0 ? guiding + 1 : heli >= 0 ? heli : allGroups.length
+    allGroups.splice(at, 0, { group: OXYGEN_GROUP, features: [] })
+  }
   const numbered: NumberedGroup[] = allGroups.map((group, i) => ({ number: 4 + i, group }))
   const stepA = numbered.filter((n) => STEP_A_GROUPS.includes(n.group.group))
   const stepBNamed = numbered.filter((n) => STEP_B_GROUPS.includes(n.group.group))
@@ -296,11 +320,6 @@ export default function DesignPage() {
   function handlePeakChange(slug: string) {
     setSelectedPeak(slug)
     reseed(slug, edition)
-    // Apply the new peak's default season. A peak with no default leaves the
-    // current choice alone rather than clearing it.
-    const exp = slug && slug !== CUSTOM_PEAK ? expeditions.find((e) => e.slug === slug) ?? null : null
-    const season = toSeasonValue(exp?.defaultSeason)
-    if (season) setFormat((prev) => ({ ...prev, season }))
   }
 
   function handleEditionChange(letter: string) {
@@ -361,6 +380,8 @@ export default function DesignPage() {
     expeditionType: format.expeditionType,
     numberOfClimbers: format.numberOfClimbers,
     season: format.season,
+    startDate: edition && DATED_EDITIONS.includes(cleanLetter(edition.letter)) ? toMDY(format.startDate) : '',
+    endDate: edition && DATED_EDITIONS.includes(cleanLetter(edition.letter)) ? toMDY(format.endDate) : '',
     specialObjectives: objectivesNote.trim(),
     selectionsJson: JSON.stringify(
       Object.fromEntries(Object.entries(selections).filter(([k]) => interactiveKeys.has(k))),
@@ -451,7 +472,7 @@ export default function DesignPage() {
                   groups={configSteps[step - 1]}
                   selections={selections}
                   onChange={setSelection}
-                  altitude={expedition?.altitude}
+                  showOxygenNotice={isSevenThousander}
                 />
               )}
 

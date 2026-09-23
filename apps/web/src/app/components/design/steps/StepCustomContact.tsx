@@ -1,3 +1,6 @@
+import { ChevronDown } from 'lucide-react'
+import { COUNTRIES } from '../../../../lib/countries'
+
 type ContactErrors = { fullName?: string; email?: string }
 
 interface StepCustomContactProps {
@@ -27,6 +30,19 @@ function FieldLabel({ children, required }: { children: React.ReactNode; require
 
 const lineInput =
   "w-full bg-transparent border-b border-[#3A3A3A] pb-3 text-white font-['Fraunces'] italic text-body-lg focus:outline-none focus:border-white transition-colors placeholder:text-[#C8CDD2]/50"
+
+// Native select styled as a line input; the chevron is drawn by the wrapper.
+const lineSelect = `${lineInput} appearance-none cursor-pointer pr-8 [color-scheme:dark] [&:has(option[value='']:checked)]:text-[#C8CDD2]/50`
+const optionClass = "not-italic font-sans text-base bg-[#1A1A1A] text-white"
+
+function SelectShell({ className = '', children }: { className?: string; children: React.ReactNode }) {
+  return (
+    <div className={`relative ${className}`}>
+      {children}
+      <ChevronDown className="absolute right-0 top-1 w-5 h-5 text-[#8C97A3] pointer-events-none" />
+    </div>
+  )
+}
 
 export function StepCustomContact({
   errors,
@@ -98,6 +114,22 @@ export function StepCustomContact({
             )}
           </div>
 
+          <div>
+            <FieldLabel>Nationality</FieldLabel>
+            <SelectShell>
+              <select name="nationality" defaultValue="" className={lineSelect}>
+                <option value="" className={optionClass}>
+                  Select nationality
+                </option>
+                {COUNTRIES.map((c) => (
+                  <option key={c.iso} value={c.name} className={optionClass}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </SelectShell>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-x-12 gap-y-9">
             <div>
               <FieldLabel required>Email Address</FieldLabel>
@@ -116,13 +148,27 @@ export function StepCustomContact({
             </div>
             <div>
               <FieldLabel>WhatsApp</FieldLabel>
-              <input
-                type="tel"
-                name="phone"
-                autoComplete="tel"
-                placeholder="Number with country code"
-                className={lineInput}
-              />
+              <div className="flex gap-4">
+                <SelectShell className="w-44 shrink-0">
+                  <select name="phoneCountry" defaultValue="" aria-label="Country code" className={lineSelect}>
+                    <option value="" className={optionClass}>
+                      Code
+                    </option>
+                    {COUNTRIES.map((c) => (
+                      <option key={c.iso} value={c.iso} className={optionClass}>
+                        {c.name} (+{c.dial})
+                      </option>
+                    ))}
+                  </select>
+                </SelectShell>
+                <input
+                  type="tel"
+                  name="phone"
+                  autoComplete="tel-national"
+                  placeholder="Number"
+                  className={`${lineInput} min-w-0`}
+                />
+              </div>
               <p className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.12em] text-[#8C97A3] mt-2">
                 Optional
               </p>

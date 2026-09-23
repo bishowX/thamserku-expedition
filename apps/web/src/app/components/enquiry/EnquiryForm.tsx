@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown, CheckCircle, Check } from "lucide-react";
 import { useNavigation, Form, Link } from "react-router";
 import type { ConsultationPage } from "../../../lib/queries";
+import { COUNTRIES } from "../../../lib/countries";
 
 type Errors = { fullName?: string; email?: string; agreedToTerms?: string };
 
@@ -22,7 +23,7 @@ export const EnquiryForm = ({
   const isSubmitting = navigation.state === "submitting";
 
   const [contactMethod, setContactMethod] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
+  const [nationality, setNationality] = useState<string>("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const alternativeLabel = data?.formAlternativeLabel;
@@ -141,36 +142,27 @@ export const EnquiryForm = ({
 
               <div className="flex flex-col relative">
                 <label className="font-['DM_Mono'] font-medium uppercase tracking-[0.22em] text-[11px] text-[#5A6673] mb-4">
-                  A.4 — COUNTRY OF RESIDENCE <span className="ml-1">·</span>
+                  A.4 — NATIONALITY <span className="ml-1">·</span>
                 </label>
                 <div className="relative border-b border-[#5A6673] pb-3 cursor-pointer group">
                   <select
-                    name="countryOfResidence"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    className={`w-full bg-transparent font-['Fraunces'] italic text-body-lg appearance-none focus:outline-none cursor-pointer transition-colors ${country ? "text-[#1A1A1A]" : "text-[#5A6673]/70"}`}
+                    name="nationality"
+                    value={nationality}
+                    onChange={(e) => setNationality(e.target.value)}
+                    className={`w-full bg-transparent font-['Fraunces'] italic text-body-lg appearance-none focus:outline-none cursor-pointer transition-colors ${nationality ? "text-[#1A1A1A]" : "text-[#5A6673]/70"}`}
                   >
                     <option value="" disabled>
-                      Select country
+                      Select nationality
                     </option>
-                    <option
-                      value="us"
-                      className="not-italic font-sans text-base"
-                    >
-                      United States
-                    </option>
-                    <option
-                      value="uk"
-                      className="not-italic font-sans text-base"
-                    >
-                      United Kingdom
-                    </option>
-                    <option
-                      value="other"
-                      className="not-italic font-sans text-base"
-                    >
-                      Other
-                    </option>
+                    {COUNTRIES.map((c) => (
+                      <option
+                        key={c.iso}
+                        value={c.name}
+                        className="not-italic font-sans text-base"
+                      >
+                        {c.name}
+                      </option>
+                    ))}
                   </select>
                   <ChevronDown className="absolute right-0 top-1 w-5 h-5 text-[#5A6673] group-hover:text-[#2E353C] pointer-events-none" />
                 </div>

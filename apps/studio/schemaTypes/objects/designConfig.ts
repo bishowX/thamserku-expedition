@@ -21,6 +21,9 @@ export default defineType({
       name: 'defaultSeason',
       title: 'Default Season',
       type: 'string',
+      // Retired: the configurator no longer preselects a season. Hidden, not
+      // removed, so peaks that already have a value don't flag an unknown field.
+      hidden: true,
       description:
         'Preselected in the configurator when a climber picks this peak. They can still change it. Leave blank for no preselection. Separate from the free-text "Season" on the Identity tab, which is the Atlas card label.',
       options: {
