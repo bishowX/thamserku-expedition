@@ -1,7 +1,7 @@
-import { ChevronDown } from 'lucide-react'
+import { Check, ChevronDown } from 'lucide-react'
 import { COUNTRIES } from '../../../../lib/countries'
 
-type ContactErrors = { fullName?: string; email?: string }
+type ContactErrors = { fullName?: string; email?: string; notRobot?: string }
 
 interface StepCustomContactProps {
   errors?: ContactErrors
@@ -173,6 +173,31 @@ export function StepCustomContact({
                 Optional
               </p>
             </div>
+          </div>
+
+          <div>
+            <label className="inline-flex items-center gap-3 cursor-pointer">
+              <span className="relative shrink-0 w-4 h-4">
+                <input
+                  type="checkbox"
+                  name="notRobot"
+                  required
+                  className="peer appearance-none w-4 h-4 border border-[#8C97A3] rounded-sm cursor-pointer checked:bg-white checked:border-white"
+                />
+                <Check
+                  className="pointer-events-none absolute inset-0 m-auto w-3 h-3 text-[#1A1A1A] opacity-0 peer-checked:opacity-100"
+                  strokeWidth={3}
+                />
+              </span>
+              <span className="font-['DM_Mono'] text-[11px] uppercase tracking-[0.18em] text-[#C8CDD2]">
+                I am not a robot
+              </span>
+            </label>
+            {errors?.notRobot && (
+              <p className="font-['DM_Mono'] text-[11px] text-red-400 mt-2 uppercase tracking-[0.12em]">
+                {errors.notRobot}
+              </p>
+            )}
           </div>
         </div>
       </section>

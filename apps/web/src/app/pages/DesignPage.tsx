@@ -61,7 +61,7 @@ const STEP_B_GROUPS = ['Guiding Configurations', OXYGEN_GROUP, 'Helicopter Inclu
 
 const shortEdition = (name: string) => name.replace(/\s*Edition$/i, '')
 
-type ActionErrors = { fullName?: string; email?: string }
+type ActionErrors = { fullName?: string; email?: string; notRobot?: string }
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
 const MDY_RE = /^\d{2}-\d{2}-\d{4}$/
@@ -82,6 +82,8 @@ export async function action({ request }: { request: Request }): Promise<
   if (!fullName) errors.fullName = 'Please enter your name.'
   if (!email) errors.email = 'Please enter your email address.'
   else if (!EMAIL_RE.test(email)) errors.email = 'Please enter a valid email address.'
+  // Bare anti-spam gate: the browser enforces `required`, this catches bots posting directly.
+  if (formData.get('notRobot') !== 'on') errors.notRobot = 'Please confirm you are not a robot.'
   if (Object.keys(errors).length > 0) return { success: false, errors }
 
   const expeditionId = str('expeditionId')
