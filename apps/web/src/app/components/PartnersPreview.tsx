@@ -16,6 +16,7 @@ const PARTNERS: Partner[] = [
   { name: "Mountain Hardwear", logo: "/images/partners/mountain-hardwear.png?v=7" },
   { name: "Air Dynasty", logo: "/images/partners/air-dynasty.png" },
   { name: "Yeti Airlines", logo: "/images/partners/yeti-airlines.svg" },
+  { name: "Tara Air", logo: "/images/partners/tara-air.png" },
   { name: "Mountain Lodges of Nepal", logo: "/images/partners/mln.svg?v=2", tall: true },
   { name: "The Malla Hotel", logo: "/images/partners/malla-hotel.png?v=2", tall: true },
 ];
@@ -42,7 +43,7 @@ export function PartnersPreview() {
     <section
       ref={sectionRef}
       id="partners"
-      className="w-full bg-[#FCF2EC] section-padding flex flex-col gap-12"
+      className="w-full bg-[#FCF2EC] py-10 px-5 md:py-14 md:px-8 flex flex-col gap-8 md:gap-10"
     >
       <div className="max-w-7xl w-full mx-auto">
         <span className="font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-[#5A6673]">

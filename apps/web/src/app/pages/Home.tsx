@@ -77,7 +77,7 @@ export default function Home() {
         <LegacyPreview data={data.homePage ?? undefined} />
         <UnclaimedPeaks data={data.homePage ?? undefined} />
         <PartnersPreview />
-        <NewsletterSection data={data.homePage ?? undefined} />
+        <NewsletterSection data={data.homePage ?? undefined} dark />
         <Closing data={data.homePage ?? undefined} encodeDataAttribute={encodeDataAttribute} />
       </main>
       <Footer />
