@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Form, useNavigation } from "react-router";
+import { track } from "../../lib/analytics";
 import type { NewsletterActionData } from "../pages/NewsletterPage";
 
 type NewsletterData = {
@@ -23,6 +25,9 @@ export function NewsletterSection({
   const submitting = navigation.state === "submitting";
 
   const subscribed = actionData?.success === true;
+  useEffect(() => {
+    if (subscribed) track("sign_up", { method: "newsletter" });
+  }, [subscribed]);
 
   // Same palette either way, just flipped: light cream page vs the site's slate.
   const c = dark

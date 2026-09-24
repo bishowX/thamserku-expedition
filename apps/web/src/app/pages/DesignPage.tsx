@@ -27,6 +27,7 @@ import {
 } from '../../lib/configMatrix'
 import { StepFormat, CUSTOM_PEAK, DATED_EDITIONS, altitudeMeters, toMDY, type FormatValue } from '../components/design/steps/StepFormat'
 import { withDialCode } from '../../lib/countries'
+import { track } from '../../lib/analytics'
 import { StepCustomContact } from '../components/design/steps/StepCustomContact'
 import { ConfiguratorStep, type NumberedGroup } from '../components/design/ConfiguratorStep'
 import { ConfigSummary, MobileConfigBar, type SummaryItem } from '../components/design/ConfigSummary'
@@ -335,6 +336,22 @@ export default function DesignPage() {
   }
 
   const submitted = actionData?.success === true
+
+  // Journey milestones for GA funnels. Step changes only rewrite ?step=, which
+  // standard page reports fold into one path, so name each step explicitly.
+  const stepName = stepLabels[step]
+  useEffect(() => {
+    track('design_step', { step_number: step + 1, step_name: stepName })
+  }, [step, stepName])
+  useEffect(() => {
+    if (submitted) {
+      track('generate_lead', {
+        form: 'design_your_expedition',
+        expedition: selectedPeak || undefined,
+        edition: edition ? cleanLetter(edition.letter) : undefined,
+      })
+    }
+  }, [submitted]) // eslint-disable-line react-hooks/exhaustive-deps -- fire once per submission
   const actionErrors = actionData && !actionData.success ? actionData.errors : undefined
   const isSubmitting = navigation.state === 'submitting'
 

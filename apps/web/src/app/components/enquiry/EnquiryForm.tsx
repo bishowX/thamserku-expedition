@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, CheckCircle, Check } from "lucide-react";
 import { useNavigation, Form, Link } from "react-router";
 import type { ConsultationPage } from "../../../lib/queries";
 import { COUNTRIES } from "../../../lib/countries";
+import { track } from "../../../lib/analytics";
 
 type Errors = { fullName?: string; email?: string; agreedToTerms?: string };
 
@@ -32,6 +33,10 @@ export const EnquiryForm = ({
   const sectionLabel = data?.formSectionLabel;
   const chapterATitle = data?.formChapterATitle;
   const contactOptions = data?.formContactOptions ?? [];
+
+  useEffect(() => {
+    if (submitted) track("generate_lead", { form: "consultation" });
+  }, [submitted]);
 
   if (submitted) {
     return (

@@ -88,7 +88,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             competes with the LCP image for bandwidth. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-RMBQH3J4HV');var __gaLoaded=false;function __loadGA(){if(__gaLoaded)return;__gaLoaded=true;var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-RMBQH3J4HV';document.head.appendChild(s)}if('requestIdleCallback'in window){requestIdleCallback(__loadGA,{timeout:6000})}else{setTimeout(__loadGA,4000)}['pointerdown','keydown','scroll','touchstart'].forEach(function(e){window.addEventListener(e,__loadGA,{once:true,passive:true})});`,
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-19736Y8FTR');var __gaLoaded=false;function __loadGA(){if(__gaLoaded)return;__gaLoaded=true;var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-19736Y8FTR';document.head.appendChild(s)}if('requestIdleCallback'in window){requestIdleCallback(__loadGA,{timeout:6000})}else{setTimeout(__loadGA,4000)}['pointerdown','keydown','scroll','touchstart'].forEach(function(e){window.addEventListener(e,__loadGA,{once:true,passive:true})});`,
           }}
         />
         <SiteStructuredData />

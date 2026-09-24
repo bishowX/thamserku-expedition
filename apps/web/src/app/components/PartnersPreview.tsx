@@ -8,17 +8,24 @@ gsap.registerPlugin(ScrollTrigger);
 type Partner = {
   name: string;
   logo: string;
-  /** Square-ish marks read smaller than wordmarks at the same height. */
-  tall?: boolean;
+  /** Intrinsic width / height of the artwork. */
+  ratio: number;
 };
 
+/**
+ * Every logo gets the same visual area rather than the same height, so a
+ * square mark and a long wordmark read at the same weight. In em² — the <li>
+ * font size scales the whole row.
+ */
+const LOGO_AREA = 16;
+
 const PARTNERS: Partner[] = [
-  { name: "Mountain Hardwear", logo: "/images/partners/mountain-hardwear.png?v=7" },
-  { name: "Air Dynasty", logo: "/images/partners/air-dynasty.png" },
-  { name: "Yeti Airlines", logo: "/images/partners/yeti-airlines.svg" },
-  { name: "Tara Air", logo: "/images/partners/tara-air.png" },
-  { name: "Mountain Lodges of Nepal", logo: "/images/partners/mln.svg?v=2", tall: true },
-  { name: "The Malla Hotel", logo: "/images/partners/malla-hotel.png?v=2", tall: true },
+  { name: "Mountain Hardwear", logo: "/images/partners/mountain-hardwear.png?v=7", ratio: 1200 / 608 },
+  { name: "Air Dynasty", logo: "/images/partners/air-dynasty.png", ratio: 800 / 234 },
+  { name: "Yeti Airlines", logo: "/images/partners/yeti-airlines.svg", ratio: 123.6 / 29.6 },
+  { name: "Tara Air", logo: "/images/partners/tara-air.png", ratio: 454 / 140 },
+  { name: "Mountain Lodges of Nepal", logo: "/images/partners/mln.svg?v=2", ratio: 214 / 240 },
+  { name: "The Malla Hotel", logo: "/images/partners/malla-hotel.png?v=2", ratio: 210 / 217 },
 ];
 
 export function PartnersPreview() {
@@ -59,12 +66,13 @@ export function PartnersPreview() {
             <li
               key={i}
               aria-hidden={i >= PARTNERS.length || undefined}
-              className="shrink-0 px-10 md:px-16"
+              className="shrink-0 px-8 md:px-12 text-[14px] md:text-[17px]"
             >
               <img
                 src={partner.logo}
                 alt={partner.name}
-                className={`w-auto object-contain ${partner.tall ? "h-20 md:h-24" : "h-12 md:h-16"}`}
+                className="w-auto"
+                style={{ height: `${Math.sqrt(LOGO_AREA / partner.ratio)}em` }}
                 draggable={false}
               />
             </li>
