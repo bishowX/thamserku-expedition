@@ -240,17 +240,17 @@ export function Nav({
             </div>
 
             {/* Desktop Nav Links */}
-            <div className="hidden lg:flex items-center gap-8 font-['DM_Mono'] uppercase tracking-[2.4px]">
+            <div className="hidden lg:flex items-center gap-8 min-[1800px]:gap-10 font-['DM_Mono'] uppercase tracking-[2.4px]">
               <Link
                 to="/"
-                className={`text-[11px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
+                className={`text-[11px] min-[1800px]:text-[14px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
                 onMouseEnter={handleMenuClose}
               >
                 Home
               </Link>
 
               <button
-                className={`text-[11px] flex items-center gap-[2px] ${navColorTransition} uppercase ${
+                className={`text-[11px] min-[1800px]:text-[14px] flex items-center gap-[2px] ${navColorTransition} uppercase ${
                   openMenu === "about" ? navActiveClass : navHoverClass
                 }`}
                 onMouseEnter={() => handleMenuEnter("about")}
@@ -266,7 +266,7 @@ export function Nav({
               </button>
 
               <button
-                className={`text-[11px] flex items-center gap-[2px] ${navColorTransition} uppercase ${
+                className={`text-[11px] min-[1800px]:text-[14px] flex items-center gap-[2px] ${navColorTransition} uppercase ${
                   openMenu === "expedition" ? navActiveClass : navHoverClass
                 }`}
                 onMouseEnter={() => handleMenuEnter("expedition")}
@@ -283,7 +283,7 @@ export function Nav({
 
               <Link
                 to="/editions"
-                className={`text-[11px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
+                className={`text-[11px] min-[1800px]:text-[14px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
                 onMouseEnter={handleMenuClose}
               >
                 Editions
@@ -291,7 +291,7 @@ export function Nav({
 
               <Link
                 to="/safety"
-                className={`text-[11px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
+                className={`text-[11px] min-[1800px]:text-[14px] nav-link-underline ${navHoverClass} ${navColorTransition}`}
                 onMouseEnter={handleMenuClose}
               >
                 Safety
@@ -311,7 +311,7 @@ export function Nav({
                     : showBackdrop
                       ? "border-white/50"
                       : "border-white/30"
-                } px-6 py-3.5 flex items-center justify-center font-['DM_Mono'] uppercase tracking-[2.4px] text-[10px] whitespace-nowrap`}
+                } px-6 py-3.5 flex items-center justify-center font-['DM_Mono'] uppercase tracking-[2.4px] text-[10px] min-[1800px]:text-[12px] whitespace-nowrap`}
               >
                 <span>{ctaLabel}</span>
               </Link>
@@ -349,7 +349,7 @@ export function Nav({
                 <Link
                   key={item.label}
                   to={item.href}
-                  className={`text-[11px] nav-link-underline transition-colors whitespace-nowrap ${navHoverClass}`}
+                  className={`text-[11px] min-[1800px]:text-[13px] nav-link-underline transition-colors whitespace-nowrap ${navHoverClass}`}
                   onClick={() => setOpenMenu(null)}
                 >
                   {item.label}
@@ -377,7 +377,7 @@ export function Nav({
                   <button
                     key={tab}
                     onClick={() => setExpeditionTab(tab)}
-                    className={`text-[11px] transition-colors uppercase ${
+                    className={`text-[11px] min-[1800px]:text-[13px] transition-colors uppercase ${
                       expeditionTab === tab
                         ? `${submenuAccentClass} underline underline-offset-[6px] ${heroLight ? "decoration-black/55" : "decoration-[#C8CDD2]"}`
                         : navHoverClass
@@ -407,7 +407,7 @@ export function Nav({
                           />
                         )}
                       </div>
-                      <p className={`font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] text-center w-full transition-colors ${submenuCardHoverClass}`}>
+                      <p className={`font-['DM_Mono'] uppercase tracking-[2.4px] text-[11px] min-[1800px]:text-[13px] text-center w-full transition-colors ${submenuCardHoverClass}`}>
                         {exp.name}
                       </p>
                     </Link>

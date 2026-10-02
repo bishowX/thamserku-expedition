@@ -5,7 +5,7 @@ import type { ConsultationPage } from "../../../lib/queries";
 import { COUNTRIES } from "../../../lib/countries";
 import { track } from "../../../lib/analytics";
 
-type Errors = { fullName?: string; email?: string; agreedToTerms?: string };
+type Errors = { fullName?: string; email?: string; agreedToTerms?: string; notRobot?: string };
 
 const appointmentUrl = import.meta.env.VITE_GOOGLE_CALENDAR_URL as
   | string
@@ -253,6 +253,28 @@ export const EnquiryForm = ({
               {errors?.agreedToTerms && !agreedToTerms && (
                 <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-red-500">
                   {errors.agreedToTerms}
+                </p>
+              )}
+              <label className="flex items-start gap-3 cursor-pointer">
+                <span className="relative shrink-0 w-4 h-4">
+                  <input
+                    type="checkbox"
+                    name="notRobot"
+                    required
+                    className="peer appearance-none w-4 h-4 border border-[#5A6673] cursor-pointer checked:bg-[#2E353C] checked:border-[#2E353C]"
+                  />
+                  <Check
+                    className="pointer-events-none absolute inset-0 m-auto w-3 h-3 text-white opacity-0 peer-checked:opacity-100"
+                    strokeWidth={3}
+                  />
+                </span>
+                <span className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] leading-4 text-[#5A6673]">
+                  I am not a robot
+                </span>
+              </label>
+              {errors?.notRobot && (
+                <p className="font-['DM_Mono'] uppercase tracking-[0.22em] text-[11px] text-red-500">
+                  {errors.notRobot}
                 </p>
               )}
             </div>

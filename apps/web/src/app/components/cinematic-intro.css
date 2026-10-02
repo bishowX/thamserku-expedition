@@ -29,7 +29,7 @@
   bottom: 0;
   left: calc(-1 * var(--fog-tile));
   width: calc(100% + 2 * var(--fog-tile));
-  background: url("/images/fog.png") repeat-x;
+  background: url("/images/fog.webp") repeat-x;
   background-size: var(--fog-tile) 100%;
   opacity: 0.28;
   filter: blur(2px);
@@ -87,7 +87,7 @@
   bottom: 0;
   left: calc(-1 * var(--fog-tile));
   width: calc(100% + 2 * var(--fog-tile));
-  background: url("/images/fog-real.png") repeat-x;
+  background: url("/images/fog-real.webp") repeat-x;
   background-size: var(--fog-tile) 100%;
   filter: blur(1px);
   will-change: transform;
@@ -111,7 +111,7 @@
   right: 0;
   top: 0;
   height: 46%;
-  background: url("/images/fog-real.png") repeat-x;
+  background: url("/images/fog-real.webp") repeat-x;
   background-size: 1500px 100%;
   opacity: 0.95;
   transform: scaleY(-1); /* wisps reaching up */
@@ -124,7 +124,7 @@
   right: 0;
   top: 22%;
   height: 56%;
-  background: url("/images/fog-real.png") repeat-x;
+  background: url("/images/fog-real.webp") repeat-x;
   background-size: 2000px 100%;
   background-position-x: 700px;
   filter: blur(2px);
@@ -136,7 +136,7 @@
   right: 0;
   bottom: 0;
   height: 46%;
-  background: url("/images/fog-real.png") repeat-x;
+  background: url("/images/fog-real.webp") repeat-x;
   background-size: 1700px 100%;
   background-position-x: 1200px;
   opacity: 0.95;

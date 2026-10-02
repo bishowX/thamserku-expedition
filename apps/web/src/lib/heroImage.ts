@@ -5,16 +5,16 @@
 // pointing at a missing file would 404 when the browser picks it.
 
 const HERO_WIDTHS: Record<string, number[]> = {
-  'hero-cinematic-1': [640, 960, 1280, 1600, 1920, 2560, 3840],
+  // Capped at 2560: the 3840 AVIF is 1.5 MB, and as the LCP image it left the
+  // intro black for seconds on desktop while it downloaded.
+  'hero-cinematic-1': [640, 960, 1280, 1600, 1920, 2560],
   'home-hero-2': [640, 960, 1280, 1600, 1920, 2560, 3840],
 }
 
-// The cinematic intro zooms its photo to 1.65x and, on a narrow phone, shows
-// only a cropped slice of it — so the browser must select a far larger
-// candidate than the viewport width implies, or the visible crop reads as
-// upscaled mush. 200vw pulls the 2560 variant on a phone (sharp, downscaled
-// from the 5120 master) and 3840 on desktop.
-export const HERO_SIZES_INTRO = '200vw'
+// Scene 1 is a 16:9 photo under object-cover. In a tall phone portrait it is
+// scaled to fill the HEIGHT, so only a narrow slice shows — advertise 200vw so
+// the phone pulls a sharp 2560. On desktop the crop is slight; 100vw is enough.
+export const HERO_SIZES_INTRO = '(max-width: 767px) 200vw, 100vw'
 
 // The home hero photo is a near-2:1 landscape shown full-bleed. In a tall phone
 // portrait, object-cover scales it to fill the HEIGHT, so its rendered width far
@@ -23,6 +23,22 @@ export const HERO_SIZES_INTRO = '200vw'
 // portrait-aware width so mobile grabs 3840 (~350KB); desktop, where the crop is
 // slight, needs only a modest bump.
 export const HERO_SIZES_HOME = '(max-width: 767px) 230vw, 130vw'
+
+// ~150-byte blurred thumbnails, inlined as the <img> background so the hero
+// paints a soft preview on the first frame instead of the dark page bg while
+// the real photo downloads. Regenerate if the photo is swapped.
+export const HERO_LQIP: Record<string, string> = {
+  'hero-cinematic-1':
+    'data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAAAQBQCdASogABIAPtFUpU2oJCMiMBgIAQAaCUAYmwZX1++BpBeYZ764Iv3OIlrXpMIAAP7R2Ve3we0wf2BbgB39q0IxanDdm1gzsDhXvrvvzamPoiY4+4oJYE90Dog9dghYUca2JKKgCvKmCwOecddGNpl5LW7YYG5xtWzdUq+wIAAA',
+  'home-hero-2':
+    'data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQBACdASogABAAPtFYpEwoJSOiMAgBABoJbACdH8ADA1nf/tIvND/FAAD+uQI1fhsqw77sNwaIfSStaCEXnlk6jXfNzi2N2Wgbp3GWflHQ7F0p6NQx6DOI5XwskCH99IYbU8OYgHBAAA==',
+}
+
+/** Inline style that paints the blurred thumbnail behind a hero <img>. */
+export function heroLqipStyle(src: string) {
+  const lqip = HERO_LQIP[baseOf(src)]
+  return lqip ? { backgroundImage: `url(${lqip})`, backgroundSize: 'cover' } : undefined
+}
 
 function baseOf(src: string): string {
   return src.replace(/^.*\//, '').replace(/\.[^.]+$/, '')

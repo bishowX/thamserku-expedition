@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { Observer } from "gsap/Observer";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getLenis } from "../hooks/useLenis";
-import { heroSrcSet, HERO_SIZES_INTRO } from "../../lib/heroImage";
+import { heroSrcSet, heroLqipStyle, HERO_SIZES_INTRO } from "../../lib/heroImage";
 import ThamserkuLogo from "./logo/ThamserkuLogo";
 import "./cinematic-intro.css";
 
@@ -372,7 +372,8 @@ export function CinematicIntro({ children }: { children: ReactNode }) {
           <img
             src="/images/hero-cinematic-1.jpg"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover object-[32%_46%] md:object-[50%_58%]"
+            style={heroLqipStyle("/images/hero-cinematic-1.jpg")}
+            className="absolute inset-0 w-full h-full object-cover object-[32%_46%] md:object-[50%_58%] bg-[position:32%_46%] md:bg-[position:50%_58%]"
           />
         </picture>
         <div className="ci-fog-back z-[2]" />

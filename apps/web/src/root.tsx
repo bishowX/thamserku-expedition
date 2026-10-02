@@ -69,9 +69,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" sizes="48x48" />
-        <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/favicon.ico?v=3" sizes="48x48" />
+        <link rel="icon" href="/favicon.png?v=3" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
         {/* Warm the font-CDN connections before the stylesheet request, and load
             fonts via a single <link> instead of a nested CSS @import chain. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

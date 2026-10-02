@@ -35,7 +35,7 @@ export function meta({ data, matches }: Route.MetaArgs) {
   });
 }
 
-type ActionErrors = { fullName?: string; email?: string; agreedToTerms?: string };
+type ActionErrors = { fullName?: string; email?: string; agreedToTerms?: string; notRobot?: string };
 
 export async function action({ request }: { request: Request }): Promise<
   | { success: true }
@@ -51,6 +51,8 @@ export async function action({ request }: { request: Request }): Promise<
   if (!fullName) errors.fullName = 'Please enter your name.';
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = 'Please enter a valid email address.';
   if (!agreedToTerms) errors.agreedToTerms = 'You must agree to the Terms & Conditions to continue.';
+  // Bare anti-spam gate: the browser enforces `required`, this catches bots posting directly.
+  if (formData.get('notRobot') !== 'on') errors.notRobot = 'Please confirm you are not a robot.';
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
